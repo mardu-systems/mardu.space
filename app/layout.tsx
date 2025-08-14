@@ -67,7 +67,9 @@ export default function RootLayout({
         <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <HeaderMegaMenu items={defaultHeaderItems} logoLightSrc="marduspace_logo_bg_white.svg"
                         logoDarkSrc="marduspace_logo_bg_black.svg" showTopbar={false}/>
-        {children}
+        <div className="light" data-theme="light" style={{colorScheme: "light"}}>
+            {children}
+        </div>
         <SiteFooter/>
         </body>
         </html>
