@@ -34,21 +34,22 @@ export default function Home() {
 
                 {/* Hero Overlay Content */}
                 <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="max-w-[70ch] px-6 sm:px-8 lg:px-12  text-center text-white">
-                        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-6 capitalize">
+                    <div className="max-w-4xl mx-auto px-6 sm:px-8 lg:px-12 text-center text-white">
+                        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-6">
                             Zugriffskontrollsysteme
                         </h1>
                         <p className="text-lg sm:text-xl text-white/90 mb-8 leading-relaxed">
                             für Makerspaces, FabLabs und Schülerlabore
                         </p>
                         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                            <Button size="lg" className="px-8 bg-[#CA452A]">
+                            <Button size="lg" className="px-8 bg-[#CA452A] hover:bg-[#B23A21]">
                                 WAS BRAUCHT DEIN SPACE?
                             </Button>
                         </div>
                     </div>
                 </div>
             </section>
+
 
 
 
