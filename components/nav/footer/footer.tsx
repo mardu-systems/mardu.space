@@ -74,8 +74,8 @@ export default function SiteFooter() {
     const [ok, setOk] = React.useState<null | boolean>(null);
 
     const FormSchema = z.object({
-        email: z.string().email("Bitte eine gültige E‑Mail angeben"),
-        role: z.enum(ROLE_OPTIONS, {message: "Bitte eine Kategorie wählen"}), // keine required_error verwenden
+        email: z.email("Bitte eine gültige E‑Mail angeben"),
+        role: z.enum(ROLE_OPTIONS, {message: "Bitte eine Kategorie wählen"}),
     });
 
     type FormValues = z.infer<typeof FormSchema>;
@@ -107,160 +107,162 @@ export default function SiteFooter() {
     }
 
     return (
-        <footer className="w-full bg-radial-[at_5%_50%] from-zinc-900 from-70% to-[#37093F] to-99% text-neutral-50">
-            <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                {/* Top row: logo */}
-                <div className="flex items-center justify-start py-8">
-                    {/* Replace with your real logo */}
-                    <div className="flex items-center gap-3">
-                        <Image
-                            src="/marduspace_logo_bg_black.svg"
-                            alt="Mardu"
-                            width={240}
-                            height={45}
-                            sizes="(max-width: 640px) 40vw, (max-width: 1024px) 22vw, 240px"
-                            className="h-auto w-[clamp(120px,22vw,240px)]"
-                        />
-                        <span className="sr-only">Mardu</span>
-                    </div>
-                </div>
-
-                {/* Main area */}
-                <div className="grid grid-cols-1 gap-10 border-neutral-800/80 py-12 md:grid-cols-2">
-                    {/* Left: Headline */}
-                    <div>
-                        <h2 className="text-balance text-4xl font-extrabold tracking-tight sm:text-5xl">
-                            Stay Connected
-                        </h2>
-                        <p className="mt-3 text-sm/6 text-neutral-400">
-                            Sign up for our newsletter
-                        </p>
+        <div className="dark" data-theme="dark" style={{colorScheme: "dark"}}>
+            <footer className="w-full bg-radial-[at_5%_50%] from-zinc-900 from-70% to-[#37093F] to-99% text-neutral-50">
+                <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                    {/* Top row: logo */}
+                    <div className="flex items-center justify-start py-8">
+                        {/* Replace with your real logo */}
+                        <div className="flex items-center gap-3">
+                            <Image
+                                src="/marduspace_logo_bg_black.svg"
+                                alt="Mardu"
+                                width={240}
+                                height={45}
+                                sizes="(max-width: 640px) 40vw, (max-width: 1024px) 22vw, 240px"
+                                className="h-auto w-[clamp(120px,22vw,240px)]"
+                            />
+                            <span className="sr-only">Mardu</span>
+                        </div>
                     </div>
 
-                    {/* Right: Form – shadcn/ui only */}
-                    <div>
-                        <Form {...form}>
-                            <form
-                                onSubmit={form.handleSubmit(onSubmit)}
-                                className="max-w-md md:ms-auto"
-                            >
-                                {/* Email */}
-                                <FormField
-                                    control={form.control}
-                                    name="email"
-                                    render={({field}) => (
-                                        <FormItem>
-                                            <FormLabel className="sr-only">Email address</FormLabel>
-                                            <div className="flex gap-3">
+                    {/* Main area */}
+                    <div className="grid grid-cols-1 gap-5 border-neutral-800/80 py-12 md:grid-cols-2">
+                        {/* Left: Headline */}
+                        <div>
+                            <h2 className="text-balance text-4xl font-extrabold tracking-tight sm:text-5xl">
+                                Stay Connected
+                            </h2>
+                            <p className="mt-3 text-sm/6 text-neutral-400">
+                                Sign up for our newsletter
+                            </p>
+                        </div>
+
+                        {/* Right: Form – shadcn/ui only */}
+                        <div>
+                            <Form {...form}>
+                                <form
+                                    onSubmit={form.handleSubmit(onSubmit)}
+                                    className="max-w-md md:ms-auto"
+                                >
+                                    {/* Email */}
+                                    <FormField
+                                        control={form.control}
+                                        name="email"
+                                        render={({field}) => (
+                                            <FormItem>
+                                                <FormLabel className="sr-only">Email address</FormLabel>
                                                 <FormControl>
                                                     <Input
                                                         type="email"
                                                         inputMode="email"
                                                         autoComplete="email"
                                                         placeholder="Enter your email"
-                                                        className="h-11 flex-1 bg-neutral-900/60 text-base placeholder:text-neutral-500"
+                                                        className="h-11 flex-1"
                                                         {...field}
                                                     />
                                                 </FormControl>
-                                            </div>
-                                            <FormMessage/>
-                                        </FormItem>
+                                                <FormMessage/>
+                                            </FormItem>
+                                        )}
+                                    />
+
+                                    {/* Role */}
+                                    <FormField
+                                        control={form.control}
+                                        name="role"
+                                        render={({field}) => (
+                                            <FormItem className="mt-5">
+                                                <FormLabel className="mb-2 block text-sm">
+                                                    Wer bist du?
+                                                </FormLabel>
+                                                <Select onValueChange={field.onChange} value={field.value}>
+                                                    <FormControl>
+                                                        <SelectTrigger
+                                                            aria-labelledby="role-label"
+                                                            className="w-fit max-w-xs sm:max-w-sm justify-between"
+                                                        >
+                                                            <SelectValue placeholder="Kategorie wählen …"/>
+                                                        </SelectTrigger>
+                                                    </FormControl>
+                                                    <SelectContent className="max-h-64 overflow-auto">
+                                                        <SelectGroup>
+                                                            <SelectLabel>Einrichtungen</SelectLabel>
+                                                            <SelectItem value="fablab">FabLab</SelectItem>
+                                                            <SelectItem value="makerspace">Makerspace</SelectItem>
+                                                            <SelectItem value="schule">Schule</SelectItem>
+                                                            <SelectItem value="hochschule">Universität /
+                                                                Hochschule</SelectItem>
+                                                            <SelectItem value="oeffentliche-einrichtung">Öffentliche
+                                                                Einrichtung</SelectItem>
+                                                            <SelectItem value="bibliothek">Bibliothek</SelectItem>
+                                                            <SelectItem value="museum">Museum</SelectItem>
+                                                            <SelectItem value="kulturzentrum">Kulturzentrum</SelectItem>
+                                                            <SelectItem value="coworking">Coworking Space</SelectItem>
+                                                            <SelectItem value="werkstatt">Werkstatt</SelectItem>
+                                                            <SelectItem value="jugendzentrum">Jugendzentrum</SelectItem>
+                                                            <SelectItem
+                                                                value="forschungslabor">Forschungslabor</SelectItem>
+                                                            <SelectItem
+                                                                value="community-projekt">Community‑Projekt</SelectItem>
+                                                            <SelectItem value="agentur-studio">Agentur /
+                                                                Studio</SelectItem>
+                                                            <SelectItem value="unternehmen">Unternehmen</SelectItem>
+                                                            <SelectItem value="medien">Medien</SelectItem>
+                                                            <SelectItem value="privatperson">Privatperson</SelectItem>
+                                                            <SelectItem value="sonstiges">Sonstiges</SelectItem>
+                                                        </SelectGroup>
+                                                    </SelectContent>
+                                                </Select>
+                                                <Button type="submit" variant="secondary"
+                                                        className="mt-3 w-fit whitespace-nowrap" disabled={loading}>
+                                                    Anmelden
+                                                </Button>
+                                                <FormMessage/>
+                                            </FormItem>
+                                        )}
+                                    />
+
+                                    {/* Status message */}
+                                    {status !== "idle" && (
+                                        <Alert
+                                            className="mt-3"
+                                            variant={status === "success" ? "default" : "destructive"}
+                                        >
+                                            <AlertDescription>
+                                                {status === "success"
+                                                    ? "Danke! Bitte prüfe dein Postfach."
+                                                    : "Etwas ist schiefgelaufen. Versuch es nochmal."}
+                                            </AlertDescription>
+                                        </Alert>
                                     )}
-                                />
-
-                                {/* Role */}
-                                <FormField
-                                    control={form.control}
-                                    name="role"
-                                    render={({field}) => (
-                                        <FormItem className="mt-5">
-                                            <FormLabel className="mb-2 block text-sm text-neutral-300">
-                                                Wer bist du?
-                                            </FormLabel>
-                                            <Select onValueChange={field.onChange} value={field.value}>
-                                                <FormControl>
-                                                    <SelectTrigger
-                                                        aria-labelledby="role-label"
-                                                        className="w-fit max-w-xs sm:max-w-sm justify-between text-neutral-300"
-                                                    >
-                                                        <SelectValue placeholder="Kategorie wählen …"/>
-                                                    </SelectTrigger>
-                                                </FormControl>
-                                                <SelectContent className="max-h-64 overflow-auto">
-                                                    <SelectGroup>
-                                                        <SelectLabel>Einrichtungen</SelectLabel>
-                                                        <SelectItem value="fablab">FabLab</SelectItem>
-                                                        <SelectItem value="makerspace">Makerspace</SelectItem>
-                                                        <SelectItem value="schule">Schule</SelectItem>
-                                                        <SelectItem value="hochschule">Universität /
-                                                            Hochschule</SelectItem>
-                                                        <SelectItem value="oeffentliche-einrichtung">Öffentliche
-                                                            Einrichtung</SelectItem>
-                                                        <SelectItem value="bibliothek">Bibliothek</SelectItem>
-                                                        <SelectItem value="museum">Museum</SelectItem>
-                                                        <SelectItem value="kulturzentrum">Kulturzentrum</SelectItem>
-                                                        <SelectItem value="coworking">Coworking Space</SelectItem>
-                                                        <SelectItem value="werkstatt">Werkstatt</SelectItem>
-                                                        <SelectItem value="jugendzentrum">Jugendzentrum</SelectItem>
-                                                        <SelectItem value="forschungslabor">Forschungslabor</SelectItem>
-                                                        <SelectItem
-                                                            value="community-projekt">Community‑Projekt</SelectItem>
-                                                        <SelectItem value="agentur-studio">Agentur / Studio</SelectItem>
-                                                        <SelectItem value="unternehmen">Unternehmen</SelectItem>
-                                                        <SelectItem value="medien">Medien</SelectItem>
-                                                        <SelectItem value="privatperson">Privatperson</SelectItem>
-                                                        <SelectItem value="sonstiges">Sonstiges</SelectItem>
-                                                    </SelectGroup>
-                                                </SelectContent>
-                                            </Select>
-                                            <Button type="submit" variant="secondary"
-                                                    className="mt-3 w-fit whitespace-nowrap" disabled={loading}>
-                                                Anmelden
-                                            </Button>
-                                            <FormMessage/>
-                                        </FormItem>
-                                    )}
-                                />
-
-                                {/* Status message */}
-                                {status !== "idle" && (
-                                    <Alert
-                                        className="mt-3"
-                                        variant={status === "success" ? "default" : "destructive"}
-                                    >
-                                        <AlertDescription>
-                                            {status === "success"
-                                                ? "Danke! Bitte prüfe dein Postfach."
-                                                : "Etwas ist schiefgelaufen. Versuch es nochmal."}
-                                        </AlertDescription>
-                                    </Alert>
-                                )}
-                            </form>
-                        </Form>
-                    </div>
-                </div>
-
-                {/* Bottom links row */}
-                <div className="pt-6">
-                    <div
-                        aria-hidden
-                        className="h-[1px] w-full bg-linear-to-r from-[#A618C3] to-gray-500 to-40%"
-                    />
-                    <div className="flex flex-col gap-6 py-6 md:flex-row md:items-center md:justify-between">
-                        <nav aria-label="Footer-Navigation"
-                             className="flex flex-wrap gap-x-8 gap-y-3 text-sm text-neutral-300">
-                            <Link href="#" className="hover:text-white">FAQ</Link>
-                            <Link href="#" className="hover:text-white">Brand Assets</Link>
-                            <Link href="#" className="hover:text-white">Fotos</Link>
-                        </nav>
-                        <div className="flex flex-wrap items-center gap-6 text-sm text-neutral-300">
-                            <Link href="#" className="hover:text-white">Impressum</Link>
-                            <Link href="#" className="hover:text-white">Datenschutz</Link>
+                                </form>
+                            </Form>
                         </div>
                     </div>
-                </div>
 
-            </div>
-        </footer>
+                    {/* Bottom links row */}
+                    <div className="pt-6">
+                        <div
+                            aria-hidden
+                            className="h-[1px] w-full bg-linear-to-r from-[#A618C3] to-gray-500 to-40%"
+                        />
+                        <div className="flex flex-col gap-6 py-6 md:flex-row md:items-center md:justify-between">
+                            <nav aria-label="Footer-Navigation"
+                                 className="flex flex-wrap gap-x-8 gap-y-3 text-sm text-neutral-300">
+                                <Link href="#" className="hover:text-white">FAQ</Link>
+                                <Link href="#" className="hover:text-white">Brand Assets</Link>
+                                <Link href="#" className="hover:text-white">Fotos</Link>
+                            </nav>
+                            <div className="flex flex-wrap items-center gap-6 text-sm text-neutral-300">
+                                <Link href="#" className="hover:text-white">Impressum</Link>
+                                <Link href="#" className="hover:text-white">Datenschutz</Link>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </footer>
+        </div>
     );
 }
