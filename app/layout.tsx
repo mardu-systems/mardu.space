@@ -34,11 +34,17 @@ const NAV: Array<MegaMenuConfig | MegaMenu> = [
                     {
                         label: "Konfigurator",
                         href: "/shop/konfigurator",
-                        description: "Konfigurieren Sie Ihre Maschine"
-                    }
-                ]
-            }
-        ]
+                        description: "Konfigurieren Sie Ihre Maschine",
+                        image: "/globe.svg",
+                    },
+                ],
+            },
+        ],
+        promo: {
+            headline: "Entdecken",
+            subline: "Unsere Produkte",
+            image: "/next.svg",
+        },
     },
     {
         id: "maschinenfreigabe",
@@ -50,7 +56,8 @@ const NAV: Array<MegaMenuConfig | MegaMenu> = [
                     {
                         label: "Tür",
                         href: "/maschinenfreigabe/tuer",
-                        description: "Türfreigabe verwalten"
+                        description: "Türfreigabe verwalten",
+                        image: "/file.svg",
                     }
                 ]
             }
@@ -68,7 +75,7 @@ export default function RootLayout({
         <body
             className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
-        <HeaderMegaMenu items={NAV} showTopbar salesPhone="+1 646 663 4880" />
+        <HeaderMegaMenu items={NAV} />
         {children}
         </body>
         </html>

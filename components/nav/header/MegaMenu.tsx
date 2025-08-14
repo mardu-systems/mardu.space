@@ -2,6 +2,8 @@
 import React, {useEffect, useRef, useState} from "react";
 import {motion, AnimatePresence, useReducedMotion} from "framer-motion";
 import {ChevronDown, HelpCircle, Search, UserRound} from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
 import MobileMenu from "./MobileMenu";
 
 // --- Helpers ----------------------------------------------------------------
@@ -10,7 +12,12 @@ function cx(...c: Array<string | false | undefined>) {
 }
 
 // --- Types ------------------------------------------------------------------
-type LinkItem = { label: string; href: string; description?: string };
+type LinkItem = {
+    label: string;
+    href: string;
+    description?: string;
+    image?: string;
+};
 
 type Column = { heading: string; items: LinkItem[] };
 
@@ -18,7 +25,12 @@ export type MegaMenuConfig = {
     id: string;
     label: string;
     columns: Column[];
-    promo?: { eyebrow?: string; headline: string; subline?: string };
+    promo?: {
+        eyebrow?: string;
+        headline: string;
+        subline?: string;
+        image?: string;
+    };
 };
 
 export type MegaMenu = { id: string; label: string; href: string };
@@ -43,6 +55,7 @@ export default function HeaderMegaMenu({
                                        }: HeaderProps) {
     const [openId, setOpenId] = useState<string | null>(null);
     const [hoveringPanel, setHoveringPanel] = useState(false);
+    const [scrolled, setScrolled] = useState(false);
     const reduceMotion = useReducedMotion();
     const closeTimer = useRef<number | null>(null);
 
@@ -63,32 +76,52 @@ export default function HeaderMegaMenu({
         }, 90);
     }
 
+    useEffect(() => {
+        const onScroll = () => setScrolled(window.scrollY > 10);
+        onScroll();
+        window.addEventListener("scroll", onScroll);
+        return () => window.removeEventListener("scroll", onScroll);
+    }, []);
+
     // Consistent trigger sizing to prevent misaligned pills
     const triggerBase = "inline-flex h-9 items-center gap-1.5 rounded-md px-3 text-sm font-medium whitespace-nowrap";
     const triggerIdle = "text-neutral-300 hover:text-white hover:bg-white/5";
     const triggerActive = "text-white bg-white/10";
 
     return (
-        <header className="sticky top-0 z-50 w-full">
+        <header
+            className={cx(
+                "sticky top-0 z-50 w-full transition-colors",
+                scrolled ? "bg-neutral-950/95 backdrop-blur border-b border-white/10" : "bg-transparent"
+            )}
+        >
             {/* Topbar ------------------------------------------------------------ */}
             {showTopbar && (
-                <div className="h-9 bg-neutral-800 text-neutral-200 border-b border-black/20">
+                <div
+                    className={cx(
+                        "h-9 text-neutral-200 border-b border-black/20 transition-colors",
+                        scrolled ? "bg-neutral-800" : "bg-transparent border-transparent"
+                    )}
+                >
                     <div className="mx-auto flex h-full max-w-7xl items-center justify-end gap-4 px-4 sm:px-6">
                         {salesPhone && (
                             <span className="hidden md:inline text-xs">Sales: {salesPhone}</span>
                         )}
                         <div className="flex items-center gap-3">
                             {showHelp && (
-                                <a aria-label="Help" className="hover:text-white" href="/help"><HelpCircle
-                                    size={16}/></a>
+                                <Link aria-label="Help" className="hover:text-white" href="/help">
+                                    <HelpCircle size={16}/>
+                                </Link>
                             )}
                             {showSearch && (
-                                <a aria-label="Search" className="hover:text-white" href="/search"><Search
-                                    size={16}/></a>
+                                <Link aria-label="Search" className="hover:text-white" href="/search">
+                                    <Search size={16}/>
+                                </Link>
                             )}
                             {showAccount && (
-                                <a aria-label="Account" className="hover:text-white" href="/account"><UserRound
-                                    size={16}/></a>
+                                <Link aria-label="Account" className="hover:text-white" href="/account">
+                                    <UserRound size={16}/>
+                                </Link>
                             )}
                         </div>
                     </div>
@@ -96,13 +129,12 @@ export default function HeaderMegaMenu({
             )}
 
             {/* Main bar ---------------------------------------------------------- */}
-            <div className="bg-neutral-950/95 backdrop-blur border-b border-white/10">
-                <div className="mx-auto flex h-14 sm:h-16 max-w-7xl items-center gap-2 sm:gap-6 px-4 sm:px-6">
+            <div className="mx-auto flex h-14 sm:h-16 max-w-7xl items-center gap-2 sm:gap-6 px-4 sm:px-6">
                     {/* Logo */}
-                    <a href="/" className="flex items-center gap-2 text-white">
+                    <Link href="/" className="flex items-center gap-2 text-white">
                         <LogoMark/>
                         <span className="font-semibold tracking-tight">mardu</span>
-                    </a>
+                    </Link>
 
                     {/* Nav */}
                     <nav className="hidden lg:flex items-center gap-1 mx-auto">
@@ -164,19 +196,32 @@ export default function HeaderMegaMenu({
                                                                         <ul className="mt-3 space-y-1.5">
                                                                             {col.items.map((item) => (
                                                                                 <li key={item.label}>
-                                                                                    <a href={item.href}
-                                                                                       className="group flex items-start gap-3 rounded-lg px-2 py-2 text-sm text-neutral-200 hover:bg-white/5 hover:text-white">
-                                                                                        <span
-                                                                                            className="mt-1 inline-flex h-1.5 w-1.5 rounded-full bg-neutral-500 group-hover:bg-white"/>
-                                                                                        <span
-                                                                                            className="flex min-w-0 flex-col">
-                                              <span className="truncate font-medium">{item.label}</span>
+                                                                                    <Link
+                                                                                        href={item.href}
+                                                                                        className="group flex items-start gap-3 rounded-lg px-2 py-2 text-sm text-neutral-200 hover:bg-white/5 hover:text-white"
+                                                                                    >
+                                                                                        {item.image ? (
+                                                                                            <Image
+                                                                                                src={item.image}
+                                                                                                alt={item.label}
+                                                                                                width={24}
+                                                                                                height={24}
+                                                                                                className="mt-0.5 h-6 w-6 rounded object-cover"
+                                                                                            />
+                                                                                        ) : (
+                                                                                            <span
+                                                                                                className="mt-1 inline-flex h-1.5 w-1.5 rounded-full bg-neutral-500 group-hover:bg-white"
+                                                                                            />
+                                                                                        )}
+                                                                                        <span className="flex min-w-0 flex-col">
+                                                <span className="truncate font-medium">{item.label}</span>
                                                                                             {item.description && (
-                                                                                                <span
-                                                                                                    className="truncate text-neutral-400">{item.description}</span>
+                                                                                                <span className="truncate text-neutral-400">
+                                                                                                    {item.description}
+                                                                                                </span>
                                                                                             )}
                                             </span>
-                                                                                    </a>
+                                                                                    </Link>
                                                                                 </li>
                                                                             ))}
                                                                         </ul>
@@ -201,8 +246,19 @@ export default function HeaderMegaMenu({
                                                                             <div
                                                                                 className="mt-1 text-sm text-neutral-300">{menu.promo.subline}</div>
                                                                         )}
-                                                                        <div
-                                                                            className="mt-4 h-40 w-full rounded-xl bg-gradient-to-br from-neutral-800 to-neutral-900 ring-1 ring-white/10"/>
+                                                                        {menu.promo?.image ? (
+                                                                            <Image
+                                                                                src={menu.promo.image}
+                                                                                alt={menu.promo.headline}
+                                                                                width={320}
+                                                                                height={160}
+                                                                                className="mt-4 h-40 w-full rounded-xl object-cover"
+                                                                            />
+                                                                        ) : (
+                                                                            <div
+                                                                                className="mt-4 h-40 w-full rounded-xl bg-gradient-to-br from-neutral-800 to-neutral-900 ring-1 ring-white/10"
+                                                                            />
+                                                                        )}
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -218,14 +274,14 @@ export default function HeaderMegaMenu({
                             // Simple link
                             const simple = link as MegaMenu;
                             return (
-                                <a
+                                <Link
                                     key={simple.id}
                                     href={simple.href}
                                     className={cx(triggerBase, triggerIdle)}
                                     onMouseEnter={() => setOpenId(null)}
                                 >
                                     {simple.label}
-                                </a>
+                                </Link>
                             );
                         })}
                     </nav>
@@ -235,19 +291,24 @@ export default function HeaderMegaMenu({
 
                     {/* Actions */}
                     <div className="hidden lg:flex items-center gap-3">
-                        <a href="/login"
-                           className="inline-flex h-9 items-center rounded-md px-3 text-sm font-medium text-neutral-300 hover:text-white hover:bg-white/5">Sign
-                            in</a>
-                        <a href="/demo"
-                           className="inline-flex h-9 items-center rounded-full bg-indigo-600 px-4 text-sm font-semibold text-white hover:bg-indigo-500">Get
-                            demo</a>
+                        <Link
+                            href="/login"
+                            className="inline-flex h-9 items-center rounded-md px-3 text-sm font-medium text-neutral-300 hover:text-white hover:bg-white/5"
+                        >
+                            Sign in
+                        </Link>
+                        <Link
+                            href="/demo"
+                            className="inline-flex h-9 items-center rounded-full bg-indigo-600 px-4 text-sm font-semibold text-white hover:bg-indigo-500"
+                        >
+                            Get demo
+                        </Link>
                     </div>
 
                     {/* Mobile burger + compact actions */}
                     <div className="ml-auto lg:hidden">
                         <MobileMenu/>
                     </div>
-                </div>
             </div>
         </header>
     );
