@@ -158,7 +158,6 @@ export default function SiteFooter() {
                                                         inputMode="email"
                                                         autoComplete="email"
                                                         placeholder="Enter your email"
-                                                        className="h-11 flex-1"
                                                         {...field}
                                                     />
                                                 </FormControl>
@@ -179,6 +178,7 @@ export default function SiteFooter() {
                                                 <Select onValueChange={field.onChange} value={field.value}>
                                                     <FormControl>
                                                         <SelectTrigger
+                                                            size="sm"
                                                             aria-labelledby="role-label"
                                                             className="w-fit max-w-xs sm:max-w-sm justify-between"
                                                         >
@@ -214,7 +214,7 @@ export default function SiteFooter() {
                                                         </SelectGroup>
                                                     </SelectContent>
                                                 </Select>
-                                                <Button type="submit" variant="secondary"
+                                                <Button size="sm" type="submit" variant="secondary"
                                                         className="mt-3 w-fit whitespace-nowrap" disabled={loading}>
                                                     Anmelden
                                                 </Button>
