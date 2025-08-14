@@ -1,8 +1,12 @@
 "use client";
 
-import {AnimatePresence, motion, useReducedMotion} from "framer-motion";
-import {MenuIcon, XIcon} from "lucide-react";
+import {Menu} from "lucide-react";
 import React, {useState} from "react";
+import {Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger} from "@/components/ui/sheet";
+import {Button} from "@/components/ui/button";
+import {Accordion, AccordionContent, AccordionItem, AccordionTrigger} from "@/components/ui/accordion";
+import Link from "next/link";
+import {NavEntry} from "@/components/nav/header/MegaMenu";
 
 interface MobileMenuProps {
     title?: string;
@@ -16,88 +20,73 @@ interface MobileMenuProps {
     demoLabel?: string;
 }
 
-export default function MobileMenu({
-                                       title = "mardu",
-                                       menuItems = [
-                                           {href: "/products", label: "Products"},
-                                           {href: "/solutions", label: "Solutions"},
-                                           {href: "/resources", label: "Resources"},
-                                           {href: "/customers", label: "Customers"},
-                                           {href: "/partners", label: "Partners"},
-                                           {href: "/pricing", label: "Pricing"}
-                                       ],
-                                       signInHref = "/login",
-                                       signInLabel = "Sign in",
-                                       demoHref = "/demo",
-                                       demoLabel = "Get demo"
-                                   }: MobileMenuProps) {
-    const [open, setOpen] = useState(false);
-    const reduceMotion = useReducedMotion();
-
+// ---------------------------------------------------------------------------
+// Mobile Navigation (Sheet)
+// ---------------------------------------------------------------------------
+export default function MobileNav({items}: { items: NavEntry[] }) {
     return (
-        <>
-            <button
-                className="inline-flex items-center justify-center rounded-md border border-white/10 p-2 text-neutral-200 hover:bg-white/5"
-                aria-expanded={open}
-                onClick={() => setOpen((v) => !v)}
-            >
-                <span className="sr-only">Toggle menu</span>
-                <MenuIcon/>
-            </button>
-
-            <AnimatePresence>
-                {open && (
-                    <motion.div
-                        initial={{opacity: 0}}
-                        animate={{opacity: 1, transition: {duration: reduceMotion ? 0 : 0.15}}}
-                        exit={{opacity: 0, transition: {duration: reduceMotion ? 0 : 0.1}}}
-                        className="fixed inset-0 z-50 bg-black/40"
-                        onClick={() => setOpen(false)}
-                    />
-                )}
-            </AnimatePresence>
-
-            <AnimatePresence>
-                {open && (
-                    <motion.aside
-                        initial={{x: "100%"}}
-                        animate={{x: 0, transition: {duration: reduceMotion ? 0 : 0.2}}}
-                        exit={{x: "100%", transition: {duration: reduceMotion ? 0 : 0.15}}}
-                        className="fixed inset-y-0 right-0 z-50 w-[85vw] max-w-sm overflow-y-auto border-l border-white/10 bg-neutral-950 p-6"
-                        aria-label="Mobile navigation"
-                    >
-                        <div className="flex items-center justify-between">
-                            <div className="flex items-center gap-2 text-white">
-                                <span className="font-semibold tracking-tight">{title}</span>
+        <Sheet>
+            <SheetTrigger asChild>
+                <Button variant="ghost" size="icon" className="text-white hover:text-white/90">
+                    <Menu className="h-5 w-5"/>
+                </Button>
+            </SheetTrigger>
+            <SheetContent side="left" className="w-[85vw] max-w-sm p-0">
+                <SheetHeader className="px-4 pb-2 pt-4">
+                    <SheetTitle>Navigation</SheetTitle>
+                </SheetHeader>
+                <nav className="px-2 pb-8">
+                    <Accordion type="multiple" className="w-full">
+                        {items.map((entry) => (
+                            <div key={entry.label}>
+                                {entry.type === "link" ? (
+                                    <Link
+                                        href={entry.href}
+                                        className="block rounded-md px-3 py-2 text-sm font-medium hover:bg-muted"
+                                    >
+                                        {entry.label}
+                                    </Link>
+                                ) : (
+                                    <AccordionItem value={entry.label}>
+                                        <AccordionTrigger className="px-3 py-2 text-sm font-medium">
+                                            {entry.label}
+                                        </AccordionTrigger>
+                                        <AccordionContent>
+                                            <ul className="space-y-1 px-3 pb-3">
+                                                {entry.items.map((item) => (
+                                                    <li key={item.label}>
+                                                        <Link
+                                                            href={item.href || "#"}
+                                                            className="flex items-center gap-3 rounded-md p-2 text-sm hover:bg-muted"
+                                                        >
+                                                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                                                            {item.image ? (
+                                                                <img
+                                                                    src={item.image.src}
+                                                                    alt={item.image.alt || ""}
+                                                                    className="h-10 w-14 rounded object-cover"
+                                                                />
+                                                            ) : null}
+                                                            <div>
+                                                                <div className="font-medium">{item.label}</div>
+                                                                {item.description ? (
+                                                                    <p className="text-xs text-muted-foreground">
+                                                                        {item.description}
+                                                                    </p>
+                                                                ) : null}
+                                                            </div>
+                                                        </Link>
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </AccordionContent>
+                                    </AccordionItem>
+                                )}
                             </div>
-                            <button
-                                className="rounded-md border border-white/10 p-2 text-neutral-300 hover:bg-white/5"
-                                onClick={() => setOpen(false)}
-                            >
-                                <span className="sr-only">Close menu</span>
-                                <XIcon/>
-                            </button>
-                        </div>
-
-                        <nav className="mt-6 space-y-1">
-                            {menuItems.map((item) => (
-                                <a key={item.href}
-                                   className="block rounded-md px-3 py-2 text-sm text-neutral-200 hover:bg-white/5"
-                                   href={item.href}>
-                                    {item.label}
-                                </a>
-                            ))}
-                        </nav>
-
-                        <div className="mt-6">
-                            <a href={signInHref}
-                               className="block rounded-md px-3 py-2 text-sm text-neutral-200 hover:bg-white/5">{signInLabel}</a>
-                            <a href={demoHref}
-                               className="mt-2 block rounded-full bg-indigo-600 px-4 py-2 text-center text-sm font-semibold text-white hover:bg-indigo-500">{demoLabel}</a>
-                        </div>
-                    </motion.aside>
-                )}
-            </AnimatePresence>
-        </>
+                        ))}
+                    </Accordion>
+                </nav>
+            </SheetContent>
+        </Sheet>
     );
 }

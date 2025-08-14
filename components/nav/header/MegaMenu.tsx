@@ -1,266 +1,346 @@
 "use client";
-import React, {useEffect, useRef, useState} from "react";
-import {motion, AnimatePresence, useReducedMotion} from "framer-motion";
-import {ChevronDown, HelpCircle, Search, UserRound} from "lucide-react";
-import MobileMenu from "./MobileMenu";
+import * as React from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
+import { ChevronDown, ChevronRight, ArrowRight, HelpCircle, Search, UserRound } from "lucide-react";
+import {
+    HoverCard,
+    HoverCardTrigger,
+    HoverCardContent,
+} from "@/components/ui/hover-card";
+import { Separator } from "@/components/ui/separator";
+import MobileNav from "@/components/nav/header/MobileMenu";
+import clsx from "clsx";
 
-// --- Helpers ----------------------------------------------------------------
-function cx(...c: Array<string | false | undefined>) {
-    return c.filter(Boolean).join(" ");
-}
-
-// --- Types ------------------------------------------------------------------
-type LinkItem = { label: string; href: string; description?: string };
-
-type Column = { heading: string; items: LinkItem[] };
-
-export type MegaMenuConfig = {
-    id: string;
+// ---------------------------------------------------------------------------
+// Types
+// ---------------------------------------------------------------------------
+export type NavItem = {
     label: string;
-    columns: Column[];
-    promo?: { eyebrow?: string; headline: string; subline?: string };
+    href?: string;
+    description?: string;
+    image?: { src: string; alt?: string; aspect?: "wide" | "square" };
+    badge?: string;
 };
 
-export type MegaMenu = { id: string; label: string; href: string };
+export type MegaGroup = {
+    type: "mega";
+    label: string;
+    hero?: { src: string; alt?: string; caption?: string };
+    items: NavItem[];
+};
 
-type HeaderProps = {
-    items: Array<MegaMenuConfig | MegaMenu>;
+export type SimpleLink = {
+    type: "link";
+    label: string;
+    href: string;
+};
+
+export type NavEntry = MegaGroup | SimpleLink;
+
+export type HeaderProps = {
+    items: NavEntry[];
     showTopbar?: boolean;
     showSearch?: boolean;
     showAccount?: boolean;
     showHelp?: boolean;
     salesPhone?: string;
+    /** Light logo for dark backgrounds */
+    logoLightSrc: string;
+    /** Dark logo for light backgrounds / transparent over video */
+    logoDarkSrc: string;
+    /** Optional class for the scrolled state background */
+    scrolledBgClass?: string;
 };
 
-// --- Component --------------------------------------------------------------
+// ---------------------------------------------------------------------------
+// Constants
+// ---------------------------------------------------------------------------
+const TOPBAR_HEIGHT = 36; // px, entspricht Tailwind h-9
+const SCROLL_THRESHOLD = 24;
+const DEFAULT_SCROLLED_BG =
+    "bg-neutral-950/80 backdrop-blur supports-[backdrop-filter]:bg-neutral-950/60";
+
+// ---------------------------------------------------------------------------
+// Utilities
+// ---------------------------------------------------------------------------
+function useScrolled(threshold = 20) {
+    const [scrolled, setScrolled] = React.useState(false);
+    React.useEffect(() => {
+        const onScroll = () => setScrolled(window.scrollY > threshold);
+        onScroll();
+        window.addEventListener("scroll", onScroll, { passive: true });
+        return () => window.removeEventListener("scroll", onScroll);
+    }, [threshold]);
+    return scrolled;
+}
+
+function getHeaderBgAnimate(scrolled: boolean) {
+    return {
+        backgroundColor: scrolled ? "rgba(10,10,12,0.80)" : "rgba(0,0,0,0)",
+        backdropFilter: scrolled ? "blur(8px)" : "blur(0px)",
+    } as const;
+}
+
+// ---------------------------------------------------------------------------
+// Header Component
+// ---------------------------------------------------------------------------
 export default function HeaderMegaMenu({
                                            items,
                                            showTopbar = true,
                                            showSearch = true,
                                            showAccount = true,
                                            showHelp = true,
-                                           salesPhone,
+                                           salesPhone = "+49 176 200 00 00",
+                                           logoLightSrc,
+                                           logoDarkSrc,
+                                           scrolledBgClass = DEFAULT_SCROLLED_BG,
                                        }: HeaderProps) {
-    const [openId, setOpenId] = useState<string | null>(null);
-    const [hoveringPanel, setHoveringPanel] = useState(false);
-    const reduceMotion = useReducedMotion();
-    const closeTimer = useRef<number | null>(null);
+    const scrolled = useScrolled(SCROLL_THRESHOLD);
+    const prefersReducedMotion = useReducedMotion();
 
-    // Close with ESC
-    useEffect(() => {
-        function onKey(e: KeyboardEvent) {
-            if (e.key === "Escape") setOpenId(null);
-        }
+    // Top-Offset für den fixierten Header: wenn Topbar sichtbar und nicht gescrolled,
+    // sitzt der Header direkt unter der Topbar; nach Scroll wandert er nach oben (top: 0).
+    const navTopOffset = showTopbar && !scrolled ? TOPBAR_HEIGHT : 0;
 
-        window.addEventListener("keydown", onKey);
-        return () => window.removeEventListener("keydown", onKey);
-    }, []);
-
-    function scheduleClose() {
-        if (closeTimer.current) window.clearTimeout(closeTimer.current!);
-        closeTimer.current = window.setTimeout(() => {
-            if (!hoveringPanel) setOpenId(null);
-        }, 90);
-    }
-
-    // Consistent trigger sizing to prevent misaligned pills
-    const triggerBase = "inline-flex h-9 items-center gap-1.5 rounded-md px-3 text-sm font-medium whitespace-nowrap";
-    const triggerIdle = "text-neutral-300 hover:text-white hover:bg-white/5";
-    const triggerActive = "text-white bg-white/10";
+    const bgAnimate = React.useMemo(() => getHeaderBgAnimate(scrolled), [scrolled]);
+    const bgTransition = React.useMemo(
+        () => ({ duration: prefersReducedMotion ? 0 : 0.25 }),
+        [prefersReducedMotion]
+    );
 
     return (
-        <header className="sticky top-0 z-50 w-full">
-            {/* Topbar ------------------------------------------------------------ */}
+        <header>
             {showTopbar && (
-                <div className="h-9 bg-neutral-800 text-neutral-200 border-b border-black/20">
+                <div
+                    className="bg-neutral-800 text-neutral-200 border-b border-black/20"
+                    style={{ height: TOPBAR_HEIGHT }}
+                >
                     <div className="mx-auto flex h-full max-w-7xl items-center justify-end gap-4 px-4 sm:px-6">
                         {salesPhone && (
                             <span className="hidden md:inline text-xs">Sales: {salesPhone}</span>
                         )}
                         <div className="flex items-center gap-3">
                             {showHelp && (
-                                <a aria-label="Help" className="hover:text-white" href="/help"><HelpCircle
-                                    size={16}/></a>
+                                <a aria-label="Help" className="hover:text-white" href="/help">
+                                    <HelpCircle size={16} />
+                                </a>
                             )}
                             {showSearch && (
-                                <a aria-label="Search" className="hover:text-white" href="/search"><Search
-                                    size={16}/></a>
+                                <a aria-label="Search" className="hover:text-white" href="/search">
+                                    <Search size={16} />
+                                </a>
                             )}
                             {showAccount && (
-                                <a aria-label="Account" className="hover:text-white" href="/account"><UserRound
-                                    size={16}/></a>
+                                <a aria-label="Account" className="hover:text-white" href="/account">
+                                    <UserRound size={16} />
+                                </a>
                             )}
                         </div>
                     </div>
                 </div>
             )}
 
-            {/* Main bar ---------------------------------------------------------- */}
-            <div className="bg-neutral-950/95 backdrop-blur border-b border-white/10">
-                <div className="mx-auto flex h-14 sm:h-16 max-w-7xl items-center gap-2 sm:gap-6 px-4 sm:px-6">
-                    {/* Logo */}
-                    <a href="/" className="flex items-center gap-2 text-white">
-                        <LogoMark/>
-                        <span className="font-semibold tracking-tight">mardu</span>
-                    </a>
+            <div
+                className={clsx(
+                    "fixed inset-x-0 z-50 border-b border-transparent transition-colors transition-[top] duration-200",
+                    scrolled && "border-white/10"
+                )}
+                style={{ top: navTopOffset }}
+            >
+                {/* Hintergrund-Layer */}
+                <motion.div
+                    aria-hidden
+                    initial={false}
+                    animate={bgAnimate}
+                    transition={bgTransition}
+                    className={clsx("absolute inset-0", scrolled && scrolledBgClass)}
+                />
 
-                    {/* Nav */}
-                    <nav className="hidden lg:flex items-center gap-1 mx-auto">
-                        {items.map((link) => {
-                            const isMega = (link as MegaMenuConfig).columns !== undefined;
-                            const id = link.id;
-                            const active = openId === id;
+                <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                    <nav className="flex h-20 items-center gap-3">
+                        {/* Left side: logo */}
+                        <div className="flex items-center">
+                            <Link href="/" aria-label="Mardu Home" className="block">
+                                {/* Show contrasting logo depending on background */}
+                                <div className="relative h-16 w-[200px]">
+                                    <Image
+                                        src={logoDarkSrc}
+                                        alt="Mardu Logo"
+                                        fill
+                                        className="object-contain"
+                                        priority
+                                    />
+                                </div>
+                            </Link>
+                        </div>
 
-                            if (isMega) {
-                                const menu = link as MegaMenuConfig;
-                                return (
-                                    <div key={id} className="relative" onMouseLeave={scheduleClose}>
-                                        <button
-                                            className={cx(triggerBase, active ? triggerActive : triggerIdle)}
-                                            aria-expanded={active}
-                                            aria-controls={`panel-${id}`}
-                                            onMouseEnter={() => setOpenId(id)}
-                                            onFocus={() => setOpenId(id)}
-                                        >
-                                            {menu.label}
-                                            <ChevronDown size={14}
-                                                         className={cx("transition-transform", active && "rotate-180")}/>
-                                        </button>
+                        {/* Mobile trigger (left) */}
+                        <div className="flex flex-1 md:hidden">
+                            <MobileNav items={items} />
+                        </div>
 
-                                        <AnimatePresence>
-                                            {active && (
-                                                <motion.div
-                                                    id={`panel-${id}`}
-                                                    initial={{opacity: 0, y: 6}}
-                                                    animate={{
-                                                        opacity: 1,
-                                                        y: 0,
-                                                        transition: {duration: reduceMotion ? 0 : 0.18}
-                                                    }}
-                                                    exit={{
-                                                        opacity: 0,
-                                                        y: 6,
-                                                        transition: {duration: reduceMotion ? 0 : 0.12}
-                                                    }}
-                                                    onMouseEnter={() => setHoveringPanel(true)}
-                                                    onMouseLeave={() => {
-                                                        setHoveringPanel(false);
-                                                        scheduleClose();
-                                                    }}
-                                                    className="absolute left-1/2 top-full w-[86vw] max-w-5xl -translate-x-1/2 pt-3"
-                                                >
-                                                    <div
-                                                        className="rounded-2xl border border-white/10 bg-neutral-950 p-6 shadow-2xl ring-1 ring-black/5">
-                                                        <div className="grid grid-cols-12 gap-6">
-                                                            {/* Columns */}
-                                                            <div
-                                                                className="col-span-12 lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                                                                {menu.columns.map((col) => (
-                                                                    <div key={col.heading}>
-                                                                        <div
-                                                                            className="text-xs font-semibold uppercase tracking-wide text-neutral-400">
-                                                                            {col.heading}
-                                                                        </div>
-                                                                        <ul className="mt-3 space-y-1.5">
-                                                                            {col.items.map((item) => (
-                                                                                <li key={item.label}>
-                                                                                    <a href={item.href}
-                                                                                       className="group flex items-start gap-3 rounded-lg px-2 py-2 text-sm text-neutral-200 hover:bg-white/5 hover:text-white">
-                                                                                        <span
-                                                                                            className="mt-1 inline-flex h-1.5 w-1.5 rounded-full bg-neutral-500 group-hover:bg-white"/>
-                                                                                        <span
-                                                                                            className="flex min-w-0 flex-col">
-                                              <span className="truncate font-medium">{item.label}</span>
-                                                                                            {item.description && (
-                                                                                                <span
-                                                                                                    className="truncate text-neutral-400">{item.description}</span>
-                                                                                            )}
-                                            </span>
-                                                                                    </a>
-                                                                                </li>
-                                                                            ))}
-                                                                        </ul>
-                                                                    </div>
-                                                                ))}
-                                                            </div>
-
-                                                            {/* Promo */}
-                                                            <div className="col-span-12 lg:col-span-4">
-                                                                <div
-                                                                    className="relative overflow-hidden rounded-2xl border border-white/10">
-                                                                    <div
-                                                                        className="absolute inset-0 bg-[radial-gradient(1200px_400px_at_10%_-20%,#1a6fff22,transparent),radial-gradient(1000px_300px_at_90%_-10%,#22d3ee22,transparent)]"/>
-                                                                    <div className="relative p-4 md:p-5">
-                                                                        {menu.promo?.eyebrow && (
-                                                                            <div
-                                                                                className="mb-2 text-xs font-medium uppercase tracking-wide text-neutral-300">{menu.promo.eyebrow}</div>
-                                                                        )}
-                                                                        <div
-                                                                            className="text-base font-semibold text-white">{menu.promo?.headline}</div>
-                                                                        {menu.promo?.subline && (
-                                                                            <div
-                                                                                className="mt-1 text-sm text-neutral-300">{menu.promo.subline}</div>
-                                                                        )}
-                                                                        <div
-                                                                            className="mt-4 h-40 w-full rounded-xl bg-gradient-to-br from-neutral-800 to-neutral-900 ring-1 ring-white/10"/>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </motion.div>
-                                            )}
-                                        </AnimatePresence>
-                                    </div>
-                                );
-                            }
-
-                            // Simple link
-                            const simple = link as MegaMenu;
-                            return (
-                                <a
-                                    key={simple.id}
-                                    href={simple.href}
-                                    className={cx(triggerBase, triggerIdle)}
-                                    onMouseEnter={() => setOpenId(null)}
-                                >
-                                    {simple.label}
-                                </a>
-                            );
-                        })}
+                        {/* Desktop nav (right) */}
+                        <div className="hidden md:flex md:flex-1 md:items-center md:gap-1 md:justify-end">
+                            {items.map((entry) => (
+                                <DesktopNavEntry key={entry.label} entry={entry} />
+                            ))}
+                        </div>
                     </nav>
-
-                    {/* Spacer on large, but keep right actions */}
-                    <div className="hidden lg:block flex-1"/>
-
-                    {/* Actions */}
-                    <div className="hidden lg:flex items-center gap-3">
-                        <a href="/login"
-                           className="inline-flex h-9 items-center rounded-md px-3 text-sm font-medium text-neutral-300 hover:text-white hover:bg-white/5">Sign
-                            in</a>
-                        <a href="/demo"
-                           className="inline-flex h-9 items-center rounded-full bg-indigo-600 px-4 text-sm font-semibold text-white hover:bg-indigo-500">Get
-                            demo</a>
-                    </div>
-
-                    {/* Mobile burger + compact actions */}
-                    <div className="ml-auto lg:hidden">
-                        <MobileMenu/>
-                    </div>
                 </div>
             </div>
         </header>
     );
 }
 
-// --- Small logo -------------------------------------------------------------
-function LogoMark() {
+// ---------------------------------------------------------------------------
+// Desktop Nav Entries
+// ---------------------------------------------------------------------------
+function DesktopNavEntry({ entry }: { entry: NavEntry }) {
+    if (entry.type === "link") {
+        return (
+            <Link
+                href={entry.href}
+                className="group relative rounded-lg px-3 py-2 text-sm font-medium text-white/90 transition hover:text-white capitalize"
+            >
+                {entry.label}
+                <span className="absolute inset-x-2 -bottom-0.5 h-px scale-x-0 bg-white/50 transition-transform duration-200 group-hover:scale-x-100" />
+            </Link>
+        );
+    }
+
+    // Mega
     return (
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden>
-            <rect x="2" y="2" width="20" height="20" rx="6" className="fill-white/10"/>
-            <path d="M8 15.5V8.5C8 7.12 9.12 6 10.5 6H13.5C14.88 6 16 7.12 16 8.5V15.5" className="stroke-white"
-                  strokeWidth="1.6" strokeLinecap="round"/>
-            <circle cx="12" cy="12" r="1.4" className="fill-white"/>
-        </svg>
+        <HoverCard openDelay={50} closeDelay={80}>
+            <HoverCardTrigger asChild>
+                <button className="group flex items-center gap-1 rounded-lg px-3 py-2 text-sm font-medium text-white/90 outline-none transition hover:text-white">
+                    {entry.label}
+                    <ChevronDown className="h-4 w-4 transition group-data-[state=open]:rotate-180" />
+                </button>
+            </HoverCardTrigger>
+            <HoverCardContent className="w-[min(92vw,980px)] border-white/10 bg-neutral-950 p-0 text-white shadow-2xl backdrop-blur-xl">
+                <MegaContent group={entry} />
+            </HoverCardContent>
+        </HoverCard>
+    );
+}
+
+function MegaContent({ group }: { group: MegaGroup }) {
+    const prefersReducedMotion = useReducedMotion();
+    return (
+        <AnimatePresence initial={false} mode="wait">
+            <motion.div
+                key={group.label + (group.hero ? "-hero" : "-grid")}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 8 }}
+                transition={{ duration: prefersReducedMotion ? 0 : 0.16, ease: "easeOut" }}
+                className="overflow-hidden"
+            >
+                {group.hero ? (
+                    <div className="grid grid-cols-1 gap-0 md:grid-cols-5">
+                        {/* Hero image across full dropdown width */}
+                        <div className="relative col-span-3 h-56 w-full md:h-64">
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img
+                                src={group.hero.src}
+                                alt={group.hero.alt || ""}
+                                className="h-full w-full object-cover"
+                                loading="eager"
+                            />
+                            {group.hero.caption ? (
+                                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-3 text-sm text-white/90">
+                                    {group.hero.caption}
+                                </div>
+                            ) : null}
+                        </div>
+
+                        {/* Links */}
+                        <div className="col-span-2 p-2 md:p-3">
+                            <ul className="grid grid-cols-1 divide-y divide-white/5">
+                                {group.items.map((item) => (
+                                    <li key={item.label}>
+                                        <Link
+                                            href={item.href || "#"}
+                                            className="group flex items-center gap-3 rounded-lg p-3 transition hover:bg-white/5"
+                                        >
+                                            {item.image ? (
+                                                // eslint-disable-next-line @next/next/no-img-element
+                                                <img
+                                                    src={item.image.src}
+                                                    alt={item.image.alt || ""}
+                                                    className={clsx(
+                                                        "h-12 w-16 rounded-md object-cover ring-1 ring-white/10",
+                                                        item.image.aspect === "square" && "h-12 w-12"
+                                                    )}
+                                                />
+                                            ) : (
+                                                <span className="flex h-12 w-16 items-center justify-center rounded-md bg-white/5">
+                          <ChevronRight className="h-5 w-5" />
+                        </span>
+                                            )}
+                                            <div className="min-w-0">
+                                                <div className="text-sm font-medium text-white">{item.label}</div>
+                                                {item.description ? (
+                                                    <p className="line-clamp-2 text-xs text-white/70">{item.description}</p>
+                                                ) : null}
+                                            </div>
+                                            <ArrowRight className="ml-auto h-4 w-4 opacity-0 transition group-hover:opacity-100" />
+                                        </Link>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    </div>
+                ) : (
+                    // Grid with per-item images
+                    <div className="grid grid-cols-1 gap-2 p-3 sm:grid-cols-2 md:grid-cols-3">
+                        {group.items.map((item) => (
+                            <Link
+                                key={item.label}
+                                href={item.href || "#"}
+                                className="group relative overflow-hidden rounded-xl border border-white/10 bg-white/5"
+                            >
+                                {/* eslint-disable-next-line @next/next/no-img-element */}
+                                {item.image ? (
+                                    <img
+                                        src={item.image.src}
+                                        alt={item.image.alt || ""}
+                                        className="h-32 w-full object-cover"
+                                        loading="lazy"
+                                    />
+                                ) : (
+                                    <div className="flex h-32 w-full items-center justify-center bg-white/5">
+                                        <ChevronRight className="h-6 w-6" />
+                                    </div>
+                                )}
+                                <div className="p-3">
+                                    <div className="text-sm font-medium text-white">{item.label}</div>
+                                    {item.description ? (
+                                        <p className="mt-1 line-clamp-2 text-xs text-white/70">{item.description}</p>
+                                    ) : null}
+                                </div>
+                                <motion.div
+                                    aria-hidden
+                                    initial={{ opacity: 0 }}
+                                    whileHover={{ opacity: 1 }}
+                                    transition={{ duration: 0.15 }}
+                                    className="pointer-events-none absolute inset-0 bg-white/10"
+                                />
+                            </Link>
+                        ))}
+                    </div>
+                )}
+
+                <Separator className="mx-3 opacity-10" />
+                <div className="flex items-center justify-between px-3 py-2 text-xs text-white/60">
+                    <span>Explore more from Mardu</span>
+                    <Link href="/produkte" className="inline-flex items-center gap-1 hover:text-white">
+                        Alle Produkte <ArrowRight className="h-3.5 w-3.5" />
+                    </Link>
+                </div>
+            </motion.div>
+        </AnimatePresence>
     );
 }

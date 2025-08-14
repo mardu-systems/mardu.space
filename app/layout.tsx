@@ -1,9 +1,9 @@
 import type {Metadata} from "next";
 import {Geist, Geist_Mono} from "next/font/google";
 import "./globals.css";
-import HeaderMegaMenu, {MegaMenu, MegaMenuConfig} from "@/components/nav/header/MegaMenu";
-import {Footer} from "react-day-picker";
 import SiteFooter from "@/components/nav/footer/footer";
+import HeaderMegaMenu, {NavEntry} from "@/components/nav/header/MegaMenu";
+import React from "react";
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -16,49 +16,46 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "mardu.space",
-  description: "Coming soon with contact information",
+    title: "mardu.space",
+    description: "Coming soon with contact information",
 }
 
-const NAV: Array<MegaMenuConfig | MegaMenu> = [
+const defaultHeaderItems: NavEntry[] = [
+    {type: "link", label: "Home", href: "/"},
+    {type: "link", label: "Konfigurator", href: "/konfigurator"},
     {
-        id: "home",
-        label: "Home",
-        href: "/"
-    },
-    {
-        id: "shop",
+        type: "mega",
         label: "Shop",
-        columns: [
+        hero: {
+            src: "_A7_8631.JPG",
+            alt: "Maschinen- & Türfreigaben, Zeiterfassung",
+            caption: "Zentrale Verwaltung für Zugriffsrechte und Zeiterfassung",
+        },
+        items: [
             {
-                heading: "Kategorien",
-                items: [
-                    {
-                        label: "Konfigurator",
-                        href: "/shop/konfigurator",
-                        description: "Konfigurieren Sie Ihre Maschine"
-                    }
-                ]
-            }
-        ]
+                label: "Maschinenfreigaben",
+                href: "/produkte/maschinenfreigaben",
+                description:
+                    "Sichere Freigaben für Maschinen inkl. Qualifikationsprüfung und Protokollierung.",
+                image: {src: "_A7_8631.JPG", aspect: "wide"},
+            },
+            {
+                label: "Türfreigaben",
+                href: "/produkte/tuerfreigaben",
+                description: "Elektronische Zutrittskontrolle für Türen, Tore und Schränke.",
+                image: {src: "_A7_8631.JPG", aspect: "wide"},
+            },
+            {
+                label: "Zeiterfassung",
+                href: "/produkte/zeiterfassung",
+                description: "Intuitive Buchung am Gerät, App oder Web – live synchronisiert.",
+                image: {src: "_A7_8631.JPG", aspect: "wide"},
+            },
+        ],
     },
-    {
-        id: "maschinenfreigabe",
-        label: "Maschinenfreigabe",
-        columns: [
-            {
-                heading: "Freigaben",
-                items: [
-                    {
-                        label: "Tür",
-                        href: "/maschinenfreigabe/tuer",
-                        description: "Türfreigabe verwalten"
-                    }
-                ]
-            }
-        ]
-    }
-]
+    {type: "link", label: "Kontakt", href: "/kontakt"},
+
+];
 
 export default function RootLayout({
                                        children,
@@ -67,10 +64,9 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-        <body
-            className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-        >
-        <HeaderMegaMenu items={NAV} showTopbar salesPhone="+49 152 021 89 213" showSearch={false}/>
+        <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <HeaderMegaMenu items={defaultHeaderItems} logoLightSrc="marduspace_logo_bg_white.svg"
+                        logoDarkSrc="marduspace_logo_bg_black.svg" showTopbar={false}/>
         {children}
         <SiteFooter/>
         </body>
