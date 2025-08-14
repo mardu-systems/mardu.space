@@ -3,11 +3,53 @@
 import * as React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import {motion} from "framer-motion";
 import {Input} from "@/components/ui/input";
 import {Button} from "@/components/ui/button";
 import {Label} from "@/components/ui/label";
-import {ToggleGroup, ToggleGroupItem} from "@/components/ui/toggle-group";
+import {Alert, AlertDescription} from "@/components/ui/alert";
+import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form";
+import {
+    RadioGroup,
+    RadioGroupItem
+} from "@/components/ui/radio-group";
+import {SubmitHandler, useForm} from "react-hook-form";
+import {zodResolver} from "@hookform/resolvers/zod";
+import {z} from "zod";
+import {
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectLabel,
+    SelectTrigger,
+    SelectValue
+} from "@/components/ui/select";
+
+
+export const ROLE_OPTIONS = [
+    "fablab",
+    "makerspace",
+    "schule",
+    "hochschule",
+    "verein",
+    "ngo",
+    "oeffentliche-einrichtung",
+    "bibliothek",
+    "museum",
+    "kulturzentrum",
+    "coworking",
+    "werkstatt",
+    "jugendzentrum",
+    "forschungslabor",
+    "community-projekt",
+    "agentur-studio",
+    "unternehmen",
+    "medien",
+    "privatperson",
+    "sonstiges",
+] as const;
+
+type Role = (typeof ROLE_OPTIONS)[number];
 
 /**
  * Slush-like footer with newsletter form
@@ -24,8 +66,24 @@ export default function SiteFooter() {
     const [loading, setLoading] = React.useState(false);
     const [ok, setOk] = React.useState<null | boolean>(null);
 
-    async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
-        e.preventDefault();
+    const FormSchema = z.object({
+        email: z.string().email("Bitte eine gültige E‑Mail angeben"),
+        role: z.enum(ROLE_OPTIONS, { message: "Bitte eine Kategorie wählen" }), // keine required_error verwenden
+    });
+
+    type FormValues = z.infer<typeof FormSchema>;
+
+    const form = useForm<FormValues>({
+        resolver: zodResolver(FormSchema),
+        defaultValues: {email: "", role: "makerspace"},
+        mode: "onSubmit",
+    });
+
+    const [status, setStatus] = React.useState<"idle" | "success" | "error">(
+        "idle",
+    );
+
+    const onSubmit: SubmitHandler<FormValues> = async (data) => {
         setLoading(true);
         setOk(null);
         try {
@@ -42,25 +100,26 @@ export default function SiteFooter() {
     }
 
     return (
-        <footer className="w-full bg-neutral-950 text-neutral-50">
+        <footer className="w-full bg-radial-[at_5%_50%] from-zinc-900 from-70% to-[#37093F] to-99% text-neutral-50">
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 {/* Top row: logo */}
                 <div className="flex items-center justify-start py-8">
                     {/* Replace with your real logo */}
                     <div className="flex items-center gap-3">
                         <Image
-                            src="/logo-white.svg"
+                            src="/marduspace_logo_bg_black.svg"
                             alt="Mardu"
-                            width={112}
-                            height={28}
-                            className="h-7 w-auto"
+                            width={240}
+                            height={45}
+                            sizes="(max-width: 640px) 40vw, (max-width: 1024px) 22vw, 240px"
+                            className="h-auto w-[clamp(120px,22vw,240px)]"
                         />
                         <span className="sr-only">Mardu</span>
                     </div>
                 </div>
 
                 {/* Main area */}
-                <div className="grid grid-cols-1 gap-10 border-t border-neutral-800/80 py-12 md:grid-cols-2">
+                <div className="grid grid-cols-1 gap-10 border-neutral-800/80 py-12 md:grid-cols-2">
                     {/* Left: Headline */}
                     <div>
                         <h2 className="text-balance text-4xl font-extrabold tracking-tight sm:text-5xl">
@@ -71,110 +130,130 @@ export default function SiteFooter() {
                         </p>
                     </div>
 
-                    {/* Right: Form */}
+                    {/* Right: Form – shadcn/ui only */}
                     <div>
-                        <form onSubmit={onSubmit} className="max-w-md md:ms-auto">
-                            <Label htmlFor="email" className="sr-only">
-                                Email address
-                            </Label>
-                            <div className="flex gap-3">
-                                <Input
-                                    id="email"
-                                    type="email"
-                                    inputMode="email"
-                                    autoComplete="email"
-                                    required
-                                    placeholder="Enter your email"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.currentTarget.value)}
-                                    className="h-11 flex-1 bg-neutral-900/60 text-base placeholder:text-neutral-500"
+                        <Form {...form}>
+                            <form
+                                onSubmit={form.handleSubmit(onSubmit)}
+                                className="max-w-md md:ms-auto"
+                            >
+                                {/* Email */}
+                                <FormField
+                                    control={form.control}
+                                    name="email"
+                                    render={({field}) => (
+                                        <FormItem>
+                                            <FormLabel className="sr-only">Email address</FormLabel>
+                                            <div className="flex gap-3">
+                                                <FormControl>
+                                                    <Input
+                                                        type="email"
+                                                        inputMode="email"
+                                                        autoComplete="email"
+                                                        placeholder="Enter your email"
+                                                        className="h-11 flex-1 bg-neutral-900/60 text-base placeholder:text-neutral-500"
+                                                        {...field}
+                                                    />
+                                                </FormControl>
+                                            </div>
+                                            <FormMessage/>
+                                        </FormItem>
+                                    )}
                                 />
-                                <motion.div
-                                    whileHover={{scale: 1.02}}
-                                    whileTap={{scale: 0.98}}
-                                    className="[@media(prefers-reduced-motion:reduce)]:!scale-100"
-                                >
-                                    <Button
-                                        type="submit"
-                                        disabled={loading}
-                                        className="h-11 px-6"
-                                    >
-                                        {loading ? "…" : "Sign up"}
-                                    </Button>
-                                </motion.div>
-                            </div>
 
-                            <div className="mt-5">
-                                <Label
-                                    id="audience-label"
-                                    className="mb-2 block text-sm text-neutral-400"
-                                >
-                                    Who are you?
-                                </Label>
-                                <ToggleGroup
-                                    type="single"
-                                    value={role}
-                                    onValueChange={(v) => setRole(v || undefined)}
-                                    aria-labelledby="audience-label"
-                                    className="flex flex-wrap gap-2"
-                                >
-                                    <ToggleGroupItem
-                                        value="startup"
-                                        className="rounded-full border-neutral-800 bg-neutral-900/60 px-4 py-2 text-sm data-[state=on]:border-neutral-200 data-[state=on]:bg-neutral-100 data-[state=on]:text-neutral-900"
-                                    >
-                                        Startup
-                                    </ToggleGroupItem>
-                                    <ToggleGroupItem
-                                        value="investor"
-                                        className="rounded-full border-neutral-800 bg-neutral-900/60 px-4 py-2 text-sm data-[state=on]:border-neutral-200 data-[state=on]:bg-neutral-100 data-[state=on]:text-neutral-900"
-                                    >
-                                        Investor
-                                    </ToggleGroupItem>
-                                    <ToggleGroupItem
-                                        value="media"
-                                        className="rounded-full border-neutral-800 bg-neutral-900/60 px-4 py-2 text-sm data-[state=on]:border-neutral-200 data-[state=on]:bg-neutral-100 data-[state=on]:text-neutral-900"
-                                    >
-                                        Media
-                                    </ToggleGroupItem>
-                                    <ToggleGroupItem
-                                        value="other"
-                                        className="rounded-full border-neutral-800 bg-neutral-900/60 px-4 py-2 text-sm data-[state=on]:border-neutral-200 data-[state=on]:bg-neutral-100 data-[state=on]:text-neutral-900"
-                                    >
-                                        Other
-                                    </ToggleGroupItem>
-                                </ToggleGroup>
-                            </div>
+                                {/* Role */}
+                                <FormField
+                                    control={form.control}
+                                    name="role"
+                                    render={({field}) => (
+                                        <FormItem className="mt-5">
+                                            <FormLabel className="mb-2 block text-sm text-neutral-300">
+                                                Wer bist du?
+                                            </FormLabel>
+                                            <Select onValueChange={field.onChange} value={field.value}>
+                                                <FormControl>
+                                                    <SelectTrigger
+                                                        aria-labelledby="role-label"
+                                                        className="w-fit max-w-xs sm:max-w-sm justify-between text-neutral-300"
+                                                    >
+                                                        <SelectValue placeholder="Kategorie wählen …"/>
+                                                    </SelectTrigger>
+                                                </FormControl>
+                                                <SelectContent className="max-h-64 overflow-auto">
+                                                    <SelectGroup>
+                                                        <SelectLabel>Einrichtungen</SelectLabel>
+                                                        <SelectItem value="fablab">FabLab</SelectItem>
+                                                        <SelectItem value="makerspace">Makerspace</SelectItem>
+                                                        <SelectItem value="schule">Schule</SelectItem>
+                                                        <SelectItem value="hochschule">Universität /
+                                                            Hochschule</SelectItem>
+                                                        <SelectItem value="oeffentliche-einrichtung">Öffentliche
+                                                            Einrichtung</SelectItem>
+                                                        <SelectItem value="bibliothek">Bibliothek</SelectItem>
+                                                        <SelectItem value="museum">Museum</SelectItem>
+                                                        <SelectItem value="kulturzentrum">Kulturzentrum</SelectItem>
+                                                        <SelectItem value="coworking">Coworking Space</SelectItem>
+                                                        <SelectItem value="werkstatt">Werkstatt</SelectItem>
+                                                        <SelectItem value="jugendzentrum">Jugendzentrum</SelectItem>
+                                                        <SelectItem value="forschungslabor">Forschungslabor</SelectItem>
+                                                        <SelectItem
+                                                            value="community-projekt">Community‑Projekt</SelectItem>
+                                                        <SelectItem value="agentur-studio">Agentur / Studio</SelectItem>
+                                                        <SelectItem value="unternehmen">Unternehmen</SelectItem>
+                                                        <SelectItem value="medien">Medien</SelectItem>
+                                                        <SelectItem value="privatperson">Privatperson</SelectItem>
+                                                        <SelectItem value="sonstiges">Sonstiges</SelectItem>
+                                                    </SelectGroup>
+                                                </SelectContent>
+                                            </Select>
+                                            <Button type="submit" variant="secondary"
+                                                    className="mt-3 w-fit whitespace-nowrap" disabled={loading}>
+                                                Anmelden
+                                            </Button>
+                                            <FormMessage/>
+                                        </FormItem>
+                                    )}
+                                />
 
-                            {/* Status message */}
-                            {ok !== null && (
-                                <p
-                                    className={
-                                        "mt-3 text-sm " +
-                                        (ok ? "text-emerald-400" : "text-red-400")
-                                    }
-                                >
-                                    {ok ? "Thanks! Please check your inbox." : "Something went wrong. Try again."}
-                                </p>
-                            )}
-                        </form>
+                                {/* Status message */}
+                                {status !== "idle" && (
+                                    <Alert
+                                        className="mt-3"
+                                        variant={status === "success" ? "default" : "destructive"}
+                                    >
+                                        <AlertDescription>
+                                            {status === "success"
+                                                ? "Danke! Bitte prüfe dein Postfach."
+                                                : "Etwas ist schiefgelaufen. Versuch es nochmal."}
+                                        </AlertDescription>
+                                    </Alert>
+                                )}
+                            </form>
+                        </Form>
                     </div>
                 </div>
 
                 {/* Bottom links row */}
-                <div
-                    className="flex flex-col gap-6 border-t border-neutral-800/80 py-6 md:flex-row md:items-center md:justify-between">
-                    <nav aria-label="Footer navigation"
-                         className="flex flex-wrap gap-x-8 gap-y-3 text-sm text-neutral-300">
-                        <Link href="#" className="hover:text-white">FAQ</Link>
-                        <Link href="#" className="hover:text-white">Press kit</Link>
-                        <Link href="#" className="hover:text-white">Photos</Link>
-                        <Link href="#" className="hover:text-white">Code of conduct</Link>
-                    </nav>
-                    <div className="flex flex-wrap items-center gap-6 text-sm text-neutral-400">
-                        <Link href="#" className="hover:text-white">Terms & Conditions</Link>
-                        <span className="block">Built by <a href="#" className="underline-offset-4 hover:underline">VASA WORKS</a></span>
+                <div className="pt-6">
+                    {/* Separate Gradient-Border: 25% Lila, langer Fade zu Grau */}
+                    <div
+                        aria-hidden
+                        className="h-[1px] w-full bg-linear-to-r/shorter from-[#A618C3] to-gray-400"
+                    />
+                    <div className="flex flex-col gap-6 py-6 md:flex-row md:items-center md:justify-between">
+                        <nav aria-label="Footer-Navigation"
+                             className="flex flex-wrap gap-x-8 gap-y-3 text-sm text-neutral-300">
+                            <Link href="#" className="hover:text-white">FAQ</Link>
+                            <Link href="#" className="hover:text-white">Brand Assets</Link>
+                            <Link href="#" className="hover:text-white">Fotos</Link>
+                        </nav>
+                        <div className="flex flex-wrap items-center gap-6 text-sm text-neutral-300">
+                            <Link href="#" className="hover:text-white">Impressum</Link>
+                            <Link href="#" className="hover:text-white">Datenschutz</Link>
+                        </div>
                     </div>
                 </div>
+
             </div>
         </footer>
     );
