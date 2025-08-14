@@ -242,10 +242,9 @@ export default function SiteFooter() {
 
                 {/* Bottom links row */}
                 <div className="pt-6">
-                    {/* Separate Gradient-Border: 25% Lila, langer Fade zu Grau */}
                     <div
                         aria-hidden
-                        className="h-[1px] w-full bg-linear-to-r/shorter from-[#A618C3] to-gray-400"
+                        className="h-[1px] w-full bg-linear-to-r from-[#A618C3] to-gray-500 to-40%"
                     />
                     <div className="flex flex-col gap-6 py-6 md:flex-row md:items-center md:justify-between">
                         <nav aria-label="Footer-Navigation"
