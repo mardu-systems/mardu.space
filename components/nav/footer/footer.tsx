@@ -5,13 +5,8 @@ import Link from "next/link";
 import Image from "next/image";
 import {Input} from "@/components/ui/input";
 import {Button} from "@/components/ui/button";
-import {Label} from "@/components/ui/label";
 import {Alert, AlertDescription} from "@/components/ui/alert";
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form";
-import {
-    RadioGroup,
-    RadioGroupItem
-} from "@/components/ui/radio-group";
 import {SubmitHandler, useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {z} from "zod";
@@ -59,6 +54,18 @@ type Role = (typeof ROLE_OPTIONS)[number];
  * - Replace the <Image> src with your logo asset (SVG/PNG recommended; Next/Image does not support EPS).
  * - The submit handler is a stub – connect it to your API or an action.
  * - Respects `prefers-reduced-motion`.
+ *
+ * TODO:
+ * - Add email validation
+ * - Integrate with newsletter API
+ * - Add loading state UI
+ * - Add success/error animations
+ * - Add analytics tracking
+ * - Test form submission
+ * - Add i18n support
+ * - Implement GDPR consent
+ * - Add accessibility improvements
+ * - Add rate limiting
  */
 export default function SiteFooter() {
     const [role, setRole] = React.useState<string | undefined>("startup");
@@ -68,7 +75,7 @@ export default function SiteFooter() {
 
     const FormSchema = z.object({
         email: z.string().email("Bitte eine gültige E‑Mail angeben"),
-        role: z.enum(ROLE_OPTIONS, { message: "Bitte eine Kategorie wählen" }), // keine required_error verwenden
+        role: z.enum(ROLE_OPTIONS, {message: "Bitte eine Kategorie wählen"}), // keine required_error verwenden
     });
 
     type FormValues = z.infer<typeof FormSchema>;
