@@ -2,6 +2,8 @@ import type {Metadata} from "next";
 import {Geist, Geist_Mono} from "next/font/google";
 import "./globals.css";
 import HeaderMegaMenu, {MegaMenu, MegaMenuConfig} from "@/components/nav/header/MegaMenu";
+import {Footer} from "react-day-picker";
+import SiteFooter from "@/components/nav/footer/footer";
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -68,8 +70,9 @@ export default function RootLayout({
         <body
             className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
-        <HeaderMegaMenu items={NAV} showTopbar salesPhone="+1 646 663 4880" />
+        <HeaderMegaMenu items={NAV} showTopbar salesPhone="+49 152 021 89 213" showSearch={false}/>
         {children}
+        <SiteFooter/>
         </body>
         </html>
     );
