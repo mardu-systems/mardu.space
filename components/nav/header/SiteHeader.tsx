@@ -47,7 +47,7 @@ function useScrolled(threshold = 20) {
 
 function getHeaderBgAnimate(scrolled: boolean) {
     return {
-        backgroundColor: scrolled ? "rgba(10,10,12,0.80)" : "rgba(0,0,0,0)",
+        backgroundColor: scrolled ? "rgba(10,0,12,0.80)" : "rgba(0,0,0,0)",
         backdropFilter: scrolled ? "blur(8px)" : "blur(0px)",
     } as const;
 }

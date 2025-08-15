@@ -1,5 +1,8 @@
-import { ProductPage } from "@/components/shop/product-page";
-import { ProductPageData } from "@/types/shop";
+"use client"
+
+import {ProductPage} from "@/components/shop/product-page";
+import {ProductPageData} from "@/types/shop";
+import {useHeaderVariant} from "@/components/HeaderVariantContext";
 
 
 const demoData: ProductPageData = {
@@ -14,11 +17,11 @@ const demoData: ProductPageData = {
     pricing: {
         basePriceCents: 39900,
         options: [
-            { id: "lte", label: "LTE‑Modul", deltaPriceCents: 7500 },
-            { id: "wall-mount", label: "Wandhalterung", deltaPriceCents: 1500 },
-            { id: "ext-temp", label: "Erweiterter Temperaturbereich", deltaPriceCents: 2500 },
+            {id: "lte", label: "LTE‑Modul", deltaPriceCents: 7500},
+            {id: "wall-mount", label: "Wandhalterung", deltaPriceCents: 1500},
+            {id: "ext-temp", label: "Erweiterter Temperaturbereich", deltaPriceCents: 2500},
         ],
-        ctas: { wishlistLabel: "Vormerken", configureLabel: "Produkt konfigurieren" },
+        ctas: {wishlistLabel: "Vormerken", configureLabel: "Produkt konfigurieren"},
         stockInfo: {
             status: "preorder",
             note: "Auslieferung voraussichtlich ab Oktober.",
@@ -56,10 +59,10 @@ const demoData: ProductPageData = {
         },
         included: {
             items: [
-                { name: "Gateway‑Einheit", qty: 1, icon: "Check" },
-                { name: "Netzteil (24 V)", qty: 1 },
-                { name: "Montagematerial", qty: 1 },
-                { name: "Schnellstart‑Guide (PDF)", qty: 1 },
+                {name: "Gateway‑Einheit", qty: 1, icon: "Check"},
+                {name: "Netzteil (24 V)", qty: 1},
+                {name: "Montagematerial", qty: 1},
+                {name: "Schnellstart‑Guide (PDF)", qty: 1},
             ],
         },
         guide: {
@@ -68,7 +71,7 @@ const demoData: ProductPageData = {
                     title: "Hardware montieren",
                     contentHtml:
                         "<p>Befestige die Einheit mit der Wandhalterung oder auf der Hutschiene. Achte auf ausreichende Belüftung.</p>",
-                    assets: [{ label: "Montage‑PDF", href: "/downloads/gateway-montage.pdf" }],
+                    assets: [{label: "Montage‑PDF", href: "/downloads/gateway-montage.pdf"}],
                 },
                 {
                     title: "Anschlüsse & Strom",
@@ -80,8 +83,8 @@ const demoData: ProductPageData = {
                     contentHtml:
                         "<p>Rufe die lokale Web‑UI unter <code>http://gateway.local</code> auf und kopple das Gerät mit der zentralen Webplattform.</p>",
                     assets: [
-                        { label: "Firmware‑Image", href: "/downloads/gateway-fw.img" },
-                        { label: "Release Notes", href: "/downloads/release-notes.html" },
+                        {label: "Firmware‑Image", href: "/downloads/gateway-fw.img"},
+                        {label: "Release Notes", href: "/downloads/release-notes.html"},
                     ],
                 },
             ],
@@ -89,5 +92,7 @@ const demoData: ProductPageData = {
     },
 };
 export default function ShopPage() {
-  return <ProductPage data={demoData} />;
+    const headerVariant = useHeaderVariant();
+    headerVariant.setVariant("dark");
+    return <ProductPage data={demoData}/>;
 }
