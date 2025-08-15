@@ -114,14 +114,6 @@ export default function MegaContent({ group }: { group: MegaGroup }) {
                         ))}
                     </div>
                 )}
-
-                <Separator className="mx-3 opacity-10" />
-                <div className="flex items-center justify-between px-3 py-2 text-xs text-white/60">
-                    <span>Explore more from Mardu</span>
-                    <Link href="/produkte" className="inline-flex items-center gap-1 hover:text-white">
-                        Alle Produkte <ArrowRight className="h-3.5 w-3.5" />
-                    </Link>
-                </div>
             </motion.div>
         </AnimatePresence>
     );

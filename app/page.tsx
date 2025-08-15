@@ -5,8 +5,6 @@ import {motion} from "framer-motion";
 import WavyLinePinnedScroller from "@/app/home/SquiggleLanding";
 import {Button} from "@/components/ui/button";
 
-const HEADER_HEIGHT = 80;
-
 // Hinweis: Tailwind v4 Utilitys verwendet; Farbtöne gern zentral in tokens.
 export default function Home() {
     return (
