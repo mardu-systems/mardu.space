@@ -24,40 +24,59 @@ export default function DesktopNav({ items, variant = "dark" }: DesktopNavProps)
 }
 
 function DesktopNavEntry({ entry, variant }: { entry: NavEntry; variant: "dark" | "light" }) {
-    const colorClass =
+    const palette =
         variant === "light"
-            ? "text-neutral-900 hover:text-neutral-700"
-            : "text-white/90 hover:text-white";
+            ? {
+                text: "text-neutral-900 hover:text-neutral-700",
+                underline: "bg-neutral-900/50 group-hover:bg-neutral-900/80",
+                ring: "focus-visible:ring-neutral-900 focus-visible:ring-offset-white",
+                offset: "focus-visible:ring-offset-2",
+            }
+            : {
+                text: "text-white/90 hover:text-white",
+                underline: "bg-white/50 group-hover:bg-white/80",
+                ring: "focus-visible:ring-white/70 focus-visible:ring-offset-neutral-900",
+                offset: "focus-visible:ring-offset-2",
+            };
 
     if (entry.type === "link") {
         return (
             <Link
                 href={entry.href}
                 className={clsx(
-                    "group relative rounded-lg px-3 py-2 text-sm font-medium transition uppercase",
-                    colorClass
+                    "group relative rounded-lg px-4 py-3 text-sm font-medium uppercase",
+                    "focus-visible:outline-none", palette.ring, palette.offset,
+                    palette.text
                 )}
             >
                 {entry.label}
-                <span className="absolute inset-x-2 -bottom-0.5 h-px scale-x-0 bg-white/50 transition-transform duration-200 group-hover:scale-x-100" />
+                <span
+                    className={clsx(
+                        "absolute inset-x-2 -bottom-0.5 h-px scale-x-0 transition-transform duration-200 group-hover:scale-x-100",
+                        palette.underline
+                    )}
+                />
             </Link>
         );
     }
 
+    // Trigger für Mega-Menü
     return (
         <HoverCard openDelay={50} closeDelay={80}>
             <HoverCardTrigger asChild>
                 <button
+                    aria-haspopup="menu"
                     className={clsx(
-                        "group flex items-center gap-1 rounded-lg px-3 py-2 text-sm font-medium outline-none transition uppercase",
-                        colorClass
+                        "group flex items-center gap-1 rounded-lg px-4 py-3 text-sm font-medium uppercase outline-none",
+                        "focus-visible:outline-none", palette.ring, palette.offset,
+                        palette.text
                     )}
                 >
                     {entry.label}
                     <ChevronDown className="h-4 w-4 transition group-data-[state=open]:rotate-180" />
                 </button>
             </HoverCardTrigger>
-            <HoverCardContent className="w-[min(92vw,980px)] border-white/10 bg-neutral-950 p-0 text-white shadow-2xl backdrop-blur-xl">
+            <HoverCardContent className="w-[min(92vw,980px)] border border-white/10 bg-neutral-950 p-0 text-white shadow-2xl backdrop-blur-xl">
                 <MegaContent group={entry} />
             </HoverCardContent>
         </HoverCard>

@@ -119,7 +119,7 @@ export default function SiteHeader({
                             </Link>
                         </div>
 
-                        <div className="flex flex-1 md:hidden">
+                        <div className="flex flex-1 md:hidden justify-end">
                             <MobileNav items={items} variant={effectiveVariant}/>
                         </div>
 
