@@ -53,7 +53,7 @@ export const ROLE_OPTIONS = [
 ] as const;
 
 const FormSchema = z.object({
-    email: z.string().email("Bitte eine gültige E-Mail angeben"),
+    email: z.email("Bitte eine gültige E-Mail angeben"),
     role: z.enum(ROLE_OPTIONS, {message: "Bitte eine Kategorie wählen"}),
 });
 

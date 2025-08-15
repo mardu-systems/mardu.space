@@ -1,0 +1,169 @@
+"use client";
+
+import Image from "next/image";
+import {useState} from "react";
+
+// Hero mit 2 vollflächigen Bildern (links/rechts) + zentrale Overlays (Headline, orange Bar, vertikale Linie, Dots, Labels, CTAs)
+// - Keine UI-Framework-Komponenten (pure Tailwind)
+// - Leichte CSS-Animation für das Zeichnen der Linie, respektiert prefers-reduced-motion
+// - Hover über linkes/rechtes Bild hebt passenden Linienabschnitt hervor
+
+export type HeroProps = {
+    leftSrc?: string;
+    rightSrc?: string;
+    leftAlt?: string;
+    rightAlt?: string;
+    /** Höhe des Bereichs, z. B. "80vh" oder "640px" */
+    height?: string;
+    /** Auf Mobile stapeln (1 Spalte) */
+    stackOnMobile?: boolean;
+    /** IDs/Anker für CTAs */
+    howItWorksHref?: string;
+    productsHref?: string;
+};
+
+function HeroSystem({
+                        leftSrc = "/_A7_8650.jpg",
+                        rightSrc = "/_A7_9072_quer.jpg",
+                        leftAlt = "Gateway – Zentrale Steuereinheit",
+                        rightAlt = "Zutrittspunkt – Türmodul mit NFC",
+                        height = "80vh",
+                        stackOnMobile = true,
+                        howItWorksHref = "#so-funktionierts",
+                        productsHref = "#produkte",
+                    }: HeroProps) {
+    const [hover, setHover] = useState<"left" | "right" | null>(null);
+    const gridCols = stackOnMobile ? "grid-cols-1 md:grid-cols-2" : "grid-cols-2";
+
+    return (
+        <section className="relative w-full text-white" aria-labelledby="system-heading">
+            {/* Bild-Layer */}
+            <div className={`grid ${gridCols}`} style={{height}}>
+                {/* Links (Gateway) */}
+                <div
+                    className="relative"
+                    onMouseEnter={() => setHover("left")}
+                    onMouseLeave={() => setHover(null)}
+                >
+                    <Image
+                        src={leftSrc}
+                        alt={leftAlt}
+                        fill
+                        sizes="50vw, 100vw"
+                        className="object-cover select-none"
+                        priority
+                        draggable={false}
+                    />
+                </div>
+                {/* Rechts (Zutrittspunkt) */}
+                <div
+                    className="relative"
+                    onMouseEnter={() => setHover("right")}
+                    onMouseLeave={() => setHover(null)}
+                >
+                    <Image
+                        src={rightSrc}
+                        alt={rightAlt}
+                        fill
+                        sizes="50vw, 100vw"
+                        className="object-cover select-none"
+                        priority
+                        draggable={false}
+                    />
+                </div>
+            </div>
+
+            {/* Headline + CTAs */}
+            <div
+                className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20 flex w-full max-w-5xl flex-col items-center px-4">
+                <h1
+                    id="system-heading"
+                    className="pointer-events-auto select-none text-balance text-center font-[900] tracking-[0] leading-tight relative"
+                    style={{
+                        fontFamily: "var(--font-manuka), Impact, Helvetica, sans-serif",
+                        fontSize: "clamp(40px, 6vw, 90px)",
+                        lineHeight: "80%",
+                    }}
+                >
+                    <strong
+                        className="bg-linear-to-r from-purple-500 to-purple-500
+                                          bg-no-repeat
+                                          bg-[length:100%_0.5em]
+                                          bg-[position:0_95%]
+                                          px-[10px]
+                                          font-normal uppercase font-stretch-extra-expanded">
+                        Das System
+                    </strong>
+                </h1>
+                <div className="pointer-events-auto mt-6 flex flex-wrap items-center justify-center gap-3">
+                    <a href={howItWorksHref}
+                       className="inline-flex items-center rounded-md bg-white/10 px-5 py-3 text-sm font-medium backdrop-blur transition hover:bg-white/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black">
+                        So funktioniert’s
+                    </a>
+                    <a href={productsHref}
+                       className="inline-flex items-center rounded-md ring-1 ring-inset ring-white/30 px-5 py-3 text-sm font-medium transition hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black">
+                        Produkte ansehen
+                    </a>
+                </div>
+            </div>
+
+            {/* Vertikale Linie + Glow + Dots + Segment-Highlights */}
+            <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+                <div className="relative h-[100%] sm:h-[100%] w-px">
+                    {/* Linie (Brand-Gradient via CSS-Variablen, mit Fallbacks) */}
+                    <div
+                        className="absolute inset-0 origin-top rounded-full opacity-90 bg-gradient-to-b from-[hsl(var(--brand-from,210_100%_60%))] via-[hsl(var(--brand-mid,190_100%_55%))] to-[hsl(var(--brand-to,25_100%_60%))] animate-grow-y"
+                    />
+                    {/* Glow */}
+                    <div
+                        className="absolute -inset-x-3 inset-y-0 rounded-full bg-gradient-to-b from-[hsl(var(--brand-from,210_100%_60%))/12] via-[hsl(var(--brand-mid,190_100%_55%))/10] to-[hsl(var(--brand-to,25_100%_60%))/12] blur-2xl"/>
+                </div>
+            </div>
+
+            {/* Labels seitlich der Linie (nur Desktop) */}
+            <div
+                className="pointer-events-none absolute left-1/2 hidden -translate-x-[calc(100%+0.75rem)] text-right md:block"
+                style={{top: "16%"}}>
+                <strong
+                    className="text-white px-[3px]  uppercase font-[900] tracking-[0] leading-tight"
+                    style={{
+                        fontFamily: "var(--font-manuka), Impact, Helvetica, sans-serif",
+                        fontSize: "clamp(40px, 6vw, 90px)",
+                        lineHeight: "80%",
+                    }}
+                >
+                    Das Gateway
+                </strong>
+            </div>
+
+            <div
+                className="pointer-events-none absolute left-1/2 hidden  text-left md:block"
+                style={{bottom: "12%"}}>
+                <strong
+                    className="text-white px-[3px] uppercase font-[900] tracking-[0] leading-tight"
+                    style={{
+                        fontFamily: "var(--font-manuka), Impact, Helvetica, sans-serif",
+                        fontSize: "clamp(40px, 6vw, 90px)",
+                        lineHeight: "80%",
+                    }}
+                >
+                    Der Zutrittspunkt
+                </strong>
+            </div>
+
+
+            {/* Mobile Kicker-Labels über den Bildern */}
+            <div className="absolute left-4 top-3 text-xs tracking-wide text-white/80 md:hidden">Gateway</div>
+            <div className="absolute right-4 bottom-3 text-xs tracking-wide text-white/80 md:hidden">Zutrittspunkt</div>
+        </section>
+    );
+}
+
+// Page-Komponente, die die HeroSystem-Komponente verwendet
+export default function Page() {
+    return (
+        <main>
+            <HeroSystem/>
+        </main>
+    );
+}
