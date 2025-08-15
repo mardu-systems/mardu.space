@@ -135,10 +135,9 @@ export function PriceBox({
                 {stockInfo?.note ? (
                     <p className="text-xs text-muted-foreground">{stockInfo.note}</p>
                 ) : null}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <div className="flex gap-2">
                     <Button
                         size="lg"
-                        className="rounded-xl"
                         aria-label={ctas?.wishlistLabel ?? "Vormerken"}
                         onClick={handleWishlist}
                         variant="secondary"
@@ -147,7 +146,6 @@ export function PriceBox({
                     </Button>
                     <Button
                         size="lg"
-                        className="rounded-xl"
                         aria-label={ctas?.configureLabel ?? "Produkt konfigurieren"}
                         onClick={handleConfigure}
                     >
@@ -155,6 +153,7 @@ export function PriceBox({
                         <ChevronRight className="ml-1 h-4 w-4" aria-hidden/>
                     </Button>
                 </div>
+
             </CardContent>
         </Card>
     );
