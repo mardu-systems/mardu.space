@@ -1,34 +1,19 @@
 "use client";
 
-import {Menu} from "lucide-react";
-import React, {useState} from "react";
-import {Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger} from "@/components/ui/sheet";
-import {Button} from "@/components/ui/button";
-import {Accordion, AccordionContent, AccordionItem, AccordionTrigger} from "@/components/ui/accordion";
+import { Menu } from "lucide-react";
+import React from "react";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import { Button } from "@/components/ui/button";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import Link from "next/link";
-import {NavEntry} from "@/components/nav/header/MegaMenu";
+import { NavEntry } from "./types";
 
-interface MobileMenuProps {
-    title?: string;
-    menuItems?: {
-        href: string;
-        label: string;
-    }[];
-    signInHref?: string;
-    signInLabel?: string;
-    demoHref?: string;
-    demoLabel?: string;
-}
-
-// ---------------------------------------------------------------------------
-// Mobile Navigation (Sheet)
-// ---------------------------------------------------------------------------
-export default function MobileNav({items}: { items: NavEntry[] }) {
+export default function MobileNav({ items }: { items: NavEntry[] }) {
     return (
         <Sheet>
             <SheetTrigger asChild>
                 <Button variant="ghost" size="icon" className="text-white hover:text-white/90">
-                    <Menu className="h-5 w-5"/>
+                    <Menu className="h-5 w-5" />
                 </Button>
             </SheetTrigger>
             <SheetContent side="left" className="w-[85vw] max-w-sm p-0">

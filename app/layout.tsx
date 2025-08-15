@@ -2,7 +2,7 @@ import type {Metadata} from "next";
 import {Geist, Geist_Mono} from "next/font/google";
 import "./globals.css";
 import SiteFooter from "@/components/nav/footer/footer";
-import HeaderMegaMenu, {NavEntry} from "@/components/nav/header/MegaMenu";
+import SiteHeader, {NavEntry} from "@/components/nav/header/SiteHeader";
 import React from "react";
 import CookieBanner from "@/components/CookieBanner";
 
@@ -66,7 +66,7 @@ export default function RootLayout({
     return (
         <html lang="en">
         <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <HeaderMegaMenu items={defaultHeaderItems} logoLightSrc="marduspace_logo_bg_white.svg"
+        <SiteHeader items={defaultHeaderItems} logoLightSrc="marduspace_logo_bg_white.svg"
                         logoDarkSrc="marduspace_logo_bg_black.svg" showTopbar={false}/>
         <div className="light" data-theme="light" style={{colorScheme: "light"}}>
             {children}
