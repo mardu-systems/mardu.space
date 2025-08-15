@@ -3,13 +3,20 @@
 import * as React from "react";
 import Link from "next/link";
 import Image from "next/image";
+import {z} from "zod";
+import {useForm} from "react-hook-form";
+import {zodResolver} from "@hookform/resolvers/zod";
 import {Input} from "@/components/ui/input";
 import {Button} from "@/components/ui/button";
 import {Alert, AlertDescription} from "@/components/ui/alert";
-import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form";
-import {SubmitHandler, useForm} from "react-hook-form";
-import {zodResolver} from "@hookform/resolvers/zod";
-import {z} from "zod";
+import {
+    Form,
+    FormControl,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
+} from "@/components/ui/form";
 import {
     Select,
     SelectContent,
@@ -17,9 +24,10 @@ import {
     SelectItem,
     SelectLabel,
     SelectTrigger,
-    SelectValue
+    SelectValue,
 } from "@/components/ui/select";
 
+/* ---------- Constants & Schema (außerhalb der Komponente) ---------- */
 
 export const ROLE_OPTIONS = [
     "fablab",
@@ -44,41 +52,16 @@ export const ROLE_OPTIONS = [
     "sonstiges",
 ] as const;
 
-type Role = (typeof ROLE_OPTIONS)[number];
+const FormSchema = z.object({
+    email: z.string().email("Bitte eine gültige E-Mail angeben"),
+    role: z.enum(ROLE_OPTIONS, {message: "Bitte eine Kategorie wählen"}),
+});
 
-/**
- * Slush-like footer with newsletter form
- * Tech: Next.js 15 (App Router), Tailwind v4, shadcn/ui, framer-motion
- *
- * Notes
- * - Replace the <Image> src with your logo asset (SVG/PNG recommended; Next/Image does not support EPS).
- * - The submit handler is a stub – connect it to your API or an action.
- * - Respects `prefers-reduced-motion`.
- *
- * TODO:
- * - Add email validation
- * - Integrate with newsletter API
- * - Add loading state UI
- * - Add success/error animations
- * - Test form submission
- * - Add i18n support
- * - Implement GDPR consent
- * - Add accessibility improvements
- * - Add rate limiting
- */
+type FormValues = z.infer<typeof FormSchema>;
+
+/* ------------------------------ Component ------------------------------ */
+
 export default function SiteFooter() {
-    const [role, setRole] = React.useState<string | undefined>("startup");
-    const [email, setEmail] = React.useState("");
-    const [loading, setLoading] = React.useState(false);
-    const [ok, setOk] = React.useState<null | boolean>(null);
-
-    const FormSchema = z.object({
-        email: z.email("Bitte eine gültige E‑Mail angeben"),
-        role: z.enum(ROLE_OPTIONS, {message: "Bitte eine Kategorie wählen"}),
-    });
-
-    type FormValues = z.infer<typeof FormSchema>;
-
     const form = useForm<FormValues>({
         resolver: zodResolver(FormSchema),
         defaultValues: {email: "", role: "makerspace"},
@@ -88,98 +71,102 @@ export default function SiteFooter() {
     const [status, setStatus] = React.useState<"idle" | "success" | "error">(
         "idle",
     );
+    const [submitting, setSubmitting] = React.useState(false);
 
-    const onSubmit: SubmitHandler<FormValues> = async (data) => {
-        setLoading(true);
-        setOk(null);
+    const onSubmit = async (values: FormValues) => {
         try {
-            // TODO: call your newsletter endpoint or Next.js server action
+            setSubmitting(true);
+            setStatus("idle");
+            // TODO: API-Aufruf / Server Action
             await new Promise((r) => setTimeout(r, 700));
-            setOk(true);
-            setEmail("");
-        } catch (err) {
-            console.error(err);
-            setOk(false);
+            setStatus("success");
+            form.reset({email: "", role: "makerspace"});
+        } catch (e) {
+            console.error(e);
+            setStatus("error");
         } finally {
-            setLoading(false);
+            setSubmitting(false);
         }
-    }
+    };
 
     return (
-        <div className="dark" data-theme="dark" style={{colorScheme: "dark"}}>
-            <footer className="w-full bg-radial-[at_5%_50%] from-zinc-900 from-70% to-[#37093F] text-neutral-50">
-                <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                    {/* Top row: logo */}
-                    <div className="flex items-center justify-start py-8">
-                        {/* Replace with your real logo */}
-                        <div className="flex items-center gap-3">
-                            <Image
-                                src="/marduspace_logo_bg_black.svg"
-                                alt="Mardu"
-                                width={240}
-                                height={45}
-                                sizes="(max-width: 640px) 40vw, (max-width: 1024px) 22vw, 240px"
-                                className="h-auto w-[clamp(120px,22vw,240px)]"
-                            />
-                            <span className="sr-only">Mardu</span>
-                        </div>
+        <footer
+            className="w-full text-neutral-50 bg-[radial-gradient(ellipse_at_5%_50%,hsl(240,5%,10%)_0%,hsl(240,5%,10%)_70%,#37093F_100%)]"
+        >
+            <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                {/* Logo */}
+                <div className="flex items-center justify-start py-10 md:py-12">
+                    <Image
+                        src="/marduspace_logo_bg_black.svg"
+                        alt="MARDU SPACE"
+                        width={240}
+                        height={45}
+                        sizes="(max-width: 640px) 40vw, (max-width: 1024px) 22vw, 240px"
+                        className="h-auto w-[clamp(120px,22vw,240px)]"
+                        priority
+                    />
+                </div>
+
+                {/* Hauptbereich */}
+                <div className="grid grid-cols-1 gap-8 border-t border-neutral-800/70 py-12 md:grid-cols-2">
+                    {/* Links: Headline */}
+                    <div>
+                        <h2 className="text-balance text-4xl font-extrabold tracking-tight sm:text-5xl">
+                            Bleib auf dem Laufenden
+                        </h2>
+                        <p className="mt-3 text-sm/6 text-neutral-400">
+                            Abonniere unseren Newsletter.
+                        </p>
                     </div>
 
-                    {/* Main area */}
-                    <div className="grid grid-cols-1 gap-5 border-neutral-800/80 py-12 md:grid-cols-2">
-                        {/* Left: Headline */}
-                        <div>
-                            <h2 className="text-balance text-4xl font-extrabold tracking-tight sm:text-5xl">
-                                Stay Connected
-                            </h2>
-                            <p className="mt-3 text-sm/6 text-neutral-400">
-                                Sign up for our newsletter
-                            </p>
-                        </div>
+                    {/* Rechts: Formular */}
+                    <div className="justify-self-end">
+                        <Form {...form}>
+                            <form
+                                noValidate
+                                onSubmit={form.handleSubmit(onSubmit)}
+                                className="max-w-md md:ms-auto"
+                            >
+                                {/* E-Mail (oben) */}
+                                <FormField
+                                    control={form.control}
+                                    name="email"
+                                    render={({field}) => (
+                                        <FormItem>
+                                            <FormLabel htmlFor="email" className="mb-2 block text-sm">
+                                                E-Mail-Adresse
+                                            </FormLabel>
+                                            <FormControl>
+                                                <Input
+                                                    id="email"
+                                                    type="email"
+                                                    inputMode="email"
+                                                    autoComplete="email"
+                                                    placeholder="E-Mail-Adresse eingeben"
+                                                    className="h-11"
+                                                    {...field}
+                                                />
+                                            </FormControl>
+                                            <FormMessage/>
+                                        </FormItem>
+                                    )}
+                                />
 
-                        {/* Right: Form – shadcn/ui only */}
-                        <div>
-                            <Form {...form}>
-                                <form
-                                    onSubmit={form.handleSubmit(onSubmit)}
-                                    className="max-w-md md:ms-auto"
-                                >
-                                    {/* Email */}
-                                    <FormField
-                                        control={form.control}
-                                        name="email"
-                                        render={({field}) => (
-                                            <FormItem>
-                                                <FormLabel className="sr-only">Email address</FormLabel>
-                                                <FormControl>
-                                                    <Input
-                                                        type="email"
-                                                        inputMode="email"
-                                                        autoComplete="email"
-                                                        placeholder="Enter your email"
-                                                        {...field}
-                                                    />
-                                                </FormControl>
-                                                <FormMessage/>
-                                            </FormItem>
-                                        )}
-                                    />
-
-                                    {/* Role */}
+                                {/* Rolle + Button (darunter; ab sm nebeneinander) */}
+                                <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-end">
                                     <FormField
                                         control={form.control}
                                         name="role"
                                         render={({field}) => (
-                                            <FormItem className="mt-5">
-                                                <FormLabel className="mb-2 block text-sm">
+                                            <FormItem className="flex-1">
+                                                <FormLabel id="role-label" className="mb-2 block text-sm">
                                                     Wer bist du?
                                                 </FormLabel>
                                                 <Select onValueChange={field.onChange} value={field.value}>
                                                     <FormControl>
                                                         <SelectTrigger
-                                                            size="sm"
                                                             aria-labelledby="role-label"
-                                                            className="w-fit max-w-xs sm:max-w-sm justify-between"
+                                                            className="h-11 min-w-xs justify-between"
                                                         >
                                                             <SelectValue placeholder="Kategorie wählen …"/>
                                                         </SelectTrigger>
@@ -203,7 +190,7 @@ export default function SiteFooter() {
                                                             <SelectItem
                                                                 value="forschungslabor">Forschungslabor</SelectItem>
                                                             <SelectItem
-                                                                value="community-projekt">Community‑Projekt</SelectItem>
+                                                                value="community-projekt">Community-Projekt</SelectItem>
                                                             <SelectItem value="agentur-studio">Agentur /
                                                                 Studio</SelectItem>
                                                             <SelectItem value="unternehmen">Unternehmen</SelectItem>
@@ -213,55 +200,74 @@ export default function SiteFooter() {
                                                         </SelectGroup>
                                                     </SelectContent>
                                                 </Select>
-                                                <Button size="sm" type="submit" variant="secondary"
-                                                        className="mt-3 w-fit whitespace-nowrap" disabled={loading}>
-                                                    Anmelden
-                                                </Button>
                                                 <FormMessage/>
                                             </FormItem>
                                         )}
                                     />
 
-                                    {/* Status message */}
-                                    {status !== "idle" && (
-                                        <Alert
-                                            className="mt-3"
-                                            variant={status === "success" ? "default" : "destructive"}
-                                        >
-                                            <AlertDescription>
-                                                {status === "success"
-                                                    ? "Danke! Bitte prüfe dein Postfach."
-                                                    : "Etwas ist schiefgelaufen. Versuch es nochmal."}
-                                            </AlertDescription>
-                                        </Alert>
-                                    )}
-                                </form>
-                            </Form>
-                        </div>
-                    </div>
+                                    <Button
+                                        type="submit"
+                                        className="px-6 bg-gradient-to-r from-[#A618C3] to-[#8B14A7] font-semibold text-white shadow-lg hover:from-[#8B14A7] hover:to-[#7A1296] focus:ring-2 focus:ring-[#A618C3] focus:ring-offset-2 sm:self-end"
+                                        disabled={submitting}
+                                        aria-disabled={submitting}
+                                        aria-busy={submitting}
+                                    >
+                                        {submitting ? "Sende…" : "Anmelden"}
+                                    </Button>
+                                </div>
 
-                    {/* Bottom links row */}
-                    <div className="pt-6">
-                        <div
-                            aria-hidden
-                            className="h-[1px] w-full bg-linear-to-r from-[#A618C3] to-gray-500 to-40%"
-                        />
-                        <div className="flex flex-col gap-6 py-6 md:flex-row md:items-center md:justify-between">
-                            <nav aria-label="Footer-Navigation"
-                                 className="flex flex-wrap gap-x-8 gap-y-3 text-sm text-neutral-300">
-                                <Link href="#" className="hover:text-white">FAQ</Link>
-                                <Link href="#" className="hover:text-white">Brand Assets</Link>
-                                <Link href="#" className="hover:text-white">Fotos</Link>
-                            </nav>
-                            <div className="flex flex-wrap items-center gap-6 text-sm text-neutral-300">
-                                <Link href="#" className="hover:text-white">Impressum</Link>
-                                <Link href="#" className="hover:text-white">Datenschutz</Link>
-                            </div>
-                        </div>
+                                {/* Status */}
+                                {status !== "idle" && (
+                                    <Alert
+                                        className="mt-4"
+                                        variant={status === "success" ? "default" : "destructive"}
+                                        role="status"
+                                        aria-live="polite"
+                                    >
+                                        <AlertDescription>
+                                            {status === "success"
+                                                ? "Danke! Bitte prüfe dein Postfach."
+                                                : "Etwas ist schiefgelaufen. Versuch es nochmal."}
+                                        </AlertDescription>
+                                    </Alert>
+                                )}
+                            </form>
+                        </Form>
                     </div>
-
                 </div>
-            </footer>
-        </div>
+
+                {/* Bottom links */}
+                <div className="pt-6">
+                    <div
+                        aria-hidden
+                        className="h-px w-full bg-gradient-to-r from-[#A618C3] to-gray-500/70"
+                    />
+                    <div className="flex flex-col gap-6 py-6 md:flex-row md:items-center md:justify-between">
+                        <nav
+                            aria-label="Footer-Navigation"
+                            className="flex flex-wrap gap-x-8 gap-y-3 text-sm text-neutral-300"
+                        >
+                            <Link href="/faq" className="hover:text-white">
+                                FAQ
+                            </Link>
+                            <Link href="/brand" className="hover:text-white">
+                                Brand Assets
+                            </Link>
+                            <Link href="/fotos" className="hover:text-white">
+                                Fotos
+                            </Link>
+                        </nav>
+                        <div className="flex flex-wrap items-center gap-6 text-sm text-neutral-300">
+                            <Link href="/impressum" className="hover:text-white">
+                                Impressum
+                            </Link>
+                            <Link href="/datenschutz" className="hover:text-white">
+                                Datenschutz
+                            </Link>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
     );
 }
