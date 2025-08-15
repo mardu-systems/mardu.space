@@ -127,7 +127,7 @@ export default function MobileNav({
                 </nav>
 
                 {/* Optionaler CTA / Footer */}
-                <div className="mt-auto p-4 pb-5">
+                <div className="mt-auto p-4 pb-">
                     <Button className="w-full h-12 text-base">Konfigurator starten</Button>
                 </div>
             </SheetContent>

@@ -76,7 +76,7 @@ function DesktopNavEntry({ entry, variant }: { entry: NavEntry; variant: "dark" 
                     <ChevronDown className="h-4 w-4 transition group-data-[state=open]:rotate-180" />
                 </button>
             </HoverCardTrigger>
-            <HoverCardContent className="w-[min(92vw,980px)] border border-white/10 bg-neutral-950 p-0 text-white shadow-2xl backdrop-blur-xl">
+            <HoverCardContent className="w-full border border-white/10 bg-neutral-950 p-0 text-white shadow-2xl backdrop-blur-xl">
                 <MegaContent group={entry} />
             </HoverCardContent>
         </HoverCard>

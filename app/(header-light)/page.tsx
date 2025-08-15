@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import {motion} from "framer-motion";
-import WavyLinePinnedScroller from "@/app/home/SquiggleLanding";
 import {Button} from "@/components/ui/button";
 
 // Hinweis: Tailwind v4 Utilitys verwendet; Farbtöne gern zentral in tokens.

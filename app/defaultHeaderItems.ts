@@ -8,23 +8,17 @@ export const defaultHeaderItems: NavEntry[] = [
         label: "Shop",
         items: [
             {
-                label: "Maschinenfreigaben",
-                href: "/produkte/maschinenfreigaben",
+                label: "Die Elektronik",
+                href: "/shop/reader",
                 description:
                     "Sichere Freigaben für Maschinen inkl. Qualifikationsprüfung und Protokollierung.",
-                image: {src: "_A7_8631.JPG", aspect: "wide"},
+                image: {src: "/_A7_8631.jpg", aspect: "wide"},
             },
             {
-                label: "Türfreigaben",
-                href: "/produkte/tuerfreigaben",
+                label: "Das Gateway",
+                href: "/shop/gateway",
                 description: "Elektronische Zutrittskontrolle für Türen, Tore und Schränke.",
-                image: {src: "_A7_8631.JPG", aspect: "wide"},
-            },
-            {
-                label: "Zeiterfassung",
-                href: "/produkte/zeiterfassung",
-                description: "Intuitive Buchung am Gerät, App oder Web – live synchronisiert.",
-                image: {src: "_A7_8631.JPG", aspect: "wide"},
+                image: {src: "/_A7_8631.jpg", aspect: "wide"},
             },
         ],
     },
