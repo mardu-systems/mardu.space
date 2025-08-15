@@ -2,6 +2,7 @@
 
 import React from "react";
 import { HelpCircle, Search, UserRound } from "lucide-react";
+import Link from "next/link";
 
 export const TOPBAR_HEIGHT = 36; // px, corresponds to Tailwind h-9
 
@@ -29,19 +30,19 @@ export default function Topbar({
                 )}
                 <div className="flex items-center gap-3">
                     {showHelp && (
-                        <a aria-label="Help" className="hover:text-white" href="/help">
+                        <Link aria-label="Help" className="hover:text-white" href="/help">
                             <HelpCircle size={16} />
-                        </a>
+                        </Link>
                     )}
                     {showSearch && (
-                        <a aria-label="Search" className="hover:text-white" href="/search">
+                        <Link aria-label="Search" className="hover:text-white" href="/search">
                             <Search size={16} />
-                        </a>
+                        </Link>
                     )}
                     {showAccount && (
-                        <a aria-label="Account" className="hover:text-white" href="/account">
+                        <Link aria-label="Account" className="hover:text-white" href="/account">
                             <UserRound size={16} />
-                        </a>
+                        </Link>
                     )}
                 </div>
             </div>

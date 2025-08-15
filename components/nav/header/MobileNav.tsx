@@ -6,13 +6,19 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/co
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import Link from "next/link";
-import {NavEntry} from "@/types/header";
+import clsx from "clsx";
+import { NavEntry } from "@/types/header";
 
-export default function MobileNav({ items }: { items: NavEntry[] }) {
+export default function MobileNav({ items, variant = "dark" }: { items: NavEntry[]; variant?: "dark" | "light" }) {
+    const iconColor =
+        variant === "light" ? "text-neutral-900 hover:text-neutral-700" : "text-white hover:text-white/90";
+
+    const linkColor = variant === "light" ? "text-neutral-900" : undefined;
+
     return (
         <Sheet>
             <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" className="text-white hover:text-white/90">
+                <Button variant="ghost" size="icon" className={iconColor}>
                     <Menu className="h-5 w-5" />
                 </Button>
             </SheetTrigger>
@@ -27,13 +33,21 @@ export default function MobileNav({ items }: { items: NavEntry[] }) {
                                 {entry.type === "link" ? (
                                     <Link
                                         href={entry.href}
-                                        className="block rounded-md px-3 py-2 text-sm font-medium hover:bg-muted"
+                                        className={clsx(
+                                            "block rounded-md px-3 py-2 text-sm font-medium hover:bg-muted uppercase",
+                                            linkColor
+                                        )}
                                     >
                                         {entry.label}
                                     </Link>
                                 ) : (
                                     <AccordionItem value={entry.label}>
-                                        <AccordionTrigger className="px-3 py-2 text-sm font-medium">
+                                        <AccordionTrigger
+                                            className={clsx(
+                                                "px-3 py-2 text-sm font-medium uppercase",
+                                                linkColor
+                                            )}
+                                        >
                                             {entry.label}
                                         </AccordionTrigger>
                                         <AccordionContent>

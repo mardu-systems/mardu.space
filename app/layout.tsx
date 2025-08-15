@@ -2,9 +2,10 @@ import type {Metadata} from "next";
 import {Geist, Geist_Mono} from "next/font/google";
 import "./globals.css";
 import SiteFooter from "@/components/nav/footer/footer";
-import SiteHeader, {NavEntry} from "@/components/nav/header/SiteHeader";
+import SiteHeader from "@/components/nav/header/SiteHeader";
 import React from "react";
 import CookieBanner from "@/components/CookieBanner";
+import {NavEntry} from "@/types/header";
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -27,11 +28,6 @@ const defaultHeaderItems: NavEntry[] = [
     {
         type: "mega",
         label: "Shop",
-        hero: {
-            src: "_A7_8631.JPG",
-            alt: "Maschinen- & Türfreigaben, Zeiterfassung",
-            caption: "Zentrale Verwaltung für Zugriffsrechte und Zeiterfassung",
-        },
         items: [
             {
                 label: "Maschinenfreigaben",
@@ -64,11 +60,11 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en">
+        <html lang="de">
         <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <SiteHeader items={defaultHeaderItems} logoLightSrc="marduspace_logo_bg_white.svg"
-                        logoDarkSrc="marduspace_logo_bg_black.svg" showTopbar={false}/>
-        <div className="light" data-theme="light" style={{colorScheme: "light"}}>
+        <SiteHeader items={defaultHeaderItems} logoLightSrc="marduspace_logo_bg_black.svg" variant="dark"
+                    logoDarkSrc="marduspace_logo_bg_white.svg" showTopbar={false}/>
+        <div className="bg-gradient-to-br from-zinc-200 to-purple-50" data-theme="light" style={{colorScheme: "light"}}>
             {children}
         </div>
         <SiteFooter/>

@@ -6,7 +6,7 @@ import { ArrowRight, ChevronRight } from "lucide-react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import clsx from "clsx";
 import { Separator } from "@/components/ui/separator";
-import {MegaGroup} from "@/types/header";
+import { MegaGroup } from "@/types/header";
 
 export default function MegaContent({ group }: { group: MegaGroup }) {
     const prefersReducedMotion = useReducedMotion();
