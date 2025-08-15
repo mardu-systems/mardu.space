@@ -67,21 +67,19 @@ function formatPriceCents(
 function ProductIntro({ title, subtitle, descriptionHtml, badges }: ProductIntroProps) {
   const reduceMotion = useReducedMotion();
   return (
-    <Card className="rounded-2xl bg-neutral-950/40 backdrop-blur supports-[backdrop-filter]:bg-neutral-950/40 border-neutral-800">
+    <Card className="rounded-2xl backdrop-blur supports-[backdrop-filter]:bg-background/40">
       <CardHeader className="space-y-4">
         <div className="flex flex-wrap items-center gap-2">
           {badges?.map((b) => (
-            <Badge key={b} variant="secondary" className="bg-neutral-800 text-neutral-100">
+            <Badge key={b} variant="secondary">
               {b}
             </Badge>
           ))}
         </div>
         <div>
-          <h1 className="text-3xl md:text-4xl font-semibold tracking-tight text-neutral-50">
-            {title}
-          </h1>
+          <h1 className="text-3xl md:text-4xl font-semibold tracking-tight">{title}</h1>
           {subtitle ? (
-            <p className="mt-1 text-base text-neutral-300">{subtitle}</p>
+            <p className="mt-1 text-base text-muted-foreground">{subtitle}</p>
           ) : null}
         </div>
       </CardHeader>
@@ -91,7 +89,7 @@ function ProductIntro({ title, subtitle, descriptionHtml, badges }: ProductIntro
           whileInView={reduceMotion ? {} : { opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-20%" }}
           transition={{ duration: 0.35, ease: "easeOut" }}
-          className="prose prose-invert max-w-none prose-p:leading-relaxed prose-a:text-neutral-100"
+          className="prose max-w-none prose-p:leading-relaxed"
           dangerouslySetInnerHTML={{ __html: descriptionHtml }}
         />
       </CardContent>
@@ -121,32 +119,20 @@ function PriceBox({
       .filter((o) => selected.includes(o.id))
       .reduce((s, o) => s + o.deltaPriceCents, 0);
     return basePriceCents + delta;
-  }, [options, selected, basePriceCents]);
+  }, [options, basePriceCents]);
 
   const stockBadge = useMemo(() => {
     switch (stockInfo?.status) {
       case "in_stock":
-        return (
-          <Badge className="bg-emerald-600/20 text-emerald-300 border-emerald-700">
-            Auf Lager
-          </Badge>
-        );
+        return <Badge>Auf Lager</Badge>;
       case "preorder":
-        return (
-          <Badge className="bg-amber-600/20 text-amber-300 border-amber-700">
-            Vorbestellung
-          </Badge>
-        );
+        return <Badge variant="secondary">Vorbestellung</Badge>;
       case "oos":
-        return (
-          <Badge className="bg-rose-600/20 text-rose-300 border-rose-700">
-            Aktuell ausverkauft
-          </Badge>
-        );
+        return <Badge variant="destructive">Aktuell ausverkauft</Badge>;
       default:
         return null;
     }
-  }, [stockInfo]);
+  }, [stockInfo?.status]);
 
   function handleWishlist() {
     const payload = { optionIds: selected };
@@ -174,32 +160,32 @@ function PriceBox({
   return (
     <Card
       className={cn(
-        "rounded-2xl border-neutral-800 bg-neutral-950/60 backdrop-blur supports-[backdrop-filter]:bg-neutral-950/60",
+        "rounded-2xl backdrop-blur supports-[backdrop-filter]:bg-background/60",
         "lg:sticky lg:top-[var(--sticky-top,88px)]"
       )}
       aria-label="Preis und Optionen"
     >
       <CardHeader className="space-y-3">
         <div className="flex items-center gap-3 justify-between">
-          <h2 className="text-xl font-semibold text-neutral-100">Preis</h2>
+          <h2 className="text-xl font-semibold">Preis</h2>
           {stockBadge}
         </div>
-        <div className="text-3xl font-semibold tracking-tight text-neutral-50">
+        <div className="text-3xl font-semibold tracking-tight">
           {formatPriceCents(totalCents)}
         </div>
-        <p className="text-sm text-neutral-400">inkl. MwSt., ggf. zzgl. Versand</p>
+        <p className="text-sm text-muted-foreground">inkl. MwSt., ggf. zzgl. Versand</p>
       </CardHeader>
       <CardContent className="space-y-4">
         {options.length > 0 && (
           <div className="space-y-3" aria-label="Varianten">
-            <h3 className="text-sm font-medium text-neutral-300">Varianten</h3>
+            <h3 className="text-sm font-medium text-muted-foreground">Varianten</h3>
             <div className="space-y-2">
               {options.map((o) => (
                 <label
                   key={o.id}
                   className={cn(
-                    "flex items-start gap-3 rounded-xl border border-neutral-800 p-3 hover:bg-neutral-900/40",
-                    selected.includes(o.id) && "bg-neutral-900/50"
+                    "flex items-start gap-3 rounded-xl border p-3 hover:bg-muted/50",
+                    selected.includes(o.id) && "bg-muted"
                   )}
                 >
                   <Checkbox
@@ -213,9 +199,9 @@ function PriceBox({
                   />
                   <div className="flex-1">
                     <div className="flex items-center gap-2">
-                      <span className="text-sm text-neutral-100">{o.label}</span>
+                      <span className="text-sm">{o.label}</span>
                       {o.deltaPriceCents !== 0 && (
-                        <span className="text-xs text-neutral-400">
+                        <span className="text-xs text-muted-foreground">
                           {o.deltaPriceCents > 0 ? "+" : ""}
                           {formatPriceCents(o.deltaPriceCents)}
                         </span>
@@ -227,9 +213,9 @@ function PriceBox({
             </div>
           </div>
         )}
-        <Separator className="bg-neutral-800" />
+        <Separator />
         {stockInfo?.note ? (
-          <p className="text-xs text-neutral-400">{stockInfo.note}</p>
+          <p className="text-xs text-muted-foreground">{stockInfo.note}</p>
         ) : null}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
           <Button
@@ -267,13 +253,13 @@ function FeaturesTab({ features }: FeaturesTabProps) {
           whileInView={reduceMotion ? {} : { opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-10%" }}
           transition={{ duration: 0.3, delay: i * 0.03 }}
-          className="rounded-2xl border border-neutral-800 p-4 bg-neutral-950/40"
+          className="rounded-2xl border p-4 bg-muted/50"
         >
           <div className="flex items-start gap-3">
-            <Icon name={f.icon} className="h-5 w-5 text-neutral-300 mt-0.5" />
+            <Icon name={f.icon} className="h-5 w-5 mt-0.5" />
             <div>
-              <h4 className="text-base font-medium text-neutral-100">{f.title}</h4>
-              <p className="text-sm text-neutral-400 leading-relaxed">{f.description}</p>
+              <h4 className="text-base font-medium">{f.title}</h4>
+              <p className="text-sm text-muted-foreground leading-relaxed">{f.description}</p>
             </div>
           </div>
         </motion.div>
@@ -288,19 +274,17 @@ function IncludedTab({ items }: IncludedTabProps) {
       {items.map((it, i) => (
         <li
           key={it.name + i}
-          className="flex items-start gap-3 rounded-xl border border-neutral-800 p-3 bg-neutral-950/40"
+          className="flex items-start gap-3 rounded-xl border p-3 bg-muted/50"
         >
-          <Icon name={it.icon} className="mt-1 h-4 w-4 text-neutral-300" />
+          <Icon name={it.icon} className="mt-1 h-4 w-4" />
           <div className="flex-1">
-            <div className="flex items-center gap-2 text-sm text-neutral-100">
+            <div className="flex items-center gap-2 text-sm">
               <span>{it.name}</span>
               {it.qty ? (
-                <Badge variant="outline" className="border-neutral-700 text-neutral-300">
-                  ×{it.qty}
-                </Badge>
+                <Badge variant="outline">×{it.qty}</Badge>
               ) : null}
             </div>
-            {it.note ? <p className="text-xs text-neutral-400">{it.note}</p> : null}
+            {it.note ? <p className="text-xs text-muted-foreground">{it.note}</p> : null}
           </div>
         </li>
       ))}
@@ -316,7 +300,7 @@ function BuildGuideTab({ steps }: BuildGuideTabProps) {
           <AccordionTrigger className="text-left">{s.title}</AccordionTrigger>
           <AccordionContent>
             <div
-              className="prose prose-invert max-w-none prose-p:leading-relaxed"
+              className="prose max-w-none prose-p:leading-relaxed"
               dangerouslySetInnerHTML={{ __html: s.contentHtml }}
             />
             {s.assets?.length ? (
@@ -343,18 +327,18 @@ function SectionTabs({ data }: { data: ProductPageData["tabs"] }) {
       <div
         className={cn(
           "sticky top-[var(--sticky-top,88px)] z-20",
-          "bg-neutral-950/60 backdrop-blur supports-[backdrop-filter]:bg-neutral-950/60",
-          "rounded-2xl border border-neutral-800"
+          "bg-background/60 backdrop-blur supports-[backdrop-filter]:bg-background/60",
+          "rounded-2xl border"
         )}
       >
         <TabsList className="grid grid-cols-3 w-full">
-          <TabsTrigger value="features" className="data-[state=active]:bg-neutral-800">
+          <TabsTrigger value="features" className="data-[state=active]:bg-muted">
             Features
           </TabsTrigger>
-          <TabsTrigger value="included" className="data-[state=active]:bg-neutral-800">
+          <TabsTrigger value="included" className="data-[state=active]:bg-muted">
             Enthalten
           </TabsTrigger>
-          <TabsTrigger value="guide" className="data-[state=active]:bg-neutral-800">
+          <TabsTrigger value="guide" className="data-[state=active]:bg-muted">
             Bauanleitung
           </TabsTrigger>
         </TabsList>
@@ -389,8 +373,8 @@ function StickyMobileCTA({
   return (
     <div
       className={cn(
-        "fixed inset-x-0 bottom-[env(safe-area-inset-bottom)] z-30 border-t border-neutral-800",
-        "bg-neutral-950/80 backdrop-blur supports-[backdrop-filter]:bg-neutral-950/80",
+        "fixed inset-x-0 bottom-[env(safe-area-inset-bottom)] z-30 border-t",
+        "bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/80",
         "px-4 py-3 lg:hidden"
       )}
       role="region"
@@ -398,8 +382,8 @@ function StickyMobileCTA({
     >
       <div className="flex items-center justify-between gap-3">
         <div>
-          <span className="block text-xs text-neutral-400">Preis</span>
-          <span className="text-lg font-semibold text-neutral-50">
+          <span className="block text-xs text-muted-foreground">Preis</span>
+          <span className="text-lg font-semibold">
             {formatPriceCents(totalCents)}
           </span>
         </div>
@@ -438,7 +422,7 @@ export function ProductPage({
   }, [data.pricing.basePriceCents, data.pricing.options, selected]);
 
   return (
-    <div className="min-h-screen bg-black text-neutral-200" style={style}>
+    <div className="min-h-screen" style={style}>
       <main className="container mx-auto max-w-6xl px-4 py-6 md:py-8">
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_minmax(320px,380px)] gap-5">
           <div className="space-y-6">
