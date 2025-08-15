@@ -6,7 +6,7 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/co
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import Link from "next/link";
-import { NavEntry } from "./types";
+import { NavEntry } from "./header";
 
 export default function MobileNav({ items }: { items: NavEntry[] }) {
     return (

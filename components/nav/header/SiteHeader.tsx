@@ -9,9 +9,9 @@ import clsx from "clsx";
 import DesktopNav from "./DesktopNav";
 import MobileNav from "./MobileNav";
 import Topbar, { TOPBAR_HEIGHT } from "./Topbar";
-import { NavEntry } from "./types";
+import { NavEntry } from "./header";
 
-export type { NavEntry } from "./types";
+export type { NavEntry } from "./header";
 
 export interface HeaderProps {
     items: NavEntry[];
