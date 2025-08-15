@@ -33,20 +33,16 @@ export function ProductPage({
 
     return (
         <div className="min-h-screen" style={style}>
-            <main className="container mx-auto max-w-6xl px-4 py-6 md:py-8">
+            <main className="container mx-auto max-w-6xl px-4 py-6 md:py-8 space-y-8">
                 <div className="grid grid-cols-1 lg:grid-cols-[1fr_minmax(320px,380px)] gap-5">
-                    <div className="space-y-6">
-                        <ProductIntro {...data.intro} />
-                        <SectionTabs data={data.tabs}/>
-                    </div>
-                    <div>
-                        <PriceBox
-                            {...data.pricing}
-                            selected={selected}
-                            onSelectedChange={setSelected}
-                        />
-                    </div>
+                    <ProductIntro {...data.intro} />
+                    <PriceBox
+                        {...data.pricing}
+                        selected={selected}
+                        onSelectedChange={setSelected}
+                    />
                 </div>
+                <SectionTabs data={data.tabs} />
             </main>
 
             <StickyMobileCTA
