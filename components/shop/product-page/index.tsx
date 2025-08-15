@@ -12,15 +12,9 @@ import {StickyMobileCTA} from "./sticky-mobile-cta";
 
 export function ProductPage({
                                 data,
-                                headerOffset = 80,
                             }: {
     data: ProductPageData;
-    headerOffset?: number;
 }) {
-    const style = {
-        "--sticky-top": `calc(${headerOffset}px + 8px)`,
-    } as React.CSSProperties;
-
     const [selected, setSelected] = useState<string[]>(
         data.pricing.options?.filter((o) => o.default).map((o) => o.id) ?? []
     );
@@ -32,7 +26,7 @@ export function ProductPage({
     }, [data.pricing.basePriceCents, data.pricing.options, selected]);
 
     return (
-        <div className="min-h-screen" style={style}>
+        <div className="min-h-screen">
             <main className="container mx-auto max-w-6xl px-4 py-6 md:py-8 space-y-8">
                 <div className="grid grid-cols-1 lg:grid-cols-[1fr_minmax(320px,380px)] gap-5">
                     <ProductIntro {...data.intro} />

@@ -95,5 +95,10 @@ const demoData: ProductPageData = {
 export default function ShopPage() {
     const {setVariant} = useHeaderVariant();
     useEffect(() => setVariant("light"), [setVariant]);
-    return <ProductPage data={demoData}/>;
+    // HEader Hight
+    return (
+        <div className="pt-16">
+            <ProductPage data={demoData}/>
+        </div>
+    );
 }

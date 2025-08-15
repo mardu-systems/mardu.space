@@ -107,7 +107,7 @@ export default function SiteFooter() {
 
     return (
         <div className="dark" data-theme="dark" style={{colorScheme: "dark"}}>
-            <footer className="w-full bg-radial-[at_5%_50%] from-zinc-900 from-70% to-[#37093F] to-99% text-neutral-50">
+            <footer className="w-full bg-radial-[at_5%_50%] from-zinc-900 from-70% to-[#37093F] text-neutral-50">
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     {/* Top row: logo */}
                     <div className="flex items-center justify-start py-8">
