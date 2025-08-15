@@ -3,15 +3,13 @@
 import * as React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { motion, useReducedMotion } from "framer-motion";
+import {motion, useReducedMotion} from "framer-motion";
 import clsx from "clsx";
 
 import DesktopNav from "./DesktopNav";
 import MobileNav from "./MobileNav";
-import Topbar, { TOPBAR_HEIGHT } from "./Topbar";
-import { NavEntry } from "./header";
-
-export type { NavEntry } from "./header";
+import Topbar, {TOPBAR_HEIGHT} from "./Topbar";
+import {NavEntry} from "@/types/header";
 
 export interface HeaderProps {
     items: NavEntry[];
@@ -37,7 +35,7 @@ function useScrolled(threshold = 20) {
     React.useEffect(() => {
         const onScroll = () => setScrolled(window.scrollY > threshold);
         onScroll();
-        window.addEventListener("scroll", onScroll, { passive: true });
+        window.addEventListener("scroll", onScroll, {passive: true});
         return () => window.removeEventListener("scroll", onScroll);
     }, [threshold]);
     return scrolled;
@@ -51,16 +49,16 @@ function getHeaderBgAnimate(scrolled: boolean) {
 }
 
 export default function SiteHeader({
-    items,
-    showTopbar = true,
-    showSearch = true,
-    showAccount = true,
-    showHelp = true,
-    salesPhone = "+49 176 200 00 00",
-    logoLightSrc,
-    logoDarkSrc,
-    scrolledBgClass = DEFAULT_SCROLLED_BG,
-}: HeaderProps) {
+                                       items,
+                                       showTopbar = true,
+                                       showSearch = true,
+                                       showAccount = true,
+                                       showHelp = true,
+                                       salesPhone = "+49 176 200 00 00",
+                                       logoLightSrc,
+                                       logoDarkSrc,
+                                       scrolledBgClass = DEFAULT_SCROLLED_BG,
+                                   }: HeaderProps) {
     const scrolled = useScrolled(SCROLL_THRESHOLD);
     const prefersReducedMotion = useReducedMotion();
 
@@ -69,7 +67,7 @@ export default function SiteHeader({
 
     const bgAnimate = React.useMemo(() => getHeaderBgAnimate(scrolled), [scrolled]);
     const bgTransition = React.useMemo(
-        () => ({ duration: prefersReducedMotion ? 0 : 0.25 }),
+        () => ({duration: prefersReducedMotion ? 0 : 0.25}),
         [prefersReducedMotion]
     );
 
@@ -86,10 +84,10 @@ export default function SiteHeader({
 
             <div
                 className={clsx(
-                    "fixed inset-x-0 z-50 border-b border-transparent transition-colors transition-[top] duration-200",
+                    "fixed inset-x-0 z-50 border-b border-transparent transition-colors  duration-200",
                     scrolled && "border-white/10"
                 )}
-                style={{ top: navTopOffset }}
+                style={{top: navTopOffset}}
             >
                 <motion.div
                     aria-hidden
@@ -116,10 +114,10 @@ export default function SiteHeader({
                         </div>
 
                         <div className="flex flex-1 md:hidden">
-                            <MobileNav items={items} />
+                            <MobileNav items={items}/>
                         </div>
 
-                        <DesktopNav items={items} />
+                        <DesktopNav items={items}/>
                     </nav>
                 </div>
             </div>

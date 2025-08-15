@@ -4,8 +4,8 @@ import Link from "next/link";
 import { ChevronDown } from "lucide-react";
 import { HoverCard, HoverCardTrigger, HoverCardContent } from "@/components/ui/hover-card";
 import React from "react";
-import { NavEntry } from "./header";
 import MegaContent from "./MegaContent";
+import {NavEntry} from "@/types/header";
 
 interface DesktopNavProps {
     items: NavEntry[];
