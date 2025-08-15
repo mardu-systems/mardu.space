@@ -27,7 +27,7 @@ export function ProductPage({
 
     return (
         <div className="min-h-screen">
-            <main className="container mx-auto max-w-6xl px-4 py-6 md:py-8 space-y-8">
+            <main className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-6 space-y-6">
                 <div className="grid grid-cols-1 lg:grid-cols-[1fr_minmax(320px,380px)] gap-5">
                     <ProductIntro {...data.intro} />
                     <PriceBox
@@ -36,7 +36,7 @@ export function ProductPage({
                         onSelectedChange={setSelected}
                     />
                 </div>
-                <SectionTabs data={data.tabs} />
+                <SectionTabs data={data.tabs}/>
             </main>
 
             <StickyMobileCTA

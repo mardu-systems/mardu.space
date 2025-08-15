@@ -1,13 +1,11 @@
 "use client";
 
-import {motion, useReducedMotion} from "framer-motion";
-
 import {Card, CardContent, CardHeader} from "@/components/ui/card";
 import {Badge} from "@/components/ui/badge";
 import type {ProductIntroProps} from "@/types/shop";
+import Gallery from "@/components/shop/product-page/gallery";
 
-export function ProductIntro({title, subtitle, descriptionHtml, badges}: ProductIntroProps) {
-    const reduceMotion = useReducedMotion();
+export function ProductIntro({title, subtitle, badges, images}: ProductIntroProps) {
     return (
         <Card className="rounded-2xl backdrop-blur supports-[backdrop-filter]:bg-background/40">
             <CardHeader className="space-y-4">
@@ -26,14 +24,7 @@ export function ProductIntro({title, subtitle, descriptionHtml, badges}: Product
                 </div>
             </CardHeader>
             <CardContent>
-                <motion.div
-                    initial={reduceMotion ? false : {opacity: 0, y: 6}}
-                    whileInView={reduceMotion ? {} : {opacity: 1, y: 0}}
-                    viewport={{once: true, margin: "-20%"}}
-                    transition={{duration: 0.35, ease: "easeOut"}}
-                    className="prose max-w-none prose-p:leading-relaxed"
-                    dangerouslySetInnerHTML={{__html: descriptionHtml}}
-                />
+                {images?.length ? <Gallery images={images}/> : null}
             </CardContent>
         </Card>
     );

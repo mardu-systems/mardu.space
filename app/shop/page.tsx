@@ -11,9 +11,11 @@ const demoData: ProductPageData = {
     intro: {
         title: "Das Gateway",
         subtitle: "Edge‑Connector für Maschinen und Türen",
-        descriptionHtml:
-            "<p>Unser Gateway verbindet Maschinen, Türen und Sensorik sicher mit der zentralen Plattform. <strong>Offline‑fähig</strong> mit Edge‑Caching, <em>fail‑safe</em> Fallbacks und granularen Berechtigungen. Entwickelt für rauen Einsatz, wartungsarm, fernadministrierbar.</p>",
         badges: ["Edge", "Industrial", "Made in DE"],
+        images: [
+            "/_A7_8631.JPG",
+            "/_A7_9072_quer.jpg",
+        ],
     },
     pricing: {
         basePriceCents: 39900,
@@ -23,6 +25,9 @@ const demoData: ProductPageData = {
             {id: "ext-temp", label: "Erweiterter Temperaturbereich", deltaPriceCents: 2500},
         ],
         ctas: {wishlistLabel: "Vormerken", configureLabel: "Produkt konfigurieren"},
+        descriptionHtml:
+            "<p>Unser Gateway verbindet Maschinen, Türen und Sensorik sicher mit der zentralen Plattform. <strong>Offline‑fähig</strong> mit Edge‑Caching, <em>fail‑safe</em> Fallbacks und granularen Berechtigungen. Entwickelt für rauen Einsatz, wartungsarm, fernadministrierbar.</p>",
+
         stockInfo: {
             status: "preorder",
             note: "Auslieferung voraussichtlich ab Oktober.",

@@ -13,6 +13,7 @@ import {Checkbox} from "@/components/ui/checkbox";
 import {cn} from "@/lib/utils";
 import type {PriceBoxProps} from "@/types/shop";
 import {formatPriceCents} from "./utils";
+import {motion, useReducedMotion} from "framer-motion";
 
 export function PriceBox({
                              basePriceCents,
@@ -21,9 +22,11 @@ export function PriceBox({
                              onConfigure,
                              ctas,
                              stockInfo,
+                             descriptionHtml,
                              selected: controlledSelected,
                              onSelectedChange,
                          }: PriceBoxProps) {
+    const reduceMotion = useReducedMotion();
     const router = useRouter();
     const [internalSelected, setInternalSelected] = useState<string[]>(
         options.filter((o) => o.default).map((o) => o.id)
@@ -92,6 +95,16 @@ export function PriceBox({
                     {formatPriceCents(totalCents)}
                 </div>
                 <p className="text-sm text-muted-foreground">inkl. MwSt., ggf. zzgl. Versand</p>
+
+                <Separator/>
+                <motion.div
+                    initial={reduceMotion ? false : {opacity: 0, y: 6}}
+                    whileInView={reduceMotion ? {} : {opacity: 1, y: 0}}
+                    viewport={{once: true, margin: "-20%"}}
+                    transition={{duration: 0.35, ease: "easeOut"}}
+                    className="prose max-w-none prose-p:leading-relaxed"
+                    dangerouslySetInnerHTML={{__html: descriptionHtml}}
+                />
             </CardHeader>
             <CardContent className="space-y-4">
                 {options.length > 0 && (
