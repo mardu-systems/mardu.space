@@ -108,7 +108,7 @@ export default function MegaContent({ group }: { group: MegaGroup }) {
                                     initial={{ opacity: 0 }}
                                     whileHover={{ opacity: 1 }}
                                     transition={{ duration: 0.15 }}
-                                    className="pointer-events-none absolute inset-0 bg-white/10"
+                                     className="pointer-events-none absolute inset-0"
                                 />
                             </Link>
                         ))}
