@@ -16,13 +16,13 @@ export function FeaturesTab({ features }: FeaturesTabProps) {
           whileInView={reduceMotion ? {} : { opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-10%" }}
           transition={{ duration: 0.3, delay: i * 0.03 }}
-          className="rounded-2xl border border-neutral-800 p-4 bg-neutral-950/40"
+          className="rounded-2xl border p-4 bg-muted/50"
         >
           <div className="flex items-start gap-3">
-            <Icon name={f.icon} className="h-5 w-5 text-neutral-300 mt-0.5" />
+              <Icon name={f.icon} className="h-5 w-5 mt-0.5" />
             <div>
-              <h4 className="text-base font-medium text-neutral-100">{f.title}</h4>
-              <p className="text-sm text-neutral-400 leading-relaxed">{f.description}</p>
+                <h4 className="text-base font-medium">{f.title}</h4>
+                <p className="text-sm text-muted-foreground leading-relaxed">{f.description}</p>
             </div>
           </div>
         </motion.div>
