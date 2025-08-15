@@ -4,6 +4,7 @@ import "./globals.css";
 import SiteFooter from "@/components/nav/footer/footer";
 import HeaderMegaMenu, {NavEntry} from "@/components/nav/header/MegaMenu";
 import React from "react";
+import CookieBanner from "@/components/CookieBanner";
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -71,6 +72,7 @@ export default function RootLayout({
             {children}
         </div>
         <SiteFooter/>
+        <CookieBanner/>
         </body>
         </html>
     );

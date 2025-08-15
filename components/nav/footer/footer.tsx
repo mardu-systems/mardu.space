@@ -60,7 +60,6 @@ type Role = (typeof ROLE_OPTIONS)[number];
  * - Integrate with newsletter API
  * - Add loading state UI
  * - Add success/error animations
- * - Add analytics tracking
  * - Test form submission
  * - Add i18n support
  * - Implement GDPR consent
