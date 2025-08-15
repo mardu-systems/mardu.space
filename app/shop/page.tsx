@@ -3,6 +3,7 @@
 import {ProductPage} from "@/components/shop/product-page";
 import {ProductPageData} from "@/types/shop";
 import {useHeaderVariant} from "@/components/HeaderVariantContext";
+import {useEffect} from "react";
 
 
 const demoData: ProductPageData = {
@@ -92,7 +93,7 @@ const demoData: ProductPageData = {
     },
 };
 export default function ShopPage() {
-    const headerVariant = useHeaderVariant();
-    headerVariant.setVariant("dark");
+    const {setVariant} = useHeaderVariant();
+    useEffect(() => setVariant("light"), [setVariant]);
     return <ProductPage data={demoData}/>;
 }
