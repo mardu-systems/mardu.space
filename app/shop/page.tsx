@@ -1,5 +1,5 @@
-import {ProductPage} from "@/components/shop/product-page";
-import {ProductPageData} from "@/components/shop/types";
+import { ProductPage } from "@/components/shop/product-page";
+import { ProductPageData } from "@/types/shop";
 
 
 const demoData: ProductPageData = {
