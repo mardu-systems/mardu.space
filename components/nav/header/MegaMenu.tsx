@@ -114,7 +114,7 @@ export default function HeaderMegaMenu({
         <header>
             {showTopbar && (
                 <div
-                    className="bg-neutral-800 text-neutral-200 border-b border-black/20"
+                    className="bg-radial-[at_5%_50%] from-zinc-900 from-70% to-[#37093F] text-neutral-200 border-b border-black/20"
                     style={{ height: TOPBAR_HEIGHT }}
                 >
                     <div className="mx-auto flex h-full max-w-7xl items-center justify-end gap-4 px-4 sm:px-6">
@@ -123,19 +123,19 @@ export default function HeaderMegaMenu({
                         )}
                         <div className="flex items-center gap-3">
                             {showHelp && (
-                                <a aria-label="Help" className="hover:text-white" href="/help">
+                                <Link aria-label="Help" className="hover:text-white" href="/help">
                                     <HelpCircle size={16} />
-                                </a>
+                                </Link>
                             )}
                             {showSearch && (
-                                <a aria-label="Search" className="hover:text-white" href="/search">
+                                <Link aria-label="Search" className="hover:text-white" href="/search">
                                     <Search size={16} />
-                                </a>
+                                </Link>
                             )}
                             {showAccount && (
-                                <a aria-label="Account" className="hover:text-white" href="/account">
+                                <Link aria-label="Account" className="hover:text-white" href="/account">
                                     <UserRound size={16} />
-                                </a>
+                                </Link>
                             )}
                         </div>
                     </div>
@@ -202,7 +202,7 @@ function DesktopNavEntry({ entry }: { entry: NavEntry }) {
         return (
             <Link
                 href={entry.href}
-                className="group relative rounded-lg px-3 py-2 text-sm font-medium text-white/90 transition hover:text-white capitalize"
+                className="group relative rounded-lg px-3 py-2 text-sm font-medium text-white/90 transition hover:text-white uppercase tracking-wide"
             >
                 {entry.label}
                 <span className="absolute inset-x-2 -bottom-0.5 h-px scale-x-0 bg-white/50 transition-transform duration-200 group-hover:scale-x-100" />
@@ -214,12 +214,12 @@ function DesktopNavEntry({ entry }: { entry: NavEntry }) {
     return (
         <HoverCard openDelay={50} closeDelay={80}>
             <HoverCardTrigger asChild>
-                <button className="group flex items-center gap-1 rounded-lg px-3 py-2 text-sm font-medium text-white/90 outline-none transition hover:text-white">
+                <button className="group flex items-center gap-1 rounded-lg px-3 py-2 text-sm font-medium text-white/90 outline-none transition hover:text-white uppercase tracking-wide">
                     {entry.label}
                     <ChevronDown className="h-4 w-4 transition group-data-[state=open]:rotate-180" />
                 </button>
             </HoverCardTrigger>
-            <HoverCardContent className="w-[min(92vw,980px)] border-white/10 bg-neutral-950 p-0 text-white shadow-2xl backdrop-blur-xl">
+            <HoverCardContent className="w-[min(92vw,980px)] border-white/10 bg-radial-[at_5%_50%] from-zinc-900 from-70% to-[#37093F] p-0 text-white shadow-2xl backdrop-blur-xl">
                 <MegaContent group={entry} />
             </HoverCardContent>
         </HoverCard>
