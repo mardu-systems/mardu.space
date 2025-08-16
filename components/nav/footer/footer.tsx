@@ -3,12 +3,12 @@
 import * as React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { z } from "zod";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Alert, AlertDescription } from "@/components/ui/alert";
+import {z} from "zod";
+import {useForm} from "react-hook-form";
+import {zodResolver} from "@hookform/resolvers/zod";
+import {Input} from "@/components/ui/input";
+import {Button} from "@/components/ui/button";
+import {Alert, AlertDescription} from "@/components/ui/alert";
 import {
     Form,
     FormControl,
@@ -26,28 +26,28 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
-import { Loader2 } from "lucide-react";
+import {Loader2} from "lucide-react";
 
 // ---------- Role Options ----------
 const ROLE_OPTIONS = [
-    { value: "fablab", label: "FabLab", group: "Facilities" },
-    { value: "makerspace", label: "Makerspace", group: "Facilities" },
-    { value: "schule", label: "School", group: "Education" },
-    { value: "hochschule", label: "University / College", group: "Education" },
-    { value: "oeffentliche-einrichtung", label: "Public Institution", group: "Facilities" },
-    { value: "bibliothek", label: "Library", group: "Facilities" },
-    { value: "museum", label: "Museum", group: "Facilities" },
-    { value: "kulturzentrum", label: "Cultural Center", group: "Facilities" },
-    { value: "coworking", label: "Coworking Space", group: "Organizations" },
-    { value: "werkstatt", label: "Workshop", group: "Organizations" },
-    { value: "jugendzentrum", label: "Youth Center", group: "Facilities" },
-    { value: "forschungslabor", label: "Research Lab", group: "Education" },
-    { value: "community-projekt", label: "Community Project", group: "Organizations" },
-    { value: "agentur-studio", label: "Agency / Studio", group: "Organizations" },
-    { value: "unternehmen", label: "Company", group: "Organizations" },
-    { value: "medien", label: "Media", group: "Organizations" },
-    { value: "privatperson", label: "Private Person", group: "Other" },
-    { value: "sonstiges", label: "Other", group: "Other" },
+    {value: "fablab", label: "FabLab", group: "Facilities"},
+    {value: "makerspace", label: "Makerspace", group: "Facilities"},
+    {value: "schule", label: "School", group: "Education"},
+    {value: "hochschule", label: "University / College", group: "Education"},
+    {value: "oeffentliche-einrichtung", label: "Public Institution", group: "Facilities"},
+    {value: "bibliothek", label: "Library", group: "Facilities"},
+    {value: "museum", label: "Museum", group: "Facilities"},
+    {value: "kulturzentrum", label: "Cultural Center", group: "Facilities"},
+    {value: "coworking", label: "Coworking Space", group: "Organizations"},
+    {value: "werkstatt", label: "Workshop", group: "Organizations"},
+    {value: "jugendzentrum", label: "Youth Center", group: "Facilities"},
+    {value: "forschungslabor", label: "Research Lab", group: "Education"},
+    {value: "community-projekt", label: "Community Project", group: "Organizations"},
+    {value: "agentur-studio", label: "Agency / Studio", group: "Organizations"},
+    {value: "unternehmen", label: "Company", group: "Organizations"},
+    {value: "medien", label: "Media", group: "Organizations"},
+    {value: "privatperson", label: "Private Person", group: "Other"},
+    {value: "sonstiges", label: "Other", group: "Other"},
 ] as const;
 
 const ROLE_VALUES = ROLE_OPTIONS.map((r) => r.value) as [string, ...string[]];
@@ -65,12 +65,12 @@ const ROLE_GROUPS = ROLE_OPTIONS.reduce<Record<string, typeof ROLE_OPTIONS>>(
 // ---------- Schema ----------
 const FormSchema = z.object({
     email: z.string().email("Bitte eine gültige E-Mail angeben"),
-    role: z.enum(ROLE_VALUES, { message: "Bitte eine Kategorie wählen" }),
+    role: z.enum(ROLE_VALUES, {message: "Bitte eine Kategorie wählen"}),
 });
 type FormValues = z.infer<typeof FormSchema>;
 
 // ---------- Success Component ----------
-const SuccessMessage = React.memo(function SuccessMessage({ onClose }: { onClose: () => void }) {
+const SuccessMessage = React.memo(function SuccessMessage({onClose}: { onClose: () => void }) {
     React.useEffect(() => {
         const t = setTimeout(onClose, 4000);
         return () => clearTimeout(t);
@@ -123,7 +123,8 @@ export default function SiteFooter({
     };
 
     return (
-        <footer className="w-full text-neutral-50 bg-[radial-gradient(ellipse_at_5%_50%,hsl(240,5%,10%)_0%,hsl(240,5%,10%)_70%,#37093F_100%)]">
+        <footer
+            className="w-full text-neutral-50 bg-[radial-gradient(ellipse_at_5%_50%,hsl(240,5%,10%)_0%,hsl(240,5%,10%)_70%,#37093F_100%)]">
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 {/* Logo */}
                 <div className="flex items-center justify-start py-10 md:py-12">
@@ -159,7 +160,7 @@ export default function SiteFooter({
                                 <FormField
                                     control={form.control}
                                     name="email"
-                                    render={({ field }) => (
+                                    render={({field}) => (
                                         <FormItem>
                                             <FormLabel htmlFor="email" className="mb-2 block text-sm">
                                                 E-Mail-Adresse
@@ -175,7 +176,7 @@ export default function SiteFooter({
                                                     {...field}
                                                 />
                                             </FormControl>
-                                            <FormMessage />
+                                            <FormMessage/>
                                         </FormItem>
                                     )}
                                 />
@@ -184,7 +185,7 @@ export default function SiteFooter({
                                     <FormField
                                         control={form.control}
                                         name="role"
-                                        render={({ field }) => (
+                                        render={({field}) => (
                                             <FormItem className="flex-1">
                                                 <FormLabel id="role-label" className="mb-2 block text-sm">
                                                     Wer bist du?
@@ -228,7 +229,7 @@ export default function SiteFooter({
                                     </Button>
                                 </div>
 
-                                {status === "success" && <SuccessMessage onClose={() => setStatus("idle")} />}
+                                {status === "success" && <SuccessMessage onClose={() => setStatus("idle")}/>}
                                 {status === "error" && (
                                     <Alert
                                         className="mt-4 animate-fade-in"
@@ -248,7 +249,7 @@ export default function SiteFooter({
 
                 {/* Bottom */}
                 <div className="pt-6">
-                    <div aria-hidden className="h-px w-full bg-gradient-to-r from-brand to-gray-500/70" />
+                    <div aria-hidden className="h-px w-full bg-gradient-to-r from-brand to-gray-500/70"/>
                     <div className="flex flex-col gap-6 py-6 md:flex-row md:items-center md:justify-between">
                         <nav
                             aria-label="Footer Navigation"
