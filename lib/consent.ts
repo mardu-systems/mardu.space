@@ -1,12 +1,7 @@
 "use server";
 
 import {cookies} from "next/headers";
-
-export type ConsentPreferences = {
-    necessary: boolean;
-    analytics: boolean;
-    marketing: boolean;
-};
+import type {ConsentPreferences} from "@/types/consent";
 
 const CONSENT_COOKIE = "cookie_preferences";
 
@@ -14,12 +9,12 @@ export async function getConsent(): Promise<ConsentPreferences> {
     const cookieStore = await cookies();
     const cookie = cookieStore.get(CONSENT_COOKIE)?.value;
     if (!cookie) {
-        return {necessary: true, analytics: false, marketing: false};
+        return {necessary: true, analytics: false, marketing: false, given: false};
     }
     try {
         return JSON.parse(cookie) as ConsentPreferences;
     } catch {
-        return {necessary: true, analytics: false, marketing: false};
+        return {necessary: true, analytics: false, marketing: false, given: false};
     }
 }
 

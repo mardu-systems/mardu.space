@@ -11,8 +11,8 @@ export const metadata: Metadata = {
 }
 
 
-export default function RootLayout({children}: { children: React.ReactNode }) {
-    const consent = getConsent();
+export default async function RootLayout({children}: { children: React.ReactNode }) {
+    const consent = await getConsent();
 
     return (
         <html lang="de">

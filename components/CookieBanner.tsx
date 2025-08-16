@@ -2,15 +2,16 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { ConsentPreferences, setConsent } from "@/lib/consent";
+ import type { ConsentPreferences } from "@/types/consent";
 import { Button } from "@/components/ui/button";
 
 export default function CookieConsentBanner() {
     const [visible, setVisible] = useState(false);
-    const [prefs, setPrefs] = useState<ConsentPreferences>({
+    const [, setPrefs] = useState<ConsentPreferences>({
         necessary: true,
         analytics: false,
         marketing: false,
+        given: false,
     });
 
     useEffect(() => {
@@ -18,13 +19,22 @@ export default function CookieConsentBanner() {
             const res = await fetch("/api/consent");
             const current = await res.json();
             if (!current || !current.given) setVisible(true);
-            setPrefs(current || { necessary: true, analytics: false, marketing: false });
+            setPrefs(current || {
+                necessary: true,
+                analytics: false,
+                marketing: false,
+                given: false,
+            });
         })();
     }, []);
 
     async function handleSave(newPrefs: ConsentPreferences) {
-        await setConsent({ ...newPrefs, given: true });
-        setPrefs({ ...newPrefs, given: true });
+        await fetch("/api/consent", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(newPrefs),
+        });
+        setPrefs(newPrefs);
         setVisible(false);
     }
 
