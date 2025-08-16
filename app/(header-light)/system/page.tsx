@@ -47,10 +47,7 @@ function HeroSystem({
                         draggable={false}
                         priority
                     />
-                    <div
-                        aria-hidden="true"
-                        className="absolute inset-0 bg-black/40"
-                    />
+                    <div aria-hidden="true" className="absolute inset-0 bg-black/40" />
                 </div>
                 <div className="relative">
                     <Image
@@ -63,10 +60,7 @@ function HeroSystem({
                         draggable={false}
                         priority
                     />
-                    <div
-                        aria-hidden="true"
-                        className="absolute inset-0 bg-black/40"
-                    />
+                    <div aria-hidden="true" className="absolute inset-0 bg-black/40" />
                 </div>
             </div>
 
@@ -83,9 +77,9 @@ function HeroSystem({
               bg-[length:96%_0.5em]
               bg-[position:0_95%]
               px-[10px]
-              font-bold uppercase tracking-[0.35em]
-              text-[clamp(28px,5vw,80px)]
-              leading-[1.1] lg:leading-[0.8]
+              font-bold uppercase tracking-[0.3em]
+              text-[clamp(22px,6vw,40px)] leading-[1.2]
+              lg:text-[clamp(40px,6vw,80px)] lg:leading-[0.9]
             "
                     >
                         Das System
@@ -103,16 +97,22 @@ function HeroSystem({
                 </div>
             </div>
 
-            {/* Vertikale Linie */}
+            {/* Linie */}
+            {/* Vertikal ab md, horizontal auf Mobile */}
             <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-                <div className="relative h-full w-px">
+                {/* Desktop: Vertikal */}
+                <div className="relative hidden h-full w-px md:block">
                     <div className="absolute inset-0 origin-top rounded-full opacity-90 bg-gradient-to-b from-[#F133FF] via-[#7AFA27] to-[#FF7A11] animate-grow-y" />
+                </div>
+                {/* Mobile: Horizontal */}
+                <div className="relative block h-px w-full md:hidden">
+                    <div className="absolute inset-0 origin-left rounded-full opacity-90 bg-gradient-to-r from-[#F133FF] via-[#7AFA27] to-[#FF7A11] animate-grow-x" />
                 </div>
             </div>
 
             {/* Labels seitlich der Linie (nur Desktop, visuell) */}
             <div
-                className="pointer-events-none absolute left-1/2 hidden -translate-x-[calc(100%+0.75rem)] text-right md:block top-[16%]"
+                className="pointer-events-none absolute left-1/2 -translate-x-[calc(100%+0.75rem)] text-right md:block top-[16%]"
                 aria-hidden="true"
             >
                 <strong className="px-[3px] font-bold uppercase text-[clamp(20px,4vw,64px)] leading-[0.9]">
@@ -121,26 +121,12 @@ function HeroSystem({
             </div>
 
             <div
-                className="pointer-events-none absolute left-1/2 hidden text-left md:block bottom-[12%]"
+                className="pointer-events-none absolute left-1/2 text-left md:block bottom-[12%]"
                 aria-hidden="true"
             >
                 <strong className="px-[3px] font-bold uppercase text-[clamp(20px,4vw,64px)] leading-[0.9]">
                     Der Zutrittspunkt
                 </strong>
-            </div>
-
-            {/* Mobile Labels */}
-            <div
-                className="absolute left-4 top-3 text-xs tracking-wide text-white/80 md:hidden"
-                aria-hidden="true"
-            >
-                Gateway
-            </div>
-            <div
-                className="absolute right-4 bottom-3 text-xs tracking-wide text-white/80 md:hidden"
-                aria-hidden="true"
-            >
-                Zutrittspunkt
             </div>
         </section>
     );
