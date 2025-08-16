@@ -1,6 +1,20 @@
 import * as React from "react";
+import ReactGA from "react-ga4";
 import type { ConsentPreferences } from "@/types/consent";
 import { setConsent } from "@/lib/consent";
+
+const GA_MEASUREMENT_ID =
+    process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || "G-XXXXXXX";
+
+function clearGACookies() {
+    document.cookie.split(";").forEach((cookie) => {
+        const [name] = cookie.split("=");
+        const trimmed = name?.trim();
+        if (trimmed && trimmed.startsWith("_ga")) {
+            document.cookie = `${trimmed}=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT;`;
+        }
+    });
+}
 
 const DEFAULT_PREFS: ConsentPreferences = {
     necessary: true,
@@ -11,6 +25,7 @@ const DEFAULT_PREFS: ConsentPreferences = {
 
 export function useConsent() {
     const [prefs, setPrefsState] = React.useState<ConsentPreferences | null>(null);
+    const prevAnalytics = React.useRef<boolean | null>(null);
 
     React.useEffect(() => {
         (async () => {
@@ -23,6 +38,23 @@ export function useConsent() {
             }
         })();
     }, []);
+
+    React.useEffect(() => {
+        if (!prefs) return;
+        const current = prefs.analytics;
+        const prev = prevAnalytics.current;
+
+        if (current && !prev) {
+            if (!ReactGA.isInitialized) {
+                ReactGA.initialize(GA_MEASUREMENT_ID);
+            }
+            ReactGA.send("pageview");
+        } else if (!current && prev) {
+            clearGACookies();
+        }
+
+        prevAnalytics.current = current;
+    }, [prefs]);
 
     const setPrefs = React.useCallback(async (newPrefs: ConsentPreferences) => {
         setPrefsState(newPrefs);
