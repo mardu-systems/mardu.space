@@ -3,11 +3,6 @@
 import Image from "next/image";
 import {useState} from "react";
 
-// Hero mit 2 vollflächigen Bildern (links/rechts) + zentrale Overlays (Headline, orange Bar, vertikale Linie, Dots, Labels, CTAs)
-// - Keine UI-Framework-Komponenten (pure Tailwind)
-// - Leichte CSS-Animation für das Zeichnen der Linie, respektiert prefers-reduced-motion
-// - Hover über linkes/rechtes Bild hebt passenden Linienabschnitt hervor
-
 export type HeroProps = {
     leftSrc?: string;
     rightSrc?: string;
@@ -51,7 +46,6 @@ function HeroSystem({
                         fill
                         sizes="50vw, 100vw"
                         className="object-cover select-none"
-                        priority
                         draggable={false}
                     />
                 </div>
@@ -67,7 +61,6 @@ function HeroSystem({
                         fill
                         sizes="50vw, 100vw"
                         className="object-cover select-none"
-                        priority
                         draggable={false}
                     />
                 </div>
@@ -78,20 +71,10 @@ function HeroSystem({
                 className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20 flex w-full max-w-5xl flex-col items-center px-4">
                 <h1
                     id="system-heading"
-                    className="pointer-events-auto select-none text-balance text-center font-[900] tracking-[0] leading-tight relative"
-                    style={{
-                        fontFamily: "var(--font-manuka), Impact, Helvetica, sans-serif",
-                        fontSize: "clamp(40px, 6vw, 90px)",
-                        lineHeight: "80%",
-                    }}
+                    className="pointer-events-auto select-none text-balance text-center font-black leading-tight"
                 >
                     <strong
-                        className="bg-linear-to-r from-purple-500 to-purple-500
-                                          bg-no-repeat
-                                          bg-[length:100%_0.5em]
-                                          bg-[position:0_95%]
-                                          px-[10px]
-                                          font-normal uppercase font-stretch-extra-expanded">
+                        className=" bg-linear-to-r from-purple-500 to-purple-500 bg-no-repeat bg-[length:100%_0.5em] bg-[position:0_95%] px-[10px] font-bold uppercase tracking-[0.3em] text-[clamp(40px,6vw,90px)] leading-[0.8]">
                         Das System
                     </strong>
                 </h1>
@@ -125,9 +108,8 @@ function HeroSystem({
                 className="pointer-events-none absolute left-1/2 hidden -translate-x-[calc(100%+0.75rem)] text-right md:block"
                 style={{top: "16%"}}>
                 <strong
-                    className="text-white px-[3px]  uppercase font-[900] tracking-[0] leading-tight"
+                    className="text-white px-[3px] uppercase font-[900] tracking-[0] leading-tight"
                     style={{
-                        fontFamily: "var(--font-manuka), Impact, Helvetica, sans-serif",
                         fontSize: "clamp(40px, 6vw, 90px)",
                         lineHeight: "80%",
                     }}
@@ -142,7 +124,6 @@ function HeroSystem({
                 <strong
                     className="text-white px-[3px] uppercase font-[900] tracking-[0] leading-tight"
                     style={{
-                        fontFamily: "var(--font-manuka), Impact, Helvetica, sans-serif",
                         fontSize: "clamp(40px, 6vw, 90px)",
                         lineHeight: "80%",
                     }}
