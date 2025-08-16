@@ -19,7 +19,7 @@ function HeroSystem({
                         rightSrc = "/_A7_9072_quer.jpg",
                         leftAlt = "Gateway – Zentrale Steuereinheit",
                         rightAlt = "Zutrittspunkt – Türmodul mit NFC",
-                        heightClass = "h-screen",
+                        heightClass = "h-[80vh] sm:h-[90vh] lg:h-[11/12]",
                         stackOnMobile = true,
                         howItWorksHref = "#so-funktionierts",
                     }: HeroProps) {
@@ -36,7 +36,6 @@ function HeroSystem({
         >
             {/* Bild-Layer */}
             <div className={clsx("grid", gridCols, heightClass)}>
-                {/* Overlay für besseren Kontrast */}
                 <div className="relative">
                     <Image
                         src={leftSrc}
@@ -84,8 +83,9 @@ function HeroSystem({
               bg-[length:96%_0.5em]
               bg-[position:0_95%]
               px-[10px]
-              font-bold uppercase tracking-[0.4em]
-              text-[clamp(40px,6vw,90px)] leading-[0.8]
+              font-bold uppercase tracking-[0.35em]
+              text-[clamp(28px,5vw,80px)]
+              leading-[1.1] lg:leading-[0.8]
             "
                     >
                         Das System
@@ -96,14 +96,14 @@ function HeroSystem({
                     <a
                         href={howItWorksHref}
                         aria-label="Mehr erfahren: So funktioniert das System"
-                        className="inline-flex items-center rounded-md bg-white/10 px-5 py-3 text-sm font-medium backdrop-blur transition hover:bg-white/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+                        className="inline-flex items-center rounded-md bg-white/10 px-6 py-4 sm:px-5 sm:py-3 text-sm font-medium backdrop-blur transition hover:bg-white/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black"
                     >
                         So funktioniert’s
                     </a>
                 </div>
             </div>
 
-            {/* Vertikale Linie + Glow */}
+            {/* Vertikale Linie */}
             <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
                 <div className="relative h-full w-px">
                     <div className="absolute inset-0 origin-top rounded-full opacity-90 bg-gradient-to-b from-[#F133FF] via-[#7AFA27] to-[#FF7A11] animate-grow-y" />
@@ -115,7 +115,7 @@ function HeroSystem({
                 className="pointer-events-none absolute left-1/2 hidden -translate-x-[calc(100%+0.75rem)] text-right md:block top-[16%]"
                 aria-hidden="true"
             >
-                <strong className="px-[3px] font-bold uppercase text-[clamp(40px,6vw,90px)] leading-[0.8]">
+                <strong className="px-[3px] font-bold uppercase text-[clamp(20px,4vw,64px)] leading-[0.9]">
                     Das Gateway
                 </strong>
             </div>
@@ -124,12 +124,12 @@ function HeroSystem({
                 className="pointer-events-none absolute left-1/2 hidden text-left md:block bottom-[12%]"
                 aria-hidden="true"
             >
-                <strong className="px-[3px] font-bold uppercase text-[clamp(40px,6vw,90px)] leading-[0.8]">
+                <strong className="px-[3px] font-bold uppercase text-[clamp(20px,4vw,64px)] leading-[0.9]">
                     Der Zutrittspunkt
                 </strong>
             </div>
 
-            {/* Mobile Labels (nur visuell) */}
+            {/* Mobile Labels */}
             <div
                 className="absolute left-4 top-3 text-xs tracking-wide text-white/80 md:hidden"
                 aria-hidden="true"
