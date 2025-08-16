@@ -3,6 +3,7 @@ import {defaultHeaderItems} from "@/app/defaultHeaderItems";
 import SiteFooter from "@/components/nav/footer/footer";
 import CookieBanner from "@/components/CookieBanner";
 import React from "react";
+import {defaultFooterMetaLinks, defaultFooterNavLinks} from "@/app/defaultFooterItems";
 
 export type HeaderVariant = "dark" | "light";
 
@@ -30,7 +31,7 @@ export default function SiteShell({
             >
                 {children}
             </div>
-            <SiteFooter/>
+            <SiteFooter navLinks={defaultFooterNavLinks} metaLinks={defaultFooterMetaLinks}/>
             <CookieBanner/>
         </div>
     );
