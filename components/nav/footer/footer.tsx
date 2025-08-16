@@ -26,6 +26,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
+import {Loader2} from "lucide-react"; // Spinner-Icon
 
 /* ---------- Rollen-Optionen ---------- */
 const ROLE_OPTIONS = [
@@ -66,10 +67,13 @@ function SuccessMessage({onClose}: { onClose: () => void }) {
     }, [onClose]);
 
     return (
-        <Alert className="mt-4" variant="default" role="status" aria-live="polite">
-            <AlertDescription>
-                Danke! Bitte prüfe dein Postfach.
-            </AlertDescription>
+        <Alert
+            className="mt-4 animate-fade-in"
+            variant="default"
+            role="status"
+            aria-live="polite"
+        >
+            <AlertDescription>Danke! Bitte prüfe dein Postfach.</AlertDescription>
         </Alert>
     );
 }
@@ -97,18 +101,23 @@ export default function SiteFooter({
         "idle"
     );
     const [submitting, setSubmitting] = React.useState(false);
+    const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
 
     const onSubmit = async (values: FormValues) => {
         try {
             setSubmitting(true);
             setStatus("idle");
+            setErrorMessage(null);
             // TODO: API-Aufruf / Server Action
-            await new Promise((r) => setTimeout(r, 700));
+            await new Promise((r) => setTimeout(r, 1200));
+            // Simuliere: zufälliger Fehler
+            if (Math.random() > 0.7) throw new Error("Server nicht erreichbar");
             setStatus("success");
             form.reset({email: "", role: "makerspace"});
-        } catch (e) {
+        } catch (e: any) {
             console.error(e);
             setStatus("error");
+            setErrorMessage(e?.message ?? null);
         } finally {
             setSubmitting(false);
         }
@@ -144,7 +153,7 @@ export default function SiteFooter({
                     </div>
 
                     {/* Rechts: Formular */}
-                    <div className="justify-self-end w-full sm:w-auto">
+                    <div className="w-full sm:w-auto">
                         <Form {...form}>
                             <form
                                 noValidate
@@ -199,7 +208,7 @@ export default function SiteFooter({
                                                     <FormControl>
                                                         <SelectTrigger
                                                             aria-labelledby="role-label"
-                                                            className="h-11 min-w-xs justify-between"
+                                                            className="h-11 w-full sm:w-auto justify-between"
                                                         >
                                                             <SelectValue placeholder="Kategorie wählen …"/>
                                                         </SelectTrigger>
@@ -231,11 +240,12 @@ export default function SiteFooter({
 
                                     <Button
                                         type="submit"
-                                        className="px-6 bg-gradient-to-r from-brand to-brand-dark font-semibold text-white shadow-lg hover:from-brand-dark hover:to-brand-darker focus:ring-2 focus:ring-brand focus:ring-offset-2 sm:self-end"
+                                        className="px-6 bg-gradient-to-r from-brand to-brand-dark font-semibold text-white shadow-lg hover:from-brand-dark hover:to-brand-darker focus:ring-2 focus:ring-brand focus:ring-offset-2 sm:w-auto w-full flex items-center justify-center gap-2"
                                         disabled={submitting}
                                         aria-disabled={submitting}
                                         aria-busy={submitting}
                                     >
+                                        {submitting && <Loader2 className="h-4 w-4 animate-spin"/>}
                                         {submitting ? "Sende…" : "Anmelden"}
                                     </Button>
                                 </div>
@@ -246,13 +256,13 @@ export default function SiteFooter({
                                 )}
                                 {status === "error" && (
                                     <Alert
-                                        className="mt-4"
+                                        className="mt-4 animate-fade-in"
                                         variant="destructive"
                                         role="alert"
                                         aria-live="assertive"
                                     >
                                         <AlertDescription>
-                                            Etwas ist schiefgelaufen. Versuch es nochmal.
+                                            {errorMessage ?? "Etwas ist schiefgelaufen. Versuch es nochmal."}
                                         </AlertDescription>
                                     </Alert>
                                 )}
