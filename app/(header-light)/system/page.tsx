@@ -31,29 +31,44 @@ function HeroSystem({
     );
 
     return (
-        <section className="relative w-full text-white" aria-labelledby="system-heading">
+        <section
+            className="relative w-full text-white"
+            aria-labelledby="system-heading"
+            role="region"
+        >
             {/* Bild-Layer */}
             <div className={clsx("grid", gridCols, heightClass)}>
+                {/* Overlay für besseren Kontrast */}
                 <div className="relative">
                     <Image
                         src={leftSrc}
                         alt={leftAlt}
+                        role="img"
                         fill
                         sizes="(min-width: 768px) 50vw, 100vw"
                         className="object-cover select-none"
                         draggable={false}
                         priority
                     />
+                    <div
+                        aria-hidden="true"
+                        className="absolute inset-0 bg-black/40"
+                    />
                 </div>
                 <div className="relative">
                     <Image
                         src={rightSrc}
                         alt={rightAlt}
+                        role="img"
                         fill
                         sizes="(min-width: 768px) 50vw, 100vw"
                         className="object-cover select-none"
                         draggable={false}
                         priority
+                    />
+                    <div
+                        aria-hidden="true"
+                        className="absolute inset-0 bg-black/40"
                     />
                 </div>
             </div>
@@ -82,15 +97,10 @@ function HeroSystem({
                 <div className="pointer-events-auto mt-6 flex flex-wrap items-center justify-center gap-3">
                     <a
                         href={howItWorksHref}
+                        aria-label="Mehr erfahren: So funktioniert das System"
                         className="inline-flex items-center rounded-md bg-white/10 px-5 py-3 text-sm font-medium backdrop-blur transition hover:bg-white/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black"
                     >
                         So funktioniert’s
-                    </a>
-                    <a
-                        href={productsHref}
-                        className="inline-flex items-center rounded-md ring-1 ring-inset ring-white/30 px-5 py-3 text-sm font-medium transition hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black"
-                    >
-                        Produkte ansehen
                     </a>
                 </div>
             </div>
@@ -103,24 +113,36 @@ function HeroSystem({
                 </div>
             </div>
 
-            {/* Labels seitlich der Linie (nur Desktop) */}
-            <div className="pointer-events-none absolute left-1/2 hidden -translate-x-[calc(100%+0.75rem)] text-right md:block top-[16%]">
+            {/* Labels seitlich der Linie (nur Desktop, visuell) */}
+            <div
+                className="pointer-events-none absolute left-1/2 hidden -translate-x-[calc(100%+0.75rem)] text-right md:block top-[16%]"
+                aria-hidden="true"
+            >
                 <strong className="px-[3px] font-bold uppercase text-[clamp(40px,6vw,90px)] leading-[0.8]">
                     Das Gateway
                 </strong>
             </div>
 
-            <div className="pointer-events-none absolute left-1/2 hidden text-left md:block bottom-[12%]">
+            <div
+                className="pointer-events-none absolute left-1/2 hidden text-left md:block bottom-[12%]"
+                aria-hidden="true"
+            >
                 <strong className="px-[3px] font-bold uppercase text-[clamp(40px,6vw,90px)] leading-[0.8]">
                     Der Zutrittspunkt
                 </strong>
             </div>
 
-            {/* Mobile Labels */}
-            <div className="absolute left-4 top-3 text-xs tracking-wide text-white/80 md:hidden">
+            {/* Mobile Labels (nur visuell) */}
+            <div
+                className="absolute left-4 top-3 text-xs tracking-wide text-white/80 md:hidden"
+                aria-hidden="true"
+            >
                 Gateway
             </div>
-            <div className="absolute right-4 bottom-3 text-xs tracking-wide text-white/80 md:hidden">
+            <div
+                className="absolute right-4 bottom-3 text-xs tracking-wide text-white/80 md:hidden"
+                aria-hidden="true"
+            >
                 Zutrittspunkt
             </div>
         </section>
