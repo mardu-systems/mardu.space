@@ -1,9 +1,13 @@
+"use client"
 import SiteHeader from "@/components/nav/header/SiteHeader";
 import {defaultHeaderItems} from "@/app/defaultHeaderItems";
 import SiteFooter from "@/components/nav/footer/footer";
 import CookieBanner from "@/components/CookieBanner";
 import React from "react";
 import {defaultFooterMetaLinks, defaultFooterNavLinks} from "@/app/defaultFooterItems";
+import CookieConsentBanner from "@/components/CookieBanner";
+import {AnimatePresence, motion} from "framer-motion";
+import {usePathname} from "next/navigation";
 
 export type HeaderVariant = "dark" | "light";
 
@@ -14,9 +18,10 @@ export default function SiteShell({
     children: React.ReactNode;
     headerVariant?: HeaderVariant;
 }) {
+    const pathname = usePathname();
     // Daten-Attribut optional, falls du CSS abhängig davon schreiben willst
     return (
-        <div data-header-variant={headerVariant}>
+        <div data-header-variant="light">
             <SiteHeader
                 items={defaultHeaderItems}
                 logoLightSrc="/marduspace_logo_bg_black.svg"
@@ -29,10 +34,19 @@ export default function SiteShell({
                 data-theme="light"
                 style={{colorScheme: "light"}}
             >
-                {children}
+                <AnimatePresence mode="wait">
+                    <motion.div
+                        key={pathname}
+                        initial={{opacity: 0, y: 8}}
+                        animate={{opacity: 1, y: 0}}
+                        exit={{opacity: 0, y: -8}}
+                        transition={{duration: 0.25, ease: "easeOut"}}
+                    >
+                        {children}
+                    </motion.div>
+                </AnimatePresence>
             </div>
             <SiteFooter navLinks={defaultFooterNavLinks} metaLinks={defaultFooterMetaLinks}/>
-            <CookieBanner/>
         </div>
     );
 }
