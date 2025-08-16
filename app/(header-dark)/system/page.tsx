@@ -1,18 +1,16 @@
 "use client";
 
 import Image from "next/image";
-import {useState} from "react";
+import { useMemo } from "react";
+import clsx from "clsx";
 
 export type HeroProps = {
     leftSrc?: string;
     rightSrc?: string;
     leftAlt?: string;
     rightAlt?: string;
-    /** Höhe des Bereichs, z. B. "80vh" oder "640px" */
-    height?: string;
-    /** Auf Mobile stapeln (1 Spalte) */
+    heightClass?: string;
     stackOnMobile?: boolean;
-    /** IDs/Anker für CTAs */
     howItWorksHref?: string;
     productsHref?: string;
 };
@@ -22,57 +20,49 @@ function HeroSystem({
                         rightSrc = "/_A7_9072_quer.jpg",
                         leftAlt = "Gateway – Zentrale Steuereinheit",
                         rightAlt = "Zutrittspunkt – Türmodul mit NFC",
-                        height = "80vh",
+                        heightClass = "h-[80vh]",
                         stackOnMobile = true,
                         howItWorksHref = "#so-funktionierts",
                         productsHref = "#produkte",
                     }: HeroProps) {
-    const [hover, setHover] = useState<"left" | "right" | null>(null);
-    const gridCols = stackOnMobile ? "grid-cols-1 md:grid-cols-2" : "grid-cols-2";
+    const gridCols = useMemo(
+        () => (stackOnMobile ? "grid-cols-1 md:grid-cols-2" : "grid-cols-2"),
+        [stackOnMobile]
+    );
 
     return (
         <section className="relative w-full text-white" aria-labelledby="system-heading">
             {/* Bild-Layer */}
-            <div className={`grid ${gridCols}`} style={{height}}>
-                {/* Links (Gateway) */}
-                <div
-                    className="relative"
-                    onMouseEnter={() => setHover("left")}
-                    onMouseLeave={() => setHover(null)}
-                >
+            <div className={clsx("grid", gridCols, heightClass)}>
+                <div className="relative">
                     <Image
                         src={leftSrc}
                         alt={leftAlt}
                         fill
-                        sizes="50vw, 100vw"
+                        sizes="(min-width: 768px) 50vw, 100vw"
                         className="object-cover select-none"
                         draggable={false}
+                        priority
                     />
                 </div>
-
-                {/* Rechts (Zutrittspunkt) */}
-                <div
-                    className="relative"
-                    onMouseEnter={() => setHover("right")}
-                    onMouseLeave={() => setHover(null)}
-                >
+                <div className="relative">
                     <Image
                         src={rightSrc}
                         alt={rightAlt}
                         fill
-                        sizes="50vw, 100vw"
+                        sizes="(min-width: 768px) 50vw, 100vw"
                         className="object-cover select-none"
                         draggable={false}
+                        priority
                     />
                 </div>
             </div>
 
             {/* Headline + CTAs */}
-            <div
-                className="pointer-events-none absolute left-1/2 top-1/2 z-20 flex w-full max-w-5xl -translate-x-1/2 -translate-y-1/2 flex-col items-center px-4">
+            <div className="pointer-events-none absolute left-1/2 top-1/2 z-20 flex w-full max-w-5xl -translate-x-1/2 -translate-y-1/2 flex-col items-center px-4">
                 <h1
                     id="system-heading"
-                    className="pointer-events-auto select-none text-balance text-center font-black leading-tight"
+                    className="pointer-events-auto select-none text-balance text-center font-black"
                 >
                     <strong
                         className="
@@ -81,7 +71,7 @@ function HeroSystem({
               bg-[length:100%_0.5em]
               bg-[position:0_95%]
               px-[10px]
-              font-bold uppercase tracking-[0.3em]
+              font-bold uppercase tracking-[0.4em]
               text-[clamp(40px,6vw,90px)] leading-[0.8]
             "
                     >
@@ -108,25 +98,20 @@ function HeroSystem({
             {/* Vertikale Linie + Glow */}
             <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
                 <div className="relative h-full w-px">
-                    <div
-                        className="absolute inset-0 origin-top rounded-full opacity-90 bg-gradient-to-b from-[hsl(var(--brand-from,210_100%_60%))] via-[hsl(var(--brand-mid,190_100%_55%))] to-[hsl(var(--brand-to,25_100%_60%))] animate-grow-y"/>
-                    <div
-                        className="absolute -inset-x-3 inset-y-0 rounded-full bg-gradient-to-b from-[hsl(var(--brand-from,210_100%_60%))/12] via-[hsl(var(--brand-mid,190_100%_55%))/10] to-[hsl(var(--brand-to,25_100%_60%))/12] blur-2xl"/>
+                    <div className="absolute inset-0 origin-top rounded-full opacity-90 bg-gradient-to-b from-[hsl(var(--brand-from,210_100%_60%))] via-[hsl(var(--brand-mid,190_100%_55%))] to-[hsl(var(--brand-to,25_100%_60%))] animate-grow-y" />
+                    <div className="absolute -inset-x-3 inset-y-0 rounded-full bg-gradient-to-b from-[hsl(var(--brand-from,210_100%_60%))/12] via-[hsl(var(--brand-mid,190_100%_55%))/10] to-[hsl(var(--brand-to,25_100%_60%))/12] blur-2xl" />
                 </div>
             </div>
 
             {/* Labels seitlich der Linie (nur Desktop) */}
-            <div
-                className="pointer-events-none absolute left-1/2 hidden -translate-x-[calc(100%+0.75rem)] text-right md:block top-[16%]">
-                <strong
-                    className="px-[3px] font-bold uppercase  text-[clamp(40px,6vw,90px)] leading-tight">
+            <div className="pointer-events-none absolute left-1/2 hidden -translate-x-[calc(100%+0.75rem)] text-right md:block top-[16%]">
+                <strong className="px-[3px] font-bold uppercase text-[clamp(40px,6vw,90px)] leading-[0.8]">
                     Das Gateway
                 </strong>
             </div>
 
             <div className="pointer-events-none absolute left-1/2 hidden text-left md:block bottom-[12%]">
-                <strong
-                    className="px-[3px] font-bold uppercase  text-[clamp(40px,6vw,90px)] leading-tight">
+                <strong className="px-[3px] font-bold uppercase text-[clamp(40px,6vw,90px)] leading-[0.8]">
                     Der Zutrittspunkt
                 </strong>
             </div>
@@ -146,7 +131,7 @@ function HeroSystem({
 export default function Page() {
     return (
         <main>
-            <HeroSystem/>
+            <HeroSystem />
         </main>
     );
 }
