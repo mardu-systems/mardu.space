@@ -12,7 +12,6 @@ export type HeroProps = {
     heightClass?: string;
     stackOnMobile?: boolean;
     howItWorksHref?: string;
-    productsHref?: string;
 };
 
 function HeroSystem({
@@ -20,10 +19,9 @@ function HeroSystem({
                         rightSrc = "/_A7_9072_quer.jpg",
                         leftAlt = "Gateway – Zentrale Steuereinheit",
                         rightAlt = "Zutrittspunkt – Türmodul mit NFC",
-                        heightClass = "h-[80vh]",
+                        heightClass = "h-screen",
                         stackOnMobile = true,
                         howItWorksHref = "#so-funktionierts",
-                        productsHref = "#produkte",
                     }: HeroProps) {
     const gridCols = useMemo(
         () => (stackOnMobile ? "grid-cols-1 md:grid-cols-2" : "grid-cols-2"),
@@ -83,7 +81,7 @@ function HeroSystem({
                         className="
               bg-linear-to-r from-purple-500 to-purple-500
               bg-no-repeat
-              bg-[length:100%_0.5em]
+              bg-[length:96%_0.5em]
               bg-[position:0_95%]
               px-[10px]
               font-bold uppercase tracking-[0.4em]
@@ -108,8 +106,7 @@ function HeroSystem({
             {/* Vertikale Linie + Glow */}
             <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
                 <div className="relative h-full w-px">
-                    <div className="absolute inset-0 origin-top rounded-full opacity-90 bg-gradient-to-b from-[hsl(var(--brand-from,210_100%_60%))] via-[hsl(var(--brand-mid,190_100%_55%))] to-[hsl(var(--brand-to,25_100%_60%))] animate-grow-y" />
-                    <div className="absolute -inset-x-3 inset-y-0 rounded-full bg-gradient-to-b from-[hsl(var(--brand-from,210_100%_60%))/12] via-[hsl(var(--brand-mid,190_100%_55%))/10] to-[hsl(var(--brand-to,25_100%_60%))/12] blur-2xl" />
+                    <div className="absolute inset-0 origin-top rounded-full opacity-90 bg-gradient-to-b from-[#F133FF] via-[#7AFA27] to-[#FF7A11] animate-grow-y" />
                 </div>
             </div>
 
