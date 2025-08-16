@@ -111,7 +111,7 @@ export default function SiteFooter() {
                 <div className="grid grid-cols-1 gap-8 border-t border-neutral-800/70 py-12 md:grid-cols-2">
                     {/* Links: Headline */}
                     <div>
-                        <h2 className="text-balance text-4xl font-extrabold tracking-tight sm:text-5xl">
+                        <h2 className="text-balance font-bold text-4xl tracking-tight sm:text-5xl">
                             Bleib auf dem Laufenden
                         </h2>
                         <p className="mt-3 text-sm/6 text-neutral-400">
