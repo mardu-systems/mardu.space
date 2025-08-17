@@ -82,12 +82,12 @@ export default function HomePage() {
                     <div className="flex flex-col space-y-8 order-1 md:order-2">
 
                         {/* Wortwolke */}
-                        <div className="flex justify-center order-1">
+                        <div className="flex justify-center order-1 md:translate-y-[-25%] md:translate-x-[-30%]">
                             <Image
                                 src="/landing/words.svg"
                                 alt="Wortwolke"
-                                width={900}
-                                height={900}
+                                width={1000}
+                                height={1000}
                                 className="w-full h-auto drop-shadow-2xl"
                             />
                         </div>
@@ -273,7 +273,7 @@ export default function HomePage() {
                     </div>
                 </section>
                 <section className="w-full">
-                    <div className="max-w-7xl mx-auto px-6 md:px-8">
+                    <div className="max-w-7xl mx-auto">
                         <div className="w-3/5 justify-self-left">
 
                             <div className="grid grid-cols-12 gap-6 md:gap-10 items-center">
@@ -310,7 +310,7 @@ export default function HomePage() {
                 <section className="w-full">
                     <div className="max-w-7xl mx-auto px-6 md:px-8">
                         <div className="grid grid-cols-12 gap-6 md:gap-10 items-start">
-                            <div className="col-span-12 md:col-span-7 relative">
+                            <div className="col-span-11 md:col-span-6 relative">
                                 <Image
                                     src="/landing/open_badge_mardu_cloud.svg"
                                     alt="Open Educational Badges – Cloud / Gateway"
@@ -333,22 +333,53 @@ export default function HomePage() {
                                             Ein Offline-Cache sorgt für einen Betrieb auch bei einem Internetausfall.
                                         </p>
                                     </div>
-                                    <CircleNumber number={5} className="shrink-0" anchor/>
+                                    <CircleNumber number={5} className="shrink-0 translate-y-[100%] translate-x-[20%]" anchor/>
                                 </div>
                             </div>
 
                             {/* RECHTS: Gerät-Kachel + Caption */}
-                            <div className="col-span-12 md:col-span-5 flex flex-col items-center md:items-start translate-y-[35%]">
+                            <figure className="col-span-12 md:col-span-5 flex flex-col items-center md:items-start md:self-end">
                                 <Image
                                     src="/landing/blende.svg"
-                                    alt="mardu.space Gerät"
+                                    alt="mardu.space Gerät – Freischaltung"
                                     width={1200}
                                     height={1200}
-                                    className="w-[82%] md:w-[88%] lg:w-[80%] h-auto object-contain rounded-2xl"
+                                    className="w-[82%] md:w-[88%] lg:w-[80%] h-auto object-contain rounded-2xl drop-shadow-xl"
                                 />
-                                <p className="mt-4 text-base md:text-lg text-zinc-700 text-center md:text-left">
+                                <figcaption className="mt-3 text-base md:text-lg text-center md:text-left">
                                     Gerät zur Freischaltung der Maschinen
-                                </p>
+                                </figcaption>
+                            </figure>
+                        </div>
+                    </div>
+                </section>
+                <section className="w-full py-10 md:py-14">
+                    <div className="max-w-7xl mx-auto px-6 md:px-8">
+                        <div className="grid grid-cols-12 gap-6 md:gap-10 items-center">
+
+                            {/* LINKS: Illustration Person + Schweißgerät */}
+                            <div className="col-span-12 md:col-span-6 flex justify-center md:justify-start">
+                                <Image
+                                    src="/landing/person_schweiss.svg"
+                                    alt="Jochen schweißt mit freigeschaltetem Gerät"
+                                    width={1000}
+                                    height={800}
+                                    className="w-[90%] md:w-full max-w-[580px] h-auto object-contain"
+                                />
+                            </div>
+
+                            {/* RECHTS: Kreisnummer + Text */}
+                            <div className="col-span-12 md:col-span-6 flex items-start gap-4">
+                                <CircleNumber number={6} className="mt-1 shrink-0 " anchor />
+                                <div className="text-[#CA452A] text-sm sm:text-base md:text-lg leading-relaxed tracking-[0.005em] max-w-[56ch]">
+                                    <p>
+                                        Da die Berechtigung vorliegt, schaltet das <span className="whitespace-nowrap">mardu.space</span> Gerät
+                                        den Strom für das Schweißgerät frei und Jochen kann seinen Wohnzimmertisch zusammenschweißen. *
+                                    </p>
+                                    <p className="mt-4">
+                                        Dank des Kurses von Harald weiß er auch, wie man den Verzug beim Schweißen gering hält.
+                                    </p>
+                                </div>
                             </div>
 
                         </div>
