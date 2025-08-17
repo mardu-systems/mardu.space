@@ -1,259 +1,291 @@
 "use client";
 
 import Image from "next/image";
-import {motion} from "framer-motion";
 import {Button} from "@/components/ui/button";
 
-// Hinweis: Tailwind v4 Utilitys verwendet; Farbtöne gern zentral in tokens.
-export default function Home() {
+/* ------ Kreisnummer (dein Component, minimal getuned) ------ */
+export function CircleNumber({
+                                 number,
+                                 size = "w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20",
+                                 borderWidth = "border-[3px] sm:border-[4px] lg:border-[6px]",
+                                 textSize = "text-xl sm:text-3xl lg:text-4xl",
+                                 color = "border-[#CA452A] text-[#CA452A]",
+                                 className = "",
+                             }: {
+    number: string | number;
+    size?: string;
+    borderWidth?: string;
+    textSize?: string;
+    color?: string;
+    className?: string;
+}) {
+    return (
+        <div className={`${size} ${borderWidth} rounded-full ${color} flex items-center justify-center ${className}`}>
+            <span className={`${textSize} font-black leading-none tracking-tight`}>{number}</span>
+        </div>
+    );
+}
+
+/* ------ Gemeinsamer, stabiler Step-Wrapper ------ */
+function StepRow({
+                     number,
+                     orient = "left",
+                     media,
+                     children,
+                     className = "",
+                 }: {
+    number: number;
+    orient?: "left" | "right";
+    media: React.ReactNode;
+    children: React.ReactNode;
+    className?: string;
+}) {
+    const left = orient === "left";
+    return (
+        <section className={`py-16 md:py-24 ${className}`}>
+            <div className="mx-auto w-full max-w-6xl px-6">
+                <div className="grid grid-cols-12 gap-x-10 gap-y-10 items-start">
+                    {/* Rail für die Nummer (1 Spalte) */}
+                    <div
+                        className={`${left ? "col-span-1 order-1" : "col-span-1 order-3"} hidden md:flex justify-center`}>
+                        <CircleNumber number={number} className="mt-1"/>
+                    </div>
+
+                    {/* Media (5 Spalten) */}
+                    <div
+                        className={`${left ? "col-span-12 md:col-span-5 order-2" : "col-span-12 md:col-span-5 md:order-2 order-1"} flex justify-center md:justify-start`}>
+                        {media}
+                    </div>
+
+                    {/* Text (6 Spalten) */}
+                    <div
+                        className={`${left ? "col-span-12 md:col-span-6 order-3" : "col-span-12 md:col-span-6 order-3"}`}>
+                        {/* Nummer mobil oben vor dem Text */}
+                        <div className="md:hidden mb-4">
+                            <CircleNumber number={number}/>
+                        </div>
+                        <div
+                            className="text-[#CA452A] leading-7 tracking-[0.005em] text-[clamp(16px,1.05vw,19px)] max-w-[56ch] text-pretty">
+                            {children}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    );
+}
+
+/* ===================== Einzelschritte ===================== */
+
+export function Step1_Intro() {
+    return (
+        <StepRow
+            number={1}
+            orient="left"
+            media={
+                <Image
+                    src="/landing/person.svg"
+                    alt="Person"
+                    width={192}
+                    height={192}
+                    className="w-24 h-24 md:w-32 md:h-32 object-contain"
+                />
+            }
+        >
+            <p>
+                Jochen macht bei Harald einen Schweißkurs. Dieser findet in seinem heimischen Makerspace statt.
+            </p>
+            <p className="mt-4">
+                Harald ist ein im Ruhestand befindlicher professioneller Schweißer, der sein Wissen und seine Erfahrung
+                als Ausbilder im Makerspace gerne weitergibt.
+            </p>
+        </StepRow>
+    );
+}
+
+export function Step2_Badge() {
+    return (
+        <StepRow
+            number={2}
+            orient="left"
+            media={
+                <Image
+                    src="/landing/person_happy.svg"
+                    alt="Person freut sich"
+                    width={192}
+                    height={192}
+                    className="w-24 h-24 md:w-32 md:h-32 object-contain"
+                />
+            }
+        >
+            <p>
+                Jochen hat erfolgreich an dem Schweißkurs teilgenommen und weiß nun, welche Gefahren von einem
+                Schweißgerät ausgehen und wie man dieses fachgerecht verwendet.
+            </p>
+            <p className="mt-4">
+                Harald hat ihm dafür das Open-Educational-Badge „Kenntnisse im Schweißen” digital verliehen.
+            </p>
+        </StepRow>
+    );
+}
+
+export function Step3_Auth() {
+    return (
+        <StepRow
+            number={3}
+            orient="right"
+            media={
+                <div className="relative w-full max-w-[580px]">
+                    <Image
+                        src="/landing/person_schweiss_nfc.svg"
+                        alt="NFC-Authentifizierung am Gerät"
+                        width={820}
+                        height={820}
+                        className="w-full h-auto object-contain"
+                        priority
+                    />
+                    {/* Overlay nur im Bild – keine Dopplung im Seitentext */}
+                    <p className="absolute left-[clamp(10px,2vw,28px)] top-[clamp(10px,2vw,28px)] max-w-[32ch] text-[#CA452A] text-[clamp(14px,2.1vw,22px)] leading-snug whitespace-pre-line pointer-events-none select-none">
+                        {`Jochen möchte nun ein Gestell für einen Wohnzimmertisch schweißen.
+
+Hierzu authentifiziert er sich an dem mardu.space Gerät, welches dem Schweißgerät vorgeschaltet ist.`}
+                    </p>
+                </div>
+            }
+        >
+            <p>
+                Authentifizierung direkt am <span className="underline">mardu.space</span> Gerät – sicher und
+                nachvollziehbar.
+            </p>
+        </StepRow>
+    );
+}
+
+export function Step5_GatewayOEB() {
+    return (
+        <StepRow
+            number={5}
+            orient="left"
+            media={
+                <div className="relative w-full max-w-[580px]">
+                    <Image
+                        src="/landing/open_badge_mardu_cloud.svg"
+                        alt="Open Educational Badges Cloud"
+                        width={820}
+                        height={820}
+                        className="w-full h-auto object-contain"
+                    />
+                    <div
+                        className="absolute right-[clamp(10px,2vw,28px)] bottom-[clamp(10px,3vw,36px)] max-w-[30ch] text-[#CA452A] text-[clamp(14px,2.1vw,22px)] leading-snug select-none">
+                        <p>
+                            Das Gateway von{" "}
+                            <a href="https://mardu.space" target="_blank" rel="noopener noreferrer"
+                               className="underline pointer-events-auto">
+                                mardu.space
+                            </a>{" "}
+                            empfängt die Daten und fragt bei Open Education Badges an, ob die erforderlichen Kenntnisse
+                            vorliegen.
+                        </p>
+                        <p className="mt-5">
+                            Ein Offline-Cache sorgt für einen Betrieb auch bei einem <span
+                            className="underline">Internetausfall</span>.
+                        </p>
+                    </div>
+                </div>
+            }
+        >
+            <p>Zuverlässige Prüfung der Berechtigungen – auch bei temporären Verbindungsproblemen dank
+                Offline-Cache.</p>
+        </StepRow>
+    );
+}
+
+/* ===================== Seite ===================== */
+
+export default function HomePage() {
     return (
         <main className="relative min-h-screen">
-            {/* === HERO: Vollflächiges Video/Foto im Hintergrund =====================
-         TODO (Design):
-         - Lege ein dunkles Overlay über das Hero-Bild/Video, ~40–60% (AA-Kontrast).
-         - Typo-Hierarchie: Headline groß (clamp), Subline/CTA klarer Fokus.
-         TODO (Copy aus PDF):
-         - H1: „Zugriffskontrollsysteme für Makerspaces, FabLabs und Schülerlabore“
-           -> Quelle: PDF, Startseite Headline.
-         - CTA 1: „Was braucht dein Space?“ (scrollt zur Needs-Sektion)
-         - CTA 2: „Zum Konfigurator“ (Link auf /konfigurator)
-      ======================================================================= */}
+            {/* Hero */}
             <section className="relative w-full h-[calc(100vh-5rem)]">
-                <Image
-                    src="/_A7_9072_quer.jpg"
-                    alt="Hero Image"
-                    fill
-                    priority
-                    sizes="100vw"
-                    className="object-cover"
-                />
-                <div className="absolute inset-0 bg-black/50" />
-
-                {/* Hero Overlay Content */}
+                <Image src="/_A7_9072_quer.jpg" alt="Hero Image" fill priority sizes="100vw" className="object-cover"/>
+                <div className="absolute inset-0 bg-black/50"/>
                 <div className="absolute inset-0 flex items-center justify-center">
                     <div className="max-w-4xl mx-auto px-6 sm:px-8 lg:px-12 text-center text-white">
-                        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-6">
-                            Zugriffskontrollsysteme
-                        </h1>
-                        <p className="text-lg sm:text-xl text-white/90 mb-8 leading-relaxed">
-                            für Makerspaces, FabLabs und Schülerlabore
-                        </p>
-                        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                            <Button size="lg" className="px-8 bg-[#CA452A] hover:bg-[#B23A21]">
-                                WAS BRAUCHT DEIN SPACE?
-                            </Button>
+                        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-6">Zugriffskontrollsysteme</h1>
+                        <p className="text-lg sm:text-xl text-white/90 mb-8 leading-relaxed">für Makerspaces, FabLabs
+                            und Schülerlabore</p>
+                        <Button size="lg" className="px-8 bg-[#CA452A] hover:bg-[#B23A21]">Was braucht dein
+                            Space?</Button>
+                    </div>
+                </div>
+            </section>
+
+            <section className="relative w-full">
+                <div className="flex items-end justify-center">
+                    <div className="text-center">
+                        <strong className="uppercase text-[clamp(20px,4vw,80px)] leading-[0.9]">
+                            Warum brauchst du Mardu.space?
+                        </strong>
+                    </div>
+                </div>
+            </section>
+
+            <section className="relative w-full min-h-screen px-6 sm:px-12 lg:px-20 py-16">
+                <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+
+                    {/* Linke Seite: Großes Warnsymbol */}
+                    <div className="flex items-center justify-center">
+                        <Image
+                            src="/landing/warning.svg"
+                            alt="Warnsymbol Verletzungsgefahr"
+                            width={1200}
+                            height={1200}
+                            className="w-full h-auto max-w-2xl"
+                        />
+                    </div>
+
+                    {/* Rechte Seite: Text */}
+                    <div className="flex flex-col space-y-8">
+
+                        {/* Wortwolke */}
+                        {/* Wortwolke */}
+                        <div className="flex justify-center">
+                            <Image
+                                src="/landing/words.svg"
+                                alt="Wortwolke"
+                                width={900}
+                                height={900}
+                                className="w-full h-auto"
+                            />
                         </div>
+
+                        {/* Fließtext */}
+                        <div className="space-y-4 leading-relaxed text-lg">
+                            <p>
+                                Makerspaces und FabLabs eröffnen kreative Möglichkeiten, bringen
+                                aber auch Risiken durch leistungsstarke Maschinen mit sich.
+                                Besonders beim Zugang für Minderjährige ist klare Verantwortung
+                                gefragt.
+                            </p>
+                            <p>
+                                Das mardu.space System sorgt mit eigener Hard- und Software sowie
+                                einer europaweit anerkannten Kenntnisdatenbank (Open Education
+                                Badges) für sichere Zutritts- und Zugriffskontrollen. So werden nur
+                                geschulte Nutzer freigeschaltet – und ihre Qualifikationen lassen
+                                sich standortübergreifend einsetzen.
+                            </p>
+                        </div>
+
                     </div>
                 </div>
             </section>
 
 
-
-
-            {/* === PINNED WIGGLY LINE ===============================================
-         MUSS: Einzige scrol­lende Entität. Inhalt links/rechts bleibt gepinnt,
-         wechselt nur per Fade/Slide, wenn Steps passieren.
-         TODO (Integration):
-         - Falls möglich, Marker/Breakpoints an die 6 Story-Schritte + 2 Kapitel
-           (WHY + NEEDS) koppeln. So ergeben sich insgesamt 8 "Stops".
-         - Mobile: dünnere Linie, kleinere Amplitude; Desktop: wie unten.
-      ======================================================================= */}
-            <section
-                id="hero"
-                className="sticky top-0 h-screen grid place-items-center px-6"
-                aria-label="Einführung"
-            >
-                <div className="max-w-3xl text-center md:text-left md:ml-[min(14vw,200px)] space-y-6">
-                    <h1 className="text-balance text-4xl md:text-6xl font-medium">
-                        {/* TODO: setze den PDF-Text hier rein */}
-                        Zugriffskontrollsysteme für Makerspaces, FabLabs und Schülerlabore
-                    </h1>
-                    <p className="text-pretty text-base md:text-lg text-white/80">
-                        {/* TODO: Kurz-Subline (1–2 Sätze), Nutzenversprechen (Sicherheit, Freigaben, OEB). */}
-                    </p>
-                    <div className="flex gap-3 justify-center md:justify-start">
-                        {/* TODO: shadcn Button-Komponenten verwenden */}
-                        <a href="#needs" className="rounded-2xl px-5 py-2.5 bg-white text-black">
-                            Was braucht dein Space?
-                        </a>
-                        <a href="/konfigurator" className="rounded-2xl px-5 py-2.5 border border-white/40">
-                            Zum Konfigurator
-                        </a>
-                    </div>
-                </div>
-            </section>
-
-            {/* === SECTION: WHY (WARUM BRAUCHST DU MARDU.SPACE?) =====================
-         Inhalte laut PDF:
-         - Überschrift: „WARUM BRAUCHST DU MARDU.SPACE?“
-         - Schlagwort-Wolke (Abrechnung, Sicherheit, Zutritt, Kurse, ...).
-         - Absatz: Risiken leistungsstarker Maschinen / Verantwortung / Lösung
-           via eigene Hard-/Software + Open Education Badges.
-         TODO (Design):
-         - Erzeuge eine animierte Tag-Cloud: Keywords rotieren/leuchten
-           subtil (z-index unter der Copy), reagieren auf Scroll progress.
-         - Copy-Block rechts/links der Linie; Linie bleibt bewegte Referenz.
-         - A11y: Tags als dekorativ kennzeichnen (aria-hidden), Copy ist lesbar.
-      ======================================================================= */}
-            <section
-                id="why"
-                className="sticky top-0 h-screen grid place-items-center px-6"
-                aria-labelledby="why-title"
-            >
-                <div className="relative max-w-5xl md:ml-[min(24vw,280px)]">
-                    <h2 id="why-title" className="text-3xl md:text-5xl font-semibold">
-                        WARUM BRAUCHST DU MARDU.SPACE?
-                    </h2>
-
-                    {/* TODO: Word-Cloud-Hintergrund (dekorativ) */}
-                    <div className="pointer-events-none absolute -inset-x-6 -top-10 -bottom-10 opacity-25"
-                         aria-hidden="true">
-                        {/* Idee: Flex/Wrap Grid mit variablen Sizes + motion-opacity on scroll */}
-                        {/* Begriffe aus dem PDF: Abrechnung, Verletzung, Sicherheit, Grauzone,
-                Zutritt, Gewissen, Protokollierung, Aufsicht, Kurse,
-                Maschinenfreigabe, Berechtigungen, Zerstörung, Verantwortung, Entlastung */}
-                    </div>
-
-                    <motion.p
-                        className="mt-6 text-white/85 text-pretty leading-relaxed"
-                        initial={{opacity: 0, y: 8}}
-                        whileInView={{opacity: 1, y: 0}}
-                        viewport={{amount: 0.6, once: true}}
-                    >
-                        {/* TODO: 3–5 Sätze, Zusammenfassung aus PDF:
-               - Makerspaces eröffnen Chancen, aber bergen Risiken bei Maschinen.
-               - Klare Verantwortung, v. a. bei Minderjährigen.
-               - mardu.space = Hard-/Software + OEB (europaweit anerkannt) →
-                 nur geschulte Nutzer freigeschaltet; Qualifikationen standortübergreifend nutzbar. */}
-                    </motion.p>
-                </div>
-            </section>
-
-            {/* === SECTION: NEEDS (WAS BRAUCHT DEIN SPACE?) ==========================
-         TODO (Design):
-         - 3–4 interaktive "Need"-Cards (z. B. Zutritt, Maschinenfreigabe,
-           Zeiterfassung, Abrechnung/Protokollierung). Hover hebt Card hervor,
-           Linie "pulsiert" synchron (kleiner amplitude-bump).
-         - Klick scrollt später in Produkt-/Konfiguratorfluss.
-         - Inhalte können mit PDF-Keywords beschriftet werden.
-      ======================================================================= */}
-            <section
-                id="needs"
-                className="sticky top-0 h-screen grid place-items-center px-6"
-                aria-labelledby="needs-title"
-            >
-                <div className="max-w-5xl md:ml-[min(24vw,280px)] space-y-6">
-                    <h2 id="needs-title" className="text-3xl md:text-5xl font-semibold">
-                        WAS BRAUCHT DEIN SPACE?
-                    </h2>
-
-                    {/* TODO: shadcn Cards in responsiver Grid, 2x2 auf Desktop */}
-                    <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
-                        {/* Beispiele (Platzhalter): */}
-                        <div className="rounded-2xl border border-white/15 p-5">
-                            <h3 className="text-xl font-medium">Zutritt & Aufsicht</h3>
-                            <p className="text-white/75 text-sm mt-2">
-                                Alters- & Rollenbasierte Zutrittsregeln, Protokollierung.
-                            </p>
-                        </div>
-                        <div className="rounded-2xl border border-white/15 p-5">
-                            <h3 className="text-xl font-medium">Maschinenfreigabe</h3>
-                            <p className="text-white/75 text-sm mt-2">
-                                Freischaltung nur für geschulte Nutzer (Open Education Badges).
-                            </p>
-                        </div>
-                        <div className="rounded-2xl border border-white/15 p-5">
-                            <h3 className="text-xl font-medium">Zeiterfassung</h3>
-                            <p className="text-white/75 text-sm mt-2">
-                                Nutzungszeiten erfassen – Basis für Abrechnung & Verantwortung.
-                            </p>
-                        </div>
-                        <div className="rounded-2xl border border-white/15 p-5">
-                            <h3 className="text-xl font-medium">Abrechnung & Protokolle</h3>
-                            <p className="text-white/75 text-sm mt-2">
-                                Transparenz & Entlastung durch automatische Reports.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            {/* === SECTION: STORYLINE 1–6 (WIE KANN MARDU.SPACE DIR HELFEN?) =========
-         Inhalte laut PDF (jeweils als Step-Card neben der Linie):
-         1) Kurs bei Harald → Wissensweitergabe
-         2) Jochen erhält Badge „Kenntnisse im Schweißen“
-         3) Auth am vorgeschalteten mardu.space Gerät
-         4) Funkvernetzte Geräte, hohe Ausfallsicherheit
-         5) Gateway prüft OEB; Offline-Cache ermöglicht Betrieb ohne Internet
-         6) Berechtigung vorhanden → Stromfreigabe → Nutzung
-         TODO (Design/UX):
-         - Nutze position: sticky für die Step-Liste. Pro Scrollabschnitt genau
-           EINE Card prominent (opacity 1, scale 1), andere 0.4/0.96.
-         - Jede Card enthält: Step-Nummer, Kurzheadline, 1–2 Sätze, kleines Icon.
-         - Optional: Mikroverbindungen (dotted lines) von Card zur Wellenlinie.
-         - Mobile: einspaltig, größere Tapp-Zonen; Desktop: Cards alternierend
-           links/rechts der Linie.
-      ======================================================================= */}
-            <section
-                id="story"
-                className="sticky top-0 h-screen px-6"
-                aria-labelledby="story-title"
-            >
-                <div className="max-w-5xl md:ml-[min(24vw,280px)]">
-                    <h2 id="story-title" className="sr-only">
-                        Wie kann mardu.space dir helfen?
-                    </h2>
-
-                    <ol className="relative space-y-4">
-                        {/* TODO: Ersetze Platzhaltertexte mit PDF-Copy (paraphrasiert) */}
-                        <li className="rounded-2xl border border-white/15 p-5 backdrop-blur-sm">
-                            <div className="text-sm opacity-70">1</div>
-                            <h3 className="text-lg font-medium">Wissensweitergabe durch Kurse</h3>
-                            <p className="text-white/80 mt-1">
-                                Jochen belegt bei Harald einen Schweißkurs im Makerspace.
-                            </p>
-                        </li>
-                        <li className="rounded-2xl border border-white/15 p-5 backdrop-blur-sm">
-                            <div className="text-sm opacity-70">2</div>
-                            <h3 className="text-lg font-medium">Open Education Badge</h3>
-                            <p className="text-white/80 mt-1">
-                                Nach Bestehen erhält Jochen das digitale Badge „Kenntnisse im Schweißen“.
-                            </p>
-                        </li>
-                        <li className="rounded-2xl border border-white/15 p-5 backdrop-blur-sm">
-                            <div className="text-sm opacity-70">3</div>
-                            <h3 className="text-lg font-medium">Authentifizierung am Gerät</h3>
-                            <p className="text-white/80 mt-1">
-                                Vor der Maschine authentifiziert er sich am mardu.space Gerät.
-                            </p>
-                        </li>
-                        <li className="rounded-2xl border border-white/15 p-5 backdrop-blur-sm">
-                            <div className="text-sm opacity-70">4</div>
-                            <h3 className="text-lg font-medium">Funkvernetzung & Ausfallsicherheit</h3>
-                            <p className="text-white/80 mt-1">
-                                Alle Geräte sind funkvernetzt – Anfragen erreichen zuverlässig ihr Ziel.
-                            </p>
-                        </li>
-                        <li className="rounded-2xl border border-white/15 p-5 backdrop-blur-sm">
-                            <div className="text-sm opacity-70">5</div>
-                            <h3 className="text-lg font-medium">Gateway prüft OEB & Offline-Cache</h3>
-                            <p className="text-white/80 mt-1">
-                                Das Gateway validiert die Berechtigungen; Offline-Cache sichert den Betrieb.
-                            </p>
-                        </li>
-                        <li className="rounded-2xl border border-white/15 p-5 backdrop-blur-sm">
-                            <div className="text-sm opacity-70">6</div>
-                            <h3 className="text-lg font-medium">Freigabe & Nutzung</h3>
-                            <p className="text-white/80 mt-1">
-                                Berechtigung liegt vor → Strom wird freigegeben → Arbeiten kann beginnen.
-                            </p>
-                        </li>
-                    </ol>
-                </div>
-            </section>
-
-            <div className="h-[30vh]" aria-hidden/>
-            {/* Spacer fürs natürliche Scroll-Ende */}
+            {/* Steps */}
+            <Step1_Intro/>
+            <Step2_Badge/>
+            <Step3_Auth/>
+            <Step5_GatewayOEB/>
         </main>
     );
 }

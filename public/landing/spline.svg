@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="200%" height="200%" viewBox="0 0 432 4175" version="1.1" xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/"
+     style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">
+    <g transform="matrix(1,0,0,1,-1175.67,-304.083)">
+        <g transform="matrix(0.942537,0,0,0.657407,575.084,635.276)">
+            <path d="M869.085,-224.999C952.708,39.332 841.845,356.032 908.147,678.635"
+                  style="fill:none;stroke:rgb(202,69,42);stroke-width:22.37px;stroke-dasharray:44.74,67.11,0,0;"/>
+        </g>
+        <g transform="matrix(0.341604,0,0,0.712639,1150.8,1422.51)">
+            <path d="M828.716,-151.747C836.022,55.318 1035.77,64.033 1064.29,232.705"
+                  style="fill:none;stroke:rgb(202,69,42);stroke-width:22.37px;stroke-dasharray:44.74,67.11,0,0;"/>
+        </g>
+        <g transform="matrix(0.341604,0,0,0.712639,1243.84,1925.86)">
+            <path d="M862.718,-151.747C922.56,204.948 207.742,438.803 409.665,1136.26"
+                  style="fill:none;stroke:rgb(202,69,42);stroke-width:22.37px;stroke-dasharray:44.74,67.11,0,0;"/>
+        </g>
+        <g transform="matrix(0.341604,0,0,0.712639,1426.59,3154.06)">
+            <path d="M-206.775,-305.253C-575.883,2.395 -434.208,413.79 -173.255,766.034"
+                  style="fill:none;stroke:rgb(202,69,42);stroke-width:22.37px;stroke-dasharray:44.74,67.11,0,0;"/>
+        </g>
+        <g transform="matrix(0.341604,0,0,0.712639,1752.93,3906.46)">
+            <path d="M-936.298,-9.088C-813.2,174.311 -1212.5,227.217 -1384.43,551.164"
+                  style="fill:none;stroke:rgb(202,69,42);stroke-width:22.37px;stroke-dasharray:44.74,67.11,0,0;"/>
+        </g>
+        <g transform="matrix(1,0,0,1,1122.95,243.696)">
+            <circle cx="230.618" cy="140.206" r="73.57" style="fill:none;stroke:rgb(202,69,42);stroke-width:12.5px;"/>
+            <g transform="matrix(1,0,0,1,8.01096,-2.53272)">
+                <text x="200.472px" y="172.87px"
+                      style="font-family:'FuturaPT-Demi', 'Futura PT', sans-serif;font-weight:500;font-size:90.348px;fill:rgb(202,69,42);">1</text>
+            </g>
+        </g>
+        <g transform="matrix(0.942702,0,0,1,1227.63,1067.32)">
+            <circle cx="230.618" cy="140.206" r="73.57" style="fill:none;stroke:rgb(202,69,42);stroke-width:12.86px;"/>
+            <g transform="matrix(1,0,0,1,6.65575,-1.85511)">
+                <text x="200.472px" y="172.87px"
+                      style="font-family:'FuturaPT-Demi', 'Futura PT', sans-serif;font-weight:500;font-size:90.348px;fill:rgb(202,69,42);">2</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,1296.32,1553.44)">
+            <circle cx="230.618" cy="140.206" r="73.57" style="fill:none;stroke:rgb(202,69,42);stroke-width:12.5px;"/>
+            <g transform="matrix(1,0,0,1,6.3847,-2.53272)">
+                <text x="200.472px" y="172.87px"
+                      style="font-family:'FuturaPT-Demi', 'Futura PT', sans-serif;font-weight:500;font-size:90.348px;fill:rgb(202,69,42);">3</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,1174.44,2699.19)">
+            <circle cx="230.618" cy="140.206" r="73.57"
+                    style="fill:rgb(202,69,42);fill-opacity:0;stroke:rgb(202,69,42);stroke-width:12.5px;"/>
+            <g transform="matrix(1,0,0,1,4.39706,-2.53272)">
+                <text x="200.472px" y="172.87px"
+                      style="font-family:'FuturaPT-Demi', 'Futura PT', sans-serif;font-weight:500;font-size:90.348px;fill:rgb(202,69,42);">4</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,1159.31,3661.01)">
+            <circle cx="230.618" cy="140.206" r="73.57"
+                    style="fill:rgb(202,69,42);fill-opacity:0;stroke:rgb(202,69,42);stroke-width:12.5px;"/>
+            <g transform="matrix(1,0,0,1,6.29436,-3.21033)">
+                <text x="200.472px" y="172.87px"
+                      style="font-family:'FuturaPT-Demi', 'Futura PT', sans-serif;font-weight:500;font-size:90.348px;fill:rgb(202,69,42);">5</text>
+            </g>
+        </g>
+        <g transform="matrix(1,0,0,1,1024.87,4259)">
+            <circle cx="230.618" cy="140.206" r="73.57" style="fill:none;stroke:rgb(202,69,42);stroke-width:12.5px;"/>
+            <g transform="matrix(1,0,0,1,4.57775,-2.3972)">
+                <text x="200.472px" y="172.87px"
+                      style="font-family:'FuturaPT-Demi', 'Futura PT', sans-serif;font-weight:500;font-size:90.348px;fill:rgb(202,69,42);">6</text>
+            </g>
+        </g>
+    </g>
+</svg>
