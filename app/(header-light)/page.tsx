@@ -2,34 +2,9 @@
 
 import Image from "next/image";
 import {Button} from "@/components/ui/button";
-import React, {useEffect, useRef, useState} from "react";
-
-/* ------ Kreisnummer (dein Component, minimal getuned) ------ */
-export function CircleNumber({
-                                 number,
-                                 size = "w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20",
-                                 borderWidth = "border-[3px] sm:border-[4px] lg:border-[6px]",
-                                 textSize = "text-xl sm:text-3xl lg:text-4xl",
-                                 color = "border-[#CA452A] text-[#CA452A]",
-                                 className = "",
-                                 anchor = false,
-                             }: {
-    number: string | number;
-    size?: string;
-    borderWidth?: string;
-    textSize?: string;
-    color?: string;
-    className?: string;
-    anchor?: boolean;
-}) {
-    return (
-        <div
-            data-timeline-anchor={anchor ? "true" : undefined}
-            className={`${size} ${borderWidth} rounded-full ${color} flex items-center justify-center ${className}`}>
-            <span className={`${textSize} font-black leading-none tracking-tight`}>{number}</span>
-        </div>
-    );
-}
+import {useRef} from "react";
+import CircleNumber from "@/components/CircleNumber";
+import DashedConnector from "@/components/DashedConnector";
 
 /* ===================== Seite ===================== */
 
@@ -198,7 +173,7 @@ export default function HomePage() {
                                         Schweißgerät ausgehen und wie man dieses fachgerecht verwendet.
                                     </p>
                                     <p className="mt-4">
-                                        Harald hat ihm dafür das Open-Educational-Badge „Kenntnisse im Schweißen"
+                                        Harald hat ihm dafür das Open-Educational-Badge „Kenntnisse im Schweißen“
                                         digital
                                         verliehen.
                                     </p>
@@ -333,12 +308,14 @@ export default function HomePage() {
                                             Ein Offline-Cache sorgt für einen Betrieb auch bei einem Internetausfall.
                                         </p>
                                     </div>
-                                    <CircleNumber number={5} className="shrink-0 translate-y-[100%] translate-x-[20%]" anchor/>
+                                    <CircleNumber number={5} className="shrink-0 translate-y-[100%] translate-x-[20%]"
+                                                  anchor/>
                                 </div>
                             </div>
 
                             {/* RECHTS: Gerät-Kachel + Caption */}
-                            <figure className="col-span-12 md:col-span-5 flex flex-col items-center md:items-start md:self-end">
+                            <figure
+                                className="col-span-12 md:col-span-5 flex flex-col items-center md:items-start md:self-end">
                                 <Image
                                     src="/landing/blende.svg"
                                     alt="mardu.space Gerät – Freischaltung"
@@ -370,14 +347,18 @@ export default function HomePage() {
 
                             {/* RECHTS: Kreisnummer + Text */}
                             <div className="col-span-12 md:col-span-6 flex items-start gap-4">
-                                <CircleNumber number={6} className="mt-1 shrink-0 " anchor />
-                                <div className="text-[#CA452A] text-sm sm:text-base md:text-lg leading-relaxed tracking-[0.005em] max-w-[56ch]">
+                                <CircleNumber number={6} className="mt-1 shrink-0 " anchor/>
+                                <div
+                                    className="text-[#CA452A] text-sm sm:text-base md:text-lg leading-relaxed tracking-[0.005em] max-w-[56ch]">
                                     <p>
-                                        Da die Berechtigung vorliegt, schaltet das <span className="whitespace-nowrap">mardu.space</span> Gerät
-                                        den Strom für das Schweißgerät frei und Jochen kann seinen Wohnzimmertisch zusammenschweißen. *
+                                        Da die Berechtigung vorliegt, schaltet das <span
+                                        className="whitespace-nowrap">mardu.space</span> Gerät
+                                        den Strom für das Schweißgerät frei und Jochen kann seinen Wohnzimmertisch
+                                        zusammenschweißen. *
                                     </p>
                                     <p className="mt-4">
-                                        Dank des Kurses von Harald weiß er auch, wie man den Verzug beim Schweißen gering hält.
+                                        Dank des Kurses von Harald weiß er auch, wie man den Verzug beim Schweißen
+                                        gering hält.
                                     </p>
                                 </div>
                             </div>
@@ -385,7 +366,7 @@ export default function HomePage() {
                         </div>
                     </div>
                 </section>
-                {/* === Förderung / EXIST === */}
+
                 <section id="foerderung" className="w-full py-12 md:py-16">
                     <div className="max-w-7xl mx-auto px-6 md:px-8">
 
@@ -447,140 +428,15 @@ export default function HomePage() {
 
                         {/* Förderhinweis-Text */}
                         <p className="mt-10 text-sm md:text-base leading-relaxed text-zinc-700 max-w-4xl text-center mx-auto">
-                            Die Europäische Union fördert zusammen mit dem Bundesministerium für Wirtschaft und Klimaschutz
-                            über den Europäischen Sozialfonds Plus (ESF Plus) das Programm <em>Existenzgründungen aus der
+                            Die Europäische Union fördert zusammen mit dem Bundesministerium für Wirtschaft und
+                            Klimaschutz
+                            über den Europäischen Sozialfonds Plus (ESF Plus) das Programm <em>Existenzgründungen aus
+                            der
                             Wissenschaft (EXIST)</em> in Deutschland.
                         </p>
-
                     </div>
                 </section>
             </div>
         </main>
-    );
-}
-
-
-function DashedConnector({
-                             rootRef,
-                             anchorSelector = "[data-timeline-anchor]",
-                             stroke = "#CA452A",
-                             strokeWidth = 2,
-                             dash = "6 8",
-                             offsetBeforePoint = 16,
-                         }: {
-    rootRef: React.RefObject<HTMLElement | null>;
-    anchorSelector?: string;
-    stroke?: string;
-    strokeWidth?: number;
-    dash?: string;
-    offsetBeforePoint?: number;
-}) {
-    const svgRef = useRef<SVGSVGElement>(null);
-    const [box, setBox] = useState<{ w: number; h: number }>({w: 0, h: 0});
-
-    useEffect(() => {
-        const root = rootRef.current;
-        if (!root) return;
-
-        const getAnchors = () =>
-            Array.from(root.querySelectorAll(anchorSelector)) as HTMLElement[];
-
-        const update = () => {
-            const r = root.getBoundingClientRect();
-            setBox({w: r.width, h: r.height});
-
-            const points = getAnchors()
-                // nur sichtbare (Desktop)
-                .filter(el => getComputedStyle(el).display !== "none")
-                .map(el => {
-                    const b = el.getBoundingClientRect();
-                    return {
-                        x: b.left + b.width / 2 - r.left + root.scrollLeft,
-                        y: b.top + b.height / 2 - r.top + root.scrollTop,
-                    };
-                })
-                .sort((a, b) => a.y - b.y);
-
-            const pathSegments = buildIndividualConnections(points, offsetBeforePoint);
-
-            // Entferne alle bestehenden Pfade
-            const svg = svgRef.current;
-            if (svg) {
-                svg.querySelectorAll("path").forEach(path => path.remove());
-
-                // Füge neue Pfad-Segmente hinzu
-                pathSegments.forEach(pathData => {
-                    const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
-                    path.setAttribute("d", pathData);
-                    path.setAttribute("fill", "none");
-                    path.setAttribute("stroke", stroke);
-                    path.setAttribute("stroke-width", strokeWidth.toString());
-                    path.setAttribute("stroke-dasharray", dash);
-                    path.setAttribute("vector-effect", "non-scaling-stroke");
-                    svg.appendChild(path);
-                });
-            }
-        };
-
-        const buildIndividualConnections = (pts: { x: number; y: number }[], offset: number) => {
-            if (pts.length < 2) return [];
-
-            const segments: string[] = [];
-
-            // Erstelle separate Verbindungen zwischen jeweils zwei aufeinanderfolgenden Punkten
-            for (let i = 0; i < pts.length - 1; i++) {
-                const startPoint = {
-                    x: pts[i].x,
-                    y: pts[i].y + offset
-                };
-
-                const endPoint = {
-                    x: pts[i + 1].x,
-                    y: pts[i + 1].y - offset
-                };
-
-                // Erstelle eine glatte Kurve zwischen den beiden Punkten
-                const midY = (startPoint.y + endPoint.y) / 2;
-                const pathData = `M ${startPoint.x},${startPoint.y} C ${startPoint.x},${midY} ${endPoint.x},${midY} ${endPoint.x},${endPoint.y}`;
-
-                segments.push(pathData);
-            }
-
-            return segments;
-        };
-
-        // Reagiert auf Größenänderungen
-        const rootRO = new ResizeObserver(update);
-        rootRO.observe(root);
-
-        const anchorROs: ResizeObserver[] = [];
-        const anchorsNow = getAnchors();
-        anchorsNow.forEach(el => {
-            const ro = new ResizeObserver(update);
-            ro.observe(el);
-            anchorROs.push(ro);
-        });
-
-        window.addEventListener("resize", update);
-        window.addEventListener("load", update);
-        update();
-
-        return () => {
-            window.removeEventListener("resize", update);
-            window.removeEventListener("load", update);
-            rootRO.disconnect();
-            anchorROs.forEach(ro => ro.disconnect());
-        };
-    }, [rootRef, anchorSelector]);
-
-    return (
-        <svg
-            ref={svgRef}
-            className="absolute inset-0 pointer-events-none hidden md:block"
-            width="100%"
-            height="100%"
-            viewBox={`0 0 ${Math.max(1, box.w)} ${Math.max(1, box.h)}`}
-            preserveAspectRatio="none"
-        />
     );
 }
