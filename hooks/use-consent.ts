@@ -1,10 +1,6 @@
 import * as React from "react";
-import ReactGA from "react-ga4";
 import type { ConsentPreferences } from "@/types/consent";
 import { setConsent } from "@/lib/consent";
-
-const GA_MEASUREMENT_ID =
-    process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || "G-XXXXXXX";
 
 function clearGACookies() {
     document.cookie.split(";").forEach((cookie) => {
@@ -44,12 +40,7 @@ export function useConsent() {
         const current = prefs.analytics;
         const prev = prevAnalytics.current;
 
-        if (current && !prev) {
-            if (!ReactGA.isInitialized) {
-                ReactGA.initialize(GA_MEASUREMENT_ID);
-            }
-            ReactGA.send("pageview");
-        } else if (!current && prev) {
+        if (!current && prev) {
             clearGACookies();
         }
 
