@@ -187,7 +187,7 @@ export default function HomePage() {
                                     <Image src="/landing/HaraldundJochen.jpg" alt="Harald zeigt Jochen das Schweißen"
                                            width={1200}
                                            height={1200} className="w-full h-auto drop-shadow-2xl" loading="lazy"/>
-                                    <p className="font-futura-normal text-sm sm:text-lg text-center">
+                                    <p className="font-futura-normal mt-3 text-center md:text-left text-xl leading-snug">
                                         Wissensweitergabe durch Kurse
                                     </p>
                                 </div>
@@ -212,7 +212,7 @@ export default function HomePage() {
                                     />
                                 </div>
 
-                                <p className="font-futura-normal mt-6 text-center md:text-left text-xl leading-snug">
+                                <p className="font-futura-normal mt-3 text-center md:text-left text-xl leading-snug">
                                     <span className="block">Webplattform Open Educational Badges</span>
                                     <span className="block text-zinc-600">Zur Ausstellung der Berechtigungen</span>
                                 </p>
@@ -325,7 +325,7 @@ export default function HomePage() {
                                     loading="lazy"
                                 />
                                 <figcaption
-                                    className="mt-3 font-futura-normal text-base md:text-lg text-center md:text-right z-20">
+                                    className="font-futura-normal mt-3 text-center md:text-left text-xl leading-snug">
                                     Gerät zur Freischaltung der Maschinen
                                 </figcaption>
                             </figure>
