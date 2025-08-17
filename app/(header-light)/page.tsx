@@ -102,7 +102,7 @@ export default function HomePage() {
 
             <div ref={timelineRef} className="relative">
                 <DashedConnector rootRef={timelineRef} offsetBeforePoint={50} strokeWidth={5}/>
-                <section className="w-full py-10 md:py-14 z-20">
+                <section className="w-full py-8 md:py-10 z-20">
                     <div className="max-w-7xl mx-auto px-6 md:px-8">
                         <div className="grid grid-cols-12 gap-6 md:gap-10 items-center">
                             <div className="col-span-2 flex justify-center md:justify-start">
@@ -196,7 +196,7 @@ export default function HomePage() {
                     </div>
                 </section>
 
-                <section className="w-full pt-10 md:pt-14 z-20">
+                <section className="w-full pt-6 md:pt-8 z-20">
                     <div className="max-w-7xl mx-auto px-6 md:px-8">
                         <div className="grid grid-cols-12 gap-6 md:gap-10 items-start">
                             <div className="col-span-12 md:col-span-6 flex flex-col items-center md:items-start">
@@ -232,7 +232,7 @@ export default function HomePage() {
                                     </div>
                                 </div>
 
-                                <div className="relative mt-8 md:mt-10 flex items-end justify-end translate-y-[-35%]">
+                                <div className="relative -mt-12 md:-mt-20 md:mb-[-16px] flex items-end justify-end">
                                     <Image
                                         src="/landing/person_schweiss_nfc.svg"
                                         alt="Illustration einer Person, die sich per NFC am Gerät authentifiziert"
@@ -246,11 +246,10 @@ export default function HomePage() {
                         </div>
                     </div>
                 </section>
-                <section className="w-full z-20">
-                    <div className="max-w-7xl mx-auto">
-                        <div className="w-full md:w-4/6 justify-self-left">
-
-                            <div className="grid grid-cols-12 gap-6 md:gap-10 items-center">
+                <section className="w-full z-20  md:-mt-10">
+                    <div className="max-w-7xl mx-auto px-6 md:px-8">
+                        <div className="w-full md:w-4/6">
+                            <div className="grid grid-cols-12 gap-4 md:gap-6 items-center">
 
                                 {/* LINKS: Icon/Illustration */}
                                 <div className="col-span-3 md:col-span-2 flex justify-center md:justify-start">
@@ -282,7 +281,7 @@ export default function HomePage() {
                         </div>
                     </div>
                 </section>
-                <section className="w-full z-20">
+                <section className="w-full z-20 -mt-8 md:-mt-12">
                     <div className="max-w-7xl mx-auto px-6 md:px-8">
                         <div className="grid grid-cols-12 gap-6 md:gap-10 items-start">
                             <div className="col-span-11 md:col-span-6 relative">
@@ -296,7 +295,7 @@ export default function HomePage() {
                                 />
 
                                 <div
-                                    className="absolute font-futura-normal text-[#CA452A] text-sm sm:text-base leading-snug tracking-[0.005em] flex items-start gap-4 max-w-[280px] md:max-w-[340px] left-[45%] bottom-[5%]">
+                                    className="absolute font-futura-normal text-[#CA452A] text-sm sm:text-base leading-snug tracking-[0.005em] flex items-start gap-4 max-w-[280px] md:max-w-[340px] left-[45%] bottom-[7%] pointer-events-none">
                                     <div className="flex-1">
                                         <p>
                                             Das Gateway von <span
