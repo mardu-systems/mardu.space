@@ -223,7 +223,7 @@ export default function HomePage() {
             <section className="relative w-full">
                 <div className="flex items-end justify-center">
                     <div className="text-center">
-                        <strong className="uppercase text-[clamp(20px,4vw,80px)] leading-[0.9]">
+                        <strong className="uppercase font-futura-normal text-[clamp(20px,4vw,80px)] md:leading-[0.9]">
                             Warum brauchst du Mardu.space?
                         </strong>
                     </div>
@@ -234,22 +234,21 @@ export default function HomePage() {
                 <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
 
                     {/* Linke Seite: Großes Warnsymbol */}
-                    <div className="flex items-center justify-center">
+                    <div className="flex items-center justify-center order-2 md:order-1">
                         <Image
                             src="/landing/warning.svg"
                             alt="Warnsymbol Verletzungsgefahr"
                             width={1200}
                             height={1200}
-                            className="w-full h-auto max-w-2xl"
+                            className="w-1/2 h-auto md:w-full md:max-w-2xl"
                         />
                     </div>
 
                     {/* Rechte Seite: Text */}
-                    <div className="flex flex-col space-y-8">
+                    <div className="flex flex-col space-y-8 order-1 md:order-2">
 
                         {/* Wortwolke */}
-                        {/* Wortwolke */}
-                        <div className="flex justify-center">
+                        <div className="flex justify-center order-1">
                             <Image
                                 src="/landing/words.svg"
                                 alt="Wortwolke"
@@ -260,7 +259,7 @@ export default function HomePage() {
                         </div>
 
                         {/* Fließtext */}
-                        <div className="space-y-4 leading-relaxed text-lg">
+                        <div className="space-y-3 sm:space-y-4 leading-relaxed text-sm sm:text-base md:text-lg order-3 hidden md:block">
                             <p>
                                 Makerspaces und FabLabs eröffnen kreative Möglichkeiten, bringen
                                 aber auch Risiken durch leistungsstarke Maschinen mit sich.
@@ -277,10 +276,24 @@ export default function HomePage() {
                         </div>
 
                     </div>
+                    {/* Fließtext */}
+                    <div className="space-y-3 sm:space-y-4 leading-relaxed text-sm sm:text-base md:text-lg order-3 md:hidden">
+                        <p>
+                            Makerspaces und FabLabs eröffnen kreative Möglichkeiten, bringen
+                            aber auch Risiken durch leistungsstarke Maschinen mit sich.
+                            Besonders beim Zugang für Minderjährige ist klare Verantwortung
+                            gefragt.
+                        </p>
+                        <p>
+                            Das mardu.space System sorgt mit eigener Hard- und Software sowie
+                            einer europaweit anerkannten Kenntnisdatenbank (Open Education
+                            Badges) für sichere Zutritts- und Zugriffskontrollen. So werden nur
+                            geschulte Nutzer freigeschaltet – und ihre Qualifikationen lassen
+                            sich standortübergreifend einsetzen.
+                        </p>
+                    </div>
                 </div>
             </section>
-
-
             {/* Steps */}
             <Step1_Intro/>
             <Step2_Badge/>
