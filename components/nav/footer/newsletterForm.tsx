@@ -50,13 +50,12 @@ const ROLE_OPTIONS = [
 const ROLE_VALUES = ROLE_OPTIONS.map((r) => r.value) as [string, ...string[]];
 
 // Precompute groups once
-const ROLE_GROUPS = ROLE_OPTIONS.reduce<Record<string, typeof ROLE_OPTIONS>>(
+const ROLE_GROUPS: Record<string, typeof ROLE_OPTIONS[number][]> = ROLE_OPTIONS.reduce(
     (acc, option) => {
-        acc[option.group] = acc[option.group] || [];
-        acc[option.group].push(option);
+        (acc[option.group] = acc[option.group] || []).push(option);
         return acc;
     },
-    {}
+    {} as Record<string, typeof ROLE_OPTIONS[number][]>,
 );
 
 // ---------- Schema ----------
@@ -91,7 +90,7 @@ export default function NewsletterForm() {
     const [submitting, setSubmitting] = React.useState(false);
     const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
 
-    const onSubmit = async (values: FormValues) => {
+    const onSubmit = async () => {
         try {
             setSubmitting(true);
             setStatus("idle");
@@ -102,9 +101,9 @@ export default function NewsletterForm() {
 
             setStatus("success");
             form.resetField("email");
-        } catch (e: any) {
+        } catch (e: unknown) {
             setStatus("error");
-            setErrorMessage(e?.message ?? null);
+            setErrorMessage(e instanceof Error ? e.message : null);
         } finally {
             setSubmitting(false);
         }

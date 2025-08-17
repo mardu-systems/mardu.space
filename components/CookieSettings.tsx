@@ -3,6 +3,7 @@
 import {useEffect, useState} from "react";
 import {Button} from "@/components/ui/button";
 import {Switch} from "@/components/ui/switch";
+import {Tooltip, TooltipTrigger, TooltipContent} from "@/components/ui/tooltip";
 import type {ConsentPreferences} from "@/types/consent";
 import Link from "next/link";
 
@@ -51,7 +52,7 @@ export default function CookieSettings({onSave}: CookieSettingsProps) {
             {/* Mobile / small: Bottom-sheet Card */}
             <div
                 className="
-          fixed inset-x-0 bottom-0 z-[9999] md:hidden
+          fixed inset-x-0 bottom-0 z-[9998] md:hidden
           rounded-t-2xl border border-border bg-[#DDDDDD] backdrop-blur
           shadow-lg
           px-4 pt-4 pb-[calc(1rem+env(safe-area-inset-bottom))]
@@ -82,7 +83,14 @@ export default function CookieSettings({onSave}: CookieSettingsProps) {
 
                     <div className="mt-2 space-y-3 text-sm">
                         <div className="flex items-center justify-between">
-                            <span>Statistik-Cookies</span>
+                            <Tooltip>
+                                <TooltipTrigger asChild>
+                                    <span>Statistik-Cookies</span>
+                                </TooltipTrigger>
+                                <TooltipContent className="z-[10000]">
+                                    Helfen uns zu verstehen, wie unsere Website genutzt wird.
+                                </TooltipContent>
+                            </Tooltip>
                             <Switch
                                 checked={prefs.analytics}
                                 onCheckedChange={(v) => updatePrefs("analytics", v)}
@@ -90,7 +98,14 @@ export default function CookieSettings({onSave}: CookieSettingsProps) {
                             />
                         </div>
                         <div className="flex items-center justify-between">
-                            <span>Marketing-Cookies</span>
+                            <Tooltip>
+                                <TooltipTrigger asChild>
+                                    <span>Marketing-Cookies</span>
+                                </TooltipTrigger>
+                                <TooltipContent className="z-[10000]">
+                                    Ermöglichen personalisierte Werbung und Tracking.
+                                </TooltipContent>
+                            </Tooltip>
                             <Switch
                                 checked={prefs.marketing}
                                 onCheckedChange={(v) => updatePrefs("marketing", v)}
@@ -98,7 +113,14 @@ export default function CookieSettings({onSave}: CookieSettingsProps) {
                             />
                         </div>
                         <div className="flex items-center justify-between opacity-70">
-                            <span>Notwendige Cookies</span>
+                            <Tooltip>
+                                <TooltipTrigger asChild>
+                                    <span>Notwendige Cookies</span>
+                                </TooltipTrigger>
+                                <TooltipContent className="z-[10000]">
+                                    Erforderlich für grundlegende Funktionen der Website.
+                                </TooltipContent>
+                            </Tooltip>
                             <Switch checked disabled aria-label="Notwendige Cookies (immer aktiv)" />
                         </div>
                     </div>
@@ -176,7 +198,14 @@ export default function CookieSettings({onSave}: CookieSettingsProps) {
 
                         <div className="mt-2 w-full max-w-[340px] lg:max-w-[420px] space-y-2 text-sm">
                             <div className="flex items-center justify-between">
-                                <span>Statistik-Cookies</span>
+                                <Tooltip>
+                                    <TooltipTrigger asChild>
+                                        <span>Statistik-Cookies</span>
+                                    </TooltipTrigger>
+                                    <TooltipContent>
+                                        Helfen uns zu verstehen, wie unsere Website genutzt wird.
+                                    </TooltipContent>
+                                </Tooltip>
                                 <Switch
                                     checked={prefs.analytics}
                                     onCheckedChange={(v) => updatePrefs("analytics", v)}
@@ -184,7 +213,14 @@ export default function CookieSettings({onSave}: CookieSettingsProps) {
                                 />
                             </div>
                             <div className="flex items-center justify-between">
-                                <span>Marketing-Cookies</span>
+                                <Tooltip>
+                                    <TooltipTrigger asChild>
+                                        <span>Marketing-Cookies</span>
+                                    </TooltipTrigger>
+                                    <TooltipContent>
+                                        Ermöglichen personalisierte Werbung und Tracking.
+                                    </TooltipContent>
+                                </Tooltip>
                                 <Switch
                                     checked={prefs.marketing}
                                     onCheckedChange={(v) => updatePrefs("marketing", v)}
@@ -192,7 +228,14 @@ export default function CookieSettings({onSave}: CookieSettingsProps) {
                                 />
                             </div>
                             <div className="flex items-center justify-between opacity-70">
-                                <span>Notwendige Cookies</span>
+                                <Tooltip>
+                                    <TooltipTrigger asChild>
+                                        <span>Notwendige Cookies</span>
+                                    </TooltipTrigger>
+                                    <TooltipContent>
+                                        Erforderlich für grundlegende Funktionen der Website.
+                                    </TooltipContent>
+                                </Tooltip>
                                 <Switch checked disabled aria-label="Notwendige Cookies (immer aktiv)" />
                             </div>
                         </div>

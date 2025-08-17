@@ -6,7 +6,11 @@ import Image from "next/image";
 import NewsletterForm from "@/components/nav/footer/newsletterForm";
 
 /* ---------- Footer Props ---------- */
-export type FooterLink = { href: string; label: string };
+export type FooterLink = {
+    href: string;
+    label: string;
+    onClick?: React.MouseEventHandler<HTMLAnchorElement>;
+};
 type SiteFooterProps = {
     navLinks?: ReadonlyArray<FooterLink>;
     metaLinks?: ReadonlyArray<FooterLink>;
@@ -55,14 +59,24 @@ export default function SiteFooter({
                         <nav aria-label="Footer Navigation"
                              className="flex flex-wrap gap-x-8 gap-y-3 text-sm text-neutral-300">
                             {navLinks.map((link) => (
-                                <Link key={link.href} href={link.href} className="hover:text-white">
+                                <Link
+                                    key={link.href}
+                                    href={link.href}
+                                    className="hover:text-white"
+                                    onClick={link.onClick}
+                                >
                                     {link.label}
                                 </Link>
                             ))}
                         </nav>
                         <div className="flex flex-wrap items-center gap-6 text-sm text-neutral-300">
                             {metaLinks.map((link) => (
-                                <Link key={link.href} href={link.href} className="hover:text-white">
+                                <Link
+                                    key={link.href}
+                                    href={link.href}
+                                    className="hover:text-white"
+                                    onClick={link.onClick}
+                                >
                                     {link.label}
                                 </Link>
                             ))}

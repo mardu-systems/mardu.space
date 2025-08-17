@@ -19,3 +19,7 @@ export function event(action: string, params?: Record<string, unknown>) {
     if (!initialized) return;
     ReactGA.event(action, params);
 }
+
+export function resetGA() {
+    initialized = false;
+}

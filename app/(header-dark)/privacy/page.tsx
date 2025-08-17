@@ -2,6 +2,8 @@ import {Card, CardHeader, CardTitle, CardContent} from "@/components/ui/card"
 import Link from "next/link"
 import {Button} from "@/components/ui/button"
 
+/* eslint-disable react/no-unescaped-entities */
+
 export default function Privacy() {
     return (
         <main className="min-h-screen p-4 bg-gray-50">
@@ -164,10 +166,16 @@ export default function Privacy() {
                             </div>
                         </section>
 
-                        <div className="flex justify-center pt-6">
+                        <div className="flex flex-col sm:flex-row justify-center gap-4 pt-6">
                             <Link href="/">
                                 <Button variant="outline">Zurück zur Startseite</Button>
                             </Link>
+                            <Button
+                                variant="ghost"
+                                onClick={() => window.openCookieSettings?.()}
+                            >
+                                Cookie-Einstellungen
+                            </Button>
                         </div>
                     </CardContent>
                 </Card>

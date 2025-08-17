@@ -7,6 +7,12 @@ import { Button } from "@/components/ui/button";
 import { useConsent } from "@/hooks/use-consent";
 import CookieSettings from "@/components/CookieSettings";
 
+declare global {
+    interface Window {
+        openCookieSettings?: () => void;
+    }
+}
+
 export default function CookieConsentBanner() {
     const { prefs, setPrefs } = useConsent();
     const [visible, setVisible] = useState(false);
@@ -17,6 +23,16 @@ export default function CookieConsentBanner() {
             setVisible(true);
         }
     }, [prefs]);
+
+    useEffect(() => {
+        window.openCookieSettings = () => {
+            setVisible(true);
+            setShowSettings(true);
+        };
+        return () => {
+            delete window.openCookieSettings;
+        };
+    }, []);
 
     async function handleSave(newPrefs: ConsentPreferences) {
         await setPrefs(newPrefs);
