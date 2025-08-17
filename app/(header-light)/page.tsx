@@ -385,6 +385,75 @@ export default function HomePage() {
                         </div>
                     </div>
                 </section>
+                {/* === Förderung / EXIST === */}
+                <section id="foerderung" className="w-full py-12 md:py-16">
+                    <div className="max-w-7xl mx-auto px-6 md:px-8">
+
+                        <header className="mb-8">
+                            <h2 className="text-lg md:text-xl font-semibold">Gefördert durch:</h2>
+                        </header>
+
+                        {/* Logos in einer Reihe */}
+                        <div className="flex flex-wrap items-center justify-center gap-10 md:gap-16">
+
+                            {/* BMWK */}
+                            <a
+                                href="https://www.bmwk.de/"
+                                target="_blank"
+                                rel="noreferrer noopener"
+                                className="block w-40 md:w-48"
+                            >
+                                <Image
+                                    src="/logos/bmwk.svg"
+                                    alt="Bundesministerium für Wirtschaft und Klimaschutz"
+                                    width={400}
+                                    height={200}
+                                    className="w-full h-auto object-contain"
+                                />
+                            </a>
+
+                            {/* EU / ESF Plus */}
+                            <a
+                                href="https://www.esf.de/portal/DE/ESF-Plus-2021-2027/Liste-der-Vorhaben/inhalt.html"
+                                target="_blank"
+                                rel="noreferrer noopener"
+                                className="block w-40 md:w-48"
+                            >
+                                <Image
+                                    src="/logos/eu_esf.svg"
+                                    alt="Europäische Union – Europäischer Sozialfonds Plus (ESF Plus)"
+                                    width={400}
+                                    height={200}
+                                    className="w-full h-auto object-contain"
+                                />
+                            </a>
+
+                            {/* EXIST */}
+                            <a
+                                href="https://www.exist.de/"
+                                target="_blank"
+                                rel="noreferrer noopener"
+                                className="block w-40 md:w-48"
+                            >
+                                <Image
+                                    src="/logos/exist.svg"
+                                    alt="EXIST – Existenzgründungen aus der Wissenschaft"
+                                    width={400}
+                                    height={200}
+                                    className="w-full h-auto object-contain"
+                                />
+                            </a>
+                        </div>
+
+                        {/* Förderhinweis-Text */}
+                        <p className="mt-10 text-sm md:text-base leading-relaxed text-zinc-700 max-w-4xl text-center mx-auto">
+                            Die Europäische Union fördert zusammen mit dem Bundesministerium für Wirtschaft und Klimaschutz
+                            über den Europäischen Sozialfonds Plus (ESF Plus) das Programm <em>Existenzgründungen aus der
+                            Wissenschaft (EXIST)</em> in Deutschland.
+                        </p>
+
+                    </div>
+                </section>
             </div>
         </main>
     );
