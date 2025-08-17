@@ -19,10 +19,12 @@ export default function HomePage() {
                 <div className="absolute inset-0 bg-black/50"/>
                 <div className="absolute inset-0 flex items-center justify-center">
                     <div className="max-w-4xl mx-auto px-6 sm:px-8 lg:px-12 text-center text-white">
-                        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-futura-heavy leading-tight mb-6">Zugriffskontrollsysteme</h1>
-                        <p className="font-futura-normal text-lg sm:text-xl text-white/90 mb-8 leading-snug">für
-                            Makerspaces, FabLabs
-                            und Schülerlabore</p>
+                        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-6">
+                            mardu.space: Zugriffskontrollsysteme für Makerspaces, FabLabs und Schülerlabore
+                        </h1>
+                        <p className="text-lg sm:text-xl text-white/90 mb-8 leading-relaxed">
+                            Sichere Zutritts- und Zugriffskontrollen mit Hard- und Software
+                        </p>
                         <Button size="lg" className="px-8 bg-[#CA452A] hover:bg-[#B23A21]">Was braucht dein
                             Space?</Button>
                     </div>
