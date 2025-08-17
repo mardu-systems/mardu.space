@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import {Button} from "@/components/ui/button";
-import {useEffect, useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 
 /* ------ Kreisnummer (dein Component, minimal getuned) ------ */
 export function CircleNumber({
@@ -28,126 +28,6 @@ export function CircleNumber({
             className={`${size} ${borderWidth} rounded-full ${color} flex items-center justify-center ${className}`}>
             <span className={`${textSize} font-black leading-none tracking-tight`}>{number}</span>
         </div>
-    );
-}
-
-/* ------ Gemeinsamer, stabiler Step-Wrapper ------ */
-function StepRow({
-                     number,
-                     orient = "left",
-                     media,
-                     children,
-                     className = "",
-                 }: {
-    number: number;
-    orient?: "left" | "right";
-    media: React.ReactNode;
-    children: React.ReactNode;
-    className?: string;
-}) {
-    const left = orient === "left";
-    return (
-        <section className={`py-16 md:py-24 ${className}`}>
-            <div className="mx-auto w-full max-w-6xl px-6">
-                <div className="grid grid-cols-12 gap-x-10 gap-y-10 items-start">
-                    {/* Rail für die Nummer (1 Spalte) */}
-                    <div
-                        className={`${left ? "col-span-1 order-1" : "col-span-1 order-3"} hidden md:flex justify-center`}>
-                        <CircleNumber number={number} className="mt-1"/>
-                    </div>
-
-                    {/* Media (5 Spalten) */}
-                    <div
-                        className={`${left ? "col-span-12 md:col-span-5 order-2" : "col-span-12 md:col-span-5 md:order-2 order-1"} flex justify-center md:justify-start`}>
-                        {media}
-                    </div>
-
-                    {/* Text (6 Spalten) */}
-                    <div
-                        className={`${left ? "col-span-12 md:col-span-6 order-3" : "col-span-12 md:col-span-6 order-3"}`}>
-                        {/* Nummer mobil oben vor dem Text */}
-                        <div className="md:hidden mb-4">
-                            <CircleNumber number={number}/>
-                        </div>
-                        <div
-                            className="text-[#CA452A] leading-7 tracking-[0.005em] text-[clamp(16px,1.05vw,19px)] max-w-[56ch] text-pretty">
-                            {children}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    );
-}
-
-export function Step3_Auth() {
-    return (
-        <StepRow
-            number={3}
-            orient="right"
-            media={
-                <div className="relative w-full max-w-[580px]">
-                    <Image
-                        src="/landing/person_schweiss_nfc.svg"
-                        alt="NFC-Authentifizierung am Gerät"
-                        width={820}
-                        height={820}
-                        className="w-full h-auto object-contain"
-                        priority
-                    />
-                    {/* Overlay nur im Bild – keine Dopplung im Seitentext */}
-                    <p className="absolute left-[clamp(10px,2vw,28px)] top-[clamp(10px,2vw,28px)] max-w-[32ch] text-[#CA452A] text-[clamp(14px,2.1vw,22px)] leading-snug whitespace-pre-line pointer-events-none select-none">
-                        {`Jochen möchte nun ein Gestell für einen Wohnzimmertisch schweißen.
-
-Hierzu authentifiziert er sich an dem mardu.space Gerät, welches dem Schweißgerät vorgeschaltet ist.`}
-                    </p>
-                </div>
-            }
-        >
-            <p>
-                Authentifizierung direkt am <span className="underline">mardu.space</span> Gerät – sicher und
-                nachvollziehbar.
-            </p>
-        </StepRow>
-    );
-}
-
-export function Step5_GatewayOEB() {
-    return (
-        <StepRow
-            number={5}
-            orient="left"
-            media={
-                <div className="relative w-full max-w-[580px]">
-                    <Image
-                        src="/landing/open_badge_mardu_cloud.svg"
-                        alt="Open Educational Badges Cloud"
-                        width={820}
-                        height={820}
-                        className="w-full h-auto object-contain"
-                    />
-                    <div
-                        className="absolute right-[clamp(10px,2vw,28px)] bottom-[clamp(10px,3vw,36px)] max-w-[30ch] text-[#CA452A] text-[clamp(14px,2.1vw,22px)] leading-snug select-none">
-                        <p>
-                            Das Gateway von{" "}
-                            <a href="https://mardu.space" target="_blank" rel="noopener noreferrer"
-                               className="underline pointer-events-auto">
-                                mardu.space
-                            </a>{" "}
-                            empfängt die Daten und fragt bei Open Education Badges an, ob die erforderlichen Kenntnisse
-                            vorliegen.
-                        </p>
-                        <p className="mt-5">
-                            Ein Offline-Cache sorgt für einen Betrieb auch bei einem <span
-                            className="underline">Internetausfall</span>.
-                        </p>
-                    </div>
-                </div>
-            }
-        >
-            <p>Zuverlässige Prüfung der Berechtigungen – auch bei temporären Verbindungsproblemen dank
-                Offline-Cache.</p>
-        </StepRow>
     );
 }
 
@@ -267,7 +147,7 @@ export default function HomePage() {
                             </div>
 
                             <div className="col-span-7 md:col-span-4">
-                                <div className=" text-sm sm:text-base leading-relaxed">
+                                <div className="text-[#CA452A] text-base md:text-lg leading-snug tracking-[0.005em]">
                                     <p>
                                         Jochen macht bei Harald einen Schweißkurs. Dieser findet in seinem heimischen
                                         Makerspace statt.
@@ -310,7 +190,7 @@ export default function HomePage() {
                             </div>
 
                             <div className="col-span-10 md:col-span-3">
-                                <div className=" text-sm sm:text-base leading-relaxed">
+                                <div className="text-[#CA452A] text-base md:text-lg leading-snug tracking-[0.005em]">
                                     <p>
                                         Jochen hat erfolgreich an dem Schweißkurs teilgenommen und weiß nun, welche
                                         Gefahren
@@ -342,8 +222,138 @@ export default function HomePage() {
                     </div>
                 </section>
 
-                <Step3_Auth/>
-                <Step5_GatewayOEB/>
+                <section className="w-full pt-10 md:pt-14">
+                    <div className="max-w-7xl mx-auto px-6 md:px-8">
+                        <div className="grid grid-cols-12 gap-6 md:gap-10 items-start">
+                            <div className="col-span-12 md:col-span-6 flex flex-col items-center md:items-start">
+                                <div
+                                    className="w-full max-w-[720px] rounded-xl border border-[#8D69C0]/30 shadow-[0_10px_40px_rgba(141,105,192,.15)] bg-white overflow-hidden">
+                                    <Image
+                                        src="/landing/open_badge.png"
+                                        alt="Badge erstellen – Webplattform Open Educational Badges"
+                                        width={1440}
+                                        height={890}
+                                        className="w-full h-auto object-contain"
+                                        priority
+                                    />
+                                </div>
+
+                                <p className="mt-6 text-center md:text-left text-xl leading-snug">
+                                    <span className="block">Webplattform Open Educational Badges</span>
+                                    <span className="block text-zinc-600">Zur Ausstellung der Berechtigungen</span>
+                                </p>
+                            </div>
+
+                            <div className="col-span-12 md:col-span-6 grid grid-rows-[auto_auto_1fr]">
+                                <div className="flex items-start gap-4
+">
+                                    <CircleNumber number={3} className="mt-1" anchor/>
+                                    <div
+                                        className="mt-4 max-w-[40ch] text-[#CA452A] text-sm sm:text-base leading-relaxed tracking-[0.005em]">
+                                        <p>Jochen möchte nun ein Gestell für einen Wohnzimmertisch schweißen.</p>
+                                        <p className="mt-4">
+                                            Hierzu authentifiziert er sich an dem <span
+                                            className="whitespace-nowrap">mardu.space</span> Gerät,
+                                            welches dem Schweißgerät vorgeschaltet ist.
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div className="relative mt-8 md:mt-10 flex items-end justify-end translate-y-[-35%]">
+                                    <Image
+                                        src="/landing/person_schweiss_nfc.svg"
+                                        alt="NFC-Authentifizierung am Gerät"
+                                        width={1100}
+                                        height={900}
+                                        className="w-[88%] md:w-[84%] h-auto object-contain"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section className="w-full">
+                    <div className="max-w-7xl mx-auto px-6 md:px-8">
+                        <div className="w-3/5 justify-self-left">
+
+                            <div className="grid grid-cols-12 gap-6 md:gap-10 items-center">
+
+                                {/* LINKS: Icon/Illustration */}
+                                <div className="col-span-3 md:col-span-2 flex justify-center md:justify-start">
+                                    <Image
+                                        src="/landing/mesh.png"
+                                        alt="Netzwerk Illustration"
+                                        width={220}
+                                        height={220}
+                                        className="w-24 h-24 md:w-32 md:h-32 object-contain"
+                                    />
+                                </div>
+
+                                {/* MITTE: Text */}
+                                <div className="col-span-7 md:col-span-7">
+                                    <p className="text-[#CA452A] text-sm sm:text-base leading-relaxed">
+                                        Alle Geräte von <span className="whitespace-nowrap">mardu.space</span> in einem
+                                        Gebäude sind untereinander funkvernetzt, um höchste Ausfallsicherheit zu
+                                        gewährleisten.
+                                        Dadurch erreicht jede Anfrage immer ihr Ziel.
+                                    </p>
+                                </div>
+
+                                {/* RECHTS: Nummer-Kreis */}
+                                <div className="col-span-2 flex justify-center md:justify-start">
+                                    <CircleNumber number={4} className="mt-1" anchor/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section className="w-full">
+                    <div className="max-w-7xl mx-auto px-6 md:px-8">
+                        <div className="grid grid-cols-12 gap-6 md:gap-10 items-start">
+                            <div className="col-span-12 md:col-span-7 relative">
+                                <Image
+                                    src="/landing/open_badge_mardu_cloud.svg"
+                                    alt="Open Educational Badges – Cloud / Gateway"
+                                    width={1200}
+                                    height={900}
+                                    className="w-full max-w-[600px] h-auto object-contain"
+                                    priority
+                                />
+
+                                <div
+                                    className="absolute text-[#CA452A] text-sm md:text-base leading-snug flex items-start gap-4 max-w-[280px] md:max-w-[340px] left-[45%] bottom-[5%]">
+                                    <div className="flex-1">
+                                        <p>
+                                            Das Gateway von <span
+                                            className="whitespace-nowrap">mardu.space</span> empfängt die
+                                            Daten und fragt bei Open Education Badges an, ob die erforderlichen
+                                            Kenntnisse vorliegen.
+                                        </p>
+                                        <p className="mt-4">
+                                            Ein Offline-Cache sorgt für einen Betrieb auch bei einem Internetausfall.
+                                        </p>
+                                    </div>
+                                    <CircleNumber number={5} className="shrink-0" anchor/>
+                                </div>
+                            </div>
+
+                            {/* RECHTS: Gerät-Kachel + Caption */}
+                            <div className="col-span-12 md:col-span-5 flex flex-col items-center md:items-start translate-y-[35%]">
+                                <Image
+                                    src="/landing/blende.svg"
+                                    alt="mardu.space Gerät"
+                                    width={1200}
+                                    height={1200}
+                                    className="w-[82%] md:w-[88%] lg:w-[80%] h-auto object-contain rounded-2xl"
+                                />
+                                <p className="mt-4 text-base md:text-lg text-zinc-700 text-center md:text-left">
+                                    Gerät zur Freischaltung der Maschinen
+                                </p>
+                            </div>
+
+                        </div>
+                    </div>
+                </section>
             </div>
         </main>
     );
@@ -391,38 +401,53 @@ function DashedConnector({
                 })
                 .sort((a, b) => a.y - b.y);
 
-            const path = buildSmoothPath(points, offsetBeforePoint);
-            const p = svgRef.current?.querySelector("path");
-            if (p) p.setAttribute("d", path);
-        };
+            const pathSegments = buildIndividualConnections(points, offsetBeforePoint);
 
-        const buildSmoothPath = (pts: { x: number; y: number }[], offset: number) => {
-            if (pts.length < 2) return "";
+            // Entferne alle bestehenden Pfade
+            const svg = svgRef.current;
+            if (svg) {
+                svg.querySelectorAll("path").forEach(path => path.remove());
 
-            const startPoint = {
-                x: pts[0].x,
-                y: pts[0].y + offset
-            };
-
-            let d = `M ${startPoint.x},${startPoint.y}`;
-
-            for (let i = 1; i < pts.length; i++) {
-                const prev = i === 1 ? startPoint : {
-                    x: pts[i - 1].x,
-                    y: pts[i - 1].y + offset
-                };
-
-                const cur = {
-                    x: pts[i].x,
-                    y: pts[i].y - offset
-                };
-
-                const midY = (prev.y + cur.y) / 2;
-                d += ` C ${prev.x},${midY} ${cur.x},${midY} ${cur.x},${cur.y}`;
+                // Füge neue Pfad-Segmente hinzu
+                pathSegments.forEach(pathData => {
+                    const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+                    path.setAttribute("d", pathData);
+                    path.setAttribute("fill", "none");
+                    path.setAttribute("stroke", stroke);
+                    path.setAttribute("stroke-width", strokeWidth.toString());
+                    path.setAttribute("stroke-dasharray", dash);
+                    path.setAttribute("vector-effect", "non-scaling-stroke");
+                    svg.appendChild(path);
+                });
             }
-            return d;
         };
 
+        const buildIndividualConnections = (pts: { x: number; y: number }[], offset: number) => {
+            if (pts.length < 2) return [];
+
+            const segments: string[] = [];
+
+            // Erstelle separate Verbindungen zwischen jeweils zwei aufeinanderfolgenden Punkten
+            for (let i = 0; i < pts.length - 1; i++) {
+                const startPoint = {
+                    x: pts[i].x,
+                    y: pts[i].y + offset
+                };
+
+                const endPoint = {
+                    x: pts[i + 1].x,
+                    y: pts[i + 1].y - offset
+                };
+
+                // Erstelle eine glatte Kurve zwischen den beiden Punkten
+                const midY = (startPoint.y + endPoint.y) / 2;
+                const pathData = `M ${startPoint.x},${startPoint.y} C ${startPoint.x},${midY} ${endPoint.x},${midY} ${endPoint.x},${endPoint.y}`;
+
+                segments.push(pathData);
+            }
+
+            return segments;
+        };
 
         // Reagiert auf Größenänderungen
         const rootRO = new ResizeObserver(update);
@@ -456,14 +481,6 @@ function DashedConnector({
             height="100%"
             viewBox={`0 0 ${Math.max(1, box.w)} ${Math.max(1, box.h)}`}
             preserveAspectRatio="none"
-        >
-            <path
-                fill="none"
-                stroke={stroke}
-                strokeWidth={strokeWidth}
-                strokeDasharray={dash}
-                vectorEffect="non-scaling-stroke"
-            />
-        </svg>
+        />
     );
 }
