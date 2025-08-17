@@ -50,7 +50,7 @@ export default function CookieSettings({onSave}: CookieSettingsProps) {
     return (
         <div className="fixed bottom-4 left-4 z-[9999]">
             <div className="relative w-[min(92vw,600px)]">
-                {/* Deko-SVG unverändert */}
+                {/* Decorative SVG */}
                 <svg
                     width="100%"
                     height="100%"
@@ -69,7 +69,7 @@ export default function CookieSettings({onSave}: CookieSettingsProps) {
                     </g>
                 </svg>
 
-                {/* Titel */}
+                {/* Title */}
                 <div className="absolute inset-0">
                     <div className="py-17 px-40">
                         <h2 className="text-5xl  font-bold tracking-tight">COOKIE</h2>
@@ -77,7 +77,7 @@ export default function CookieSettings({onSave}: CookieSettingsProps) {
                     </div>
                 </div>
 
-                {/* Inhalt */}
+                {/* Content */}
                 <div className="absolute inset-0 flex flex-col items-center justify-center">
                     <p className="mt-20 text-sm leading-relaxed max-w-[420px]">
                         Wir verwenden notwendige, statistische und Marketing-Cookies, um unsere Website zu betreiben,
@@ -88,13 +88,13 @@ export default function CookieSettings({onSave}: CookieSettingsProps) {
                         .
                     </p>
 
-                    {/* Kopfzeile */}
+                    {/* Header */}
                     <div className="mt-4 grid w-full max-w-[420px] grid-cols-2 text-xs">
                         <span>Cookies</span>
                         <span className="justify-self-end">Auswahl</span>
                     </div>
 
-                    {/* Schalter */}
+                    {/* Switches */}
                     <div className="mt-2 w-full max-w-[420px] space-y-2">
                         <div className="flex items-center justify-between">
                             <span className="text-sm">Statistik-Cookies</span>
