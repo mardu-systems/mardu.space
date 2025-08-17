@@ -44,78 +44,65 @@ export default function HomePage() {
                 </div>
             </section>
 
-            <section className="relative w-full py-25 animate-in fade-in slide-in-from-bottom-8 duration-700">
-                <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <section className="relative w-full py-14 md:py-20 animate-in fade-in slide-in-from-bottom-8 duration-700">
+                <div className="max-w-7xl mx-auto px-5 sm:px-6 md:px-8">
+                    {/* 1–Spalte mobil, 2–Spalten ab md */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-y-10 md:gap-y-0 md:gap-x-12 items-center">
 
-                    {/* Linke Seite: Großes Warnsymbol */}
-                    <div className="flex items-center justify-center order-2 md:order-1">
-                        <Image
-                            src="/landing/warning.svg"
-                            alt="Warnsymbol Verletzungsgefahr"
-                            width={1200}
-                            height={1200}
-                            className="w-1/2 h-auto md:w-full md:max-w-2xl drop-shadow-2xl"
-                            loading="lazy"
-                        />
-                    </div>
-
-                    {/* Rechte Seite: Text */}
-                    <div className="flex flex-col space-y-8 order-1 md:order-2">
-
-                        {/* Wortwolke */}
-                        <div className="flex justify-center order-1 md:translate-y-[-25%] md:translate-x-[-30%]">
+                        {/* Linke Seite: Warnsymbol */}
+                        <div className="order-2 md:order-1 flex items-center justify-center">
                             <Image
-                                src="/landing/words.svg"
-                                width={1000}
-                                height={1000}
-                                alt="Wortwolke mit Begriffen zu Makerspaces"
-                                className="w-full h-auto drop-shadow-2xl"
+                                src="/landing/warning.svg"
+                                alt="Warnsymbol Verletzungsgefahr"
+                                width={1200}
+                                height={1200}
+                                sizes="(min-width: 768px) 32rem, 80vw"
+                                className="w-1/2 h-auto md:w-full md:max-w-2xl drop-shadow-2xl"
                                 loading="lazy"
                             />
                         </div>
 
-                        {/* Fließtext */}
-                        <div
-                            className="font-futura-normal space-y-3 sm:space-y-4 leading-snug text-sm sm:text-base md:text-lg order-3 hidden md:block">
-                            <p>
-                                Makerspaces und FabLabs eröffnen kreative Möglichkeiten, bringen
-                                aber auch Risiken durch leistungsstarke Maschinen mit sich.
-                                Besonders beim Zugang für Minderjährige ist klare Verantwortung
-                                gefragt.
-                            </p>
-                            <p>
-                                Das mardu.space System sorgt mit eigener Hard- und Software sowie
-                                einer europaweit anerkannten Kenntnisdatenbank (Open Education
-                                Badges) für sichere Zutritts- und Zugriffskontrollen. So werden nur
-                                geschulte Nutzer freigeschaltet – und ihre Qualifikationen lassen
-                                sich standortübergreifend einsetzen.
-                            </p>
+                        {/* Rechte Seite: Wortwolke + Text */}
+                        <div className="order-1 md:order-2 flex flex-col items-center md:items-start gap-8 md:gap-6">
+                            {/* Wortwolke */}
+                            <div className="flex justify-center md:translate-y-[-20%] md:translate-x-[-18%]">
+                                <Image
+                                    src="/landing/words.svg"
+                                    alt="Wortwolke zu Themen wie Sicherheit, Verantwortung, Zutritt"
+                                    width={1000}
+                                    height={1000}
+                                    sizes="(min-width: 768px) 36rem, 90vw"
+                                    className="w-[clamp(260px,86vw,540px)] h-auto drop-shadow-2xl"
+                                    loading="lazy"
+                                />
+                            </div>
+
+                            {/* Fließtext – ein Block für alle Breakpoints */}
+                            <div
+                                className="font-futura-normal space-y-4 leading-snug text-[15px] sm:text-base md:text-lg max-w-prose text-center md:text-left">
+                                <p>
+                                    Makerspaces und FabLabs eröffnen kreative Möglichkeiten, bringen aber auch Risiken
+                                    durch
+                                    leistungsstarke Maschinen mit sich. Besonders beim Zugang für Minderjährige ist
+                                    klare
+                                    Verantwortung gefragt.
+                                </p>
+                                <p>
+                                    Das mardu.space System sorgt mit eigener Hard- und Software sowie einer europaweit
+                                    anerkannten Kenntnisdatenbank (Open Education Badges) für sichere Zutritts- und
+                                    Zugriffskontrollen. So werden nur geschulte Nutzer freigeschaltet – und ihre
+                                    Qualifikationen lassen sich standortübergreifend einsetzen.
+                                </p>
+                            </div>
                         </div>
 
-                    </div>
-                    {/* Fließtext */}
-                    <div
-                        className="font-futura-normal space-y-3 sm:space-y-4 leading-snug text-sm sm:text-base md:text-lg order-3 md:hidden">
-                        <p>
-                            Makerspaces und FabLabs eröffnen kreative Möglichkeiten, bringen
-                            aber auch Risiken durch leistungsstarke Maschinen mit sich.
-                            Besonders beim Zugang für Minderjährige ist klare Verantwortung
-                            gefragt.
-                        </p>
-                        <p>
-                            Das mardu.space System sorgt mit eigener Hard- und Software sowie
-                            einer europaweit anerkannten Kenntnisdatenbank (Open Education
-                            Badges) für sichere Zutritts- und Zugriffskontrollen. So werden nur
-                            geschulte Nutzer freigeschaltet – und ihre Qualifikationen lassen
-                            sich standortübergreifend einsetzen.
-                        </p>
                     </div>
                 </div>
             </section>
 
             <div ref={timelineRef} className="relative">
                 <DashedConnector rootRef={timelineRef} offsetBeforePoint={50} strokeWidth={5}/>
-                <section className="w-full py-10 md:py-14">
+                <section className="w-full py-10 md:py-14 z-20">
                     <div className="max-w-7xl mx-auto px-6 md:px-8">
                         <div className="grid grid-cols-12 gap-6 md:gap-10 items-center">
                             <div className="col-span-2 flex justify-center md:justify-start">
@@ -150,17 +137,17 @@ export default function HomePage() {
                             </div>
 
                             <div className="col-span-12 md:col-span-4 md:col-start-9 translate-y-[-40%]">
-                                <h2 className="font-futura-heavy text-[#8D69C0] whitespace-pre-line uppercase text-3xl sm:text-4xl md:text-6xl leading-tight text-right ">
+                                <h2 className="font-futura-heavy text-[#8D69C0] whitespace-pre-line uppercase text-3xl sm:text-4xl md:text-6xl text-right">
                                     {`WIE KANN
-                                MARDU.SPACE
-                                DIR HELFEN?`}
+                                    MARDU.SPACE
+                                    DIR HELFEN?`}
                                 </h2>
                             </div>
                         </div>
                     </div>
                 </section>
 
-                <section className="w-full py-10 md:py-14">
+                <section className="w-full py-10 md:py-14 z-20">
                     <div className="max-w-7xl mx-auto px-6 md:px-8">
                         <div className="grid grid-cols-12 gap-6 md:gap-10 items-center">
                             <div className="col-span-2 flex justify-center md:justify-start">
@@ -209,7 +196,7 @@ export default function HomePage() {
                     </div>
                 </section>
 
-                <section className="w-full pt-10 md:pt-14">
+                <section className="w-full pt-10 md:pt-14 z-20">
                     <div className="max-w-7xl mx-auto px-6 md:px-8">
                         <div className="grid grid-cols-12 gap-6 md:gap-10 items-start">
                             <div className="col-span-12 md:col-span-6 flex flex-col items-center md:items-start">
@@ -220,7 +207,7 @@ export default function HomePage() {
                                         alt="Badge erstellen – Webplattform Open Educational Badges"
                                         width={1440}
                                         height={890}
-                                        className="w-full h-auto object-contain"
+                                        className="w-full h-auto object-contain z-20"
                                         loading="lazy"
                                     />
                                 </div>
@@ -259,9 +246,9 @@ export default function HomePage() {
                         </div>
                     </div>
                 </section>
-                <section className="w-full">
+                <section className="w-full z-20">
                     <div className="max-w-7xl mx-auto">
-                        <div className="w-4/6 justify-self-left">
+                        <div className="w-full md:w-4/6 justify-self-left">
 
                             <div className="grid grid-cols-12 gap-6 md:gap-10 items-center">
 
@@ -295,7 +282,7 @@ export default function HomePage() {
                         </div>
                     </div>
                 </section>
-                <section className="w-full">
+                <section className="w-full z-20">
                     <div className="max-w-7xl mx-auto px-6 md:px-8">
                         <div className="grid grid-cols-12 gap-6 md:gap-10 items-start">
                             <div className="col-span-11 md:col-span-6 relative">
@@ -338,14 +325,14 @@ export default function HomePage() {
                                     loading="lazy"
                                 />
                                 <figcaption
-                                    className="mt-3 font-futura-normal text-base md:text-lg text-center md:text-right">
+                                    className="mt-3 font-futura-normal text-base md:text-lg text-center md:text-right z-20">
                                     Gerät zur Freischaltung der Maschinen
                                 </figcaption>
                             </figure>
                         </div>
                     </div>
                 </section>
-                <section className="w-full py-10 md:py-14">
+                <section className="w-full py-10 md:py-14 z-20">
                     <div className="max-w-7xl mx-auto px-6 md:px-8">
                         <div className="grid grid-cols-12 gap-6 md:gap-10 items-center">
 
@@ -356,7 +343,7 @@ export default function HomePage() {
                                     alt="Jochen schweißt mit freigeschaltetem Gerät"
                                     width={1000}
                                     height={800}
-                                    className="w-[90%] md:w-full max-w-[580px] h-auto object-contain"
+                                    className="w-[90%] md:w-full max-w-[580px] h-auto object-contain z-20"
                                     loading="lazy"
                                 />
                             </div>
