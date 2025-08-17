@@ -70,16 +70,16 @@ export default function CookieSettings({onSave}: CookieSettingsProps) {
                 </svg>
 
                 {/* Title */}
-                <div className="absolute inset-0">
-                    <div className="py-17 px-40">
-                        <h2 className="text-5xl  font-bold tracking-tight">COOKIE</h2>
-                        <p className="text-3xl font-bold -mt-1">Settings</p>
+                <div className="absolute inset-0 flex flex-col items-center">
+                    <div className="max-w-[320px] lg:max-w-[420px] translate-y-4/5 -translate-x-3/5">
+                        <h2 className="text-2xl lg:text-5xl font-bold tracking-tight">COOKIE</h2>
+                        <p className="text-xl lg:text-3xl font-bold -mt-1">Settings</p>
                     </div>
                 </div>
 
                 {/* Content */}
                 <div className="absolute inset-0 flex flex-col items-center justify-center">
-                    <p className="mt-20 text-sm leading-relaxed max-w-[420px]">
+                    <p className="mt-20 text-xs lg:text-sm leading-relaxed max-w-[320px] lg:max-w-[420px]">
                         Wir verwenden notwendige, statistische und Marketing-Cookies, um unsere Website zu betreiben,
                         die Nutzung zu analysieren und Ihre Erfahrung zu verbessern. Einzelheiten finden Sie in unserer{" "}
                         <Link href="/privacy" className="underline underline-offset-2">
@@ -89,15 +89,15 @@ export default function CookieSettings({onSave}: CookieSettingsProps) {
                     </p>
 
                     {/* Header */}
-                    <div className="mt-4 grid w-full max-w-[420px] grid-cols-2 text-xs">
+                    <div className="mt-4 grid w-full max-w-[320px] lg:max-w-[420px] grid-cols-2 text-xs">
                         <span>Cookies</span>
                         <span className="justify-self-end">Auswahl</span>
                     </div>
 
                     {/* Switches */}
-                    <div className="mt-2 w-full max-w-[420px] space-y-2">
+                    <div className="mt-2 w-full max-w-[320px] lg:max-w-[420px] space-y-2 text-xs lg:text-sm">
                         <div className="flex items-center justify-between">
-                            <span className="text-sm">Statistik-Cookies</span>
+                            <span>Statistik-Cookies</span>
                             <Switch
                                 checked={prefs.analytics}
                                 onCheckedChange={(v) => updatePrefs("analytics", v)}
@@ -105,7 +105,7 @@ export default function CookieSettings({onSave}: CookieSettingsProps) {
                             />
                         </div>
                         <div className="flex items-center justify-between">
-                            <span className="text-sm">Marketing-Cookies</span>
+                            <span>Marketing-Cookies</span>
                             <Switch
                                 checked={prefs.marketing}
                                 onCheckedChange={(v) => updatePrefs("marketing", v)}
@@ -113,17 +113,18 @@ export default function CookieSettings({onSave}: CookieSettingsProps) {
                             />
                         </div>
                         <div className="flex items-center justify-between opacity-70">
-                            <span className="text-sm">Notwendige Cookies</span>
+                            <span>Notwendige Cookies</span>
                             <Switch checked disabled aria-label="Notwendige Cookies (immer aktiv)"/>
                         </div>
                     </div>
 
                     {/* Buttons */}
-                    <div className="mt-6 flex w-full max-w-[420px] flex-wrap items-center gap-3">
-                        <div className="flex w-full gap-3">
+                    <div className="mt-6 flex w-full max-w-[320px] lg:max-w-[420px] flex-wrap items-center gap-3">
+                        <div className="flex w-full gap-2 justify-center">
                             <Button
                                 variant="ghost"
-                                className="h-10 text-sm w-1/2"
+                                size="sm"
+                                className="w-1/2"
                                 onClick={() =>
                                     savePrefs({necessary: true, analytics: false, marketing: false, given: true})
                                 }
@@ -132,7 +133,9 @@ export default function CookieSettings({onSave}: CookieSettingsProps) {
                             </Button>
 
                             <Button
-                                className="h-10 text-sm w-1/2"
+                                className="w-1/2"
+                                size="sm"
+
                                 onClick={() =>
                                     savePrefs({necessary: true, analytics: true, marketing: true, given: true})
                                 }
@@ -141,12 +144,16 @@ export default function CookieSettings({onSave}: CookieSettingsProps) {
                             </Button>
                         </div>
 
-                        <Button
-                            className="mt-2 w-full h-10 text-sm"
-                            onClick={() => savePrefs({...prefs, necessary: true, given: true})}
-                        >
-                            Auswahl speichern
-                        </Button>
+                        <div className="flex w-full justify-center">
+                            <Button
+                                className="w-1/2 lg:w-full"
+                                size="sm"
+                                onClick={() => savePrefs({...prefs, necessary: true, given: true})}
+                            >
+                                Auswahl speichern
+                            </Button>
+                        </div>
+
                     </div>
                 </div>
             </div>
