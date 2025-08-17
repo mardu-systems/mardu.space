@@ -60,9 +60,9 @@ export default function HomePage() {
                         <div className="flex justify-center order-1 md:translate-y-[-25%] md:translate-x-[-30%]">
                             <Image
                                 src="/landing/words.svg"
-                                alt="Wortwolke"
                                 width={1000}
                                 height={1000}
+                                alt="Wortwolke mit Begriffen zu Makerspaces"
                                 className="w-full h-auto drop-shadow-2xl"
                             />
                         </div>
@@ -173,7 +173,7 @@ export default function HomePage() {
                                         Schweißgerät ausgehen und wie man dieses fachgerecht verwendet.
                                     </p>
                                     <p className="mt-4">
-                                        Harald hat ihm dafür das Open-Educational-Badge „Kenntnisse im Schweißen“
+                                        Harald hat ihm dafür das Open-Educational-Badge „Kenntnisse im Schweißen"
                                         digital
                                         verliehen.
                                     </p>
@@ -186,7 +186,7 @@ export default function HomePage() {
 
                             <div className="col-span-12 md:col-span-4">
                                 <div className="space-y-2">
-                                    <Image src="/landing/HaraldundJochen.jpg" alt="Harald und Jochen" width={1200}
+                                    <Image src="/landing/HaraldundJochen.jpg" alt="Harald zeigt Jochen das Schweißen" width={1200}
                                            height={1200} className="w-full h-auto drop-shadow-2xl"/>
                                     <p className="text-sm sm:text-lg text-center">
                                         Wissensweitergabe durch Kurse
@@ -237,7 +237,7 @@ export default function HomePage() {
                                 <div className="relative mt-8 md:mt-10 flex items-end justify-end translate-y-[-35%]">
                                     <Image
                                         src="/landing/person_schweiss_nfc.svg"
-                                        alt="NFC-Authentifizierung am Gerät"
+                                        alt="Illustration einer Person, die sich per NFC am Gerät authentifiziert"
                                         width={1100}
                                         height={900}
                                         className="w-[88%] md:w-[84%] h-auto object-contain"
@@ -257,7 +257,7 @@ export default function HomePage() {
                                 <div className="col-span-3 md:col-span-2 flex justify-center md:justify-start">
                                     <Image
                                         src="/landing/mesh.png"
-                                        alt="Netzwerk Illustration"
+                                        alt="Illustration eines Funknetzwerks"
                                         width={220}
                                         height={220}
                                         className="w-24 h-24 md:w-32 md:h-32 object-contain"
@@ -318,7 +318,7 @@ export default function HomePage() {
                                 className="col-span-12 md:col-span-5 flex flex-col items-center md:items-start md:self-end">
                                 <Image
                                     src="/landing/blende.svg"
-                                    alt="mardu.space Gerät – Freischaltung"
+                                    alt="mardu.space Gerät zur Freischaltung der Maschinen"
                                     width={1200}
                                     height={1200}
                                     className="w-[82%] md:w-[88%] lg:w-[80%] h-auto object-contain rounded-2xl drop-shadow-xl"
