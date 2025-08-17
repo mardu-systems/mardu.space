@@ -20,7 +20,7 @@ export default function HomePage() {
                 <div className="absolute inset-0 flex items-center justify-center">
                     <div className="max-w-4xl mx-auto px-6 sm:px-8 lg:px-12 text-center text-white">
                         <h1 className="text-4xl sm:text-5xl lg:text-6xl font-futura-heavy leading-tight mb-6">Zugriffskontrollsysteme</h1>
-                        <p className="font-futura-normal text-lg sm:text-xl text-white/90 mb-8 leading-relaxed">für
+                        <p className="font-futura-normal text-lg sm:text-xl text-white/90 mb-8 leading-snug">für
                             Makerspaces, FabLabs
                             und Schülerlabore</p>
                         <Button size="lg" className="px-8 bg-[#CA452A] hover:bg-[#B23A21]">Was braucht dein
@@ -72,7 +72,7 @@ export default function HomePage() {
 
                         {/* Fließtext */}
                         <div
-                            className="font-futura-normal space-y-3 sm:space-y-4 leading-relaxed text-sm sm:text-base md:text-lg order-3 hidden md:block">
+                            className="font-futura-normal space-y-3 sm:space-y-4 leading-snug text-sm sm:text-base md:text-lg order-3 hidden md:block">
                             <p>
                                 Makerspaces und FabLabs eröffnen kreative Möglichkeiten, bringen
                                 aber auch Risiken durch leistungsstarke Maschinen mit sich.
@@ -91,7 +91,7 @@ export default function HomePage() {
                     </div>
                     {/* Fließtext */}
                     <div
-                        className="font-futura-normal space-y-3 sm:space-y-4 leading-relaxed text-sm sm:text-base md:text-lg order-3 md:hidden">
+                        className="font-futura-normal space-y-3 sm:space-y-4 leading-snug text-sm sm:text-base md:text-lg order-3 md:hidden">
                         <p>
                             Makerspaces und FabLabs eröffnen kreative Möglichkeiten, bringen
                             aber auch Risiken durch leistungsstarke Maschinen mit sich.
@@ -127,7 +127,7 @@ export default function HomePage() {
 
                             <div className="col-span-7 md:col-span-4">
                                 <div
-                                    className="font-futura-normal text-[#CA452A] text-base md:text-lg leading-snug tracking-[0.005em]">
+                                    className="font-futura-normal text-[#CA452A] text-sm sm:text-base leading-snug tracking-[0.005em]">
                                     <p>
                                         Jochen macht bei Harald einen Schweißkurs. Dieser findet in seinem heimischen
                                         Makerspace statt.
@@ -172,7 +172,7 @@ export default function HomePage() {
 
                             <div className="col-span-10 md:col-span-3">
                                 <div
-                                    className="font-futura-normal text-[#CA452A] text-base md:text-lg leading-snug tracking-[0.005em]">
+                                    className="font-futura-normal text-[#CA452A] text-sm sm:text-base leading-snug tracking-[0.005em]">
                                     <p>
                                         Jochen hat erfolgreich an dem Schweißkurs teilgenommen und weiß nun, welche
                                         Gefahren
@@ -231,7 +231,7 @@ export default function HomePage() {
                                 <div className="flex items-start gap-4">
                                     <CircleNumber number={3} className="mt-1" anchor/>
                                     <div
-                                        className="mt-4 max-w-[40ch] font-futura-normal text-[#CA452A] text-sm sm:text-base leading-relaxed tracking-[0.005em]">
+                                        className="mt-4 max-w-[40ch] font-futura-normal text-[#CA452A] text-sm sm:text-base leading-snug tracking-[0.005em]">
                                         <p>Jochen möchte nun ein Gestell für einen Wohnzimmertisch schweißen.</p>
                                         <p className="mt-4">
                                             Hierzu authentifiziert er sich an dem <span
@@ -275,7 +275,7 @@ export default function HomePage() {
 
                                 {/* MITTE: Text */}
                                 <div className="col-span-7 md:col-span-7">
-                                    <p className="font-futura-normal text-[#CA452A] text-sm sm:text-base leading-relaxed">
+                                    <p className="font-futura-normal text-[#CA452A] text-sm sm:text-base leading-snug tracking-[0.005em]">
                                         Alle Geräte von <span className="whitespace-nowrap">mardu.space</span> in einem
                                         Gebäude sind untereinander funkvernetzt, um höchste Ausfallsicherheit zu
                                         gewährleisten.
@@ -305,7 +305,7 @@ export default function HomePage() {
                                 />
 
                                 <div
-                                    className="absolute font-futura-normal text-[#CA452A] text-sm md:text-base leading-snug flex items-start gap-4 max-w-[280px] md:max-w-[340px] left-[45%] bottom-[5%]">
+                                    className="absolute font-futura-normal text-[#CA452A] text-sm sm:text-base leading-snug tracking-[0.005em] flex items-start gap-4 max-w-[280px] md:max-w-[340px] left-[45%] bottom-[5%]">
                                     <div className="flex-1">
                                         <p>
                                             Das Gateway von <span
@@ -361,7 +361,7 @@ export default function HomePage() {
                             <div className="col-span-12 md:col-span-6 flex items-start gap-4">
                                 <CircleNumber number={6} className="mt-1 shrink-0 " anchor/>
                                 <div
-                                    className="font-futura-normal text-[#CA452A] text-sm sm:text-base md:text-lg leading-relaxed tracking-[0.005em] max-w-[56ch]">
+                                    className="font-futura-normal text-[#CA452A] text-sm sm:text-base leading-snug tracking-[0.005em] max-w-[56ch]">
                                     <p>
                                         Da die Berechtigung vorliegt, schaltet das <span
                                         className="whitespace-nowrap">mardu.space</span> Gerät
@@ -442,7 +442,7 @@ export default function HomePage() {
                         </div>
 
                         {/* Förderhinweis-Text */}
-                        <p className="font-futura-normal mt-10 text-sm md:text-base leading-relaxed text-zinc-700 max-w-4xl text-center mx-auto">
+                        <p className="font-futura-normal mt-10 text-sm md:text-base leading-snug text-zinc-700 max-w-4xl text-center mx-auto">
                             Die Europäische Union fördert zusammen mit dem Bundesministerium für Wirtschaft und
                             Klimaschutz
                             über den Europäischen Sozialfonds Plus (ESF Plus) das Programm <em>Existenzgründungen aus
