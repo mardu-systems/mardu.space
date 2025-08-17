@@ -15,10 +15,12 @@ export default function HomePage() {
         <main className="relative min-h-screen">
             {/* Hero */}
             <section className="relative w-full h-[calc(100vh-5rem)]">
-                <Image src="/_A7_9072_quer.jpg" alt="Zugriffskontrollsysteme im Makerspace" fill priority sizes="100vw" className="object-cover"/>
+                <Image src="/_A7_9072_quer.jpg" alt="Zugriffskontrollsysteme im Makerspace" fill priority sizes="100vw"
+                       className="object-cover"/>
                 <div className="absolute inset-0 bg-black/50"/>
                 <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="max-w-4xl mx-auto px-6 sm:px-8 lg:px-12 text-center text-white">
+                    <div
+                        className="max-w-4xl mx-auto px-6 sm:px-8 lg:px-12 text-center text-white animate-in fade-in slide-in-from-bottom-8 duration-700">
                         <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-6">
                             mardu.space: Zugriffskontrollsysteme für Makerspaces, FabLabs und Schülerlabore
                         </h1>
@@ -34,15 +36,15 @@ export default function HomePage() {
             <section className="relative w-full">
                 <div className="flex items-end justify-center">
                     <div className="text-center">
-                        <strong
-                            className="uppercase font-futura-heavy text-[clamp(20px,4vw,80px)] text-[#8D69C0] md:leading-[0.9]">
+                        <h1
+                            className="uppercase font-futura-heavy text-[clamp(20px,4vw,80px)] text-[#8D69C0] md:leading-[0.9] animate-in fade-in slide-in-from-bottom-4 duration-700">
                             Warum brauchst du Mardu.space?
-                        </strong>
+                        </h1>
                     </div>
                 </div>
             </section>
 
-            <section className="relative w-full py-25">
+            <section className="relative w-full py-25 animate-in fade-in slide-in-from-bottom-8 duration-700">
                 <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
 
                     {/* Linke Seite: Großes Warnsymbol */}
