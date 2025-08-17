@@ -1,11 +1,16 @@
 import ReactGA from "react-ga4";
 
-const GA_ID = process.env.NEXT_PUBLIC_GA_ID || "";
+const MEASUREMENT_ID = process.env.NEXT_PUBLIC_GOOGLE_MEASUREMENT_ID;
 let initialized = false;
 
 export function initializeGA() {
-    if (!initialized && GA_ID) {
-        ReactGA.initialize(GA_ID);
+    if (!MEASUREMENT_ID) {
+        console.warn("GOOGLE_MEASUREMENT_ID is not set; analytics disabled");
+        return;
+    }
+
+    if (!initialized) {
+        ReactGA.initialize(MEASUREMENT_ID);
         initialized = true;
     }
 }
