@@ -223,14 +223,15 @@ export default function HomePage() {
             <section className="relative w-full">
                 <div className="flex items-end justify-center">
                     <div className="text-center">
-                        <strong className="uppercase font-futura-normal text-[clamp(20px,4vw,80px)] md:leading-[0.9]">
+                        <strong
+                            className="uppercase font-futura-normal text-[clamp(20px,4vw,80px)] text-[#8D69C0] md:leading-[0.9]">
                             Warum brauchst du Mardu.space?
                         </strong>
                     </div>
                 </div>
             </section>
 
-            <section className="relative w-full min-h-screen px-6 sm:px-12 lg:px-20 py-16">
+            <section className="relative w-full py-25">
                 <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
 
                     {/* Linke Seite: Großes Warnsymbol */}
@@ -259,7 +260,8 @@ export default function HomePage() {
                         </div>
 
                         {/* Fließtext */}
-                        <div className="space-y-3 sm:space-y-4 leading-relaxed text-sm sm:text-base md:text-lg order-3 hidden md:block">
+                        <div
+                            className="space-y-3 sm:space-y-4 leading-relaxed text-sm sm:text-base md:text-lg order-3 hidden md:block">
                             <p>
                                 Makerspaces und FabLabs eröffnen kreative Möglichkeiten, bringen
                                 aber auch Risiken durch leistungsstarke Maschinen mit sich.
@@ -277,7 +279,8 @@ export default function HomePage() {
 
                     </div>
                     {/* Fließtext */}
-                    <div className="space-y-3 sm:space-y-4 leading-relaxed text-sm sm:text-base md:text-lg order-3 md:hidden">
+                    <div
+                        className="space-y-3 sm:space-y-4 leading-relaxed text-sm sm:text-base md:text-lg order-3 md:hidden">
                         <p>
                             Makerspaces und FabLabs eröffnen kreative Möglichkeiten, bringen
                             aber auch Risiken durch leistungsstarke Maschinen mit sich.
@@ -294,6 +297,21 @@ export default function HomePage() {
                     </div>
                 </div>
             </section>
+
+            <section className="relative w-full">
+                <div className="flex items-end justify-center">
+                    <div className="text-right">
+                        <strong
+                            className="uppercase font-futura-normal text-[clamp(20px,4vw,80px)] text-[#8D69C0] whitespace-pre-line">
+                            {`WIE KANN
+                            MARDU.SPACE
+                            DIR HELFEN?`}
+                        </strong>
+                    </div>
+                </div>
+            </section>
+
+
             {/* Steps */}
             <Step1_Intro/>
             <Step2_Badge/>
