@@ -5,10 +5,12 @@ import Link from "next/link";
 import type { ConsentPreferences } from "@/types/consent";
 import { Button } from "@/components/ui/button";
 import { useConsent } from "@/hooks/use-consent";
+import CookieSettings from "@/components/CookieSettings";
 
 export default function CookieConsentBanner() {
     const { prefs, setPrefs } = useConsent();
     const [visible, setVisible] = useState(false);
+    const [showSettings, setShowSettings] = useState(false);
 
     useEffect(() => {
         if (prefs && !prefs.given) {
@@ -19,9 +21,14 @@ export default function CookieConsentBanner() {
     async function handleSave(newPrefs: ConsentPreferences) {
         await setPrefs(newPrefs);
         setVisible(false);
+        setShowSettings(false);
     }
 
     if (!visible) return null;
+
+    if (showSettings) {
+        return <CookieSettings onSave={handleSave} />;
+    }
 
     return (
         <div className="fixed bottom-4 left-4 z-[9999]">
@@ -57,7 +64,7 @@ export default function CookieConsentBanner() {
                         <Button
                             variant="outline"
                             size="lg"
-                            onClick={() => setVisible(false)}
+                            onClick={() => setShowSettings(true)}
                         >
                             settings
                         </Button>
