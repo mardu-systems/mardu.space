@@ -48,7 +48,7 @@ export default function CookieConsentBanner() {
 
     return (
         <div className="fixed bottom-4 left-4 z-[9999]">
-            <div className="relative w-[540px]">
+            <div className="relative w-[460px] lg:w-[540px]">
                 {/* SVG Hintergrund */}
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -67,11 +67,10 @@ export default function CookieConsentBanner() {
 
                 {/* Content */}
                 <div className="absolute inset-0 flex flex-col items-center justify-end pb-8 px-6 text-center">
-                    <p className="text-lg leading-relaxed mb-6 max-w-[340px]">
-                        we use required, performance and marketing cookies to measure,
-                        analyze and personalize your experience. read more in our{" "}
+                    <p className="leading-relaxed mb-6 max-w-[240px] lg:max-w-[320px] text-xs lg:text-base">
+                        Wir verwenden erforderliche, leistungsbezogene und Marketing-Cookies, um Ihre Erfahrung zu messen, zu analysieren und zu personalisieren. Weitere Informationen finden Sie in unserer {" "}
                         <Link href="/privacy" className="underline">
-                            privacy policy
+                            Datenschutzerklärung
                         </Link>
                         .
                     </p>
@@ -82,7 +81,7 @@ export default function CookieConsentBanner() {
                             size="lg"
                             onClick={() => setShowSettings(true)}
                         >
-                            settings
+                            Einstellungen
                         </Button>
                         <Button
                             variant="default"
@@ -96,7 +95,7 @@ export default function CookieConsentBanner() {
                                 })
                             }
                         >
-                            accept all
+                            Alle akzeptieren
                         </Button>
                     </div>
                 </div>

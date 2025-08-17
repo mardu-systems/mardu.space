@@ -202,7 +202,7 @@ export default function CookieSettings({onSave}: CookieSettingsProps) {
                                     <TooltipTrigger asChild>
                                         <span>Statistik-Cookies</span>
                                     </TooltipTrigger>
-                                    <TooltipContent>
+                                    <TooltipContent className="z-[10000]">
                                         Helfen uns zu verstehen, wie unsere Website genutzt wird.
                                     </TooltipContent>
                                 </Tooltip>
@@ -217,7 +217,7 @@ export default function CookieSettings({onSave}: CookieSettingsProps) {
                                     <TooltipTrigger asChild>
                                         <span>Marketing-Cookies</span>
                                     </TooltipTrigger>
-                                    <TooltipContent>
+                                    <TooltipContent className="z-[10000]">
                                         Ermöglichen personalisierte Werbung und Tracking.
                                     </TooltipContent>
                                 </Tooltip>
@@ -232,7 +232,7 @@ export default function CookieSettings({onSave}: CookieSettingsProps) {
                                     <TooltipTrigger asChild>
                                         <span>Notwendige Cookies</span>
                                     </TooltipTrigger>
-                                    <TooltipContent>
+                                    <TooltipContent className="z-[10000]">
                                         Erforderlich für grundlegende Funktionen der Website.
                                     </TooltipContent>
                                 </Tooltip>
