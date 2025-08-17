@@ -50,7 +50,7 @@ export default function CookieSettings({onSave}: CookieSettingsProps) {
     return (
         <div className="fixed bottom-4 left-4 z-[9999]">
             <div className="relative w-[min(92vw,600px)]">
-                {/* Cookie-Form (SVG bleibt wie geliefert) */}
+                {/* Deko-SVG unverändert */}
                 <svg
                     width="100%"
                     height="100%"
@@ -58,6 +58,8 @@ export default function CookieSettings({onSave}: CookieSettingsProps) {
                     xmlns="http://www.w3.org/2000/svg"
                     className="h-auto w-full"
                     style={{fillRule: "evenodd", clipRule: "evenodd", strokeLinejoin: "round", strokeMiterlimit: 2}}
+                    aria-hidden="true"
+                    role="img"
                 >
                     <g transform="matrix(1,0,0,1,-125,-125)">
                         <path
@@ -66,6 +68,8 @@ export default function CookieSettings({onSave}: CookieSettingsProps) {
                         />
                     </g>
                 </svg>
+
+                {/* Titel */}
                 <div className="absolute inset-0">
                     <div className="py-17 px-40">
                         <h2 className="text-5xl  font-bold tracking-tight">COOKIE</h2>
@@ -73,43 +77,44 @@ export default function CookieSettings({onSave}: CookieSettingsProps) {
                     </div>
                 </div>
 
+                {/* Inhalt */}
                 <div className="absolute inset-0 flex flex-col items-center justify-center">
-                    {/* Copy */}
                     <p className="mt-20 text-sm leading-relaxed max-w-[420px]">
-                        Wir verwenden erforderliche, leistungsbezogene und Marketing-Cookies, um Ihre
-                        Erfahrung zu messen, zu analysieren und zu personalisieren. Weitere
-                        Informationen finden Sie in unserer{" "}
+                        Wir verwenden notwendige, statistische und Marketing-Cookies, um unsere Website zu betreiben,
+                        die Nutzung zu analysieren und Ihre Erfahrung zu verbessern. Einzelheiten finden Sie in unserer{" "}
                         <Link href="/privacy" className="underline underline-offset-2">
                             Datenschutzerklärung
                         </Link>
                         .
                     </p>
 
-                    {/* Labels Row */}
+                    {/* Kopfzeile */}
                     <div className="mt-4 grid w-full max-w-[420px] grid-cols-2 text-xs">
-                        <span >cookies</span>
-                        <span className="justify-self-end">selection</span>
+                        <span>Cookies</span>
+                        <span className="justify-self-end">Auswahl</span>
                     </div>
 
-                    {/* Switches */}
+                    {/* Schalter */}
                     <div className="mt-2 w-full max-w-[420px] space-y-2">
                         <div className="flex items-center justify-between">
-                            <span className="text-sm">analytics cookies</span>
+                            <span className="text-sm">Statistik-Cookies</span>
                             <Switch
                                 checked={prefs.analytics}
                                 onCheckedChange={(v) => updatePrefs("analytics", v)}
+                                aria-label="Statistik-Cookies aktivieren"
                             />
                         </div>
                         <div className="flex items-center justify-between">
-                            <span className="text-sm">advertising cookies</span>
+                            <span className="text-sm">Marketing-Cookies</span>
                             <Switch
                                 checked={prefs.marketing}
                                 onCheckedChange={(v) => updatePrefs("marketing", v)}
+                                aria-label="Marketing-Cookies aktivieren"
                             />
                         </div>
                         <div className="flex items-center justify-between opacity-70">
-                            <span className="text-sm">required cookies</span>
-                            <Switch checked disabled/>
+                            <span className="text-sm">Notwendige Cookies</span>
+                            <Switch checked disabled aria-label="Notwendige Cookies (immer aktiv)"/>
                         </div>
                     </div>
 
@@ -123,24 +128,24 @@ export default function CookieSettings({onSave}: CookieSettingsProps) {
                                     savePrefs({necessary: true, analytics: false, marketing: false, given: true})
                                 }
                             >
-                                decline
+                                Ablehnen
                             </Button>
 
                             <Button
-                                className="h-10 text-sm w-1/2 "
+                                className="h-10 text-sm w-1/2"
                                 onClick={() =>
                                     savePrefs({necessary: true, analytics: true, marketing: true, given: true})
                                 }
                             >
-                                accept all
+                                Alle akzeptieren
                             </Button>
                         </div>
 
                         <Button
-                            className="mt-2 w-full h-10 text-sm "
+                            className="mt-2 w-full h-10 text-sm"
                             onClick={() => savePrefs({...prefs, necessary: true, given: true})}
                         >
-                            accept selection
+                            Auswahl speichern
                         </Button>
                     </div>
                 </div>
