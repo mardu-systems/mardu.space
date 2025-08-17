@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import React, {useEffect, useRef, useState} from "react";
+import {useIsMobile} from "@/hooks/use-mobile";
 
 interface DashedConnectorProps {
     rootRef: React.RefObject<HTMLElement | null>;
@@ -9,18 +10,30 @@ interface DashedConnectorProps {
     strokeWidth?: number;
     dash?: string;
     offsetBeforePoint?: number;
+    mobileStroke?: string;
+    mobileStrokeWidth?: number;
+    mobileDash?: string;
 }
 
 export default function DashedConnector({
-    rootRef,
-    anchorSelector = "[data-timeline-anchor]",
-    stroke = "#CA452A",
-    strokeWidth = 2,
-    dash = "6 8",
-    offsetBeforePoint = 16,
-}: DashedConnectorProps) {
+                                            rootRef,
+                                            anchorSelector = "[data-timeline-anchor]",
+                                            stroke = "#CA452A",
+                                            strokeWidth = 2,
+                                            dash = "6 8",
+                                            offsetBeforePoint = 16,
+                                            mobileStroke = "#CA452A40",
+                                            mobileStrokeWidth = 8,
+                                            mobileDash = "12 16",
+                                        }: DashedConnectorProps) {
     const svgRef = useRef<SVGSVGElement>(null);
     const [box, setBox] = useState<{ w: number; h: number }>({ w: 0, h: 0 });
+    const isMobile = useIsMobile();
+
+    // Wähle die richtigen Werte basierend auf der Bildschirmgröße
+    const effectiveStroke = isMobile ? mobileStroke : stroke;
+    const effectiveStrokeWidth = isMobile ? mobileStrokeWidth : strokeWidth;
+    const effectiveDash = isMobile ? mobileDash : dash;
 
     useEffect(() => {
         const root = rootRef.current;
@@ -34,7 +47,7 @@ export default function DashedConnector({
             setBox({ w: r.width, h: r.height });
 
             const points = getAnchors()
-                // nur sichtbare (Desktop)
+                // nur sichtbare Elemente
                 .filter(el => getComputedStyle(el).display !== "none")
                 .map(el => {
                     const b = el.getBoundingClientRect();
@@ -57,9 +70,9 @@ export default function DashedConnector({
                     const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
                     path.setAttribute("d", pathData);
                     path.setAttribute("fill", "none");
-                    path.setAttribute("stroke", stroke);
-                    path.setAttribute("stroke-width", strokeWidth.toString());
-                    path.setAttribute("stroke-dasharray", dash);
+                    path.setAttribute("stroke", effectiveStroke);
+                    path.setAttribute("stroke-width", effectiveStrokeWidth.toString());
+                    path.setAttribute("stroke-dasharray", effectiveDash);
                     path.setAttribute("vector-effect", "non-scaling-stroke");
                     svg.appendChild(path);
                 });
@@ -71,7 +84,6 @@ export default function DashedConnector({
 
             const segments: string[] = [];
 
-            // Erstelle separate Verbindungen zwischen jeweils zwei aufeinanderfolgenden Punkten
             for (let i = 0; i < pts.length - 1; i++) {
                 const startPoint = {
                     x: pts[i].x,
@@ -83,7 +95,6 @@ export default function DashedConnector({
                     y: pts[i + 1].y - offset,
                 };
 
-                // Erstelle eine glatte Kurve zwischen den beiden Punkten
                 const midY = (startPoint.y + endPoint.y) / 2;
                 const pathData = `M ${startPoint.x},${startPoint.y} C ${startPoint.x},${midY} ${endPoint.x},${midY} ${endPoint.x},${endPoint.y}`;
 
@@ -93,7 +104,6 @@ export default function DashedConnector({
             return segments;
         };
 
-        // Reagiert auf Größenänderungen
         const rootRO = new ResizeObserver(update);
         rootRO.observe(root);
 
@@ -115,12 +125,12 @@ export default function DashedConnector({
             rootRO.disconnect();
             anchorROs.forEach(ro => ro.disconnect());
         };
-    }, [rootRef, anchorSelector, stroke, strokeWidth, dash, offsetBeforePoint]);
+    }, [rootRef, anchorSelector, effectiveStroke, effectiveStrokeWidth, effectiveDash, offsetBeforePoint]);
 
     return (
         <svg
             ref={svgRef}
-            className="absolute inset-0 pointer-events-none hidden md:block"
+            className="absolute inset-0 pointer-events-none block"
             width="100%"
             height="100%"
             viewBox={`0 0 ${Math.max(1, box.w)} ${Math.max(1, box.h)}`}
@@ -128,4 +138,3 @@ export default function DashedConnector({
         />
     );
 }
-
