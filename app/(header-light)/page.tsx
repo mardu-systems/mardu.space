@@ -50,6 +50,7 @@ export default function HomePage() {
                             width={1200}
                             height={1200}
                             className="w-1/2 h-auto md:w-full md:max-w-2xl drop-shadow-2xl"
+                            loading="lazy"
                         />
                     </div>
 
@@ -64,6 +65,7 @@ export default function HomePage() {
                                 height={1000}
                                 alt="Wortwolke mit Begriffen zu Makerspaces"
                                 className="w-full h-auto drop-shadow-2xl"
+                                loading="lazy"
                             />
                         </div>
 
@@ -118,6 +120,7 @@ export default function HomePage() {
                                     width={192}
                                     height={192}
                                     className="w-24 h-24 md:w-32 md:h-32 object-contain"
+                                    loading="lazy"
                                 />
                             </div>
 
@@ -161,6 +164,7 @@ export default function HomePage() {
                                     width={192}
                                     height={192}
                                     className="w-24 h-24 md:w-32 md:h-32 object-contain"
+                                    loading="lazy"
                                 />
                             </div>
 
@@ -186,8 +190,9 @@ export default function HomePage() {
 
                             <div className="col-span-12 md:col-span-4">
                                 <div className="space-y-2">
-                                    <Image src="/landing/HaraldundJochen.jpg" alt="Harald zeigt Jochen das Schweißen" width={1200}
-                                           height={1200} className="w-full h-auto drop-shadow-2xl"/>
+                                    <Image src="/landing/HaraldundJochen.jpg" alt="Harald zeigt Jochen das Schweißen"
+                                           width={1200}
+                                           height={1200} className="w-full h-auto drop-shadow-2xl" loading="lazy"/>
                                     <p className="text-sm sm:text-lg text-center">
                                         Wissensweitergabe durch Kurse
                                     </p>
@@ -209,7 +214,7 @@ export default function HomePage() {
                                         width={1440}
                                         height={890}
                                         className="w-full h-auto object-contain"
-                                        priority
+                                        loading="lazy"
                                     />
                                 </div>
 
@@ -241,6 +246,7 @@ export default function HomePage() {
                                         width={1100}
                                         height={900}
                                         className="w-[88%] md:w-[84%] h-auto object-contain"
+                                        loading="lazy"
                                     />
                                 </div>
                             </div>
@@ -261,6 +267,7 @@ export default function HomePage() {
                                         width={220}
                                         height={220}
                                         className="w-24 h-24 md:w-32 md:h-32 object-contain"
+                                        loading="lazy"
                                     />
                                 </div>
 
@@ -292,7 +299,7 @@ export default function HomePage() {
                                     width={1200}
                                     height={900}
                                     className="w-full max-w-[600px] h-auto object-contain"
-                                    priority
+                                    loading="lazy"
                                 />
 
                                 <div
@@ -322,6 +329,7 @@ export default function HomePage() {
                                     width={1200}
                                     height={1200}
                                     className="w-[82%] md:w-[88%] lg:w-[80%] h-auto object-contain rounded-2xl drop-shadow-xl"
+                                    loading="lazy"
                                 />
                                 <figcaption className="mt-3 text-base md:text-lg text-center md:text-left">
                                     Gerät zur Freischaltung der Maschinen
@@ -342,6 +350,7 @@ export default function HomePage() {
                                     width={1000}
                                     height={800}
                                     className="w-[90%] md:w-full max-w-[580px] h-auto object-contain"
+                                    loading="lazy"
                                 />
                             </div>
 
@@ -390,6 +399,7 @@ export default function HomePage() {
                                     width={400}
                                     height={200}
                                     className="w-full h-auto object-contain"
+                                    loading="lazy"
                                 />
                             </a>
 
@@ -406,6 +416,7 @@ export default function HomePage() {
                                     width={400}
                                     height={200}
                                     className="w-full h-auto object-contain"
+                                    loading="lazy"
                                 />
                             </a>
 
@@ -422,6 +433,7 @@ export default function HomePage() {
                                     width={400}
                                     height={200}
                                     className="w-full h-auto object-contain"
+                                    loading="lazy"
                                 />
                             </a>
                         </div>
