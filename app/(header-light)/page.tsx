@@ -72,7 +72,7 @@ export default function HomePage() {
                                     width={1000}
                                     height={1000}
                                     sizes="(min-width: 768px) 36rem, 90vw"
-                                    className="w-[clamp(260px,86vw,540px)] h-auto drop-shadow-2xl"
+                                    className="w-[clamp(260px,86vw,540px)] h-auto "
                                     loading="lazy"
                                 />
                             </div>
@@ -201,7 +201,7 @@ export default function HomePage() {
                         <div className="grid grid-cols-12 gap-6 md:gap-10 items-start">
                             <div className="col-span-12 md:col-span-6 flex flex-col items-center md:items-start">
                                 <div
-                                    className="w-full max-w-[720px] rounded-xl border border-[#8D69C0]/30 shadow-[0_10px_40px_rgba(141,105,192,.15)] bg-white overflow-hidden">
+                                    className="w-full max-w-[720px] rounded-xl border border-[#8D69C0]/30 shadow-[0_10px_40px_rgba(141,105,192,.15)] overflow-hidden">
                                     <Image
                                         src="/landing/open_badge.png"
                                         alt="Badge erstellen – Webplattform Open Educational Badges"

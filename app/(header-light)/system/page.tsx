@@ -3,8 +3,7 @@
 import Image from "next/image";
 import {useMemo} from "react";
 import clsx from "clsx";
-import {Button} from "@/components/ui/button";
-import {Building, Monitor, Shield, Wifi} from "lucide-react";
+import ProductShowcase from "@/components/ProductShowcase";
 
 export type HeroProps = {
     leftSrc?: string;
@@ -17,7 +16,7 @@ export type HeroProps = {
 };
 
 function HeroSystem({
-                        leftSrc = "/_A7_8650.jpg",
+                        leftSrc = "/mounted.jpg",
                         rightSrc = "/_A7_9072_quer.jpg",
                         leftAlt = "Gateway – Zentrale Steuereinheit",
                         rightAlt = "Zutrittspunkt – Türmodul mit NFC",
@@ -135,101 +134,41 @@ function HeroSystem({
                     </strong>
                 </div>
             </section>
-            <GatewayFrame/>
+
+            {/* === Produkt 2: Zugriffspunkt === */}
+            <ProductShowcase
+                variant={1}
+                leftImageSrc="/zugriffspunkt/device.jpg"
+                leftImageAlt="Zugriffspunkt Lesegerät"
+                topMiddleImageSrc="/zugriffspunkt/schuetz.jpg"
+                topMiddleImageAlt="Schützgerät für Maschinen bis 32A"
+                topRightImageSrc="/zugriffspunkt/network.jpg"
+                topRightImageAlt="Funkvernetzung für Ausfallsicherheit"
+                title="Der Zugriffspunkt"
+                description="Der Zugriffspunkt liest die Schlüsselkarten der Benutzer und fragt die Berechtigung beim Gateway an."
+                price="200,00 €"
+                priceNote="Vorläufiger Preis – Produkt in Kürze erhältlich"
+                ctaLabel="Vormerken"
+                onCtaClick={() => console.log("Zugriffspunkt vorgemerkt")}
+            />
+
+            {/* === Produkt 1: Gateway === */}
+            <ProductShowcase
+                variant={2}
+                leftImageSrc="/gateway/mounted.jpg"
+                leftImageAlt="Gateway an zentraler Position in einer Werkstatt"
+                topMiddleImageSrc="/gateway/inside.jpg"
+                topMiddleImageAlt="Innenleben des Gateways"
+                topRightImageSrc="/gateway/webinterface.jpeg"
+                topRightImageAlt="Verwaltungs-Webinterface"
+                title="Das Gateway"
+                description="Das Gateway empfängt die Zugriffsanfragen von den Readern und sendet die entsprechenden Berechtigungen zurück."
+                price="400,00 €"
+                priceNote="Vorläufiger Preis – Produkt in Kürze erhältlich"
+                ctaLabel="Vormerken"
+                onCtaClick={() => console.log("Gateway vorgemerkt")}
+            />
         </main>
-    );
-}
-
-/*
-clip-path: polygon(0 0, 22% 0, 44% 100%, 0% 100%); Polygon Links
-clip-path: polygon(22% 0, 33% 50%, 52% 0); Polygon Mitte
-clip-path: polygon(75% 0, 100% 44%, 100% 0); Polygon Oben Rechts
- */
-export function GatewayFrame() {
-    return (
-        <section className="relative mx-auto min-h-screen overflow-hidden">
-            {/* ====== LAYER: Hintergrund-Fotos mit Clip-Paths ====== */}
-            <div
-                className="absolute inset-0 z-[1] [clip-path:polygon(53%_0,75%_0,100%_44%,100%_100%,44%_100%,33%_50%)]"/>
-
-
-            {/* Links: großes Werkstattfoto – Polygon Links */}
-            <div className="absolute inset-0 z-0 overflow-hidden [clip-path:polygon(0_0,22%_0,44%_100%,0%_100%)]">
-                <Image
-                    src="/_A7_8645.JPG"
-                    alt="Gateway an zentraler Position in einer Werkstatt"
-                    fill
-                    className="object-cover opacity-80"
-                    priority
-                />
-            </div>
-
-            {/* Mitte oben: Dashboard-Dreieck – Polygon Mitte */}
-            <div className="absolute inset-0 z-10 overflow-hidden [clip-path:polygon(22%_0,33%_50%,52%_0)]">
-                <Image
-                    src="/_A7_8631.jpg"
-                    alt="Verwaltungs-Webinterface"
-                    fill
-                    className="object-cover"
-                    priority
-                />
-            </div>
-
-            <div className="absolute inset-0 z-10 overflow-hidden [clip-path:polygon(75%_0,100%_44%,100%_0)]">
-                <Image
-                    src="/_A7_8631.jpg"
-                    alt="Innenleben des Gateways"
-                    fill
-                    className="object-cover"
-                    priority
-                />
-            </div>
-
-            <div className="absolute inset-0 z-20 left-[33%] top-[10%] px-4 sm:px-6">
-                <header className="mb-4 sm:mb-6 text-center translate-x-0 sm:translate-x-[-3%]">
-                    <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-extrabold tracking-wide">
-                        DAS GATEWAY
-                    </h2>
-                    <p className="mx-auto mt-2 sm:mt-4 max-w-[22ch] sm:max-w-[26ch] md:max-w-[30ch] lg:max-w-[34ch] xl:max-w-[60ch] text-sm sm:text-base md:text-lg lg:text-xl 2xl:text-xl text-neutral-700">
-                        Das Gateway [geɪtweɪ] empfängt die Zugriffsanfragen von den Readern und sendet die
-                        entsprechenden Berechtigungen zurück.
-                    </p>
-                </header>
-
-                <ul className="mx-auto mt-0 max-w-[80ch] space-y-3 sm:space-y-4 pl-5 text-lg sm:text-xl leading-relaxed list-none flex flex-col justify-center min-h-[50vh]">
-                    <li className="flex items-center gap-3">
-                        <Building className="h-6 w-6 text-[#5e3aa6] shrink-0"/>
-                        <span>Pro Gebäude wird ein Gateway benötigt, um das lokale Funknetzwerk zu verwalten.</span>
-                    </li>
-                    <li className="flex items-center gap-3">
-                        <Shield className="h-6 w-6 text-[#5e3aa6] shrink-0"/>
-                        <span>Das Gateway prüft die Kenntnisse der Nutzer über Open Educational Badges.</span>
-                    </li>
-                    <li className="flex items-center gap-3">
-                        <Wifi className="h-6 w-6 text-[#5e3aa6] shrink-0"/>
-                        <span>Alle Berechtigungen sind offline gecached, um auch bei Internetausfall den Weiterbetrieb zu ermöglichen.</span>
-                    </li>
-                    <li className="flex items-center gap-3">
-                        <Monitor className="h-6 w-6 text-[#5e3aa6] shrink-0"/>
-                        <span>Für die genaue Überwachung und Verwaltung gibt es ein modernes Webinterface.</span>
-                    </li>
-                </ul>
-
-                <div
-                    className="mt-8 sm:mt-10 flex flex-col items-center gap-5 sm:flex-row sm:justify-center sm:gap-8">
-                    <div className="text-center">
-                        <div className="text-4xl sm:text-5xl font-extrabold tracking-tight">400,00€</div>
-                        <div className="text-xs sm:text-sm text-neutral-600">inkl. MwSt.</div>
-                        <div className="mt-1 text-[10px] text-neutral-500">
-                            Vorläufiger Preis, Produkt in Kürze erhältlich
-                        </div>
-                    </div>
-                    <Button className="h-11 sm:h-12 rounded-lg px-6 sm:px-7 text-sm sm:text-base font-semibold">
-                        VORMERKEN
-                    </Button>
-                </div>
-            </div>
-        </section>
     );
 }
 
