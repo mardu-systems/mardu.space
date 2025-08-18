@@ -6,6 +6,7 @@ import {Switch} from "@/components/ui/switch";
 import {Tooltip, TooltipTrigger, TooltipContent} from "@/components/ui/tooltip";
 import type {ConsentPreferences} from "@/types/consent";
 import Link from "next/link";
+import {toast} from "sonner";
 
 interface CookieSettingsProps {
     onSave: (prefs: ConsentPreferences) => Promise<void> | void;
@@ -26,6 +27,10 @@ export default function CookieSettings({onSave}: CookieSettingsProps) {
                 const res = await fetch("/api/consent");
                 const data = (await res.json()) as ConsentPreferences;
                 setPrefs(data);
+            } catch (err) {
+                console.error("Failed to load consent preferences", err);
+                setPrefs({necessary: true, analytics: false, marketing: false, given: false});
+                toast.error("Fehler beim Laden der Cookie-Einstellungen. Standardwerte werden verwendet.");
             } finally {
                 setLoaded(true);
             }
