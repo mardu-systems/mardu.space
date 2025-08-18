@@ -2,11 +2,13 @@ import * as React from "react";
 import type { ConsentPreferences } from "@/types/consent";
 import { setConsent } from "@/lib/consent";
 
+const GA_COOKIE_PREFIXES = ["_ga", "_gid", "_gat", "_gac", "__ga", "__utm"];
+
 function clearGACookies() {
     document.cookie.split(";").forEach((cookie) => {
         const [name] = cookie.split("=");
         const trimmed = name?.trim();
-        if (trimmed && trimmed.startsWith("_ga")) {
+        if (trimmed && GA_COOKIE_PREFIXES.some((prefix) => trimmed.startsWith(prefix))) {
             document.cookie = `${trimmed}=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT;`;
         }
     });
