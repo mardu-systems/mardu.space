@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import type { ConsentPreferences } from "@/types/consent";
 import { Button } from "@/components/ui/button";
@@ -17,6 +17,7 @@ export default function CookieConsentBanner() {
     const { prefs, setPrefs } = useConsent();
     const [visible, setVisible] = useState(false);
     const [showSettings, setShowSettings] = useState(false);
+    const containerRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         if (prefs && !prefs.given) {
@@ -34,6 +35,40 @@ export default function CookieConsentBanner() {
         };
     }, []);
 
+    useEffect(() => {
+        if (!visible || showSettings) return;
+        const container = containerRef.current;
+        if (!container) return;
+
+        const selector =
+            'a[href], button, textarea, input, select, [tabindex]:not([tabindex="-1"])';
+        const focusable = Array.from(
+            container.querySelectorAll<HTMLElement>(selector),
+        );
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+
+        function handleKeyDown(e: KeyboardEvent) {
+            if (e.key !== "Tab" || focusable.length === 0) return;
+            if (e.shiftKey) {
+                if (document.activeElement === first) {
+                    e.preventDefault();
+                    last?.focus();
+                }
+            } else if (document.activeElement === last) {
+                e.preventDefault();
+                first?.focus();
+            }
+        }
+
+        container.addEventListener("keydown", handleKeyDown);
+        first?.focus();
+
+        return () => {
+            container.removeEventListener("keydown", handleKeyDown);
+        };
+    }, [visible, showSettings]);
+
     async function handleSave(newPrefs: ConsentPreferences) {
         await setPrefs(newPrefs);
         setVisible(false);
@@ -47,7 +82,12 @@ export default function CookieConsentBanner() {
     }
 
     return (
-        <div className="fixed bottom-4 left-4 z-[9999]">
+        <div
+            className="fixed bottom-4 left-4 z-[9999]"
+            role="dialog"
+            aria-modal="true"
+            ref={containerRef}
+        >
             <div className="relative w-[460px] lg:w-[540px]">
                 {/* SVG Hintergrund */}
                 <svg
