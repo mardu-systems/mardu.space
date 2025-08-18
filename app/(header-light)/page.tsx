@@ -356,7 +356,7 @@ export default function HomePage() {
                                         Da die Berechtigung vorliegt, schaltet das <span
                                         className="whitespace-nowrap">mardu.space</span> Gerät
                                         den Strom für das Schweißgerät frei und Jochen kann seinen Wohnzimmertisch
-                                        zusammenschweißen. *
+                                        zusammenschweißen.<sup>*</sup>
                                     </p>
                                     <p className="mt-4">
                                         Dank des Kurses von Harald weiß er auch, wie man den Verzug beim Schweißen
@@ -442,6 +442,12 @@ export default function HomePage() {
                     </div>
                 </section>
             </div>
+            <small
+                className="font-futura-normal block mt-6 text-center text-xs text-zinc-500"
+            >
+                * Schweißen in Wohnräumen ist nicht empfohlen. Nutze eine geeignete Werkstatt
+                mit ausreichender Belüftung.
+            </small>
         </main>
     );
 }
