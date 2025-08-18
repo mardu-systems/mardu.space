@@ -23,7 +23,7 @@ export async function setConsent(prefs: ConsentPreferences): Promise<void> {
     cookieStore.set({
         name: CONSENT_COOKIE,
         value: JSON.stringify(prefs),
-        httpOnly: false,
+        httpOnly: true,
         path: "/",
         sameSite: "lax",
         secure: process.env.NODE_ENV === "production",
