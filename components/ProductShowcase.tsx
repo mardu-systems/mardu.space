@@ -6,12 +6,12 @@ import {Building, Shield, Wifi, Monitor} from "lucide-react";
 import * as React from "react";
 
 export type ProductAdvertisementProps = {
-    leftImageSrc?: string;
-    leftImageAlt?: string;
-    topMiddleImageSrc?: string;
-    topMiddleImageAlt?: string;
-    topRightImageSrc?: string;
-    topRightImageAlt?: string;
+    leftImageSrc: string;
+    leftImageAlt: string;
+    topMiddleImageSrc: string;
+    topMiddleImageAlt: string;
+    topRightImageSrc: string;
+    topRightImageAlt: string;
     title?: string;
     description?: string;
     price?: string;
@@ -40,21 +40,21 @@ const poly = (points: string) => ({
     WebkitClipPath: `polygon(${points})`,
 });
 export default function ProductShowcase({
-                                                 leftImageSrc,
-                                                 leftImageAlt,
-                                                 topMiddleImageSrc,
-                                                 topMiddleImageAlt,
-                                                 topRightImageSrc,
-                                                 topRightImageAlt,
-                                                 title,
-                                                 description,
-                                                 price,
-                                                 priceNote,
-                                                 ctaLabel,
-                                                 onCtaClick,
-                                                 className,
-                                                 variant,
-                                             }: ProductAdvertisementProps) {
+                                            leftImageSrc,
+                                            leftImageAlt,
+                                            topMiddleImageSrc,
+                                            topMiddleImageAlt,
+                                            topRightImageSrc,
+                                            topRightImageAlt,
+                                            title,
+                                            description,
+                                            price,
+                                            priceNote,
+                                            ctaLabel,
+                                            onCtaClick,
+                                            className,
+                                            variant = 1,
+                                        }: ProductAdvertisementProps) {
     const clip = CLIP_PATHS[variant];
     return (
         <section className={`relative mx-auto min-h-screen overflow-hidden ${className}`}>
