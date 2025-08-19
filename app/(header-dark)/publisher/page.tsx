@@ -1,4 +1,10 @@
+import type { Metadata } from "next"
 import {Card, CardHeader, CardTitle, CardContent} from "@/components/ui/card"
+
+export const metadata: Metadata = {
+    title: "Impressum",
+    description: "Angaben gemäß § 5 TMG für mardu.space."
+}
 
 export default function Publisher() {
     return (

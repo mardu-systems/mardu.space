@@ -1,6 +1,12 @@
+import type { Metadata } from "next"
 import {Card, CardHeader, CardTitle, CardContent} from "@/components/ui/card"
 import Link from "next/link"
 import {Button} from "@/components/ui/button"
+
+export const metadata: Metadata = {
+    title: "Datenschutzerklärung",
+    description: "Informationen zum Datenschutz bei mardu.space."
+}
 
 /* eslint-disable react/no-unescaped-entities */
 

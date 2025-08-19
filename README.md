@@ -18,6 +18,14 @@ bun dev
 
 Set `NEXT_PUBLIC_GOOGLE_MEASUREMENT_ID` to your Google Analytics 4 measurement ID to enable analytics. If the variable is not provided, analytics will remain disabled and a warning will be logged during initialization.
 
+To enable email delivery from the configurator, configure the following variables:
+
+```
+RESEND_API_KEY=
+EMAIL_FROM=
+EMAIL_TO=
+```
+
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.

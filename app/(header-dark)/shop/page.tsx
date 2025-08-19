@@ -1,5 +1,11 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import {listProducts} from "@/lib/products";
+
+export const metadata: Metadata = {
+  title: "Shop",
+  description: "Entdecke Produkte und Lösungen von mardu.space."
+};
 
 export default async function ShopPage() {
   const products = await listProducts();
