@@ -1,10 +1,8 @@
 "use client";
 
-import Image from "next/image";
 import {Button} from "@/components/ui/button";
 import {Building, Shield, Wifi, Monitor} from "lucide-react";
 import * as React from "react";
-import {useMemo} from "react";
 
 export type ProductAdvertisementProps = {
     leftImageSrc: string;
