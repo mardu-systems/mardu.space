@@ -4,6 +4,7 @@ import Image from "next/image";
 import {Button} from "@/components/ui/button";
 import {Building, Shield, Wifi, Monitor} from "lucide-react";
 import * as React from "react";
+import {useMemo} from "react";
 
 export type ProductAdvertisementProps = {
     leftImageSrc: string;
@@ -12,6 +13,9 @@ export type ProductAdvertisementProps = {
     topMiddleImageAlt: string;
     topRightImageSrc: string;
     topRightImageAlt: string;
+    leftImageClassName?: string;
+    middleImageClassName?: string;
+    rightImageClassName?: string;
     title?: string;
     description?: string;
     price?: string;
@@ -22,23 +26,21 @@ export type ProductAdvertisementProps = {
     variant?: 1 | 2;
 };
 
-const CLIP_PATHS = {
+const AREAS = {
     1: {
-        left: "0 0, 44% 0, 22% 100%, 0% 100%",
-        middle: "22% 100%, 33% 50%, 52% 100%",
-        right: "75% 100%, 100% 44%, 100% 100%",
+        left: {frame: {left: '0%', top: '0%', width: '44%', height: '100%'}, poly: "0% 0%, 100% 0%, 50% 100%, 0% 100%"},
+        middle: {frame: {left: '22%', top: '0%', width: '30%', height: '100%'}, poly: "0% 100%, 36.7% 50%, 100% 100%"},
+        right: {frame: {left: '75%', top: '0%', width: '25%', height: '100%'}, poly: "0% 100%, 100% 44%, 100% 100%"},
     },
     2: {
-        left: "0 0, 22% 0, 44% 100%, 0% 100%",
-        middle: "22% 0, 33% 50%, 52% 0",
-        right: "75% 0, 100% 44%, 100% 0",
-    },
+        left: {frame: {left: '0%', top: '0%', width: '44%', height: '100%'}, poly: "0% 0%, 50% 0%, 100% 100%, 0% 100%"},
+        middle: {frame: {left: '22%', top: '0%', width: '30%', height: '100%'}, poly: "0% 0%, 36.7% 50%, 100% 0%"},
+        right: {frame: {left: '75%', top: '0%', width: '25%', height: '100%'}, poly: "0% 0%, 100% 44%, 100% 0%"},
+    }
 } as const;
 
-const poly = (points: string) => ({
-    clipPath: `polygon(${points})`,
-    WebkitClipPath: `polygon(${points})`,
-});
+type Area = { frame: { left: string; top: string; width: string; height: string }, poly: string };
+
 export default function ProductShowcase({
                                             leftImageSrc,
                                             leftImageAlt,
@@ -46,6 +48,9 @@ export default function ProductShowcase({
                                             topMiddleImageAlt,
                                             topRightImageSrc,
                                             topRightImageAlt,
+                                            leftImageClassName,
+                                            middleImageClassName,
+                                            rightImageClassName,
                                             title,
                                             description,
                                             price,
@@ -55,44 +60,90 @@ export default function ProductShowcase({
                                             className,
                                             variant = 1,
                                         }: ProductAdvertisementProps) {
-    const clip = CLIP_PATHS[variant];
+    const A = AREAS[variant];
+
+    function centroidFromPoly(poly: string): string {
+        // erwartet "x% y%, x% y%, ..."
+        const pts = poly
+            .split(',')
+            .map(s => s.trim())
+            .map(p => {
+                const [xStr, yStr] = p.split(/\s+/);
+                return {
+                    x: parseFloat(xStr.replace('%','')),
+                    y: parseFloat(yStr.replace('%','')),
+                };
+            })
+            .filter(p => Number.isFinite(p.x) && Number.isFinite(p.y));
+
+        if (pts.length < 3) return "50% 50%";
+
+        // Polygon-Centroid (Flächengewichtung). Für Dreiecke = klassischer Schwerpunkt.
+        let A = 0, Cx = 0, Cy = 0;
+        for (let i = 0; i < pts.length; i++) {
+            const j = (i + 1) % pts.length;
+            const cross = pts[i].x * pts[j].y - pts[j].x * pts[i].y;
+            A += cross;
+            Cx += (pts[i].x + pts[j].x) * cross;
+            Cy += (pts[i].y + pts[j].y) * cross;
+        }
+        A *= 0.5;
+        if (Math.abs(A) < 1e-6) return "50% 50%";
+        Cx = Cx / (6 * A);
+        Cy = Cy / (6 * A);
+        return `${Cx.toFixed(1)}% ${Cy.toFixed(1)}%`;
+    }
+
+    function PolyImage({
+                           src, alt, area,
+                           objectPosition,
+                           z = 0,
+                       }: {
+        src: string; alt: string; area: Area;
+        objectPosition?: string;
+        z?: number;
+    }) {
+        const { frame, poly } = area;
+        return (
+            <div
+                className="absolute bg-no-repeat bg-cover"
+                style={{
+                    left: frame.left, top: frame.top, width: frame.width, height: frame.height,
+                    clipPath: `polygon(${poly})`,
+                    WebkitClipPath: `polygon(${poly})`,
+                    backgroundImage: `url(${src})`,
+                    backgroundPosition: objectPosition,
+                }}
+            />
+        );
+    }
+
     return (
-        <section className={`relative mx-auto min-h-screen overflow-hidden ${className}`}>
+        <section className={`relative mx-auto min-h-screen ${className}`}>
             {/* ====== Decorative Layer (optional tint/gradient) ====== */}
 
-            <div className="absolute inset-0 z-0 overflow-hidden" style={poly(clip.left)}>
-                <Image
-                    src={leftImageSrc}
-                    alt={leftImageAlt}
-                    fill
-                    priority
-                    className="object-cover opacity-80"
-                    sizes="100vw"
-                />
-            </div>
+            <PolyImage
+                src={leftImageSrc}
+                alt={leftImageAlt}
+                area={A.left}
+                objectPosition="center"
+                z={0}
+            />
 
-            <div className="absolute inset-0 z-10 overflow-hidden" style={poly(clip.middle)}>
-                <Image
-                    src={topMiddleImageSrc}
-                    alt={topMiddleImageAlt}
-                    fill
-                    priority
-                    className="object-cover"
-                    sizes="100vw"
-                />
-            </div>
+            <PolyImage
+                src={topMiddleImageSrc}
+                alt={topMiddleImageAlt}
+                objectPosition="80% 10%"
+                area={A.middle}
+                z={10}
+            />
 
-            <div className="absolute inset-0 z-10 overflow-hidden" style={poly(clip.right)}>
-                <Image
-                    src={topRightImageSrc}
-                    alt={topRightImageAlt}
-                    fill
-                    priority
-                    className="object-cover"
-                    sizes="100vw"
-                />
-            </div>
-
+            <PolyImage
+                src={topRightImageSrc}
+                alt={topRightImageAlt}
+                area={A.right}
+                z={10}
+            />
 
             {/* ====== Foreground Content ====== */}
             <div className="absolute inset-0 z-20 left-[33%] top-[10%] px-4 sm:px-6">
