@@ -2,13 +2,19 @@
 
 import * as React from "react";
 import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
 import type { State } from "../page";
-import {useMemo} from "react";
 
 type BomRow = { item: string; qty: number; note?: string };
 
 export default function SummaryStep({ state }: { state: State }) {
-  const bom = useMemo(() => computeBOM(state), [state]);
+  const bom = React.useMemo(() => computeBOM(state), [state]);
+  const [open, setOpen] = React.useState(false);
   const totalCable2core =
     state.triMachines.count * state.triMachines.cablePerUnitM +
     state.schukoMachines.count * state.schukoMachines.cablePerUnitM;
@@ -47,21 +53,36 @@ export default function SummaryStep({ state }: { state: State }) {
 
       <Card className="rounded-2xl">
         <CardContent className="p-6">
-          <h3 className="text-lg font-bold text-ink-600 mb-2">Stückliste (automatisch berechnet)</h3>
-          <div className="divide-y">
-            {bom.map((row) => (
-              <div
-                key={row.item}
-                className="py-2 flex items-start justify-between gap-4 text-sm"
-              >
-                <span className="text-ink-600">
-                  {row.item}
-                  {row.note ? <span className="text-ink-400"> · {row.note}</span> : null}
-                </span>
-                <span className="font-semibold text-ink-700">{row.qty}</span>
+          <Collapsible open={open} onOpenChange={setOpen}>
+            <div className="flex items-center justify-between mb-2">
+              <h3 className="text-lg font-bold text-ink-600">
+                Stückliste (automatisch berechnet)
+              </h3>
+              <CollapsibleTrigger asChild>
+                <Button variant="ghost" size="sm">
+                  {open ? "Ausblenden" : "Anzeigen"}
+                </Button>
+              </CollapsibleTrigger>
+            </div>
+            <CollapsibleContent>
+              <div className="divide-y">
+                {bom.map((row) => (
+                  <div
+                    key={row.item}
+                    className="py-2 flex items-start justify-between gap-4 text-sm"
+                  >
+                    <span className="text-ink-600">
+                      {row.item}
+                      {row.note ? (
+                        <span className="text-ink-400"> · {row.note}</span>
+                      ) : null}
+                    </span>
+                    <span className="font-semibold text-ink-700">{row.qty}</span>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
+            </CollapsibleContent>
+          </Collapsible>
         </CardContent>
       </Card>
     </section>
