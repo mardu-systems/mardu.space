@@ -48,10 +48,29 @@ export const metadata: Metadata = {
     },
 };
 
+const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "mardu.space",
+    url: "https://mardu.space",
+    publisher: {
+        "@type": "Organization",
+        name: "mardu.space",
+        url: "https://mardu.space",
+        logo: "https://mardu.space/marduspace_logo_bg_white.svg",
+    },
+};
+
 
 export default function RootLayout({children}: { children: React.ReactNode }) {
     return (
         <html lang="de">
+            <head>
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{__html: JSON.stringify(jsonLd)}}
+                />
+            </head>
             <body className="antialiased">
                 <TrackingProvider>
                     {children}
