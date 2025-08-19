@@ -2,12 +2,13 @@
 
 import * as React from "react";
 import Image from "next/image";
-import { useMemo, useState } from "react";
-import { defineStepper } from "@stepperize/react";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
-import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
-import { createSteps } from "./steps";
+import {useMemo, useState} from "react";
+import {defineStepper} from "@stepperize/react";
+import {Button} from "@/components/ui/button";
+import {cn} from "@/lib/utils";
+import {HoverCard, HoverCardContent, HoverCardTrigger} from "@/components/ui/hover-card";
+import {createSteps} from "./steps";
+import {toast} from "sonner";
 
 export type State = {
     triMachines: {
@@ -74,7 +75,7 @@ export default function ConfiguratorPageClient() {
     const steps = useMemo(() => createSteps(state, setState), [state]);
 
     return (
-        <header className="max-w-6xl mx-auto px-6 sm:px-10 pt-30 pb-6">
+        <div className="min-h-screen flex items-center justify-center px-6 sm:px-10">
             <Wizard.Scoped>
                 <MainContent
                     steps={steps}
@@ -87,15 +88,15 @@ export default function ConfiguratorPageClient() {
                                 body: JSON.stringify({...state.contact, config: state}),
                             });
                             if (!res.ok) throw new Error("Request failed");
-                            alert("Danke! Anfrage versendet.");
+                            toast.success("Danke! Anfrage versendet.");
                         } catch (e) {
                             console.error(e);
-                            alert("Etwas ist schiefgelaufen. Versuch es erneut.");
+                            toast.error("Etwas ist schiefgelaufen. Versuch es erneut.");
                         }
                     }}
                 />
             </Wizard.Scoped>
-        </header>
+        </div>
     );
 }
 
@@ -104,7 +105,14 @@ function MainContent({
                          state,
                          onSubmit,
                      }: {
-    steps: { id: string; title: React.ReactNode; tip: string; view: React.ReactNode; valid: (s: State) => boolean; hoverImg?: string }[];
+    steps: {
+        id: string;
+        title: React.ReactNode;
+        tip: string;
+        view: React.ReactNode;
+        valid: (s: State) => boolean;
+        hoverImg?: string
+    }[];
     state: State;
     onSubmit: () => Promise<void>;
 }) {
@@ -141,7 +149,6 @@ function MainContent({
             </div>
 
             {/* Title + Tip */}
-            {/* Title + Tip */}
             <div className="text-center">
                 <HoverCard openDelay={80} closeDelay={120}>
                     <HoverCardTrigger asChild>
@@ -169,9 +176,7 @@ function MainContent({
                                     <p className="text-sm text-ink-500">Kurze Hilfe</p>
                                 </div>
                                 <span
-                                    className="text-xs font-semibold text-red-700 bg-red-50 border border-red-200 px-2 py-1 rounded-full">
-            Schritt {idx + 1}/{steps.length}
-          </span>
+                                    className="text-xs font-semibold text-red-700 bg-red-50 border border-red-200 px-2 py-1 rounded-full">Schritt {idx + 1}/{steps.length}</span>
                             </div>
                         </div>
 
@@ -206,10 +211,10 @@ function MainContent({
             </div>
 
             {/* View */}
-            <div className="mt-8">{steps[idx].view}</div>
+            <div className="mt-18">{steps[idx].view}</div>
 
             {/* Nav */}
-            <div className="mt-12 flex items-center justify-between gap-4">
+            <div className="mt-22 flex items-center justify-between gap-4">
                 <Button variant="outline" onClick={() => stepper.prev()} disabled={stepper.isFirst}>Zurück</Button>
                 <div className="flex items-center gap-4">
                     {!isValid && <span className="text-sm text-rose-600">Bitte gültige Eingabe.</span>}
