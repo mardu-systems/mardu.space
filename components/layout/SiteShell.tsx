@@ -2,14 +2,22 @@
 import SiteHeader from "@/components/nav/header/SiteHeader";
 import {defaultHeaderItems} from "@/app/defaultHeaderItems";
 import SiteFooter from "@/components/nav/footer/footer";
-import CookieBanner from "@/components/CookieBanner";
 import React from "react";
 import {defaultFooterMetaLinks, defaultFooterNavLinks} from "@/app/defaultFooterItems";
-import CookieConsentBanner from "@/components/CookieBanner";
-import {AnimatePresence, motion} from "framer-motion";
+import dynamic from "next/dynamic";
 import {usePathname} from "next/navigation";
 
 export type HeaderVariant = "dark" | "light";
+
+const MotionDiv = dynamic(
+    () => import("framer-motion").then((mod) => mod.motion.div),
+    {ssr: false}
+);
+
+const AnimatePresence = dynamic(
+    () => import("framer-motion").then((mod) => mod.AnimatePresence),
+    {ssr: false}
+);
 
 export default function SiteShell({
                                       children,
@@ -35,7 +43,7 @@ export default function SiteShell({
                 style={{colorScheme: "light"}}
             >
                 <AnimatePresence mode="wait">
-                    <motion.div
+                    <MotionDiv
                         key={pathname}
                         initial={{opacity: 0, y: 8}}
                         animate={{opacity: 1, y: 0}}
@@ -43,7 +51,7 @@ export default function SiteShell({
                         transition={{duration: 0.25, ease: "easeOut"}}
                     >
                         {children}
-                    </motion.div>
+                    </MotionDiv>
                 </AnimatePresence>
             </div>
             <SiteFooter navLinks={defaultFooterNavLinks} metaLinks={defaultFooterMetaLinks}/>
