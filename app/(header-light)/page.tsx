@@ -36,10 +36,10 @@ export default function HomePage() {
             <section className="relative w-full">
                 <div className="flex items-end justify-center">
                     <div className="text-center">
-                        <h1
+                        <h2
                             className="uppercase font-futura-heavy text-[clamp(20px,4vw,80px)] text-[#8D69C0] md:leading-[0.9] animate-in fade-in slide-in-from-bottom-4 duration-700">
                             Warum brauchst du Mardu.space?
-                        </h1>
+                        </h2>
                     </div>
                 </div>
             </section>
