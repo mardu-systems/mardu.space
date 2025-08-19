@@ -2,23 +2,12 @@
 
 import * as React from "react";
 import Image from "next/image";
-import {useEffect, useMemo, useState} from "react";
-import {defineStepper} from "@stepperize/react";
-import {Button} from "@/components/ui/button";
-import {Card, CardContent} from "@/components/ui/card";
-import {Input} from "@/components/ui/input";
-import {Textarea} from "@/components/ui/textarea";
-import {cn} from "@/lib/utils";
-import {HoverCard, HoverCardContent, HoverCardTrigger} from "@/components/ui/hover-card";
-
-/* =====================================================
-   mardu.space – Zugriffspunkte/Bedarf Konfigurator
-   - Schrittbasiert mit @stepperize/react
-   - Tailwind + shadcn/ui
-   - Enthält: Maschinen (Drehstrom/Schuko), Türen, Tore,
-              Kühlschränke (Bezahlsystem), Zentrales Freigabesystem
-   - Dynamische Stückliste (BOM) mit Summen
-   ===================================================== */
+import { useMemo, useState } from "react";
+import { defineStepper } from "@stepperize/react";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
+import { createSteps } from "./steps";
 
 export type State = {
     triMachines: {
@@ -82,103 +71,7 @@ const Wizard = defineStepper(
 export default function MarduConfigurator() {
     const [state, setState] = useState<State>(defaultState);
 
-    const steps = useMemo(() => ([
-        {
-            id: "tri",
-            title: "Wie viele Drehstrommaschinen sollen gesichert werden?",
-            tip: "Viele große Werkzeugmaschinen – wie Sägen, Fräsen, Bohrmaschinen, Drehbänke oder einige Kompressoren – laufen mit Drehstrom. Das ist ein spezielles Stromsystem mit drei Leitungen (Phasen), wie es in Werkstätten, Industriehallen oder auch in manchen Haushalten zu finden ist. Leicht erkennen lassen sich diese an den roten Stecker wie Rechts im Bild.",
-            view: (
-                <NumberStep
-                    value={state.triMachines.count}
-                    onChange={(v) => setState(p => ({...p, triMachines: {...p.triMachines, count: v}}))}
-                />
-            ),
-            valid: (s: State) => s.triMachines.count >= 0,
-        },
-        {
-            id: "schuko",
-            title: "Wie viele Maschinen sind an Schuko (einphasig) angeschlossen?",
-            tip: "Eine Schukosteckdose ist die Standardsteckdose, die man aus jedem Haushalt kennt. Viele kleinere Maschinen und Werkzeuge – wie Handbohrmaschinen, Schleifer, Staubsauger oder mobile Geräte – laufen über Schuko. Diese Steckdosen liefern 230 Volt, was für Maschinen mit geringerem Strombedarf vollkommen ausreicht.",
-            view: (
-                <NumberStep
-                    value={state.schukoMachines.count}
-                    onChange={(v) => setState(p => ({...p, schukoMachines: {...p.schukoMachines, count: v}}))}
-                />
-            ),
-            valid: (s: State) => s.schukoMachines.count >= 0,
-        },
-        {
-            id: "doors",
-            title: "Wie viele Eingangstüren sollen gesichert werden?",
-            tip: "Eingangstüren sind Hauptzugänge in ein Gebäude. Damit nur berechtigte Personen eintreten können, und das auch möglicherweise außerhalb der offiziellen Öffnungszeiten, lassen sich auch normale Türen mit unserer Hardware ausstatten. Das Elektrische Türschloss oder der Elektrische Türöffner muss dabei aber passend für die Tür gekauft werden.",
-            view: (
-                <NumberStep
-                    value={state.doors.count}
-                    onChange={(v) => setState(p => ({...p, doors: {...p.doors, count: v}}))}
-                />
-            ),
-            valid: (s: State) => s.doors.count >= 0 && s.doors.cablePerDoorM >= 0,
-        },
-        {
-            id: "gates",
-            title: "Gibt es elektrische Tore zum Gelände?",
-            tip: "Elektrische Schiebetore schützen den äußeren Zugang zum Gelände. Um den Zugang zum Gelände für jeden Berechtigten gewährleisten zu können kann das mardu.space System auch mit diesen Verbunden werden. Hierzu muss in die Torsteuerung eingegriffen werden.",
-            view: (
-                <NumberStep
-                    value={state.gates.count}
-                    onChange={(v) => setState(p => ({...p, gates: {...p.gates, count: v}}))}
-                />
-            ),
-            valid: (s: State) => s.gates.count >= 0 && s.gates.cablePerGateM >= 0,
-        },
-        {
-            id: "fridges",
-            title: "Sollen Getränkekühlschränke mit Bezahlsystem ausgestattet werden?",
-            tip: "Getränkekühlschränke lassen sich mit einem elektronischen Bezahlsystem kombinieren. Nutzer können dann Getränke nur gegen genügend Geld auf dem eigenen Ausweis entnehmen.",
-            view: (
-                <NumberStep
-                    value={state.fridges.count}
-                    onChange={(v) => setState(p => ({...p, fridges: {...p.fridges, count: v}}))}
-                    note="Hinweis: Die Geräte-Integration ist aktuell noch nicht vollständig realisiert."
-                />
-            ),
-            valid: (s: State) => (s.fridges.count >= 0),
-        },
-        {
-            id: "central",
-            title: "Wie viele Räume brauchen ein zentrales Freigabesystem?",
-            tip: "In manchen Fällen dürfen gewisse Maschinen nur unter Aufsicht bedient werden. Hierzu kann in der Nähe der Tür ein zentrales Gerät installiert werden, dass die untergeordneten Zugriffspunkte an den einzelnen Maschinen Freigegeben werden. Anwendung kann ein solches verhalten in einem Schülerlabor an einer Schule oder bei einem Kurs finden, bei dem die Schüler nur unter aufsicht eines Lehrers die Maschinen bedienen dürfen.",
-            view: (
-                <NumberStep
-                    value={state.centralRooms.count}
-                    onChange={(v) => setState(p => ({...p, centralRooms: {...p.centralRooms, count: v}}))}
-                />
-            ),
-            valid: (s: State) => s.centralRooms.count >= 0,
-        },
-        {
-            id: "contact",
-            title: "Kontaktdaten für Angebot",
-            tip: "Wir verwenden die Daten ausschließlich zur Angebotserstellung.",
-            view: (
-                <ContactStep
-                    name={state.contact.name}
-                    email={state.contact.email}
-                    company={state.contact.company || ""}
-                    message={state.contact.message || ""}
-                    onChange={(patch) => setState(p => ({...p, contact: {...p.contact, ...patch}}))}
-                />
-            ),
-            valid: (s: State) => /\S/.test(s.contact.name) && /^\S+@\S+\.\S+$/.test(s.contact.email),
-        },
-        {
-            id: "summary",
-            title: "Zusammenfassung & Stückliste",
-            tip: "Bitte prüfen, dann absenden.",
-            view: <Summary state={state}/>,
-            valid: () => true,
-        },
-    ]), [state]);
+    const steps = useMemo(() => createSteps(state, setState), [state]);
 
     return (
         <header className="max-w-6xl mx-auto px-6 sm:px-10 pt-30 pb-6">
@@ -197,23 +90,13 @@ function MainContent({
                          state,
                          onSubmit,
                      }: {
-    steps: { id: string; title: React.ReactNode; tip: string; view: React.ReactNode; valid: (s: State) => boolean }[];
+    steps: { id: string; title: React.ReactNode; tip: string; view: React.ReactNode; valid: (s: State) => boolean; hoverImg?: string }[];
     state: State;
     onSubmit: () => void;
 }) {
     const stepper = Wizard.useStepper({initialStep: "tri"});
     const idx = stepper.all.findIndex(s => s.id === stepper.current.id);
     const isValid = steps[idx].valid(state);
-
-    const [useDialog, setUseDialog] = useState(false);
-
-    useEffect(() => {
-        const mq = window.matchMedia("(hover: none), (pointer: coarse)");
-        setUseDialog(mq.matches);
-        const onChange = (e: MediaQueryListEvent) => setUseDialog(e.matches);
-        mq.addEventListener?.("change", onChange);
-        return () => mq.removeEventListener?.("change", onChange);
-    }, []);
 
     return (
         <main className="max-w-6xl mx-auto px-6 sm:px-10 pb-24">
@@ -289,9 +172,9 @@ function MainContent({
                             <div className="col-span-2">
                                 <div
                                     className="relative aspect-[4/3] w-full overflow-hidden rounded-xl border bg-ink-50">
-                                    {"hoverImg" in steps[idx] && (steps[idx] as any).hoverImg ? (
+                                    {steps[idx].hoverImg ? (
                                         <Image
-                                            src={(steps[idx] as any).hoverImg}
+                                            src={steps[idx].hoverImg}
                                             alt="Vorschau"
                                             fill
                                             className="object-cover"
@@ -329,172 +212,4 @@ function MainContent({
             </div>
         </main>
     );
-}
-
-/* ========================= STEPS ========================= */
-
-function NumberStep({value, onChange, note}: {
-    value: number;
-    onChange: (v: number) => void
-    note?: string
-}) {
-    const clamp = (v: number) => Math.max(0, Math.min(999, v));
-    return (
-        <>
-            {note &&
-                <div
-                    className="text-sm text-ink-700 bg-amber-50 border border-amber-200 mx-auto w-fit p-3 rounded-xl mb-4">
-                    {note}
-                </div>
-            }
-            <div className="mx-auto w-full max-w-sm">
-                <div className="flex flex-col items-stretch justify-center gap-4">
-                    <div className="flex-1 rounded-2xl border-2 bg-white text-ink-600">
-                        <Input
-                            type="number"
-                            value={value}
-                            onChange={(e) => onChange(clamp(Number(e.target.value || 0)))}
-                            className="h-20 text-center text-4xl font-extrabold border-0 focus-visible:ring-0"
-                        />
-                    </div>
-                </div>
-                <p className="mt-3 text-center text-xs text-ink-400">Tipp: ↑/↓ ändern ebenfalls den Wert.</p>
-            </div>
-        </>
-    );
-}
-
-function ContactStep({name, email, company, message, onChange}: {
-    name: string; email: string; company?: string; message?: string;
-    onChange: (patch: Partial<State["contact"]>) => void;
-}) {
-    return (
-        <Card className="rounded-2xl border border-ink-100 bg-white/60">
-            <CardContent className="p-6">
-                <div className="grid sm:grid-cols-2 gap-4">
-                    <Input placeholder="Name*" value={name} onChange={e => onChange({name: e.target.value})}/>
-                    <Input placeholder="E‑Mail*" type="email" value={email}
-                           onChange={e => onChange({email: e.target.value})}/>
-                    <Input className="sm:col-span-2" placeholder="Firma (optional)" value={company}
-                           onChange={e => onChange({company: e.target.value})}/>
-                    <Textarea className="sm:col-span-2" rows={3} placeholder="Nachricht (optional)" value={message}
-                              onChange={e => onChange({message: e.target.value})}/>
-                </div>
-            </CardContent>
-        </Card>
-    );
-}
-
-/* ====================== SUMMARY & BOM ====================== */
-
-type BomRow = { item: string; qty: number; note?: string };
-
-function Summary({state}: { state: State }) {
-    const bom = computeBOM(state);
-    const totalCable2core = state.triMachines.count * state.triMachines.cablePerUnitM + state.schukoMachines.count * state.schukoMachines.cablePerUnitM;
-    const totalCable12core = state.doors.count * state.doors.cablePerDoorM + state.gates.count * state.gates.cablePerGateM;
-
-    return (
-        <section className="grid xl:grid-cols-2 gap-6">
-            <Card className="rounded-2xl">
-                <CardContent className="p-6">
-                    <h3 className="text-lg font-bold text-ink-600 mb-2">Zusammenfassung</h3>
-                    <div className="grid sm:grid-cols-2 gap-3 text-sm">
-                        <Field label="Drehstrom‑Maschinen" value={`${state.triMachines.count}`}/>
-                        <Field label="Schuko‑Maschinen" value={`${state.schukoMachines.count}`}/>
-                        <Field label="Eingangstüren" value={`${state.doors.count}`}/>
-                        <Field label="Elektrische Tore" value={`${state.gates.count}`}/>
-                        <Field label="Kühlschränke (Status)" value={state.fridges.enabled}/>
-                        {state.fridges.enabled === "yes" &&
-                            <Field label="Kühlschränke (Anzahl)" value={`${state.fridges.count}`}/>}
-                        <Field label="Zentrale Räume" value={`${state.centralRooms.count}`}/>
-                        <Field label="Kontakt" value={`${state.contact.name} · ${state.contact.email}`}/>
-                    </div>
-
-                    <div className="mt-4 text-xs text-ink-400">
-                        <p>Zweiadriges Kabel gesamt (ca.): <strong className="text-ink-600">{totalCable2core} m</strong>
-                        </p>
-                        <p>12‑adriges Kabel gesamt (ca.): <strong className="text-ink-600">{totalCable12core} m</strong>
-                        </p>
-                    </div>
-                </CardContent>
-            </Card>
-
-            <Card className="rounded-2xl">
-                <CardContent className="p-6">
-                    <h3 className="text-lg font-bold text-ink-600 mb-2">Stückliste (automatisch berechnet)</h3>
-                    <div className="divide-y">
-                        {bom.map((row) => (
-                            <div key={row.item} className="py-2 flex items-start justify-between gap-4 text-sm">
-                                <span className="text-ink-600">{row.item}{row.note ?
-                                    <span className="text-ink-400"> · {row.note}</span> : null}</span>
-                                <span className="font-semibold text-ink-700">{row.qty}</span>
-                            </div>
-                        ))}
-                    </div>
-                </CardContent>
-            </Card>
-        </section>
-    );
-}
-
-function Field({label, value}: { label: string; value: React.ReactNode }) {
-    return (
-        <div className="rounded-xl border border-ink-100 p-4 bg-white/70">
-            <div className="text-ink-400 text-xs mb-1">{label}</div>
-            <div className="font-semibold break-words text-ink-700">{value}</div>
-        </div>
-    );
-}
-
-function computeBOM(state: State): BomRow[] {
-    const rows: BomRow[] = [];
-    const add = (item: string, qty: number, note?: string) => {
-        if (qty > 0) rows.push({item, qty, note});
-    };
-
-    // Drehstrommaschinen (pro Maschine)
-    add("Schützgehäuse (3~)", state.triMachines.count);
-    add("Schütz dreiphasig 24V", state.triMachines.count);
-    add("Mainboard Standard (3~)", state.triMachines.count);
-    add("Elektronikgehäuse (Maschine)", state.triMachines.count);
-    add("Verbindungskabel zweiadrig (m)", state.triMachines.count * state.triMachines.cablePerUnitM);
-
-    // Schuko‑Maschinen (pro Maschine)
-    add("Schützgehäuse einphasig", state.schukoMachines.count);
-    add("Schütz einphasig 24V", state.schukoMachines.count);
-    add("Mainboard Standard (1~)", state.schukoMachines.count);
-    add("Elektronikgehäuse (Maschine)", state.schukoMachines.count);
-    add("Verbindungskabel zweiadrig (m)", state.schukoMachines.count * state.schukoMachines.cablePerUnitM);
-
-    // Türen (pro Tür)
-    add("Elektronikgehäuse – Mainboard & USV", state.doors.count * 2);
-    add("Elektronikgehäuse – Readerboard", state.doors.count);
-    add("12‑adriges Kabel (m)", state.doors.count * state.doors.cablePerDoorM);
-    add("Mainboard mit Normboard", state.doors.count);
-    add("USV‑Board mit Powerboard", state.doors.count);
-    add("Readerboard", state.doors.count);
-    add("Hinweis: 18500‑Zelle", state.doors.count, "pro Tür");
-    add("Hinweis: Elektroschloss passend zur Tür", state.doors.count, "separat beschaffen");
-
-    // Tore (pro Tor)
-    add("Elektronikgehäuse – Readerboard", state.gates.count);
-    add("Elektronikgehäuse – Mainboard & USV", state.gates.count * 2);
-    add("12‑adriges Kabel (m)", state.gates.count * state.gates.cablePerGateM);
-    add("Schalter", state.gates.count * 2);
-    add("Schaltergehäuse", state.gates.count * 2);
-    add("Mainboard mit Normboard", state.gates.count);
-    add("USV‑Board mit Powerboard", state.gates.count);
-    add("Readerboard", state.gates.count);
-
-    // Kühlschränke – keine BOM, nur Hinweis
-    if (state.fridges.enabled === "yes" && state.fridges.count > 0) {
-        add("Getränkekühlschrank mit Bezahlsystem – HINWEIS", state.fridges.count, "Integration in Vorbereitung");
-    }
-
-    // Zentrale Räume (pro Raum)
-    add("Elektronikgehäuse – Mainboard (zentral)", state.centralRooms.count);
-    add("Mainboard ohne IO‑Board", state.centralRooms.count);
-
-    return rows;
 }
