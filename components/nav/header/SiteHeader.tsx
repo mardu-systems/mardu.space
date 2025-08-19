@@ -3,7 +3,6 @@
 import * as React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import {motion, useReducedMotion} from "framer-motion";
 import clsx from "clsx";
 
 import DesktopNav from "./DesktopNav";
@@ -60,7 +59,6 @@ export default function SiteHeader({
                                        variant = "light",
                                    }: HeaderProps) {
     const scrolled = useScrolled(SCROLL_THRESHOLD);
-    const prefersReducedMotion = useReducedMotion();
     const effectiveVariant = React.useMemo(() => {
         if (scrolled) {
             return "dark";
@@ -71,11 +69,7 @@ export default function SiteHeader({
     // Top-Offset for fixed header
     const navTopOffset = showTopbar && !scrolled ? TOPBAR_HEIGHT : 0;
 
-    const bgAnimate = React.useMemo(() => getHeaderBgAnimate(scrolled), [scrolled]);
-    const bgTransition = React.useMemo(
-        () => ({duration: prefersReducedMotion ? 0 : 0.25}),
-        [prefersReducedMotion]
-    );
+    const bgStyle = React.useMemo(() => getHeaderBgAnimate(scrolled), [scrolled]);
 
     return (
         <header>
@@ -95,12 +89,13 @@ export default function SiteHeader({
                 )}
                 style={{top: navTopOffset}}
             >
-                <motion.div
+                <div
                     aria-hidden
-                    initial={false}
-                    animate={bgAnimate}
-                    transition={bgTransition}
-                    className={clsx("absolute inset-0", scrolled && "bg-radial-[at_5%_50%] from-zinc-900 from-70% to-[#37093F]")}
+                    style={bgStyle}
+                    className={clsx(
+                        "absolute inset-0 transition-[background-color,backdrop-filter] duration-200 motion-reduce:transition-none",
+                        scrolled && "bg-radial-[at_5%_50%] from-zinc-900 from-70% to-[#37093F]"
+                    )}
                 />
 
                 <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
