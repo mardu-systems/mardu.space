@@ -1,6 +1,6 @@
 "use client";
 
-import {Menu, X} from "lucide-react";
+import {Menu} from "lucide-react";
 import React from "react";
 import {
     Sheet,
@@ -17,6 +17,7 @@ import {
     AccordionTrigger,
 } from "@/components/ui/accordion";
 import Link from "next/link";
+import Image from "next/image";
 import clsx from "clsx";
 import {NavEntry} from "@/types/header";
 
@@ -99,11 +100,16 @@ export default function MobileNav({
                                                             className="flex items-center gap-3 rounded-md p-2 text-sm hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-950"
                                                         >
                                                             {item.image && (
-                                                                // eslint-disable-next-line @next/next/no-img-element
-                                                                <img
+                                                                <Image
                                                                     src={item.image.src}
-                                                                    alt={item.image.alt || ""}
+                                                                    alt={
+                                                                        item.image.alt ||
+                                                                        `${item.label} image`
+                                                                    }
+                                                                    width={56}
+                                                                    height={40}
                                                                     className="h-10 w-14 rounded object-cover"
+                                                                    loading="lazy"
                                                                 />
                                                             )}
                                                             <div>
