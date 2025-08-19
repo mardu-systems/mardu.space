@@ -114,51 +114,16 @@ function HeroSystem({
                             className="absolute inset-0 origin-left rounded-full opacity-90 bg-gradient-to-r from-[#F133FF] via-[#7AFA27] to-[#FF7A11] animate-grow-x"/>
                     </div>
                 </div>
-
-                {/* Labels seitlich der Linie (nur Desktop, visuell) */}
-                <div
-                    className="pointer-events-none absolute left-1/2 -translate-x-[calc(100%+0.75rem)] text-right md:block top-[16%]"
-                    aria-hidden="true"
-                >
-                    <strong className="px-[3px] font-bold uppercase text-[clamp(20px,4vw,64px)] leading-[0.9]">
-                        Das Gateway
-                    </strong>
-                </div>
-
-                <div
-                    className="pointer-events-none absolute left-1/2 text-left md:block bottom-[12%]"
-                    aria-hidden="true"
-                >
-                    <strong className="px-[3px] font-bold uppercase text-[clamp(20px,4vw,64px)] leading-[0.9]">
-                        Der Zutrittspunkt
-                    </strong>
-                </div>
             </section>
-
-            {/* === Produkt 2: Zugriffspunkt === */}
-            <ProductShowcase
-                variant={1}
-                leftImageSrc="/zugriffspunkt/device.jpg"
-                leftImageAlt="Zugriffspunkt Lesegerät"
-                topMiddleImageSrc="/zugriffspunkt/schuetz.jpg"
-                topMiddleImageAlt="Schützgerät für Maschinen bis 32A"
-                topRightImageSrc="/zugriffspunkt/network.jpg"
-                topRightImageAlt="Funkvernetzung für Ausfallsicherheit"
-                title="Der Zugriffspunkt"
-                description="Der Zugriffspunkt liest die Schlüsselkarten der Benutzer und fragt die Berechtigung beim Gateway an."
-                price="200,00 €"
-                priceNote="Vorläufiger Preis – Produkt in Kürze erhältlich"
-                ctaLabel="Vormerken"
-                onCtaClick={() => console.log("Zugriffspunkt vorgemerkt")}
-            />
-
             {/* === Produkt 1: Gateway === */}
             <ProductShowcase
                 variant={2}
                 leftImageSrc="/gateway/mounted.jpg"
                 leftImageAlt="Gateway an zentraler Position in einer Werkstatt"
+                leftImageClassName="object-[80%_right]"
                 topMiddleImageSrc="/gateway/inside.jpg"
                 topMiddleImageAlt="Innenleben des Gateways"
+                middleImageClassName="object-bottom"
                 topRightImageSrc="/gateway/webinterface.jpeg"
                 topRightImageAlt="Verwaltungs-Webinterface"
                 title="Das Gateway"

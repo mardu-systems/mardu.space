@@ -3,11 +3,12 @@
 import * as React from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import type { State } from "../page";
+import {useMemo} from "react";
 
 type BomRow = { item: string; qty: number; note?: string };
 
 export default function SummaryStep({ state }: { state: State }) {
-  const bom = computeBOM(state);
+  const bom = useMemo(() => computeBOM(state), [state]);
   const totalCable2core =
     state.triMachines.count * state.triMachines.cablePerUnitM +
     state.schukoMachines.count * state.schukoMachines.cablePerUnitM;

@@ -5,7 +5,18 @@ import Link from "next/link";
 import type { ConsentPreferences } from "@/types/consent";
 import { Button } from "@/components/ui/button";
 import { useConsent } from "@/hooks/use-consent";
-import CookieSettings from "@/components/CookieSettings";
+import {Skeleton} from "@/components/ui/skeleton";
+import dynamic from "next/dynamic";
+
+const CookieSettings = dynamic(
+    () => import("@/components/CookieSettings"), {
+        loading: () => (
+            <div className="p-4">
+                <Skeleton className="h-32 w-full" />
+            </div>
+        ),
+    },
+) as unknown as typeof import("@/components/CookieSettings").default;
 
 declare global {
     interface Window {

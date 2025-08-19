@@ -1,28 +1,37 @@
-import ReactGA from "react-ga4";
-
 const MEASUREMENT_ID = process.env.NEXT_PUBLIC_GOOGLE_MEASUREMENT_ID;
 let initialized = false;
 
-export function initializeGA() {
+let reactGA: typeof import("react-ga4").default | null = null;
+let loadPromise: Promise<typeof import("react-ga4").default> | null = null;
+
+async function getReactGA() {
+    if (reactGA) return reactGA;
+    loadPromise = loadPromise ?? import("react-ga4").then((m) => m.default);
+    reactGA = await loadPromise;
+    return reactGA;
+}
+
+export async function initializeGA() {
     if (!MEASUREMENT_ID) {
         console.warn("GOOGLE_MEASUREMENT_ID is not set; analytics disabled");
         return;
     }
 
     if (!initialized) {
-        ReactGA.initialize(MEASUREMENT_ID);
+        const ga = await getReactGA();
+        ga.initialize(MEASUREMENT_ID);
         initialized = true;
     }
 }
 
 export function pageview(path: string) {
-    if (!initialized) return;
-    ReactGA.send({ hitType: "pageview", page: path });
+    if (!initialized || !reactGA) return;
+    reactGA.send({ hitType: "pageview", page: path });
 }
 
 export function event(action: string, params?: Record<string, unknown>) {
-    if (!initialized) return;
-    ReactGA.event(action, params);
+    if (!initialized || !reactGA) return;
+    reactGA.event(action, params);
 }
 
 export function resetGA() {

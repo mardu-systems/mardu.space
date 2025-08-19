@@ -27,8 +27,10 @@ export default function TrackingProvider({ children }: { children: ReactNode }) 
 
     useEffect(() => {
         if (prefs?.analytics) {
-            initializeGA();
-            pageview(window.location.pathname + window.location.search);
+            (async () => {
+                await initializeGA();
+                pageview(window.location.pathname + window.location.search);
+            })();
             return;
         }
         resetGA();
