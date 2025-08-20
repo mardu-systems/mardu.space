@@ -33,8 +33,7 @@ export default function MobileNav({
             ? "text-neutral-900 hover:text-neutral-700"
             : "text-white hover:text-white/90";
 
-    const linkColor =
-        variant === "light" ? "text-neutral-900" : "text-white/90 hover:text-white";
+    const linkColor = "text-white/90 hover:text-white";
 
     return (
         <Sheet>
@@ -56,11 +55,11 @@ export default function MobileNav({
 
             <SheetContent
                 side="left"
-                className="w-[85vw] max-w-sm p-0 bg-neutral-950 text-white border-0 flex flex-col"
+                className="w-[85vw] max-w-sm p-0 bg-radial-[at_5%_5%] from-zinc-900 from-70% to-[#37093F] text-white border-0 flex flex-col"
             >
                 {/* Header mit Close-Button */}
-                <SheetHeader className="flex items-center justify-between px-4 pt-[env(safe-area-inset-top)] pb-2">
-                    <SheetTitle className="text-base font-semibold tracking-wide uppercase">
+                <SheetHeader className="flex items-center justify-between">
+                    <SheetTitle className="text-white tracking-wide uppercase">
                         Navigation
                     </SheetTitle>
                 </SheetHeader>
@@ -74,7 +73,7 @@ export default function MobileNav({
                                     <Link
                                         href={entry.href}
                                         className={clsx(
-                                            "block h-12 rounded-md px-4 text-base font-medium uppercase flex items-center",
+                                            "h-12 rounded-md px-4 font-futura-normal uppercase flex items-center",
                                             linkColor,
                                             "hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-950"
                                         )}
@@ -85,7 +84,7 @@ export default function MobileNav({
                                     <AccordionItem value={entry.label} className="border-0">
                                         <AccordionTrigger
                                             className={clsx(
-                                                "h-12 px-4 text-base font-medium uppercase hover:no-underline",
+                                                "h-12 px-4 font-futura-normal uppercase hover:no-underline",
                                                 linkColor
                                             )}
                                         >
@@ -113,7 +112,7 @@ export default function MobileNav({
                                                                 />
                                                             )}
                                                             <div>
-                                                                <div className="font-medium">{item.label}</div>
+                                                                <div className="font-futura-normal">{item.label}</div>
                                                                 {item.description && (
                                                                     <p className="text-xs text-neutral-400">
                                                                         {item.description}
@@ -133,8 +132,8 @@ export default function MobileNav({
                 </nav>
 
                 {/* Optionaler CTA / Footer */}
-                <div className="mt-auto p-4 pb-">
-                    <Button className="w-full h-12 text-base">Konfigurator starten</Button>
+                <div className="mt-auto p-4 pb-[max(env(safe-area-inset-bottom),1rem)]">
+                    <Button className="w-full h-12 font-lg font-futura-normal">Konfigurator starten</Button>
                 </div>
             </SheetContent>
         </Sheet>
