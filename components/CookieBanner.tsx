@@ -1,10 +1,10 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import {useState, useEffect, useRef} from "react";
 import Link from "next/link";
-import type { ConsentPreferences } from "@/types/consent";
-import { Button } from "@/components/ui/button";
-import { useConsent } from "@/hooks/use-consent";
+import type {ConsentPreferences} from "@/types/consent";
+import {Button} from "@/components/ui/button";
+import {useConsent} from "@/hooks/use-consent";
 import {Skeleton} from "@/components/ui/skeleton";
 import dynamic from "next/dynamic";
 
@@ -12,7 +12,7 @@ const CookieSettings = dynamic(
     () => import("@/components/CookieSettings"), {
         loading: () => (
             <div className="p-4">
-                <Skeleton className="h-32 w-full" />
+                <Skeleton className="h-32 w-full"/>
             </div>
         ),
     },
@@ -25,7 +25,7 @@ declare global {
 }
 
 export default function CookieConsentBanner() {
-    const { prefs, setPrefs } = useConsent();
+    const {prefs, setPrefs} = useConsent();
     const [visible, setVisible] = useState(false);
     const [showSettings, setShowSettings] = useState(false);
     const containerRef = useRef<HTMLDivElement>(null);
@@ -89,22 +89,22 @@ export default function CookieConsentBanner() {
     if (!visible) return null;
 
     if (showSettings) {
-        return <CookieSettings onSave={handleSave} />;
+        return <CookieSettings onSave={handleSave}/>;
     }
 
     return (
         <div
-            className="fixed bottom-4 left-4 z-[9999]"
+            className="fixed bottom-4 left-1/2 -translate-x-1/2 z-[9999]"
             role="dialog"
             aria-modal="true"
             ref={containerRef}
         >
-            <div className="relative w-[460px] lg:w-[540px]">
+            <div className="relative w-[min(92vw,460px)] lg:w-[min(92vw,540px)]">
                 {/* SVG Hintergrund */}
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 283.27 248.13"
-                    className="w-full h-auto"
+                    className="w-full h-auto pointer-events-none"
                 >
                     <path
                         d="M132.44,5.31c4.09-7.08,14.3-7.08,18.39,0l131,226.9c4.09,7.08-1.02,15.92-9.19,15.92H10.63c-8.17,0-13.28-8.85-9.19-15.92L132.44,5.31Z"
@@ -117,13 +117,13 @@ export default function CookieConsentBanner() {
                 </svg>
 
                 {/* Content */}
-                <div className="absolute inset-0 flex flex-col items-center justify-end pb-8 px-6 text-center">
-                    <p className="leading-relaxed mb-6 max-w-[240px] lg:max-w-[320px] text-xs lg:text-base">
-                        Wir verwenden erforderliche, leistungsbezogene und Marketing-Cookies, um Ihre Erfahrung zu messen, zu analysieren und zu personalisieren. Weitere Informationen finden Sie in unserer {" "}
+                <div className="absolute inset-0 flex flex-col items-center justify-end pb-3 sm:mb-8 px-6 text-center">
+                    <p className="leading-relaxed mb-3 sm:mb-6 max-w-[220px] lg:max-w-[320px] text-xs lg:text-base">
+                        Wir verwenden erforderliche, leistungsbezogene und Marketing-Cookies, um Ihre Erfahrung zu
+                        messen, zu analysieren und zu personalisieren. Weitere Informationen finden Sie in unserer {" "}
                         <Link href="/privacy" className="underline">
                             Datenschutzerklärung
-                        </Link>
-                        .
+                        </Link>.
                     </p>
 
                     <div className="flex justify-center gap-6">

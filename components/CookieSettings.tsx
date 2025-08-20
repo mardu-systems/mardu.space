@@ -97,6 +97,7 @@ export default function CookieSettings({onSave}: CookieSettingsProps) {
                                 </TooltipContent>
                             </Tooltip>
                             <Switch
+                                className="h-7 w-12 [&>span]:h-6 [&>span]:w-6"
                                 checked={prefs.analytics}
                                 onCheckedChange={(v) => updatePrefs("analytics", v)}
                                 aria-label="Statistik-Cookies aktivieren"
@@ -112,6 +113,7 @@ export default function CookieSettings({onSave}: CookieSettingsProps) {
                                 </TooltipContent>
                             </Tooltip>
                             <Switch
+                                className="h-7 w-12 [&>span]:h-6 [&>span]:w-6"
                                 checked={prefs.marketing}
                                 onCheckedChange={(v) => updatePrefs("marketing", v)}
                                 aria-label="Marketing-Cookies aktivieren"
@@ -126,7 +128,9 @@ export default function CookieSettings({onSave}: CookieSettingsProps) {
                                     Erforderlich für grundlegende Funktionen der Website.
                                 </TooltipContent>
                             </Tooltip>
-                            <Switch checked disabled aria-label="Notwendige Cookies (immer aktiv)" />
+                            <Switch
+                                className="h-7 w-12 [&>span]:h-6 [&>span]:w-6"
+                                checked disabled aria-label="Notwendige Cookies (immer aktiv)"/>
                         </div>
                     </div>
 
@@ -135,13 +139,23 @@ export default function CookieSettings({onSave}: CookieSettingsProps) {
                             <Button
                                 variant="ghost"
                                 className="flex-1"
-                                onClick={() => savePrefs({necessary: true, analytics: false, marketing: false, given: true})}
+                                onClick={() => savePrefs({
+                                    necessary: true,
+                                    analytics: false,
+                                    marketing: false,
+                                    given: true
+                                })}
                             >
                                 Ablehnen
                             </Button>
                             <Button
                                 className="flex-1"
-                                onClick={() => savePrefs({necessary: true, analytics: true, marketing: true, given: true})}
+                                onClick={() => savePrefs({
+                                    necessary: true,
+                                    analytics: true,
+                                    marketing: true,
+                                    given: true
+                                })}
                             >
                                 Alle akzeptieren
                             </Button>
@@ -156,7 +170,8 @@ export default function CookieSettings({onSave}: CookieSettingsProps) {
             </div>
 
             {/* md+ : dein quadratisches SVG-Layout (zentriert auf kleinen Laptops, unten links auf großen) */}
-            <div className="fixed z-[9999] hidden md:block md:bottom-4 md:left-1/2 md:-translate-x-1/2 lg:left-4 lg:translate-x-0">
+            <div
+                className="fixed z-[9999] hidden md:block md:bottom-4 md:left-1/2 md:-translate-x-1/2 lg:left-4 lg:translate-x-0">
                 <div className="relative w-[min(90vw,560px)] lg:w-[min(92vw,600px)] aspect-square">
                     <svg
                         width="100%"
@@ -188,7 +203,8 @@ export default function CookieSettings({onSave}: CookieSettingsProps) {
                     {/* Content */}
                     <div className="absolute inset-0 flex flex-col items-center justify-center">
                         <p className="mt-20 text-sm lg:text-sm leading-relaxed max-w-[340px] lg:max-w-[420px]">
-                            Wir verwenden notwendige, statistische und Marketing-Cookies, um unsere Website zu betreiben,
+                            Wir verwenden notwendige, statistische und Marketing-Cookies, um unsere Website zu
+                            betreiben,
                             die Nutzung zu analysieren und Ihre Erfahrung zu verbessern. Einzelheiten in der{" "}
                             <Link href="/privacy" className="underline underline-offset-2">
                                 Datenschutzerklärung
@@ -212,6 +228,7 @@ export default function CookieSettings({onSave}: CookieSettingsProps) {
                                     </TooltipContent>
                                 </Tooltip>
                                 <Switch
+                                    className="h-7 w-12 [&>span]:h-6 [&>span]:w-6"
                                     checked={prefs.analytics}
                                     onCheckedChange={(v) => updatePrefs("analytics", v)}
                                     aria-label="Statistik-Cookies aktivieren"
@@ -227,6 +244,7 @@ export default function CookieSettings({onSave}: CookieSettingsProps) {
                                     </TooltipContent>
                                 </Tooltip>
                                 <Switch
+                                    className="h-7 w-12 [&>span]:h-6 [&>span]:w-6"
                                     checked={prefs.marketing}
                                     onCheckedChange={(v) => updatePrefs("marketing", v)}
                                     aria-label="Marketing-Cookies aktivieren"
@@ -241,7 +259,8 @@ export default function CookieSettings({onSave}: CookieSettingsProps) {
                                         Erforderlich für grundlegende Funktionen der Website.
                                     </TooltipContent>
                                 </Tooltip>
-                                <Switch checked disabled aria-label="Notwendige Cookies (immer aktiv)" />
+                                <Switch className="h-7 w-12 [&>span]:h-6 [&>span]:w-6" checked disabled
+                                        aria-label="Notwendige Cookies (immer aktiv)"/>
                             </div>
                         </div>
 
