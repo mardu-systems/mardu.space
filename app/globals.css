@@ -15,6 +15,7 @@
 /* Hilfsklassen ohne Plugin */
 .safe-pt { padding-top: calc(var(--header-h) + env(safe-area-inset-top)); }
 .scroll-offset { scroll-margin-top: calc(var(--header-h) + 16px); }
+.grecaptcha-badge { display: none; }
 
 /* Optional: weicher Ankerscroll */
 html { scroll-behavior: smooth; }

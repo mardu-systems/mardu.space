@@ -10,6 +10,7 @@ import {HoverCard, HoverCardContent, HoverCardTrigger} from "@/components/ui/hov
 import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover";
 import {createSteps} from "./steps";
 import {toast} from "sonner";
+import {useRecaptcha} from "@/lib/recaptcha";
 
 /* ===================== Typen & Defaults ===================== */
 
@@ -51,6 +52,7 @@ const Wizard = defineStepper(
 export default function ConfiguratorPageClient() {
     const [state, setState] = useState<State>(defaultState);
     const steps = useMemo(() => createSteps(state, setState), [state]);
+    const executeRecaptcha = useRecaptcha();
 
     return (
         <div
@@ -68,10 +70,12 @@ export default function ConfiguratorPageClient() {
                     state={state}
                     onSubmit={async () => {
                         try {
+                            const token = await executeRecaptcha("contact");
+                            if (!token) throw new Error("reCAPTCHA failed");
                             const res = await fetch("/api/contact", {
                                 method: "POST",
                                 headers: {"Content-Type": "application/json"},
-                                body: JSON.stringify({...state.contact, config: state}),
+                                body: JSON.stringify({...state.contact, config: state, token}),
                             });
                             if (!res.ok) throw new Error("Request failed");
                             toast.success("Danke! Anfrage versendet.");

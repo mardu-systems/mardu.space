@@ -8,6 +8,7 @@ const Schema = z.object({
     company: z.string().optional(),
     message: z.string().optional(),
     config: z.any().optional(),
+    token: z.string(),
 });
 
 export async function POST(req: Request) {
@@ -18,7 +19,22 @@ export async function POST(req: Request) {
     }
 
     try {
-        await sendContactEmail(parsed.data);
+        const { token, ...data } = parsed.data;
+        const secret = process.env.RECAPTCHA_SECRET_KEY;
+        if (!secret) {
+            return NextResponse.json({ error: "Missing captcha secret" }, { status: 500 });
+        }
+        const captchaRes = await fetch("https://www.google.com/recaptcha/api/siteverify", {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: `secret=${secret}&response=${token}`,
+        });
+        const captchaJson = await captchaRes.json();
+        if (!captchaJson.success) {
+            return NextResponse.json({ error: "Invalid captcha" }, { status: 400 });
+        }
+
+        await sendContactEmail(data);
         return NextResponse.json({ ok: true });
     } catch (err) {
         console.error("Failed to send contact email", err);

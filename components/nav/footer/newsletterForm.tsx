@@ -25,6 +25,7 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 import {Loader2} from "lucide-react";
+import {useRecaptcha} from "@/lib/recaptcha";
 
 const ROLE_OPTIONS = [
     {value: "fablab", label: "FabLab", group: "Facilities"},
@@ -89,15 +90,22 @@ export default function NewsletterForm() {
     const [status, setStatus] = React.useState<"idle" | "success" | "error">("idle");
     const [submitting, setSubmitting] = React.useState(false);
     const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
+    const executeRecaptcha = useRecaptcha();
 
-    const onSubmit = async () => {
+    const onSubmit = async (values: FormValues) => {
         try {
             setSubmitting(true);
             setStatus("idle");
             setErrorMessage(null);
 
-            // TODO: API call
-            await new Promise((r) => setTimeout(r, 1000));
+            const token = await executeRecaptcha("newsletter");
+            if (!token) throw new Error("reCAPTCHA failed");
+            const res = await fetch("/api/newsletter", {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({...values, token}),
+            });
+            if (!res.ok) throw new Error("Request failed");
 
             setStatus("success");
             form.resetField("email");
