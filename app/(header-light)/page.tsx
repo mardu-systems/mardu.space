@@ -136,7 +136,7 @@ export default function HomePage() {
                                 <CircleNumber number={1} className="mt-1" anchor/>
                             </div>
 
-                            <div className="col-span-12 md:col-span-4 md:col-start-9 translate-y-[-40%]">
+                            <div className="col-span-12 md:col-span-4 md:col-start-9 md:translate-y-[-40%] text-right">
                                 <h2 className="font-futura-heavy text-[#8D69C0] whitespace-pre-line uppercase text-3xl sm:text-4xl md:text-6xl text-right">
                                     {`WIE KANN
                                     MARDU.SPACE
@@ -207,7 +207,7 @@ export default function HomePage() {
                                         alt="Badge erstellen – Webplattform Open Educational Badges"
                                         width={1440}
                                         height={890}
-                                        className="w-full h-auto object-contain z-20"
+                                        className="w-full h-auto object-contain"
                                         loading="lazy"
                                     />
                                 </div>
@@ -232,7 +232,7 @@ export default function HomePage() {
                                     </div>
                                 </div>
 
-                                <div className="relative -mt-12 md:-mt-20 md:mb-[-16px] flex items-end justify-end">
+                                <div className="relative mt-6 md:-mt-20 md:mb-[-16px] flex items-end justify-end">
                                     <Image
                                         src="/landing/person_schweiss_nfc.svg"
                                         alt="Illustration einer Person, die sich per NFC am Gerät authentifiziert"
@@ -246,7 +246,7 @@ export default function HomePage() {
                         </div>
                     </div>
                 </section>
-                <section className="w-full z-20  md:-mt-10">
+                <section className="w-full z-20 md:-mt-12">
                     <div className="max-w-7xl mx-auto px-6 md:px-8">
                         <div className="w-full md:w-4/6">
                             <div className="grid grid-cols-12 gap-4 md:gap-6 items-center">
@@ -295,8 +295,7 @@ export default function HomePage() {
                                 />
 
                                 <div
-                                    className="absolute font-futura-normal text-[#CA452A] text-sm sm:text-base leading-snug tracking-[0.005em] flex items-start gap-4 max-w-[280px] md:max-w-[340px] left-[45%] bottom-[7%] pointer-events-none">
-                                    <div className="flex-1">
+                                    className="md:absolute relative font-futura-normal text-[#CA452A] text-sm sm:text-base leading-snug tracking-[0.005em] flex items-start gap-4 max-w-[280px] md:max-w-[340px] md:left-[45%] md:bottom-[7%] mt-6 md:mt-0 pointer-events-none">                                    <div className="flex-1">
                                         <p>
                                             Das Gateway von <span
                                             className="whitespace-nowrap">mardu.space</span> empfängt die
