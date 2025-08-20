@@ -17,6 +17,11 @@ export async function POST(req: Request) {
         return NextResponse.json({ error: "Invalid payload" }, { status: 400 });
     }
 
-    await sendContactEmail(parsed.data);
-    return NextResponse.json({ ok: true });
+    try {
+        await sendContactEmail(parsed.data);
+        return NextResponse.json({ ok: true });
+    } catch (err) {
+        console.error("Failed to send contact email", err);
+        return NextResponse.json({ error: "Failed to send email" }, { status: 500 });
+    }
 }
