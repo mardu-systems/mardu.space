@@ -1,11 +1,23 @@
 @import url("https://use.typekit.net/agw4xrt.css");
 @import "tailwindcss";
 @import "tw-animate-css";
+@plugin "@tailwindcss/typography";
 
 @custom-variant dark (&:is(.dark *));
 
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+:root { --header-h: 56px; }                 /* iOS/Android mobile */
+@media (min-width: 768px) {
+    :root { --header-h: 72px; }               /* Tablet/Desktop */
+}
+
+/* Hilfsklassen ohne Plugin */
+.safe-pt { padding-top: calc(var(--header-h) + env(safe-area-inset-top)); }
+.scroll-offset { scroll-margin-top: calc(var(--header-h) + 16px); }
+
+/* Optional: weicher Ankerscroll */
+html { scroll-behavior: smooth; }
 
 @theme inline {
     --color-background: var(--background);
