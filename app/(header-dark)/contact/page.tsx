@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import ContactForm from "./ContactForm";
 
 export const metadata: Metadata = {
     title: "Kontakt",
@@ -48,6 +49,10 @@ export default function ContactPage() {
                                 Mit dem Auto erreichst du uns über die Durlacher Allee. Folge der Beschilderung zum Alten Schlachthof
                                 und nutze die Parkplätze auf dem Gelände.
                             </p>
+                        </div>
+                        <div className="space-y-2">
+                            <h2 className="text-lg font-semibold">Schreib uns</h2>
+                            <ContactForm />
                         </div>
                         <div className="flex justify-center pt-6">
                             <Link href="/">
