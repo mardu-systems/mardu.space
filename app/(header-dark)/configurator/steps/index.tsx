@@ -1,10 +1,8 @@
-import dynamic from "next/dynamic";
 import * as React from "react";
 import type {State} from "../page";
 import NumberStep from "./number-step";
-
-const Contact = dynamic(() => import("./contact"));
-const Summary = dynamic(() => import("./summary"));
+import SummaryStep from "@/app/(header-dark)/configurator/steps/summary";
+import ContactStep from "@/app/(header-dark)/configurator/steps/contact";
 
 export const createSteps = (
     state: State,
@@ -99,7 +97,7 @@ export const createSteps = (
         id: "summary",
         title: "Zusammenfassung & Stückliste",
         tip: "Bitte prüfen, dann absenden.",
-        view: <Summary state={state}/>,
+        view: <SummaryStep state={state}/>,
         valid: () => true,
     },
     {
@@ -107,7 +105,7 @@ export const createSteps = (
         title: "Kontaktdaten für Angebot",
         tip: "Wir verwenden die Daten ausschließlich zur Angebotserstellung.",
         view: (
-            <Contact
+            <ContactStep
                 name={state.contact.name}
                 email={state.contact.email}
                 company={state.contact.company || ""}

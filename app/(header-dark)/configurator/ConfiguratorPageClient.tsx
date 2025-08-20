@@ -118,18 +118,9 @@ function MainContent({
         <main className="w-full max-w-4xl mx-auto px-0 sm:px-2 pb-24">
             {/* Progress + Stepper */}
             <div className="relative mb-8 sm:mb-10">
-                {/* Progress-Linie */}
-                <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-1 px-3">
-                    <div className="h-1 bg-gray-200 relative rounded-full overflow-hidden">
-                        <div
-                            className="absolute top-0 left-0 h-full bg-red-500 transition-[width] duration-300"
-                            style={{width: `${progressPct}%`}}
-                        />
-                    </div>
-                </div>
 
                 {/* Stepper */}
-                <div className="relative mt-3 sm:mt-6 mb-8 sm:mb-10">
+                <div className="relative mt-6 sm:mt-8 mb-8 sm:mb-10">
                     {/* MOBILE: horizontal scroll mit Connectors */}
                     <div
                         className="
@@ -155,7 +146,7 @@ function MainContent({
                                             className={cn(
                                                 "flex-shrink-0 grid place-items-center rounded-full border-2 font-black tabular-nums",
                                                 "transition-transform duration-150 focus:outline-none focus:ring-2 focus:ring-red-500/50",
-                                                "size-10", // 40px mobil
+                                                "size-11", // 44px mobil
                                                 isCompleted
                                                     ? "bg-red-500 text-white border-red-500"
                                                     : "bg-white text-red-500 border-red-500"
@@ -167,11 +158,15 @@ function MainContent({
                                         {/* Connector (nicht nach letztem Punkt) */}
                                         {i < stepper.all.length - 1 && (
                                             <div
-                                                className={cn(
-                                                    "mx-2 h-[6px] rounded-full w-8", // Breite des Strichs mobil
-                                                    i < idx ? "bg-red-500" : "bg-red-200"
-                                                )}
-                                            />
+                                                className="relative mx-2 h-[6px] w-8 rounded-full bg-red-200 overflow-hidden"
+                                                aria-hidden>
+                                                <div
+                                                    className={cn(
+                                                        "absolute inset-y-0 left-0 h-full bg-red-500 transition-all duration-500 ease-out",
+                                                        i < idx ? "w-full" : "w-0"
+                                                    )}
+                                                />
+                                            </div>
                                         )}
                                     </div>
                                 );
@@ -206,13 +201,19 @@ function MainContent({
                                     </div>
 
                                     {/* Connector bis zum nächsten Punkt (nicht nach letztem) */}
-                                    {i < stepper.all.length - 1 && (
+                                    {i < stepper.all.length - 1 ? (
                                         <div
-                                            className={cn(
-                                                "flex-1 h-[6px] rounded-full mx-2",
-                                                i < idx ? "bg-red-500" : "bg-red-200"
-                                            )}
-                                        />
+                                            className="relative flex-1 h-[6px] mx-2 rounded-full bg-red-200 overflow-hidden"
+                                            aria-hidden>
+                                            <div
+                                                className={cn(
+                                                    "absolute inset-y-0 left-0 h-full bg-red-500 transition-all duration-500 ease-out",
+                                                    i < idx ? "w-full" : "w-0"
+                                                )}
+                                            />
+                                        </div>
+                                    ) : (
+                                        <div className="flex-1 h-[6px] mx-2 opacity-0" aria-hidden/>
                                     )}
                                 </div>
                             );
