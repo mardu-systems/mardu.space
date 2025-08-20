@@ -14,15 +14,19 @@ export default async function Publisher() {
     const fileContent = await fs.readFile(filePath, "utf8");
 
     return (
-        <main className="min-h-screen flex items-center justify-center p-4">
-            <Card className="max-w-2xl w-full">
-                <CardHeader>
-                    <CardTitle className="text-center">Impressum</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-6 text-sm">
-                    <article className="prose lg:prose-xl max-w-none"><Markdown>{fileContent}</Markdown></article>
-                </CardContent>
-            </Card>
+        <main className="min-h-screen pt-[calc(var(--app-header-height,64px)+env(safe-area-inset-top))] pb-10">
+            <div className="max-w-4xl mx-auto">
+                <Card>
+                    <CardHeader className="text-center">
+                        <CardTitle className="text-2xl">Impressum</CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-6 text-sm">
+                        <article className="prose lg:prose-xl max-w-none">
+                            <Markdown>{fileContent}</Markdown>
+                        </article>
+                    </CardContent>
+                </Card>
+            </div>
         </main>
     )
 }

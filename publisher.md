@@ -10,6 +10,7 @@ E-Mail: [info@mardu.de](mailto:info@mardu.de)
 
 Vertreten durch:  
 Luca Schöneberg, Erik Frey
+
 ---
 
 ## Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV / MStV
