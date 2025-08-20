@@ -42,8 +42,8 @@ const Wizard = defineStepper(
     {id: "gates", title: "Elektrische Tore"},
     {id: "fridges", title: "Getränkekühlschränke"},
     {id: "central", title: "Zentrales Freigabesystem"},
-    {id: "contact", title: "Kontakt"},
     {id: "summary", title: "Zusammenfassung"},
+    {id: "contact", title: "Kontakt"},
 );
 
 /* ===================== Seite ===================== */

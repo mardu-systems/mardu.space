@@ -37,8 +37,11 @@ export default function SummaryStep({ state }: { state: State }) {
               <Field label="Kühlschränke (Anzahl)" value={`${state.fridges.count}`} />
             )}
             <Field label="Zentrale Räume" value={`${state.centralRooms.count}`} />
-            <Field label="Kontakt" value={`${state.contact.name} · ${state.contact.email}`} />
           </div>
+
+          <p className="mt-4 text-sm text-ink-500">
+            Kontaktdaten werden im nächsten Schritt abgefragt.
+          </p>
 
           <div className="mt-4 text-xs text-ink-400">
             <p>

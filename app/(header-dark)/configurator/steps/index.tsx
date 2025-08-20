@@ -96,6 +96,13 @@ export const createSteps = (
         valid: (s: State) => s.centralRooms.count >= 0,
     },
     {
+        id: "summary",
+        title: "Zusammenfassung & Stückliste",
+        tip: "Bitte prüfen, dann absenden.",
+        view: <Summary state={state}/>,
+        valid: () => true,
+    },
+    {
         id: "contact",
         title: "Kontaktdaten für Angebot",
         tip: "Wir verwenden die Daten ausschließlich zur Angebotserstellung.",
@@ -111,13 +118,6 @@ export const createSteps = (
             />
         ),
         valid: (s: State) => /\S/.test(s.contact.name) && /^\S+@\S+\.\S+$/.test(s.contact.email),
-    },
-    {
-        id: "summary",
-        title: "Zusammenfassung & Stückliste",
-        tip: "Bitte prüfen, dann absenden.",
-        view: <Summary state={state}/>,
-        valid: () => true,
     },
 ];
 
