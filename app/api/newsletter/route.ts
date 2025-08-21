@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
+import { createToken } from "@/lib/newsletter";
+import { sendEmail } from "@/lib/email";
 
 const Schema = z.object({
     email: z.string().email(),
@@ -14,7 +16,7 @@ export async function POST(req: Request) {
         return NextResponse.json({ error: "Invalid payload" }, { status: 400 });
     }
 
-    const { token } = parsed.data;
+    const { email, role, token } = parsed.data;
     const secret = process.env.RECAPTCHA_SECRET_KEY;
     if (!secret) {
         return NextResponse.json({ error: "Missing captcha secret" }, { status: 500 });
@@ -29,7 +31,20 @@ export async function POST(req: Request) {
         return NextResponse.json({ error: "Invalid captcha" }, { status: 400 });
     }
 
-    // TODO: handle newsletter subscription with parsed.data.email and parsed.data.role
+    try {
+        const confirmToken = createToken(email, role);
+        const origin = process.env.APP_URL ?? req.headers.get("origin") ?? "";
+        const confirmUrl = `${origin}/api/newsletter/confirm?token=${encodeURIComponent(confirmToken)}`;
+        await sendEmail({
+            to: email,
+            subject: "Bitte bestätige deine Newsletter-Anmeldung",
+            text: `Bitte bestätige deine Anmeldung indem du auf folgenden Link klickst: ${confirmUrl}`,
+            html: `<p>Bitte bestätige deine Anmeldung indem du auf folgenden Link klickst:</p><p><a href="${confirmUrl}">Newsletter bestätigen</a></p>`,
+        });
+    } catch (err) {
+        console.error("Failed to send confirmation email", err);
+        return NextResponse.json({ error: "Failed to send email" }, { status: 500 });
+    }
 
     return NextResponse.json({ ok: true });
 }

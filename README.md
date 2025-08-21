@@ -24,7 +24,12 @@ To enable email delivery from the configurator, configure the following variable
 RESEND_API_KEY=
 EMAIL_FROM=
 EMAIL_TO=
+APP_URL=
+NEWSLETTER_SECRET=
 ```
+
+The newsletter signup uses a double opt-in process. `APP_URL` should match your site and `NEWSLETTER_SECRET` can be any random string used to sign confirmation tokens.
+
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
