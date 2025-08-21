@@ -95,7 +95,6 @@ export default function CookieConsentBanner() {
             <div
                 className="fixed inset-0 bg-black/30 z-[-1]"
                 aria-hidden="true"
-                onClick={() => setVisible(false)}
             />
 
             <div
@@ -155,14 +154,14 @@ export default function CookieConsentBanner() {
                         <div className="flex items-center justify-center gap-4 md:gap-6 md:mb-5">
                             <Button
                                 variant="ghost"
-                                className="rounded-full h-9 px-5 text-sm md:h-10 md:px-6 md:text-base"
+                                className="rounded-full h-9 px-5 text-sm md:h-10 md:px-6 md:text-lg"
                                 onClick={() => setShowSettings(true)}
                             >
                                 Einstellungen
                             </Button>
                             <Button
                                 variant="default"
-                                className="rounded-full h-9 px-5 text-sm md:h-10 md:px-6 md:text-base"
+                                className="rounded-full h-9 px-5 text-sm md:h-10 md:px-6 md:text-lg"
                                 onClick={() =>
                                     handleSave({
                                         necessary: true,

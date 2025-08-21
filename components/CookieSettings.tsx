@@ -56,12 +56,17 @@ export default function CookieSettings({onSave}: CookieSettingsProps) {
         <>
             {/* Mobile / small: Bottom-sheet Card */}
             <div
+                className="fixed inset-0 bg-black/50 z-[9997] backdrop-blur-sm"
+                aria-hidden="true"
+            />
+
+            <div
                 className="
-          fixed inset-x-0 bottom-0 z-[9998] md:hidden
-          rounded-t-2xl border border-border bg-[#DDDDDD] backdrop-blur
-          shadow-lg
-          px-4 pt-4 pb-[calc(1rem+env(safe-area-inset-bottom))]
-        "
+      fixed inset-x-0 bottom-0 z-[9998] md:hidden
+      rounded-t-2xl border border-border bg-[#DDDDDD]
+      shadow-lg
+      px-4 pt-4 pb-[calc(1rem+env(safe-area-inset-bottom))]
+    "
                 role="dialog"
                 aria-modal="true"
                 aria-label="Cookie-Einstellungen"
@@ -170,8 +175,10 @@ export default function CookieSettings({onSave}: CookieSettingsProps) {
             </div>
 
             {/* md+ : dein quadratisches SVG-Layout (zentriert auf kleinen Laptops, unten links auf großen) */}
-            <div
-                className="fixed z-[9999] hidden md:block md:bottom-4 md:left-1/2 md:-translate-x-1/2 lg:left-4 lg:translate-x-0">
+            <div className="fixed inset-0 bg-black/50 z-[9997] backdrop-blur-sm" />
+
+            {/* dein SVG Layout */}
+            <div className="fixed z-[9999] hidden md:block md:bottom-4 md:left-1/2 md:-translate-x-1/2 lg:left-4 lg:translate-x-0">
                 <div className="relative w-[min(90vw,560px)] lg:w-[min(92vw,600px)] aspect-square">
                     <svg
                         width="100%"
