@@ -3,6 +3,7 @@
 import {Button} from "@/components/ui/button";
 import {Building, Shield, Wifi, Monitor} from "lucide-react";
 import * as React from "react";
+import {cn} from "@/lib/utils";
 
 export type ProductAdvertisementProps = {
     leftImageSrc: string;
@@ -60,57 +61,37 @@ export default function ProductShowcase({
                                         }: ProductAdvertisementProps) {
     const A = AREAS[variant];
 
-    function centroidFromPoly(poly: string): string {
-        // erwartet "x% y%, x% y%, ..."
-        const pts = poly
-            .split(',')
-            .map(s => s.trim())
-            .map(p => {
-                const [xStr, yStr] = p.split(/\s+/);
-                return {
-                    x: parseFloat(xStr.replace('%','')),
-                    y: parseFloat(yStr.replace('%','')),
-                };
-            })
-            .filter(p => Number.isFinite(p.x) && Number.isFinite(p.y));
-
-        if (pts.length < 3) return "50% 50%";
-
-        // Polygon-Centroid (Flächengewichtung). Für Dreiecke = klassischer Schwerpunkt.
-        let A = 0, Cx = 0, Cy = 0;
-        for (let i = 0; i < pts.length; i++) {
-            const j = (i + 1) % pts.length;
-            const cross = pts[i].x * pts[j].y - pts[j].x * pts[i].y;
-            A += cross;
-            Cx += (pts[i].x + pts[j].x) * cross;
-            Cy += (pts[i].y + pts[j].y) * cross;
-        }
-        A *= 0.5;
-        if (Math.abs(A) < 1e-6) return "50% 50%";
-        Cx = Cx / (6 * A);
-        Cy = Cy / (6 * A);
-        return `${Cx.toFixed(1)}% ${Cy.toFixed(1)}%`;
-    }
-
     function PolyImage({
-                           src, alt, area,
+                           src,
+                           alt,
+                           area,
                            objectPosition,
                            z = 0,
+                           className,
                        }: {
-        src: string; alt: string; area: Area;
+        src: string;
+        alt: string;
+        area: Area;
         objectPosition?: string;
         z?: number;
+        className?: string;
     }) {
         const { frame, poly } = area;
         return (
             <div
-                className="absolute bg-no-repeat bg-cover"
+                role="img"
+                aria-label={alt}
+                className={cn("absolute bg-no-repeat bg-cover", className)}
                 style={{
-                    left: frame.left, top: frame.top, width: frame.width, height: frame.height,
+                    left: frame.left,
+                    top: frame.top,
+                    width: frame.width,
+                    height: frame.height,
                     clipPath: `polygon(${poly})`,
                     WebkitClipPath: `polygon(${poly})`,
                     backgroundImage: `url(${src})`,
                     backgroundPosition: objectPosition,
+                    zIndex: z,
                 }}
             />
         );
@@ -126,6 +107,7 @@ export default function ProductShowcase({
                 area={A.left}
                 objectPosition="center"
                 z={0}
+                className={leftImageClassName}
             />
 
             <PolyImage
@@ -134,6 +116,7 @@ export default function ProductShowcase({
                 objectPosition="80% 10%"
                 area={A.middle}
                 z={10}
+                className={middleImageClassName}
             />
 
             <PolyImage
@@ -141,6 +124,7 @@ export default function ProductShowcase({
                 alt={topRightImageAlt}
                 area={A.right}
                 z={10}
+                className={rightImageClassName}
             />
 
             {/* ====== Foreground Content ====== */}

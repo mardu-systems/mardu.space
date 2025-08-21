@@ -111,8 +111,6 @@ function MainContent({
     const stepper = Wizard.useStepper({initialStep: "tri"});
     const idx = stepper.all.findIndex((s) => s.id === stepper.current.id);
     const isValid = steps[idx]?.valid?.(state);
-    const total = Math.max(1, stepper.all.length - 1); // Guard
-    const progressPct = (idx / total) * 100;
 
     return (
         <main className="w-full max-w-4xl mx-auto px-0 sm:px-2 pb-24 mt-10 md:mt-0">
