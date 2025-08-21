@@ -57,7 +57,7 @@ export default function ConfiguratorPageClient() {
     return (
         <div
             className={cn(
-                "min-h-screen",
+                "md:min-h-screen",
                 "flex items-start sm:items-center justify-center",
                 "px-4 sm:px-6 lg:px-10",
                 // verhindert Overlap mit transparentem Header + Notch-safe
@@ -115,7 +115,7 @@ function MainContent({
     const progressPct = (idx / total) * 100;
 
     return (
-        <main className="w-full max-w-4xl mx-auto px-0 sm:px-2 pb-24">
+        <main className="w-full max-w-4xl mx-auto px-0 sm:px-2 pb-24 mt-10 md:mt-0">
             {/* Progress + Stepper */}
             <div className="relative mb-8 sm:mb-10">
 
