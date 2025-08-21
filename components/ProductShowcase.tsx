@@ -4,6 +4,7 @@ import {Button} from "@/components/ui/button";
 import {Building, Shield, Wifi, Monitor} from "lucide-react";
 import * as React from "react";
 import {cn} from "@/lib/utils";
+import Image from "next/image";
 
 export type ProductAdvertisementProps = {
     leftImageSrc: string;
@@ -114,18 +115,26 @@ function MobileShowcase({
                         }: ProductAdvertisementProps) {
     return (
         <section className="md:hidden relative">
-            {/* Hero mit Bild */}
-            <div
-                className="relative w-full aspect-[9/16] min-h-[62vh] bg-cover bg-center clip-path-any-[polygon(0%_24%,_100%_0%,_100%_74.5%,_0%_100%)]"
-                style={{backgroundImage: `url(${leftImageSrc})`}}
-                role="img"
-                aria-label={leftImageAlt}
-            >
-                <div className="absolute inset-0 bg-gradient-to-b from-white/80 via-white/40 to-white/5"/>
-                <div className="absolute inset-x-4 bottom-6">
-                    <h2 className="text-2xl font-extrabold tracking-wide">{title}</h2>
-                    <p className="mt-2 text-[15px] text-neutral-700">{description}</p>
+
+            <div className="relative w-full">
+                <div className="max-w-[85%]">
+                    <h2 className="text-3xl font-futura-bold tracking-tight text-neutral-900">
+                        {title}
+                    </h2>
+                    <p className="mt-3 text-neutral-700 leading-snug font-futura-normal">
+                        {description}
+                    </p>
                 </div>
+                <Image
+                    className=" [clip-path:polygon(0%_10%,100%_0%,100%_90%,0%_100%)]"
+                    src={leftImageSrc}
+                    alt={leftImageAlt}
+                    width="1920"
+                    height="1080"
+                    aria-label={leftImageAlt}
+                >
+                    {/* Overlay für bessere Lesbarkeit */}
+                </Image>
             </div>
 
             {/* Content */}
