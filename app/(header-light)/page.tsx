@@ -5,6 +5,7 @@ import {Button} from "@/components/ui/button";
 import {useRef} from "react";
 import CircleNumber from "@/components/CircleNumber";
 import DashedConnector from "@/components/DashedConnector";
+import Link from "next/link";
 
 /* ===================== Seite ===================== */
 
@@ -27,8 +28,11 @@ export default function HomePage() {
                         <p className="text-lg sm:text-xl text-white/90 mb-8 leading-relaxed">
                             Sichere Zutritts- und Zugriffskontrollen mit Hard- und Software
                         </p>
-                        <Button size="lg" className="px-8 bg-[#CA452A] hover:bg-[#B23A21]">Was braucht dein
-                            Space?</Button>
+                        <Link href="/#info">
+                            <Button size="lg" className="px-8 bg-[#CA452A] hover:bg-[#B23A21]">
+                                Was braucht dein Space?
+                            </Button>
+                        </Link>
                     </div>
                 </div>
             </section>
@@ -44,7 +48,7 @@ export default function HomePage() {
                 </div>
             </section>
 
-            <section className="relative w-full py-14 md:py-20 animate-in fade-in slide-in-from-bottom-8 duration-700">
+            <section id="info" className="relative w-full py-14 md:py-20 animate-in fade-in slide-in-from-bottom-8 duration-700">
                 <div className="max-w-7xl mx-auto px-5 sm:px-6 md:px-8">
                     {/* 1–Spalte mobil, 2–Spalten ab md */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-y-10 md:gap-y-0 md:gap-x-12 items-center">
