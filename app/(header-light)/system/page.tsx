@@ -35,7 +35,7 @@ function HeroSystem({
     );
 
     return (
-        <main>
+        <>
             <section
                 className="relative w-full text-white"
                 aria-labelledby="system-heading"
@@ -93,16 +93,28 @@ function HeroSystem({
                             Das System
                         </strong>
                     </h1>
-                    <Link href="/#products">
-                        <Button size="lg"
-                                className="px-8 mt-10 md:px-12 md:py-8 text-xl md:text-4xl font-futura-bold tracking-wider uppercase bg-[#CA452A] hover:bg-[#B23A21] rounded-full cursor-pointer">
-                            Zu den Produkten
-                        </Button>
-                    </Link>
+                    <div className="pointer-events-auto mt-10 flex flex-col items-center gap-4 md:flex-row">
+                        <Link href="/#products">
+                            <Button
+                                size="lg"
+                                className="px-8 md:px-12 md:py-8 text-xl md:text-4xl font-futura-bold tracking-wider uppercase bg-[#CA452A] hover:bg-[#B23A21] rounded-full cursor-pointer"
+                            >
+                                Zu den Produkten
+                            </Button>
+                        </Link>
+                    </div>
                 </div>
             </section>
 
             <section id="products">
+                {/*
+                Texte für den Zugriffspunkt
+                Für jede freischaltbare Strombetriebene Maschine wird ein Zutrittspunkt benötigt.
+                Ein Zutrittspunkt besteht aus einem Lesegerät und einem Schützgerät.
+                Das Schütz schaltet den Strom für Maschinen mit bis zu 3 Phasen und 32A frei.
+                Das Lesegerät liest NFC Schlüsselkarten und kommuniziert über Funk mit dem Gateway
+                Alle Lesegeräte und das Gateway sind über Funk untereinander vermascht um höchste ausfallsicherheit zu gewährleisten
+                */}
                 <ProductShowcase
                     variant={1}
                     leftImageSrc="/gateway/mounted.jpg"
@@ -110,7 +122,7 @@ function HeroSystem({
                     topMiddleImageSrc="/gateway/inside.jpg"
                     topMiddleImageAlt="Innenleben des Gateways"
                     textImageSrc="/gateway/webinterface.jpeg"
-                    textImageAlt="Webinterface des Gateways"
+                    textImageAlt="Weboberfläche des Gateways"
                     title="DER ZUGRIFFSPUNKT"
                     description="Der Zugriffspunkt [ˈtsuːɡrɪfsˌpʊŋkt] liest die Schlüsselkarten der Benutzer und fragt die Berechtigung bei dem Gateway an."
                     price="200,00 €"
@@ -118,17 +130,30 @@ function HeroSystem({
                     ctaLabel="Vormerken"
                     onCtaClick={() => console.log("Gateway vorgemerkt")}
                 >
-                    <FeatureList size="lg" columns={1}>
-                        <FeatureList.Item size="lg" icon={Building}>Pro Gebäude wird ein Gateway benötigt, um das lokale
-                            Funknetzwerk zu verwalten.</FeatureList.Item>
-                        <FeatureList.Item size="lg" icon={Shield}>Das Gateway prüft die Kenntnisse der Nutzer über Open
-                            Educational Badges.</FeatureList.Item>
-                        <FeatureList.Item size="lg" icon={Wifi}>Alle Berechtigungen sind offline gecached, für Betrieb
-                            auch ohne Internet.</FeatureList.Item>
-                        <FeatureList.Item size="lg" icon={Monitor}>Zur Überwachung & Verwaltung gibt es ein modernes
-                            Webinterface.</FeatureList.Item>
-                    </FeatureList>
+                    <>
+                        <FeatureList size="lg" columns={1}>
+                            <FeatureList.Item size="lg" icon={Building}>Pro Gebäude wird ein Gateway benötigt, um das lokale
+                                Funknetzwerk zu verwalten.</FeatureList.Item>
+                            <FeatureList.Item size="lg" icon={Shield}>Das Gateway prüft die Kenntnisse der Nutzer über Open
+                                Educational Badges.</FeatureList.Item>
+                            <FeatureList.Item size="lg" icon={Wifi}>Alle Berechtigungen sind offline gecached, für Betrieb
+                                auch ohne Internet.</FeatureList.Item>
+                            <FeatureList.Item size="lg" icon={Monitor}>Zur Überwachung & Verwaltung gibt es ein modernes
+                                Webinterface.</FeatureList.Item>
+                        </FeatureList>
+                    </>
                 </ProductShowcase>
+
+                {/*
+                Text für das Gateway
+                Pro Gebäude wird ein Gateway benötigt, um das Lokale Funknetzwerk zu verwalten.
+                Das Gateway fragt die Kenntnisse der nutzer bei Open Educational Badges.
+                Alle Berechtigungen sind offline gecached um auch bei Internetausfall einen weiterbetrieb zu ermöglichen
+                Für die genaue überwachung und Verwaltung gibt es ein modernes Webinterface
+
+
+Das Produkt ist in kürze erhältlich, es handelt sich um einen Vorläufigen Preis
+                */}
                 <ProductShowcase
                     variant={2}
                     leftImageSrc="/gateway/mounted.jpg"
@@ -136,7 +161,7 @@ function HeroSystem({
                     topMiddleImageSrc="/gateway/inside.jpg"
                     topMiddleImageAlt="Innenleben des Gateways"
                     textImageSrc="/gateway/webinterface.jpeg"
-                    textImageAlt="Webinterface des Gateways"
+                    textImageAlt="Weboberfläche des Gateways"
                     title="Das Gateway"
                     description="Das Gateway [geɪtweɪ] empfängt die Zugriffsanfragen von den Readern und sendet die entsprechenden Berechtigungen zurück."
                     price="400,00 €"
@@ -156,13 +181,74 @@ function HeroSystem({
                     </FeatureList>
                 </ProductShowcase>
             </section>
-        </main>
+        </>
     );
 }
 
-// Page-Komponente
 export default function Page() {
     const faqItems: FaqItem[] = [
+        {
+            question: "Wie viele Geräte brauche ich?",
+            answer: (
+                <>
+                    Das hängt von eurer Einrichtung ab. Mit unserem{" "}
+                    <a
+                        href="/konfigurator"
+                        className="text-blue-600 hover:underline"
+                    >
+                        Konfigurator
+                    </a>{" "}
+                    könnt ihr schnell und einfach berechnen, wie viele Geräte für euch sinnvoll sind.
+                </>
+            ),
+        },
+        {
+            question: "Wie bekomme ich die Geräte?",
+            answer: (
+                <>
+                    Aktuell befindet sich das System noch in der Erprobungsphase und ist deshalb
+                    noch nicht offiziell zertifiziert. Wir führen jedoch Testphasen mit ausgewählten
+                    Partnern durch. So helft ihr uns bei der Weiterentwicklung, während ihr
+                    vergünstigten Zugriff auf das <strong>mardu.space</strong>-System erhaltet.
+                    Meldet euch bei Interesse einfach unter{" "}
+                    <a
+                        href="mailto:info@mardu.de"
+                        className="text-blue-600 hover:underline"
+                    >
+                        info@mardu.de
+                    </a>
+                    .
+                </>
+            ),
+        },
+        {
+            question: "Wir sind ein gemeinnütziger Verein – gibt es Vergünstigungen?",
+            answer: (
+                <>
+                    Ja! Da wir selbst aus einem gemeinnützigen Makerspace entstanden sind, wissen
+                    wir, wie knapp Budgets oft sind. Deshalb bieten wir das System für Vereine zu
+                    deutlich vergünstigten Konditionen an.
+                    Zusätzlich könnt ihr Gehäuse kostensparend auf euren eigenen 3D-Druckern fertigen.
+                </>
+            ),
+        },
+        {
+            question: "Gibt es Datenblätter für die Geräte?",
+            answer: (
+                <>
+                    Ja, technische Datenblätter existieren bereits. Diese veröffentlichen wir jedoch
+                    erst, sobald die Geräte offiziell in den Verkauf gehen.
+                    Falls ihr vorab Interesse habt oder Fragen klären möchtet, schreibt uns gerne an{" "}
+                    <a
+                        href="mailto:info@mardu.de"
+                        className="text-blue-600 hover:underline"
+                    >
+                        info@mardu.de
+                    </a>
+                    .
+                </>
+            ),
+        },
         {
             question: "Welche Komponenten umfasst das System?",
             answer: "Zum System gehören ein Gateway und mehrere Zugriffspunkte.",
@@ -179,10 +265,10 @@ export default function Page() {
 
     return (
         <main>
-            <HeroSystem/>
+            <HeroSystem />
             <section className="max-w-4xl mx-auto px-4 py-16">
                 <h2 className="mb-8 text-center text-3xl font-bold">FAQ</h2>
-                <Faq items={faqItems}/>
+                <Faq items={faqItems} />
             </section>
         </main>
     );

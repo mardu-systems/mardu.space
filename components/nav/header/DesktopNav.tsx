@@ -44,7 +44,7 @@ function DesktopNavEntry({ entry, variant }: { entry: NavEntry; variant: "dark" 
             <Link
                 href={entry.href}
                 className={clsx(
-                    "group relative rounded-lg px-4 py-3 text-sm font-medium uppercase",
+                    "group relative rounded-lg px-4 py-3 text-base uppercase",
                     "focus-visible:outline-none", palette.ring, palette.offset,
                     palette.text
                 )}
@@ -67,7 +67,7 @@ function DesktopNavEntry({ entry, variant }: { entry: NavEntry; variant: "dark" 
                 <button
                     aria-haspopup="menu"
                     className={clsx(
-                        "group flex items-center gap-1 rounded-lg px-4 py-3 text-sm font-medium uppercase outline-none",
+                        "group flex items-center gap-1 rounded-lg px-4 py-3 text-base uppercase outline-none",
                         "focus-visible:outline-none", palette.ring, palette.offset,
                         palette.text
                     )}
