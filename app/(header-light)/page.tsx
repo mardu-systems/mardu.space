@@ -26,11 +26,12 @@ export default function HomePage() {
                             mardu.space: Zugriffskontrollsysteme für Makerspaces, FabLabs und Schülerlabore
                         </h1>
                         <p className="text-lg sm:text-xl text-white/90 mb-8 leading-relaxed">
-                            Sichere Zutritts- und Zugriffskontrollen mit Hard- und Software
+                            Entdecke in wenigen Schritten, welche Lösungen dein Space wirklich braucht.
                         </p>
-                        <Link href="/#info">
-                            <Button size="lg" className="px-8 bg-[#CA452A] hover:bg-[#B23A21]">
-                                Was braucht dein Space?
+                        <Link href="/configurator">
+                            <Button size="lg"
+                                    className="px-8 md:px-12 md:py-8 text-xl md:text-4xl font-futura-bold tracking-wider uppercase bg-[#CA452A] hover:bg-[#B23A21] rounded-full cursor-pointer">
+                                Konfigurator starten
                             </Button>
                         </Link>
                     </div>
@@ -48,7 +49,8 @@ export default function HomePage() {
                 </div>
             </section>
 
-            <section id="info" className="relative w-full py-14 md:py-20 animate-in fade-in slide-in-from-bottom-8 duration-700">
+            <section id="info"
+                     className="relative w-full py-14 md:py-20 animate-in fade-in slide-in-from-bottom-8 duration-700">
                 <div className="max-w-7xl mx-auto px-5 sm:px-6 md:px-8">
                     {/* 1–Spalte mobil, 2–Spalten ab md */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-y-10 md:gap-y-0 md:gap-x-12 items-center">
@@ -299,7 +301,8 @@ export default function HomePage() {
                                 />
 
                                 <div
-                                    className="md:absolute relative font-futura-normal text-[#CA452A] text-sm sm:text-base leading-snug tracking-[0.005em] flex items-start gap-4 max-w-[280px] md:max-w-[340px] md:left-[45%] md:bottom-[7%] mt-6 md:mt-0 pointer-events-none">                                    <div className="flex-1">
+                                    className="md:absolute relative font-futura-normal text-[#CA452A] text-sm sm:text-base leading-snug tracking-[0.005em] flex items-start gap-4 max-w-[280px] md:max-w-[340px] md:left-[45%] md:bottom-[7%] mt-6 md:mt-0 pointer-events-none">
+                                    <div className="flex-1">
                                         <p>
                                             Das Gateway von <span
                                             className="whitespace-nowrap">mardu.space</span> empfängt die
