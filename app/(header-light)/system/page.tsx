@@ -115,7 +115,23 @@ function HeroSystem({
                     </div>
                 </div>
             </section>
-            {/* === Produkt 1: Gateway === */}
+            <ProductShowcase
+                variant={1}
+                leftImageSrc="/gateway/mounted.jpg"
+                leftImageAlt="Gateway an zentraler Position in einer Werkstatt"
+                leftImageClassName="object-[80%_right]"
+                topMiddleImageSrc="/gateway/inside.jpg"
+                topMiddleImageAlt="Innenleben des Gateways"
+                middleImageClassName="object-bottom"
+                topRightImageSrc="/gateway/webinterface.jpeg"
+                topRightImageAlt="Verwaltungs-Webinterface"
+                title="Das Gateway"
+                description="Das Gateway empfängt die Zugriffsanfragen von den Readern und sendet die entsprechenden Berechtigungen zurück."
+                price="400,00 €"
+                priceNote="Vorläufiger Preis – Produkt in Kürze erhältlich"
+                ctaLabel="Vormerken"
+                onCtaClick={() => console.log("Gateway vorgemerkt")}
+            />
             <ProductShowcase
                 variant={2}
                 leftImageSrc="/gateway/mounted.jpg"

@@ -27,89 +27,160 @@ export type ProductAdvertisementProps = {
 
 const AREAS = {
     1: {
-        left: {frame: {left: '0%', top: '0%', width: '44%', height: '100%'}, poly: "0% 0%, 100% 0%, 50% 100%, 0% 100%"},
-        middle: {frame: {left: '22%', top: '0%', width: '30%', height: '100%'}, poly: "0% 100%, 36.7% 50%, 100% 100%"},
-        right: {frame: {left: '75%', top: '0%', width: '25%', height: '100%'}, poly: "0% 100%, 100% 44%, 100% 100%"},
+        left: {frame: {left: "0%", top: "0%", width: "44%", height: "100%"}, poly: "0% 0%, 100% 0%, 50% 100%, 0% 100%"},
+        middle: {frame: {left: "22%", top: "0%", width: "30%", height: "100%"}, poly: "0% 100%, 36.7% 50%, 100% 100%"},
+        right: {frame: {left: "75%", top: "0%", width: "25%", height: "100%"}, poly: "0% 100%, 100% 44%, 100% 100%"}
     },
     2: {
-        left: {frame: {left: '0%', top: '0%', width: '44%', height: '100%'}, poly: "0% 0%, 50% 0%, 100% 100%, 0% 100%"},
-        middle: {frame: {left: '22%', top: '0%', width: '30%', height: '100%'}, poly: "0% 0%, 36.7% 50%, 100% 0%"},
-        right: {frame: {left: '75%', top: '0%', width: '25%', height: '100%'}, poly: "0% 0%, 100% 44%, 100% 0%"},
+        left: {frame: {left: "0%", top: "0%", width: "44%", height: "100%"}, poly: "0% 0%, 50% 0%, 100% 100%, 0% 100%"},
+        middle: {frame: {left: "22%", top: "0%", width: "30%", height: "100%"}, poly: "0% 0%, 36.7% 50%, 100% 0%"},
+        right: {frame: {left: "75%", top: "0%", width: "25%", height: "100%"}, poly: "0% 0%, 100% 44%, 100% 0%"}
     }
 } as const;
 
-type Area = { frame: { left: string; top: string; width: string; height: string }, poly: string };
+type Area = { frame: { left: string; top: string; width: string; height: string }; poly: string };
 
-export default function ProductShowcase({
-                                            leftImageSrc,
-                                            leftImageAlt,
-                                            topMiddleImageSrc,
-                                            topMiddleImageAlt,
-                                            topRightImageSrc,
-                                            topRightImageAlt,
-                                            leftImageClassName,
-                                            middleImageClassName,
-                                            rightImageClassName,
-                                            title,
-                                            description,
-                                            price,
-                                            priceNote,
-                                            ctaLabel,
-                                            onCtaClick,
-                                            className,
-                                            variant = 1,
-                                        }: ProductAdvertisementProps) {
+/** ===== Desktop Poly Image ===== */
+function PolyImage({
+                       src,
+                       alt,
+                       area,
+                       objectPosition,
+                       z = 0,
+                       className
+                   }: {
+    src: string;
+    alt: string;
+    area: Area;
+    objectPosition?: string;
+    z?: number;
+    className?: string;
+}) {
+    const {frame, poly} = area;
+    return (
+        <div
+            role="img"
+            aria-label={alt}
+            className={cn("absolute bg-no-repeat bg-cover", className)}
+            style={{
+                left: frame.left,
+                top: frame.top,
+                width: frame.width,
+                height: frame.height,
+                clipPath: `polygon(${poly})`,
+                WebkitClipPath: `polygon(${poly})`,
+                backgroundImage: `url(${src})`,
+                backgroundPosition: objectPosition,
+                zIndex: z
+            }}
+        />
+    );
+}
+
+/** ===== Shared Feature List ===== */
+function FeatureList() {
+    return (
+        <ul className="space-y-4 text-sm md:text-base leading-relaxed">
+            <li className="flex items-start gap-3">
+                <Building className="h-5 w-5 md:h-6 md:w-6 text-[#5e3aa6] shrink-0 mt-0.5"/>
+                <span>Pro Gebäude wird ein Gateway benötigt, um das lokale Funknetzwerk zu verwalten.</span>
+            </li>
+            <li className="flex items-start gap-3">
+                <Shield className="h-5 w-5 md:h-6 md:w-6 text-[#5e3aa6] shrink-0 mt-0.5"/>
+                <span>Das Gateway prüft die Kenntnisse der Nutzer über Open Educational Badges.</span>
+            </li>
+            <li className="flex items-start gap-3">
+                <Wifi className="h-5 w-5 md:h-6 md:w-6 text-[#5e3aa6] shrink-0 mt-0.5"/>
+                <span>Alle Berechtigungen sind offline gecached, für Betrieb auch ohne Internet.</span>
+            </li>
+            <li className="flex items-start gap-3">
+                <Monitor className="h-5 w-5 md:h-6 md:w-6 text-[#5e3aa6] shrink-0 mt-0.5"/>
+                <span>Zur Überwachung & Verwaltung gibt es ein modernes Webinterface.</span>
+            </li>
+        </ul>
+    );
+}
+
+/** ===== Mobile Layout (< md) ===== */
+function MobileShowcase({
+                            leftImageSrc,
+                            leftImageAlt,
+                            title,
+                            description,
+                            price,
+                            priceNote,
+                            ctaLabel,
+                            onCtaClick
+                        }: ProductAdvertisementProps) {
+    return (
+        <section className="md:hidden relative">
+            {/* Hero mit Bild */}
+            <div
+                className="relative w-full aspect-[9/16] min-h-[62vh] bg-cover bg-center clip-path-any-[polygon(0%_24%,_100%_0%,_100%_74.5%,_0%_100%)]"
+                style={{backgroundImage: `url(${leftImageSrc})`}}
+                role="img"
+                aria-label={leftImageAlt}
+            >
+                <div className="absolute inset-0 bg-gradient-to-b from-white/80 via-white/40 to-white/5"/>
+                <div className="absolute inset-x-4 bottom-6">
+                    <h2 className="text-2xl font-extrabold tracking-wide">{title}</h2>
+                    <p className="mt-2 text-[15px] text-neutral-700">{description}</p>
+                </div>
+            </div>
+
+            {/* Content */}
+            <div className="px-4 py-6 space-y-6">
+                <FeatureList/>
+                {/* Preisbox (nicht sticky – die CTA-Leiste unten ist sticky) */}
+                <div className="rounded-xl border p-4 text-center">
+                    <div className="text-3xl font-extrabold tracking-tight">{price}</div>
+                    <div className="text-xs text-neutral-600">inkl. MwSt.</div>
+                    {priceNote && <div className="mt-1 text-[10px] text-neutral-500">{priceNote}</div>}
+                </div>
+            </div>
+
+            {/* Sticky CTA unten */}
+            <div
+                className="sticky bottom-0 inset-x-0 z-30 border-t bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+                <div className="mx-auto max-w-screen-sm px-4 py-3 flex items-center justify-between gap-3">
+                    <div className="leading-tight">
+                        <div className="text-base font-semibold">{price}</div>
+                        {priceNote && <div className="text-[10px] text-neutral-500">{priceNote}</div>}
+                    </div>
+                    <Button className="h-11 px-5 rounded-lg" onClick={onCtaClick}>
+                        {ctaLabel}
+                    </Button>
+                </div>
+            </div>
+        </section>
+    );
+}
+
+/** ===== Desktop Layout (>= md) – dein bisheriges Design ===== */
+function DesktopShowcase(props: ProductAdvertisementProps) {
+    const {
+        leftImageSrc,
+        leftImageAlt,
+        topMiddleImageSrc,
+        topMiddleImageAlt,
+        leftImageClassName,
+        middleImageClassName,
+        title,
+        description,
+        price,
+        priceNote,
+        ctaLabel,
+        onCtaClick,
+        className,
+        variant = 1
+    } = props;
+
     const A = AREAS[variant];
 
-    function PolyImage({
-                           src,
-                           alt,
-                           area,
-                           objectPosition,
-                           z = 0,
-                           className,
-                       }: {
-        src: string;
-        alt: string;
-        area: Area;
-        objectPosition?: string;
-        z?: number;
-        className?: string;
-    }) {
-        const { frame, poly } = area;
-        return (
-            <div
-                role="img"
-                aria-label={alt}
-                className={cn("absolute bg-no-repeat bg-cover", className)}
-                style={{
-                    left: frame.left,
-                    top: frame.top,
-                    width: frame.width,
-                    height: frame.height,
-                    clipPath: `polygon(${poly})`,
-                    WebkitClipPath: `polygon(${poly})`,
-                    backgroundImage: `url(${src})`,
-                    backgroundPosition: objectPosition,
-                    zIndex: z,
-                }}
-            />
-        );
-    }
-
     return (
-        <section className={`relative mx-auto min-h-screen ${className}`}>
-            {/* ====== Decorative Layer (optional tint/gradient) ====== */}
-
-            <PolyImage
-                src={leftImageSrc}
-                alt={leftImageAlt}
-                area={A.left}
-                objectPosition="center"
-                z={0}
-                className={leftImageClassName}
-            />
-
+        <section className={cn("relative mx-auto min-h-screen hidden md:block", className)}>
+            <PolyImage src={leftImageSrc} alt={leftImageAlt} area={A.left} objectPosition="center" z={0}
+                       className={leftImageClassName}/>
             <PolyImage
                 src={topMiddleImageSrc}
                 alt={topMiddleImageAlt}
@@ -119,62 +190,41 @@ export default function ProductShowcase({
                 className={middleImageClassName}
             />
 
-            <PolyImage
-                src={topRightImageSrc}
-                alt={topRightImageAlt}
-                area={A.right}
-                z={10}
-                className={rightImageClassName}
-            />
-
-            {/* ====== Foreground Content ====== */}
-            <div className="absolute inset-0 z-20 left-[33%] top-[10%] px-4 sm:px-6">
-                <header className="mb-4 sm:mb-6 text-center translate-x-0 sm:-translate-x-[3%]">
-                    <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-extrabold tracking-wide">
-                        {title}
-                    </h2>
-                    <p className="mx-auto mt-2 sm:mt-4 max-w-[22ch] sm:max-w-[26ch] md:max-w-[30ch] lg:max-w-[34ch] xl:max-w-[60ch] text-sm sm:text-base md:text-lg lg:text-xl 2xl:text-xl text-neutral-700">
-                        {description}
-                    </p>
+            {/* Content */}
+            <div className="absolute inset-0 z-20 left-[33%] top-[10%] px-6">
+                <header className="mb-6 text-center -translate-x-[3%]">
+                    <h2 className="text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-extrabold tracking-wide">{title}</h2>
+                    <p className="mx-auto mt-4 max-w-[60ch] text-base lg:text-xl 2xl:text-xl text-neutral-700">{description}</p>
                 </header>
 
-                <ul className="mx-auto mt-0 max-w-[32ch] sm:max-w-[40ch] md:max-w-[60ch] lg:max-w-[80ch] space-y-4 sm:space-y-5 md:space-y-6 px-4 sm:px-6 text-sm sm:text-base md:text-lg lg:text-xl leading-relaxed list-none flex flex-col justify-center min-h-[50vh]">
-                    <li className="flex items-start gap-3 sm:gap-4">
-                        <Building className="h-5 w-5 sm:h-6 sm:w-6 md:h-7 md:w-7 text-[#5e3aa6] shrink-0 mt-0.5"/>
-                        <span>Pro Gebäude wird ein Gateway benötigt, um das lokale Funknetzwerk zu verwalten.</span>
-                    </li>
-                    <li className="flex items-start gap-3 sm:gap-4">
-                        <Shield className="h-5 w-5 sm:h-6 sm:w-6 md:h-7 md:w-7 text-[#5e3aa6] shrink-0 mt-0.5"/>
-                        <span>Das Gateway prüft die Kenntnisse der Nutzer über Open Educational Badges.</span>
-                    </li>
-                    <li className="flex items-start gap-3 sm:gap-4">
-                        <Wifi className="h-5 w-5 sm:h-6 sm:w-6 md:h-7 md:w-7 text-[#5e3aa6] shrink-0 mt-0.5"/>
-                        <span>Alle Berechtigungen sind offline gecached, um auch bei Internetausfall den Weiterbetrieb zu ermöglichen.</span>
-                    </li>
-                    <li className="flex items-start gap-3 sm:gap-4">
-                        <Monitor className="h-5 w-5 sm:h-6 sm:w-6 md:h-7 md:w-7 text-[#5e3aa6] shrink-0 mt-0.5"/>
-                        <span>Für die genaue Überwachung und Verwaltung gibt es ein modernes Webinterface.</span>
-                    </li>
-                </ul>
+                <div className="mx-auto max-w-[80ch] min-h-[50vh] px-6">
+                    <FeatureList/>
+                </div>
 
-                <div className="mt-8 sm:mt-10 flex flex-col items-center gap-5 sm:flex-row sm:justify-center sm:gap-8">
+                <div className="mt-10 flex items-center gap-8 justify-center">
                     <div className="text-center">
-                        <div className="text-4xl sm:text-5xl font-extrabold tracking-tight">{price}</div>
-                        <div className="text-xs sm:text-sm text-neutral-600">inkl. MwSt.</div>
-                        <div className="mt-1 text-[10px] text-neutral-500">{priceNote}</div>
+                        <div className="text-5xl font-extrabold tracking-tight">{price}</div>
+                        <div className="text-sm text-neutral-600">inkl. MwSt.</div>
+                        {priceNote && <div className="mt-1 text-[10px] text-neutral-500">{priceNote}</div>}
                     </div>
-                    <Button
-                        className="h-11 sm:h-12 rounded-lg px-6 sm:px-7 text-sm sm:text-base font-semibold"
-                        onClick={onCtaClick}
-                    >
+                    <Button className="h-12 rounded-lg px-7 text-base font-semibold" onClick={onCtaClick}>
                         {ctaLabel}
                     </Button>
                 </div>
             </div>
 
-            {/* ====== Mobile safety net: leichte Abdunklung für Lesbarkeit ====== */}
+            {/* leichte Abdunklung für Lesbarkeit in Zwischenbereichen */}
             <div
-                className="absolute inset-0 z-[15] pointer-events-none md:hidden bg-gradient-to-b from-white/80 via-white/40 to-transparent"/>
+                className="absolute inset-0 z-[15] pointer-events-none bg-gradient-to-b from-white/40 via-transparent to-transparent"/>
         </section>
+    );
+}
+
+export default function ProductShowcase(props: ProductAdvertisementProps) {
+    return (
+        <div className={cn("relative w-full", props.className)}>
+            <MobileShowcase {...props} />
+            <DesktopShowcase {...props} />
+        </div>
     );
 }
