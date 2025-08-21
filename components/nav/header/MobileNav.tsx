@@ -1,7 +1,7 @@
 "use client";
 
 import {Menu} from "lucide-react";
-import React from "react";
+import React, {useState} from "react";
 import {
     Sheet,
     SheetContent,
@@ -28,6 +28,8 @@ export default function MobileNav({
     items: NavEntry[];
     variant?: "dark" | "light";
 }) {
+    const [open, setOpen] = useState(false);
+
     const iconColor =
         variant === "light"
             ? "text-neutral-900 hover:text-neutral-700"
@@ -35,8 +37,10 @@ export default function MobileNav({
 
     const linkColor = "text-white/90 hover:text-white";
 
+    const closeAndGo = () => setOpen(false);
+
     return (
-        <Sheet>
+        <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger asChild>
                 <Button
                     variant="ghost"
@@ -48,8 +52,10 @@ export default function MobileNav({
                             ? "focus-visible:ring-neutral-900 focus-visible:ring-offset-white"
                             : "focus-visible:ring-white focus-visible:ring-offset-neutral-950"
                     )}
+                    aria-label="Navigation öffnen"
+                    onClick={() => setOpen(true)}
                 >
-                    <Menu className="h-5 w-5"/>
+                    <Menu className="h-5 w-5" />
                 </Button>
             </SheetTrigger>
 
@@ -57,7 +63,7 @@ export default function MobileNav({
                 side="left"
                 className="w-[85vw] max-w-sm p-0 bg-radial-[at_5%_5%] from-zinc-900 from-70% to-[#37093F] text-white border-0 flex flex-col"
             >
-                {/* Header mit Close-Button */}
+                {/* Header */}
                 <SheetHeader className="flex items-center justify-between">
                     <SheetTitle className="text-white tracking-wide uppercase">
                         Navigation
@@ -72,6 +78,7 @@ export default function MobileNav({
                                 {entry.type === "link" ? (
                                     <Link
                                         href={entry.href}
+                                        onClick={closeAndGo}
                                         className={clsx(
                                             "h-12 rounded-md px-4 font-futura-normal uppercase flex items-center",
                                             linkColor,
@@ -96,15 +103,13 @@ export default function MobileNav({
                                                     <li key={item.label}>
                                                         <Link
                                                             href={item.href || "#"}
+                                                            onClick={closeAndGo}
                                                             className="flex items-center gap-3 rounded-md p-2 text-sm hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-950"
                                                         >
                                                             {item.image && (
                                                                 <Image
                                                                     src={item.image.src}
-                                                                    alt={
-                                                                        item.image.alt ||
-                                                                        `${item.label} image`
-                                                                    }
+                                                                    alt={item.image.alt || `${item.label} image`}
                                                                     width={56}
                                                                     height={40}
                                                                     className="h-10 w-14 rounded object-cover"
@@ -112,7 +117,9 @@ export default function MobileNav({
                                                                 />
                                                             )}
                                                             <div>
-                                                                <div className="font-futura-normal">{item.label}</div>
+                                                                <div className="font-futura-normal">
+                                                                    {item.label}
+                                                                </div>
                                                                 {item.description && (
                                                                     <p className="text-xs text-neutral-400">
                                                                         {item.description}
@@ -131,9 +138,16 @@ export default function MobileNav({
                     </Accordion>
                 </nav>
 
-                {/* Optionaler CTA / Footer */}
+                {/* Footer-CTA */}
                 <div className="mt-auto p-4 pb-[max(env(safe-area-inset-bottom),1rem)]">
-                    <Button className="w-full h-12 font-lg font-futura-normal">Konfigurator starten</Button>
+                    <Button
+                        asChild
+                        className="w-full h-14 text-base tracking-wide uppercase font-futura-normal"
+                    >
+                        <Link href="/configurator" onClick={closeAndGo}>
+                            KONFIGURATOR STARTEN
+                        </Link>
+                    </Button>
                 </div>
             </SheetContent>
         </Sheet>
