@@ -226,7 +226,7 @@ export default function HomePage() {
 
                             <div className="col-span-12 md:col-span-6 grid grid-rows-[auto_auto_1fr]">
                                 <div className="flex items-start gap-4">
-                                    <CircleNumber number={3} className="mt-1" anchor/>
+                                    <CircleNumber number={3} className="mt-1 shrink-0" anchor/>
                                     <div
                                         className="mt-4 max-w-[40ch] font-futura-normal text-[#CA452A] text-sm sm:text-base leading-snug tracking-[0.005em]">
                                         <p>Jochen möchte nun ein Gestell für einen Wohnzimmertisch schweißen.</p>
@@ -281,7 +281,7 @@ export default function HomePage() {
 
                                 {/* RECHTS: Nummer-Kreis */}
                                 <div className="col-span-2 flex justify-center md:justify-start">
-                                    <CircleNumber number={4} className="mt-1" anchor/>
+                                    <CircleNumber number={4} className="mt-1 shrink-0" anchor/>
                                 </div>
                             </div>
                         </div>
