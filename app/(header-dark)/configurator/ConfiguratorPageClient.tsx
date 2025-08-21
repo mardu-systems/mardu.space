@@ -19,7 +19,7 @@ export type State = {
     schukoMachines: { count: number; cablePerUnitM: number; photoUrl?: string };
     doors: { count: number; cablePerDoorM: number; photoUrl?: string };
     gates: { count: number; cablePerGateM: number; photoUrl?: string };
-    fridges: { enabled: "yes" | "no" | "later"; count: number; photoUrl?: string };
+    fridges: { count: number; photoUrl?: string };
     centralRooms: { count: number; photoUrl?: string };
     contact: { name: string; email: string; company?: string; message?: string };
 };
@@ -72,10 +72,11 @@ export default function ConfiguratorPageClient() {
                         try {
                             const token = await executeRecaptcha("contact");
                             if (!token) throw new Error("reCAPTCHA failed");
+                            const {contact, ...config} = state;
                             const res = await fetch("/api/contact", {
                                 method: "POST",
                                 headers: {"Content-Type": "application/json"},
-                                body: JSON.stringify({...state.contact, config: state, token}),
+                                body: JSON.stringify({...contact, config, token}),
                             });
                             if (!res.ok) throw new Error("Request failed");
                             toast.success("Danke! Anfrage versendet.");
