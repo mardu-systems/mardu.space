@@ -127,7 +127,7 @@ function HeroSystem({
                     textImageSrc="/gateway/webinterface.jpeg"
                     textImageAlt="Weboberfläche des Gateways"
                     title="DER ZUGRIFFSPUNKT"
-                    description="Der Zugriffspunkt [ˈtsuːɡrɪfsˌpʊŋkt] liest die Schlüsselkarten der Benutzer und fragt die Berechtigung bei dem Gateway an."
+                    description="Der Zugriffspunkt [ˈtsuːɡrɪfsˌpʊŋkt] kombiniert Lesegerät und Schützmodul. Er liest die Schlüsselkarten der Nutzer, fragt beim Gateway die Berechtigung an und schaltet Maschinen zuverlässig frei."
                     price="200,00 €"
                     priceNote="Vorläufiger Preis – Produkt in Kürze erhältlich"
                     ctaLabel="Vormerken"
@@ -136,13 +136,13 @@ function HeroSystem({
                     <>
                         <FeatureList size="lg" columns={1}>
                             <FeatureList.Item size="lg" icon={Shield}>
-                                Sichere Freischaltung von Maschinen mit bis zu 32A / 3 Phasen.
+                                Schützmodul schaltet Strom für Maschinen mit bis zu 32A / 3 Phasen sicher frei.
                             </FeatureList.Item>
                             <FeatureList.Item size="lg" icon={Wifi}>
-                                Kommuniziert drahtlos mit dem Gateway im vermaschten Funknetzwerk.
+                                NFC-Lesegerät kommuniziert drahtlos mit dem Gateway im vermaschten Funknetz.
                             </FeatureList.Item>
                             <FeatureList.Item size="lg" icon={Monitor}>
-                                Alle Zutrittspunkte sind miteinander vernetzt, um maximale Ausfallsicherheit zu gewährleisten.
+                                Vernetzte Zugriffspunkte sorgen für maximale Ausfallsicherheit.
                             </FeatureList.Item>
                         </FeatureList>
                     </>
@@ -169,7 +169,7 @@ Das Produkt ist in kürze erhältlich, es handelt sich um einen Vorläufigen Pre
                     textImageSrc="/gateway/webinterface.jpeg"
                     textImageAlt="Weboberfläche des Gateways"
                     title="Das Gateway"
-                    description="Das Gateway [geɪtweɪ] empfängt die Zugriffsanfragen von den Readern und sendet die entsprechenden Berechtigungen zurück."
+                    description="Das Gateway [ˈɡeɪtweɪ] koordiniert das Funknetzwerk, prüft Zugriffsberechtigungen anhand der Open Badges und sendet Freigaben an die Zugriffspunkte."
                     price="400,00 €"
                     priceNote="Vorläufiger Preis – Produkt in Kürze erhältlich"
                     ctaLabel="Vormerken"
@@ -177,13 +177,14 @@ Das Produkt ist in kürze erhältlich, es handelt sich um einen Vorläufigen Pre
                 >
                     <FeatureList size="lg" columns={1}>
                         <FeatureList.Item size="lg" icon={Building}>
-                            Pro Gebäude wird mindestens ein Gateway benötigt, um das lokale Funknetzwerk zu koordinieren.
+                            Pro Gebäude wird mindestens ein Gateway benötigt, um das lokale Funknetzwerk zu
+                            koordinieren.
                         </FeatureList.Item>
                         <FeatureList.Item size="lg" icon={Shield}>
                             Prüft Berechtigungen anhand der Open Badges und sorgt für regelkonformen Zugang.
                         </FeatureList.Item>
                         <FeatureList.Item size="lg" icon={Wifi}>
-                            Offline-Caching aller Berechtigungen für Betrieb auch bei Internetausfall.
+                            Offline-Caching aller Berechtigungen ermöglicht Betrieb auch bei Internetausfall.
                         </FeatureList.Item>
                         <FeatureList.Item size="lg" icon={Monitor}>
                             Intuitives Webinterface zur Verwaltung, Überwachung und Auswertung.
@@ -198,10 +199,10 @@ Das Produkt ist in kürze erhältlich, es handelt sich um einen Vorläufigen Pre
 export default function Page() {
     return (
         <main>
-            <HeroSystem />
+            <HeroSystem/>
             <section className="max-w-4xl mx-auto px-4 py-16">
                 <h2 className="mb-8 text-center text-3xl font-bold">FAQ</h2>
-                <Faq items={faqItems} />
+                <Faq items={faqItems}/>
             </section>
         </main>
     );
