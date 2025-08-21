@@ -15,7 +15,7 @@ export default function HomePage() {
     return (
         <main className="relative min-h-screen">
             {/* Hero */}
-            <section className="relative w-full h-screen">
+            <section className="relative w-full h-[calc(100vh-8rem)]">
                 <Image src="/_A7_9072_quer.jpg" alt="Zugriffskontrollsysteme im Makerspace" fill priority sizes="100vw"
                        className="object-cover"/>
                 <div className="absolute inset-0 bg-black/50"/>
