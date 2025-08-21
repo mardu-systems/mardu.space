@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { verifyToken, removeSubscriber } from "@/lib/newsletter";
-import { sendEmail } from "@/lib/email";
+import { sendEmail, renderEmailLayout } from "@/lib/email";
 
 export async function GET(req: Request) {
     const { searchParams } = new URL(req.url);
@@ -21,7 +21,10 @@ export async function GET(req: Request) {
             to: data.email,
             subject: "Newsletter Abmeldung",
             text: "Du hast dich erfolgreich vom Newsletter abgemeldet.",
-            html: "<p>Du hast dich erfolgreich vom Newsletter abgemeldet.</p>",
+            html: renderEmailLayout(
+                "Newsletter Abmeldung",
+                "<p>Du hast dich erfolgreich vom Newsletter abgemeldet.</p>"
+            ),
         });
     } catch (err) {
         console.error("Failed to send unsubscribe email", err);

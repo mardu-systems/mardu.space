@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { createToken } from "@/lib/newsletter";
-import { sendEmail } from "@/lib/email";
+import { sendEmail, renderEmailLayout } from "@/lib/email";
 
 const Schema = z.object({
     email: z.string().email(),
@@ -39,7 +39,10 @@ export async function POST(req: Request) {
             to: email,
             subject: "Bitte bestätige deine Newsletter-Anmeldung",
             text: `Bitte bestätige deine Anmeldung indem du auf folgenden Link klickst: ${confirmUrl}`,
-            html: `<p>Bitte bestätige deine Anmeldung indem du auf folgenden Link klickst:</p><p><a href="${confirmUrl}">Newsletter bestätigen</a></p>`,
+            html: renderEmailLayout(
+                "Newsletter Anmeldung",
+                `<p>Bitte bestätige deine Anmeldung indem du auf folgenden Link klickst:</p><p style="text-align:center;"><a href="${confirmUrl}">Newsletter bestätigen</a></p>`
+            ),
         });
     } catch (err) {
         console.error("Failed to send confirmation email", err);

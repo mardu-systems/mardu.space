@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { verifyToken, saveSubscriber, createToken } from "@/lib/newsletter";
-import { sendEmail } from "@/lib/email";
+import { sendEmail, renderEmailLayout } from "@/lib/email";
 
 export async function GET(req: Request) {
     const { searchParams } = new URL(req.url);
@@ -24,7 +24,10 @@ export async function GET(req: Request) {
             to: data.email,
             subject: "Newsletter Anmeldung bestätigt",
             text: `Vielen Dank für deine Bestätigung! Wenn du den Newsletter nicht mehr erhalten möchtest, kannst du dich hier abmelden: ${unsubscribeUrl}`,
-            html: `<p>Vielen Dank für deine Bestätigung!</p><p>Wenn du den Newsletter nicht mehr erhalten möchtest, kannst du dich <a href="${unsubscribeUrl}">hier abmelden</a>.</p>`,
+            html: renderEmailLayout(
+                "Newsletter Anmeldung bestätigt",
+                `<p>Vielen Dank für deine Bestätigung!</p><p>Wenn du den Newsletter nicht mehr erhalten möchtest, kannst du dich <a href="${unsubscribeUrl}">hier abmelden</a>.</p>`
+            ),
         });
     } catch (err) {
         console.error("Failed to send confirmation email", err);

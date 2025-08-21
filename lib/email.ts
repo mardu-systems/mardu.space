@@ -44,6 +44,15 @@ export async function sendEmail({
     }
 }
 
+export function renderEmailLayout(title: string, content: string): string {
+    return `
+        <main style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;padding:20px;">
+            <h1 style="text-align:center;font-size:24px;font-weight:bold;margin-bottom:24px;">${title}</h1>
+            <div style="font-size:16px;line-height:1.5;">${content}</div>
+        </main>
+    `;
+}
+
 export async function sendContactEmail(data: {
     name: string;
     email: string;
