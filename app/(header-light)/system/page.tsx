@@ -110,6 +110,8 @@ function HeroSystem({
             <section id="products">
                 {/*
                 Texte für den Zugriffspunkt
+                Der Zugriffspunkt [ˈtsuːɡrɪfsˌpʊŋkt] liest die Schlüsselkarten der Benutzer und fragt die Berechtigung bei dem Gateway an.
+
                 Für jede freischaltbare Strombetriebene Maschine wird ein Zutrittspunkt benötigt.
                 Ein Zutrittspunkt besteht aus einem Lesegerät und einem Schützgerät.
                 Das Schütz schaltet den Strom für Maschinen mit bis zu 3 Phasen und 32A frei.
@@ -148,6 +150,8 @@ function HeroSystem({
 
                 {/*
                 Text für das Gateway
+                Das Gateway [geɪtweɪ] empfängt die Zugriffsanfragen von den Readern und sendet die entsprechenden Berechtigungen zurück.
+
                 Pro Gebäude wird ein Gateway benötigt, um das Lokale Funknetzwerk zu verwalten.
                 Das Gateway fragt die Kenntnisse der nutzer bei Open Educational Badges.
                 Alle Berechtigungen sind offline gecached um auch bei Internetausfall einen weiterbetrieb zu ermöglichen
