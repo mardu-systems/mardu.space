@@ -8,6 +8,7 @@ import FeatureList from "@/components/product/FeatureList";
 import {Building, Monitor, Shield, Wifi} from "lucide-react";
 import Link from "next/link";
 import {Button} from "@/components/ui/button";
+import Faq, {FaqItem} from "@/components/Faq";
 
 export type HeroProps = {
     leftSrc?: string;
@@ -108,6 +109,8 @@ function HeroSystem({
                     leftImageAlt="Gateway an zentraler Position in einer Werkstatt"
                     topMiddleImageSrc="/gateway/inside.jpg"
                     topMiddleImageAlt="Innenleben des Gateways"
+                    textImageSrc="/gateway/webinterface.jpeg"
+                    textImageAlt="Webinterface des Gateways"
                     title="DER ZUGRIFFSPUNKT"
                     description="Der Zugriffspunkt [ˈtsuːɡrɪfsˌpʊŋkt] liest die Schlüsselkarten der Benutzer und fragt die Berechtigung bei dem Gateway an."
                     price="200,00 €"
@@ -132,6 +135,8 @@ function HeroSystem({
                     leftImageAlt="Gateway an zentraler Position in einer Werkstatt"
                     topMiddleImageSrc="/gateway/inside.jpg"
                     topMiddleImageAlt="Innenleben des Gateways"
+                    textImageSrc="/gateway/webinterface.jpeg"
+                    textImageAlt="Webinterface des Gateways"
                     title="Das Gateway"
                     description="Das Gateway [geɪtweɪ] empfängt die Zugriffsanfragen von den Readern und sendet die entsprechenden Berechtigungen zurück."
                     price="400,00 €"
@@ -157,9 +162,28 @@ function HeroSystem({
 
 // Page-Komponente
 export default function Page() {
+    const faqItems: FaqItem[] = [
+        {
+            question: "Welche Komponenten umfasst das System?",
+            answer: "Zum System gehören ein Gateway und mehrere Zugriffspunkte.",
+        },
+        {
+            question: "Funktioniert das System ohne Internetverbindung?",
+            answer: "Ja, alle Berechtigungen werden offline im Gateway gespeichert.",
+        },
+        {
+            question: "Wann sind die Produkte verfügbar?",
+            answer: "Die ersten Produkte sind demnächst erhältlich und können vorgemerkt werden.",
+        },
+    ];
+
     return (
         <main>
             <HeroSystem/>
+            <section className="max-w-4xl mx-auto px-4 py-16">
+                <h2 className="mb-8 text-center text-3xl font-bold">FAQ</h2>
+                <Faq items={faqItems}/>
+            </section>
         </main>
     );
 }
