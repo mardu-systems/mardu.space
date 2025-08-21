@@ -8,7 +8,8 @@ import FeatureList from "@/components/product/FeatureList";
 import {Building, Monitor, Shield, Wifi} from "lucide-react";
 import Link from "next/link";
 import {Button} from "@/components/ui/button";
-import Faq, {FaqItem} from "@/components/Faq";
+import Faq from "@/components/Faq";
+import {faqItems} from "@/app/faqItems";
 
 export type HeroProps = {
     leftSrc?: string;
@@ -132,14 +133,15 @@ function HeroSystem({
                 >
                     <>
                         <FeatureList size="lg" columns={1}>
-                            <FeatureList.Item size="lg" icon={Building}>Pro Gebäude wird ein Gateway benötigt, um das lokale
-                                Funknetzwerk zu verwalten.</FeatureList.Item>
-                            <FeatureList.Item size="lg" icon={Shield}>Das Gateway prüft die Kenntnisse der Nutzer über Open
-                                Educational Badges.</FeatureList.Item>
-                            <FeatureList.Item size="lg" icon={Wifi}>Alle Berechtigungen sind offline gecached, für Betrieb
-                                auch ohne Internet.</FeatureList.Item>
-                            <FeatureList.Item size="lg" icon={Monitor}>Zur Überwachung & Verwaltung gibt es ein modernes
-                                Webinterface.</FeatureList.Item>
+                            <FeatureList.Item size="lg" icon={Shield}>
+                                Sichere Freischaltung von Maschinen mit bis zu 32A / 3 Phasen.
+                            </FeatureList.Item>
+                            <FeatureList.Item size="lg" icon={Wifi}>
+                                Kommuniziert drahtlos mit dem Gateway im vermaschten Funknetzwerk.
+                            </FeatureList.Item>
+                            <FeatureList.Item size="lg" icon={Monitor}>
+                                Alle Zutrittspunkte sind miteinander vernetzt, um maximale Ausfallsicherheit zu gewährleisten.
+                            </FeatureList.Item>
                         </FeatureList>
                     </>
                 </ProductShowcase>
@@ -170,14 +172,18 @@ Das Produkt ist in kürze erhältlich, es handelt sich um einen Vorläufigen Pre
                     onCtaClick={() => console.log("Gateway vorgemerkt")}
                 >
                     <FeatureList size="lg" columns={1}>
-                        <FeatureList.Item size="lg" icon={Building}>Pro Gebäude wird ein Gateway benötigt, um das lokale
-                            Funknetzwerk zu verwalten.</FeatureList.Item>
-                        <FeatureList.Item size="lg" icon={Shield}>Das Gateway prüft die Kenntnisse der Nutzer über Open
-                            Educational Badges.</FeatureList.Item>
-                        <FeatureList.Item size="lg" icon={Wifi}>Alle Berechtigungen sind offline gecached, für Betrieb
-                            auch ohne Internet.</FeatureList.Item>
-                        <FeatureList.Item size="lg" icon={Monitor}>Zur Überwachung & Verwaltung gibt es ein modernes
-                            Webinterface.</FeatureList.Item>
+                        <FeatureList.Item size="lg" icon={Building}>
+                            Pro Gebäude wird mindestens ein Gateway benötigt, um das lokale Funknetzwerk zu koordinieren.
+                        </FeatureList.Item>
+                        <FeatureList.Item size="lg" icon={Shield}>
+                            Prüft Berechtigungen anhand der Open Badges und sorgt für regelkonformen Zugang.
+                        </FeatureList.Item>
+                        <FeatureList.Item size="lg" icon={Wifi}>
+                            Offline-Caching aller Berechtigungen für Betrieb auch bei Internetausfall.
+                        </FeatureList.Item>
+                        <FeatureList.Item size="lg" icon={Monitor}>
+                            Intuitives Webinterface zur Verwaltung, Überwachung und Auswertung.
+                        </FeatureList.Item>
                     </FeatureList>
                 </ProductShowcase>
             </section>
@@ -186,83 +192,6 @@ Das Produkt ist in kürze erhältlich, es handelt sich um einen Vorläufigen Pre
 }
 
 export default function Page() {
-    const faqItems: FaqItem[] = [
-        {
-            question: "Wie viele Geräte brauche ich?",
-            answer: (
-                <>
-                    Das hängt von eurer Einrichtung ab. Mit unserem{" "}
-                    <a
-                        href="/konfigurator"
-                        className="text-blue-600 hover:underline"
-                    >
-                        Konfigurator
-                    </a>{" "}
-                    könnt ihr schnell und einfach berechnen, wie viele Geräte für euch sinnvoll sind.
-                </>
-            ),
-        },
-        {
-            question: "Wie bekomme ich die Geräte?",
-            answer: (
-                <>
-                    Aktuell befindet sich das System noch in der Erprobungsphase und ist deshalb
-                    noch nicht offiziell zertifiziert. Wir führen jedoch Testphasen mit ausgewählten
-                    Partnern durch. So helft ihr uns bei der Weiterentwicklung, während ihr
-                    vergünstigten Zugriff auf das <strong>mardu.space</strong>-System erhaltet.
-                    Meldet euch bei Interesse einfach unter{" "}
-                    <a
-                        href="mailto:info@mardu.de"
-                        className="text-blue-600 hover:underline"
-                    >
-                        info@mardu.de
-                    </a>
-                    .
-                </>
-            ),
-        },
-        {
-            question: "Wir sind ein gemeinnütziger Verein – gibt es Vergünstigungen?",
-            answer: (
-                <>
-                    Ja! Da wir selbst aus einem gemeinnützigen Makerspace entstanden sind, wissen
-                    wir, wie knapp Budgets oft sind. Deshalb bieten wir das System für Vereine zu
-                    deutlich vergünstigten Konditionen an.
-                    Zusätzlich könnt ihr Gehäuse kostensparend auf euren eigenen 3D-Druckern fertigen.
-                </>
-            ),
-        },
-        {
-            question: "Gibt es Datenblätter für die Geräte?",
-            answer: (
-                <>
-                    Ja, technische Datenblätter existieren bereits. Diese veröffentlichen wir jedoch
-                    erst, sobald die Geräte offiziell in den Verkauf gehen.
-                    Falls ihr vorab Interesse habt oder Fragen klären möchtet, schreibt uns gerne an{" "}
-                    <a
-                        href="mailto:info@mardu.de"
-                        className="text-blue-600 hover:underline"
-                    >
-                        info@mardu.de
-                    </a>
-                    .
-                </>
-            ),
-        },
-        {
-            question: "Welche Komponenten umfasst das System?",
-            answer: "Zum System gehören ein Gateway und mehrere Zugriffspunkte.",
-        },
-        {
-            question: "Funktioniert das System ohne Internetverbindung?",
-            answer: "Ja, alle Berechtigungen werden offline im Gateway gespeichert.",
-        },
-        {
-            question: "Wann sind die Produkte verfügbar?",
-            answer: "Die ersten Produkte sind demnächst erhältlich und können vorgemerkt werden.",
-        },
-    ];
-
     return (
         <main>
             <HeroSystem />
