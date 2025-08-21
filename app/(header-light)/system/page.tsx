@@ -3,7 +3,11 @@
 import Image from "next/image";
 import {useMemo} from "react";
 import clsx from "clsx";
-import ProductShowcase from "@/components/ProductShowcase";
+import ProductShowcase from "@/components/product/ProductShowcase";
+import FeatureList from "@/components/product/FeatureList";
+import {Building, Monitor, Shield, Wifi} from "lucide-react";
+import Link from "next/link";
+import {Button} from "@/components/ui/button";
 
 export type HeroProps = {
     leftSrc?: string;
@@ -88,67 +92,65 @@ function HeroSystem({
                             Das System
                         </strong>
                     </h1>
-
-                    <div className="pointer-events-auto mt-6 flex flex-wrap items-center justify-center gap-3">
-                        <a
-                            href={howItWorksHref}
-                            aria-label="Mehr erfahren: So funktioniert das System"
-                            className="inline-flex items-center rounded-md bg-white/10 px-6 py-4 sm:px-5 sm:py-3 text-sm font-medium backdrop-blur transition hover:bg-white/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black"
-                        >
-                            So funktioniert’s
-                        </a>
-                    </div>
-                </div>
-
-                {/* Linie */}
-                {/* Vertikal ab md, horizontal auf Mobile */}
-                <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-                    {/* Desktop: Vertikal */}
-                    <div className="relative hidden h-full w-px md:block">
-                        <div
-                            className="absolute inset-0 origin-top rounded-full opacity-90 bg-gradient-to-b from-[#F133FF] via-[#7AFA27] to-[#FF7A11] animate-grow-y"/>
-                    </div>
-                    {/* Mobile: Horizontal */}
-                    <div className="relative block h-px w-full md:hidden">
-                        <div
-                            className="absolute inset-0 origin-left rounded-full opacity-90 bg-gradient-to-r from-[#F133FF] via-[#7AFA27] to-[#FF7A11] animate-grow-x"/>
-                    </div>
+                    <Link href="/#products">
+                        <Button size="lg"
+                                className="px-8 mt-10 md:px-12 md:py-8 text-xl md:text-4xl font-futura-bold tracking-wider uppercase bg-[#CA452A] hover:bg-[#B23A21] rounded-full cursor-pointer">
+                            Zu den Produkten
+                        </Button>
+                    </Link>
                 </div>
             </section>
-            <ProductShowcase
-                variant={1}
-                leftImageSrc="/gateway/mounted.jpg"
-                leftImageAlt="Gateway an zentraler Position in einer Werkstatt"
-                leftImageClassName="object-[80%_right]"
-                topMiddleImageSrc="/gateway/inside.jpg"
-                topMiddleImageAlt="Innenleben des Gateways"
-                middleImageClassName="object-bottom"
-                topRightImageSrc="/gateway/webinterface.jpeg"
-                topRightImageAlt="Verwaltungs-Webinterface"
-                title="Das Gateway"
-                description="Das Gateway empfängt die Zugriffsanfragen von den Readern und sendet die entsprechenden Berechtigungen zurück."
-                price="400,00 €"
-                priceNote="Vorläufiger Preis – Produkt in Kürze erhältlich"
-                ctaLabel="Vormerken"
-                onCtaClick={() => console.log("Gateway vorgemerkt")}
-            />
-            <ProductShowcase
-                variant={2}
-                leftImageSrc="/gateway/mounted.jpg"
-                leftImageAlt="Gateway an zentraler Position in einer Werkstatt"
-                leftImageClassName="object-[80%_right]"
-                topMiddleImageSrc="/gateway/inside.jpg"
-                topMiddleImageAlt="Innenleben des Gateways"
-                middleImageClassName="object-bottom"
-                topRightImageSrc="/gateway/webinterface.jpeg"
-                topRightImageAlt="Verwaltungs-Webinterface"
-                title="Das Gateway"
-                description="Das Gateway empfängt die Zugriffsanfragen von den Readern und sendet die entsprechenden Berechtigungen zurück."
-                price="400,00 €"
-                priceNote="Vorläufiger Preis – Produkt in Kürze erhältlich"
-                ctaLabel="Vormerken"
-                onCtaClick={() => console.log("Gateway vorgemerkt")}
-            />
+
+            <section id="products">
+                <ProductShowcase
+                    variant={1}
+                    leftImageSrc="/gateway/mounted.jpg"
+                    leftImageAlt="Gateway an zentraler Position in einer Werkstatt"
+                    topMiddleImageSrc="/gateway/inside.jpg"
+                    topMiddleImageAlt="Innenleben des Gateways"
+                    title="DER ZUGRIFFSPUNKT"
+                    description="Der Zugriffspunkt [ˈtsuːɡrɪfsˌpʊŋkt] liest die Schlüsselkarten der Benutzer und fragt die Berechtigung bei dem Gateway an."
+                    price="200,00 €"
+                    priceNote="Vorläufiger Preis – Produkt in Kürze erhältlich"
+                    ctaLabel="Vormerken"
+                    onCtaClick={() => console.log("Gateway vorgemerkt")}
+                >
+                    <FeatureList size="lg" columns={1}>
+                        <FeatureList.Item size="lg" icon={Building}>Pro Gebäude wird ein Gateway benötigt, um das lokale
+                            Funknetzwerk zu verwalten.</FeatureList.Item>
+                        <FeatureList.Item size="lg" icon={Shield}>Das Gateway prüft die Kenntnisse der Nutzer über Open
+                            Educational Badges.</FeatureList.Item>
+                        <FeatureList.Item size="lg" icon={Wifi}>Alle Berechtigungen sind offline gecached, für Betrieb
+                            auch ohne Internet.</FeatureList.Item>
+                        <FeatureList.Item size="lg" icon={Monitor}>Zur Überwachung & Verwaltung gibt es ein modernes
+                            Webinterface.</FeatureList.Item>
+                    </FeatureList>
+                </ProductShowcase>
+                <ProductShowcase
+                    variant={2}
+                    leftImageSrc="/gateway/mounted.jpg"
+                    leftImageAlt="Gateway an zentraler Position in einer Werkstatt"
+                    topMiddleImageSrc="/gateway/inside.jpg"
+                    topMiddleImageAlt="Innenleben des Gateways"
+                    title="Das Gateway"
+                    description="Das Gateway [geɪtweɪ] empfängt die Zugriffsanfragen von den Readern und sendet die entsprechenden Berechtigungen zurück."
+                    price="400,00 €"
+                    priceNote="Vorläufiger Preis – Produkt in Kürze erhältlich"
+                    ctaLabel="Vormerken"
+                    onCtaClick={() => console.log("Gateway vorgemerkt")}
+                >
+                    <FeatureList size="lg" columns={1}>
+                        <FeatureList.Item size="lg" icon={Building}>Pro Gebäude wird ein Gateway benötigt, um das lokale
+                            Funknetzwerk zu verwalten.</FeatureList.Item>
+                        <FeatureList.Item size="lg" icon={Shield}>Das Gateway prüft die Kenntnisse der Nutzer über Open
+                            Educational Badges.</FeatureList.Item>
+                        <FeatureList.Item size="lg" icon={Wifi}>Alle Berechtigungen sind offline gecached, für Betrieb
+                            auch ohne Internet.</FeatureList.Item>
+                        <FeatureList.Item size="lg" icon={Monitor}>Zur Überwachung & Verwaltung gibt es ein modernes
+                            Webinterface.</FeatureList.Item>
+                    </FeatureList>
+                </ProductShowcase>
+            </section>
         </main>
     );
 }
