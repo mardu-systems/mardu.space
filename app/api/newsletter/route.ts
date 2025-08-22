@@ -4,7 +4,7 @@ import {createToken} from "@/lib/newsletter";
 import {renderEmailLayout, sendEmail} from "@/lib/email";
 
 const Schema = z.object({
-    email: z.string().email(),
+    email: z.email(),
     role: z.string(),
     token: z.string(),
 });
