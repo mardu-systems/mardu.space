@@ -373,8 +373,8 @@ function HelpContent({
                     </div>
                     <span
                         className="text-xs font-semibold text-red-700 bg-red-50 border border-red-200 px-2 py-1 rounded-full">
-            Schritt {stepIndex + 1}/{stepCount}
-          </span>
+                        Schritt {stepIndex + 1}/{stepCount}
+                    </span>
                 </div>
             </div>
 
@@ -382,17 +382,16 @@ function HelpContent({
                 <div className="md:col-span-3 text-left">
                     <p className="text-ink-700 leading-relaxed">{tip}</p>
                 </div>
-
-                <div className="md:col-span-2">
-                    <div className="relative aspect-[4/3] w-full overflow-hidden rounded-xl border bg-ink-50">
-                        {image ? (
-                            <Image src={image} alt="Vorschau" fill className="object-cover"/>
-                        ) : (
-                            <div className="absolute inset-0 grid place-items-center text-ink-300 text-sm">Keine
-                                Vorschau</div>
-                        )}
+                {image && (
+                    <div className="md:col-span-2">
+                        <div className="relative aspect-[4/3] w-full overflow-hidden rounded-xl border bg-ink-50">
+                            {image && (
+                                <Image src={image} alt="Vorschau" fill className="object-cover" quality={30}
+                                />
+                            )}
+                        </div>
                     </div>
-                </div>
+                )}
             </div>
         </>
     );

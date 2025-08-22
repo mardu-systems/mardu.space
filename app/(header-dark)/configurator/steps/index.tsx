@@ -20,6 +20,7 @@ export const createSteps = (
                 }
             />
         ),
+        hoverImg:"/configurator/32a.jpg",
         valid: (s: State) => s.triMachines.count >= 0,
     },
     {
@@ -48,6 +49,7 @@ export const createSteps = (
                 }
             />
         ),
+        hoverImg:"/configurator/tuer.jpg",
         valid: (s: State) => s.doors.count >= 0 && s.doors.cablePerDoorM >= 0,
     },
     {
@@ -62,6 +64,7 @@ export const createSteps = (
                 }
             />
         ),
+        hoverImg:"/configurator/tor.jpg",
         valid: (s: State) => s.gates.count >= 0 && s.gates.cablePerGateM >= 0,
     },
     {
@@ -77,6 +80,7 @@ export const createSteps = (
                 note="Hinweis: Die Geräte-Integration ist aktuell noch nicht vollständig realisiert."
             />
         ),
+        hoverImg:"/configurator/device.jpg",
         valid: (s: State) => s.fridges.count >= 0,
     },
     {
@@ -91,6 +95,7 @@ export const createSteps = (
                 }
             />
         ),
+        hoverImg:"/configurator/device.jpg",
         valid: (s: State) => s.centralRooms.count >= 0,
     },
     {
