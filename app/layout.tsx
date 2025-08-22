@@ -3,6 +3,7 @@ import "./globals.css";
 import React from "react";
 import CookieConsentBanner from "@/components/CookieBanner";
 import TrackingProvider from "@/components/TrackingProvider";
+import RecaptchaProvider from "@/components/RecaptchaProvider";
 
 export const viewport: Viewport = {
     width: "device-width",
@@ -91,10 +92,12 @@ export default function RootLayout({children}: { children: React.ReactNode }) {
             />
         </head>
         <body className="antialiased overflow-x-hidden">
-        <TrackingProvider>
-            {children}
-            <CookieConsentBanner/>
-        </TrackingProvider>
+        <RecaptchaProvider>
+            <TrackingProvider>
+                {children}
+                <CookieConsentBanner/>
+            </TrackingProvider>
+        </RecaptchaProvider>
         </body>
         </html>
     );
