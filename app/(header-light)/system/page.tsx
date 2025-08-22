@@ -20,9 +20,10 @@ export type HeroProps = {
     stackOnMobile?: boolean;
 };
 
+
 function HeroSystem({
-                        leftSrc = "/mounted.jpg",
-                        rightSrc = "/_A7_9072_quer.jpg",
+                        leftSrc = "/gateway/mounted.jpg",
+                        rightSrc = "/device/near.jpg",
                         leftAlt = "Gateway – Zentrale Steuereinheit",
                         rightAlt = "Zutrittspunkt – Türmodul mit NFC",
                         heightClass = "h-[80vh] sm:h-[90vh] lg:h-[11/12]",
@@ -42,14 +43,13 @@ function HeroSystem({
             >
                 {/* Bild-Layer */}
                 <div className={clsx("grid", gridCols, heightClass)}>
-                    <div className="relative">
+                    <div className="relative overflow-hidden">
                         <Image
                             src={leftSrc}
                             alt={leftAlt}
                             role="img"
                             fill
-                            sizes="(min-width: 768px) 50vw, 100vw"
-                            className="object-cover select-none"
+                            className="object-cover select-none scale-200"
                             draggable={false}
                             priority
                         />
@@ -61,7 +61,6 @@ function HeroSystem({
                             alt={rightAlt}
                             role="img"
                             fill
-                            sizes="(min-width: 768px) 50vw, 100vw"
                             className="object-cover select-none"
                             draggable={false}
                             priority
@@ -93,7 +92,7 @@ function HeroSystem({
                         </strong>
                     </h1>
                     <div className="pointer-events-auto mt-10 flex flex-col items-center gap-4 md:flex-row">
-                        <Link href="/#products">
+                        <Link href="/system/#products">
                             <Button
                                 size="lg"
                                 className="px-8 md:px-12 md:py-8 text-xl md:text-4xl font-futura-bold tracking-wider uppercase bg-[#CA452A] hover:bg-[#B23A21] rounded-full cursor-pointer"
@@ -118,11 +117,11 @@ function HeroSystem({
                 */}
                 <ProductShowcase
                     variant={1}
-                    leftImageSrc="/gateway/mounted.jpg"
+                    leftImageSrc="/_A7_9072_quer.jpg"
                     leftImageAlt="Gateway an zentraler Position in einer Werkstatt"
-                    topMiddleImageSrc="/gateway/inside.jpg"
+                    topMiddleImageSrc="/device/tor-2.jpg"
                     topMiddleImageAlt="Innenleben des Gateways"
-                    textImageSrc="/gateway/webinterface.jpeg"
+                    textImageSrc="/device/render.png"
                     textImageAlt="Weboberfläche des Gateways"
                     title="DER ZUGRIFFSPUNKT"
                     description="Der Zugriffspunkt [ˈtsuːɡrɪfsˌpʊŋkt] kombiniert Lesegerät und Schützmodul. Er liest die Schlüsselkarten der Nutzer, fragt beim Gateway die Berechtigung an und schaltet Maschinen zuverlässig frei."
@@ -164,8 +163,8 @@ Das Produkt ist in kürze erhältlich, es handelt sich um einen Vorläufigen Pre
                     leftImageAlt="Gateway an zentraler Position in einer Werkstatt"
                     topMiddleImageSrc="/gateway/inside.jpg"
                     topMiddleImageAlt="Innenleben des Gateways"
-                    textImageSrc="/gateway/webinterface.jpeg"
-                    textImageAlt="Weboberfläche des Gateways"
+                    textImageSrc="/gateway/cutout.png"
+                    textImageAlt="Gateways Coutout"
                     title="Das Gateway"
                     description="Das Gateway [ˈɡeɪtweɪ] koordiniert das Funknetzwerk, prüft Zugriffsberechtigungen anhand der Open Badges und sendet Freigaben an die Zugriffspunkte."
                     price="400,00 €"

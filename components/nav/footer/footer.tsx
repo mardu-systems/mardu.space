@@ -54,7 +54,7 @@ export default function SiteFooter({
 
                 {/* Bottom */}
                 <div className="pt-6">
-                    <div aria-hidden className="h-px w-full bg-gradient-to-r from-brand to-gray-500/70"/>
+                    <div aria-hidden className="h-px w-full bg-gradient-to-r from-orange-500 to-gray-500/70"/>
                     <div className="flex flex-col gap-6 py-6 md:flex-row md:items-center md:justify-between">
                         <nav aria-label="Footer Navigation"
                              className="flex flex-wrap gap-x-8 gap-y-3 text-sm text-neutral-300">

@@ -203,11 +203,11 @@ function DesktopShowcase(props: ProductAdvertisementProps) {
     return (
         <section
             className={cn(
-                "relative mx-auto hidden min-h-screen lg:block",
+                "relative mx-auto hidden h-screen overflow-hidden lg:block",
                 className
             )}
         >
-            {/* Hintergrundbilder */}
+        {/* Hintergrundbilder */}
             <PolyImage
                 src={leftImageSrc}
                 alt={leftImageAlt}
@@ -223,40 +223,54 @@ function DesktopShowcase(props: ProductAdvertisementProps) {
                 z={0}
             />
 
-            {/* Content */}
-            <div className="absolute inset-0 z-20 flex flex-col px-6 left-[40%]">
-                <header className="mt-[10%] text-center">
-                    <h2 className="text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-futura-heavy uppercase tracking-wide">
-                        {title}
-                    </h2>
-                    <p className="mx-auto mt-4 max-w-[65ch] text-lg text-neutral-700 leading-snug">
-                        {description}
-                    </p>
+
+            {/* Content-Grid */}
+            <div className="relative z-20 grid h-full grid-rows-[auto,1fr,auto] px-6 lg:pl-[40%]">
+                {/* Header */}
+                <header className="pt-[7%] text-center">
+                    {title && (
+                        <h2 className="text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-futura-heavy uppercase tracking-wide">
+                            {title}
+                        </h2>
+                    )}
+                    {description && (
+                        <p className="mx-auto mt-4 max-w-[65ch] text-lg text-neutral-700 leading-snug">
+                            {description}
+                        </p>
+                    )}
                 </header>
 
-                <div className="flex-1 flex flex-col items-center justify-center gap-12">
-                    {/* Optionaler Content (z.B. FeatureList) */}
-                    {children && <div className="max-w-[80ch]">{children}</div>}
-
-                    {/* Produktbild */}
-                    <div className="relative w-full max-w-[600px] aspect-[4/3]">
-                        <Image
-                            src={textImageSrc}
-                            alt={textImageAlt}
-                            fill
-                            className="object-contain"
-                        />
-                    </div>
+                {/* Mitte: optionaler Content + Bild */}
+                <div className="grid grid-rows-[auto,1fr] items-center gap-6">
+                    {children && (
+                        <div className="max-w-[80ch] mx-auto">{children}</div>
+                    )}
+                    {textImageSrc && (
+                        <div className="relative w-full h-full min-h-[300px]">
+                            <Image
+                                src={textImageSrc}
+                                alt={textImageAlt}
+                                fill
+                                className="object-contain"
+                                sizes="(min-width: 1536px) 48vw, (min-width: 1280px) 54vw, (min-width: 1024px) 60vw, 90vw"
+                                priority
+                            />
+                        </div>
+                    )}
                 </div>
 
-                {/* Preis & CTA am unteren Ende */}
-                <div className="mb-12 text-center">
+                {/* Footer: Preis + CTA */}
+                <footer className="mb-12 text-center">
                     <div className="flex flex-col items-center gap-3">
-                        <div>
-                            <div className="text-5xl font-extrabold tracking-tight">{price}</div>
-                            <div className="text-sm text-neutral-600">inkl. MwSt.</div>
-                            {priceNote && (<div className="mt-1 text-xs text-neutral-500">{priceNote}</div>)}
-                        </div>
+                        {price && (
+                            <div>
+                                <div className="text-5xl font-extrabold tracking-tight">{price}</div>
+                                <div className="text-sm text-neutral-600">inkl. MwSt.</div>
+                                {priceNote && (
+                                    <div className="mt-1 text-xs text-neutral-500">{priceNote}</div>
+                                )}
+                            </div>
+                        )}
                         {ctaLabel && (
                             <Button
                                 className="h-12 rounded-lg px-7 text-base font-semibold"
@@ -266,7 +280,7 @@ function DesktopShowcase(props: ProductAdvertisementProps) {
                             </Button>
                         )}
                     </div>
-                </div>
+                </footer>
             </div>
         </section>
     );
