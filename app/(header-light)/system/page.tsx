@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import {useMemo} from "react";
+import {useMemo, useState} from "react";
 import clsx from "clsx";
 import ProductShowcase from "@/components/product/ProductShowcase";
 import FeatureList from "@/components/product/FeatureList";
@@ -10,6 +10,17 @@ import Link from "next/link";
 import {Button} from "@/components/ui/button";
 import Faq from "@/components/Faq";
 import {faqItems} from "@/app/faqItems";
+import {
+    Dialog,
+    DialogContent,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+} from "@/components/ui/dialog";
+import {Input} from "@/components/ui/input";
+import {Label} from "@/components/ui/label";
+import {toast} from "sonner";
+import {Toaster} from "@/components/ui/sonner";
 
 export type HeroProps = {
     leftSrc?: string;
@@ -33,6 +44,30 @@ function HeroSystem({
         () => (stackOnMobile ? "grid-cols-1 md:grid-cols-2" : "grid-cols-2"),
         [stackOnMobile]
     );
+    const [open, setOpen] = useState(false);
+    const [loading, setLoading] = useState(false);
+
+    async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+        e.preventDefault();
+        const formData = new FormData(e.currentTarget);
+        const email = formData.get("email");
+        setLoading(true);
+        try {
+            const res = await fetch("/api/preorder", {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({email}),
+            });
+            if (!res.ok) throw new Error("Request failed");
+            toast.success("Danke! Vormerkung erfolgreich.");
+            setOpen(false);
+        } catch (err) {
+            console.error(err);
+            toast.error("Etwas ist schiefgelaufen. Versuch es erneut.");
+        } finally {
+            setLoading(false);
+        }
+    }
 
     return (
         <>
@@ -128,7 +163,7 @@ function HeroSystem({
                     price="200,00 €"
                     priceNote="Vorläufiger Preis – Produkt in Kürze erhältlich"
                     ctaLabel="Vormerken"
-                    onCtaClick={() => console.log("Gateway vorgemerkt")}
+                    onCtaClick={() => setOpen(true)}
                 >
                     <>
                         <FeatureList size="lg" columns={1}>
@@ -170,7 +205,7 @@ Das Produkt ist in kürze erhältlich, es handelt sich um einen Vorläufigen Pre
                     price="400,00 €"
                     priceNote="Vorläufiger Preis – Produkt in Kürze erhältlich"
                     ctaLabel="Vormerken"
-                    onCtaClick={() => console.log("Gateway vorgemerkt")}
+                    onCtaClick={() => setOpen(true)}
                 >
                     <FeatureList size="lg" columns={1}>
                         <FeatureList.Item size="lg" icon={Building}>
@@ -189,18 +224,40 @@ Das Produkt ist in kürze erhältlich, es handelt sich um einen Vorläufigen Pre
                     </FeatureList>
                 </ProductShowcase>
             </section>
+
+            <Dialog open={open} onOpenChange={setOpen}>
+                <DialogContent>
+                    <DialogHeader>
+                        <DialogTitle>Produkt vormerken</DialogTitle>
+                    </DialogHeader>
+                    <form onSubmit={handleSubmit} className="space-y-4">
+                        <div className="space-y-2">
+                            <Label htmlFor="email">E-Mail-Adresse</Label>
+                            <Input id="email" name="email" type="email" required />
+                        </div>
+                        <DialogFooter>
+                            <Button type="submit" disabled={loading}>
+                                {loading ? "Sende..." : "Absenden"}
+                            </Button>
+                        </DialogFooter>
+                    </form>
+                </DialogContent>
+            </Dialog>
         </>
     );
 }
 
 export default function Page() {
     return (
-        <main>
-            <HeroSystem/>
-            <section className="max-w-4xl mx-auto px-4 py-16">
-                <h2 className="mb-8 text-center text-3xl font-bold">FAQ</h2>
-                <Faq items={faqItems}/>
-            </section>
-        </main>
+        <>
+            <main>
+                <HeroSystem/>
+                <section className="max-w-4xl mx-auto px-4 py-16">
+                    <h2 className="mb-8 text-center text-3xl font-bold">FAQ</h2>
+                    <Faq items={faqItems}/>
+                </section>
+            </main>
+            <Toaster position="top-center" richColors/>
+        </>
     );
 }
