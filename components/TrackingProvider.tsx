@@ -1,6 +1,7 @@
 "use client";
 
 import {type ReactNode, useEffect, useRef} from "react";
+import {usePathname, useSearchParams} from "next/navigation";
 import {useConsent} from "@/hooks/use-consent";
 import {initializeGA, pageview, resetGA} from "@/lib/ga";
 
@@ -23,22 +24,27 @@ function clearMarketingCookies() {
 
 export default function TrackingProvider({children}: { children: ReactNode }) {
     const {prefs} = useConsent();
+    const pathname = usePathname();
+    const searchParams = useSearchParams();
     const prevMarketing = useRef<boolean | null>(null);
 
     useEffect(() => {
-        if (prefs?.analytics) {
-            (async () => {
-                await initializeGA();
-                pageview(window.location.pathname + window.location.search);
-            })();
-            return;
-        }
+        if (prefs?.analytics) return;
         resetGA();
         const script = document.querySelector<HTMLScriptElement>(
             'script[src^="https://www.googletagmanager.com/gtag/js"]',
         );
         script?.remove();
     }, [prefs?.analytics]);
+
+    useEffect(() => {
+        if (!prefs?.analytics) return;
+        void (async () => {
+            await initializeGA();
+            const url = pathname + (searchParams.toString() ? `?${searchParams}` : "");
+            pageview(url);
+        })();
+    }, [pathname, searchParams, prefs?.analytics]);
 
     useEffect(() => {
         const current = prefs?.marketing ?? null;
