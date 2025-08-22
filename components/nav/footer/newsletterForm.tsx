@@ -177,7 +177,7 @@ export default function NewsletterForm() {
 
                     <Button
                         type="submit"
-                        className="px-6 bg-gradient-to-r from-brand to-brand-dark font-semibold text-white shadow-lg hover:from-brand-dark hover:to-brand-darker focus:ring-2 focus:ring-brand focus:ring-offset-2 sm:w-auto w-full flex items-center justify-center gap-2"
+                        className="px-6 font-semibold text-white shadow-lg hover:from-brand-dark hover:to-brand-darker focus:ring-2 focus:ring-brand focus:ring-offset-2 sm:w-auto w-full flex items-center justify-center gap-2"
                         disabled={submitting}
                         aria-disabled={submitting}
                         aria-busy={submitting}
