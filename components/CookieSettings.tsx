@@ -3,7 +3,7 @@
 import {useEffect, useState} from "react";
 import {Button} from "@/components/ui/button";
 import {Switch} from "@/components/ui/switch";
-import {Tooltip, TooltipTrigger, TooltipContent} from "@/components/ui/tooltip";
+import {Tooltip, TooltipContent, TooltipTrigger} from "@/components/ui/tooltip";
 import type {ConsentPreferences} from "@/types/consent";
 import Link from "next/link";
 import {toast} from "sonner";

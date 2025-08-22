@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import {NextResponse} from "next/server";
 import {getConsent, setConsent} from "@/lib/consent";
 import type {ConsentPreferences} from "@/types/consent";
 

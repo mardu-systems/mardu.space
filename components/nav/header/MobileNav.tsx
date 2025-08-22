@@ -2,20 +2,9 @@
 
 import {Menu} from "lucide-react";
 import React, {useState} from "react";
-import {
-    Sheet,
-    SheetContent,
-    SheetHeader,
-    SheetTitle,
-    SheetTrigger,
-} from "@/components/ui/sheet";
+import {Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger,} from "@/components/ui/sheet";
 import {Button} from "@/components/ui/button";
-import {
-    Accordion,
-    AccordionContent,
-    AccordionItem,
-    AccordionTrigger,
-} from "@/components/ui/accordion";
+import {Accordion, AccordionContent, AccordionItem, AccordionTrigger,} from "@/components/ui/accordion";
 import Link from "next/link";
 import Image from "next/image";
 import clsx from "clsx";
@@ -55,7 +44,7 @@ export default function MobileNav({
                     aria-label="Navigation öffnen"
                     onClick={() => setOpen(true)}
                 >
-                    <Menu className="h-5 w-5" />
+                    <Menu className="h-5 w-5"/>
                 </Button>
             </SheetTrigger>
 

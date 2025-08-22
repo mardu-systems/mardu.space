@@ -1,12 +1,12 @@
 "use client";
 
 import * as React from "react";
-import { useState } from "react";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
-import { useRecaptcha } from "@/lib/recaptcha";
-import { toast } from "sonner";
+import {useState} from "react";
+import {Input} from "@/components/ui/input";
+import {Textarea} from "@/components/ui/textarea";
+import {Button} from "@/components/ui/button";
+import {useRecaptcha} from "@/lib/recaptcha";
+import {toast} from "sonner";
 
 export default function ContactForm() {
     const [name, setName] = useState("");
@@ -44,7 +44,7 @@ export default function ContactForm() {
     return (
         <form onSubmit={onSubmit} className="space-y-4">
             <div className="grid sm:grid-cols-2 gap-4">
-                <Input placeholder="Name*" value={name} onChange={(e) => setName(e.target.value)} />
+                <Input placeholder="Name*" value={name} onChange={(e) => setName(e.target.value)}/>
                 <Input
                     type="email"
                     placeholder="E‑Mail*"

@@ -1,10 +1,12 @@
+import {Resend} from "resend";
+
 export async function sendEmail({
-    subject,
-    text,
-    html,
-    to,
-    replyTo,
-}: {
+                                    subject,
+                                    text,
+                                    html,
+                                    to,
+                                    replyTo,
+                                }: {
     subject: string;
     text?: string;
     html?: string;
@@ -19,37 +21,66 @@ export async function sendEmail({
         throw new Error("Email service not configured");
     }
 
-    const body: Record<string, unknown> = {
-        from,
-        to: recipient,
-        subject,
-    };
+    const resend = new Resend(apiKey);
 
-    if (text) body.text = text;
-    if (html) body.html = html;
-    if (replyTo) body.reply_to = replyTo;
+    const fromHeader = from.includes("<") ? from : `Mardu.space <${from}>`;
 
-    const res = await fetch("https://api.resend.com/emails", {
-        method: "POST",
-        headers: {
-            "Authorization": `Bearer ${apiKey}`,
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(body),
-    });
-
-    if (!res.ok) {
-        const errText = await res.text();
-        throw new Error(`Failed to send email: ${res.status} ${errText}`);
+    if (!apiKey || !from || !recipient) {
+        throw new Error("Email service not configured");
     }
+
+    // Bestimme den Content-Type und erstelle entsprechendes Objekt
+    let emailData;
+
+    if (html) {
+        emailData = {
+            from: fromHeader,
+            to: recipient,
+            subject,
+            html,
+            ...(replyTo && {reply_to: replyTo}),
+        };
+    } else if (text) {
+        emailData = {
+            from: fromHeader,
+            to: recipient,
+            subject,
+            text,
+            ...(replyTo && {reply_to: replyTo}),
+        };
+    } else {
+        emailData = {
+            from: fromHeader,
+            to: recipient,
+            subject,
+            text: subject,
+            ...(replyTo && {reply_to: replyTo}),
+        };
+    }
+
+
+    const {error} = await resend.emails.send(emailData);
+
+    if (error) {
+        throw new Error(`Failed to send email: ${error.name ?? "Error"} ${error.message ?? String(error)}`);
+    }
+
+
 }
 
 export function renderEmailLayout(title: string, content: string): string {
     return `
-        <main style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;padding:20px;">
-            <h1 style="text-align:center;font-size:24px;font-weight:bold;margin-bottom:24px;">${title}</h1>
-            <div style="font-size:16px;line-height:1.5;">${content}</div>
-        </main>
+        <main style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;padding:20px;background-color:#f9f9f9;">
+            <div style="text-align:center;margin-bottom:24px;">
+                <img src="https://mardu.space/marduspace_logo_bg_white.svg" alt="Mardu.space Logo" style="width:150px;height:auto;" />
+            </div>
+            <h1 style="text-align:center;font-size:24px;font-weight:bold;margin-bottom:24px;color:#333;">${title}</h1>
+            <div style="font-size:16px;line-height:1.5;color:#333;">${content}</div>
+            <footer style="margin-top:32px;font-size:12px;color:#666;text-align:center;line-height:1.4;">
+                <p>Mardu A1 · Alter Schlachthof 39 · 76131 Karlsruhe</p>
+                <p>E-Mail: <a href="mailto:info@mardu.de" style="color:#666;text-decoration:underline;">info@mardu.de</a></p>
+                <p>Du erhältst diese E-Mail, weil du uns kontaktiert hast. Wenn du sie nicht erwartet hast, kannst du sie ignorieren oder <a href="mailto:info@mardu.de" style="color:#666;text-decoration:underline;">uns Bescheid geben</a>.</p>
+            </footer>
     `;
 }
 

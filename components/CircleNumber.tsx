@@ -11,14 +11,14 @@ interface CircleNumberProps {
 }
 
 export default function CircleNumber({
-    number,
-    size = "w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20",
-    borderWidth = "border-[3px] sm:border-[4px] lg:border-[6px]",
-    textSize = "text-xl sm:text-3xl lg:text-4xl",
-    color = "border-[#CA452A] text-[#CA452A]",
-    className = "",
-    anchor = false,
-}: CircleNumberProps) {
+                                         number,
+                                         size = "w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20",
+                                         borderWidth = "border-[3px] sm:border-[4px] lg:border-[6px]",
+                                         textSize = "text-xl sm:text-3xl lg:text-4xl",
+                                         color = "border-[#CA452A] text-[#CA452A]",
+                                         className = "",
+                                         anchor = false,
+                                     }: CircleNumberProps) {
     return (
         <div
             data-timeline-anchor={anchor ? "true" : undefined}

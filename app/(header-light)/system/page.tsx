@@ -18,7 +18,6 @@ export type HeroProps = {
     rightAlt?: string;
     heightClass?: string;
     stackOnMobile?: boolean;
-    howItWorksHref?: string;
 };
 
 function HeroSystem({
@@ -28,7 +27,6 @@ function HeroSystem({
                         rightAlt = "Zutrittspunkt – Türmodul mit NFC",
                         heightClass = "h-[80vh] sm:h-[90vh] lg:h-[11/12]",
                         stackOnMobile = true,
-                        howItWorksHref = "#so-funktionierts",
                     }: HeroProps) {
     const gridCols = useMemo(
         () => (stackOnMobile ? "grid-cols-1 md:grid-cols-2" : "grid-cols-2"),

@@ -3,11 +3,7 @@
 import * as React from "react";
 import {Card, CardContent} from "@/components/ui/card";
 import {Button} from "@/components/ui/button";
-import {
-    Collapsible,
-    CollapsibleContent,
-    CollapsibleTrigger,
-} from "@/components/ui/collapsible";
+import {Collapsible, CollapsibleContent, CollapsibleTrigger,} from "@/components/ui/collapsible";
 import type {State} from "../page";
 
 type BomRow = { item: string; qty: number; note?: string };
@@ -150,13 +146,11 @@ function computeBOM(state: State): BomRow[] {
     add("Readerboard", state.gates.count);
 
     // Kühlschränke – keine BOM, nur Hinweis
-    if (state.fridges.enabled === "yes" && state.fridges.count > 0) {
-        add(
-            "Getränkekühlschrank mit Bezahlsystem – HINWEIS",
-            state.fridges.count,
-            "Integration in Vorbereitung"
-        );
-    }
+    add(
+        "Getränkekühlschrank mit Bezahlsystem – HINWEIS",
+        state.fridges.count,
+        "Integration in Vorbereitung"
+    );
 
     // Zentrale Räume (pro Raum)
     add("Elektronikgehäuse – Mainboard (zentral)", state.centralRooms.count);

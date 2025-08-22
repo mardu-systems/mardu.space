@@ -80,7 +80,8 @@ export const faqItems: FaqItem[] = [
         answer: (
             <>
                 Ja, die Schulungsnachweise basieren auf Open Educational Badges, die europaweit anerkannt sind.
-                Wenn ein anderer Makerspace ebenfalls mardu.space einsetzt, kannst du deine einmal erworbenen Badges dort weiterverwenden.
+                Wenn ein anderer Makerspace ebenfalls mardu.space einsetzt, kannst du deine einmal erworbenen Badges
+                dort weiterverwenden.
             </>
         ),
     },
