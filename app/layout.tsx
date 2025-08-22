@@ -1,6 +1,6 @@
 import type {Metadata, Viewport} from "next";
 import "./globals.css";
-import React from "react";
+import React, {Suspense} from "react";
 import CookieConsentBanner from "@/components/CookieBanner";
 import TrackingProvider from "@/components/TrackingProvider";
 import RecaptchaProvider from "@/components/RecaptchaProvider";
@@ -93,10 +93,12 @@ export default function RootLayout({children}: { children: React.ReactNode }) {
         </head>
         <body className="antialiased overflow-x-hidden">
         <RecaptchaProvider>
-            <TrackingProvider>
-                {children}
-                <CookieConsentBanner/>
-            </TrackingProvider>
+            <Suspense fallback={null}>
+                <TrackingProvider>
+                    {children}
+                    <CookieConsentBanner/>
+                </TrackingProvider>
+            </Suspense>
         </RecaptchaProvider>
         </body>
         </html>
