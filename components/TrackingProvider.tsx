@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useRef, type ReactNode } from "react";
-import { useConsent } from "@/hooks/use-consent";
-import { initializeGA, pageview, resetGA } from "@/lib/ga";
+import {type ReactNode, useEffect, useRef} from "react";
+import {useConsent} from "@/hooks/use-consent";
+import {initializeGA, pageview, resetGA} from "@/lib/ga";
 
 const MARKETING_SCRIPT_URL = process.env.NEXT_PUBLIC_MARKETING_SCRIPT_URL;
 
@@ -21,8 +21,8 @@ function clearMarketingCookies() {
     });
 }
 
-export default function TrackingProvider({ children }: { children: ReactNode }) {
-    const { prefs } = useConsent();
+export default function TrackingProvider({children}: { children: ReactNode }) {
+    const {prefs} = useConsent();
     const prevMarketing = useRef<boolean | null>(null);
 
     useEffect(() => {

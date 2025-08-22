@@ -21,7 +21,8 @@ export default function MegaContent({group}: { group: MegaGroup }) {
                             className="object-cover"
                         />
                         {group.hero.caption && (
-                            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent px-3 py-2 text-sm text-white/90">
+                            <div
+                                className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent px-3 py-2 text-sm text-white/90">
                                 {group.hero.caption}
                             </div>
                         )}
@@ -38,7 +39,8 @@ export default function MegaContent({group}: { group: MegaGroup }) {
                                     >
                                         {/* Thumbnail */}
                                         {item.image ? (
-                                            <div className="relative h-12 w-16 shrink-0 overflow-hidden ring-1 ring-white/10">
+                                            <div
+                                                className="relative h-12 w-16 shrink-0 overflow-hidden ring-1 ring-white/10">
                                                 <Image
                                                     src={item.image.src}
                                                     alt={item.image.alt || ""}
@@ -48,7 +50,8 @@ export default function MegaContent({group}: { group: MegaGroup }) {
                                                 />
                                             </div>
                                         ) : (
-                                            <span className="flex h-12 w-16 shrink-0 items-center justify-center bg-white/5">
+                                            <span
+                                                className="flex h-12 w-16 shrink-0 items-center justify-center bg-white/5">
                                                 <ChevronRight className="h-5 w-5"/>
                                             </span>
                                         )}
@@ -66,7 +69,8 @@ export default function MegaContent({group}: { group: MegaGroup }) {
                                         </div>
 
                                         {/* Pfeil */}
-                                        <ArrowRight className="ml-auto h-4 w-4 opacity-0 transition-opacity group-hover:opacity-100"/>
+                                        <ArrowRight
+                                            className="ml-auto h-4 w-4 opacity-0 transition-opacity group-hover:opacity-100"/>
                                     </Link>
                                 </li>
                             ))}

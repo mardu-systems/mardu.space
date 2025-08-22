@@ -26,7 +26,7 @@ export async function initializeGA() {
 
 export function pageview(path: string) {
     if (!initialized || !reactGA) return;
-    reactGA.send({ hitType: "pageview", page: path });
+    reactGA.send({hitType: "pageview", page: path});
 }
 
 export function event(action: string, params?: Record<string, unknown>) {

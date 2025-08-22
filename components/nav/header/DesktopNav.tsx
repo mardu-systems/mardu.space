@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { ChevronDown } from "lucide-react";
-import { HoverCard, HoverCardTrigger, HoverCardContent } from "@/components/ui/hover-card";
+import {ChevronDown} from "lucide-react";
+import {HoverCard, HoverCardContent, HoverCardTrigger} from "@/components/ui/hover-card";
 import React from "react";
 import clsx from "clsx";
 import MegaContent from "./MegaContent";
@@ -13,17 +13,17 @@ interface DesktopNavProps {
     variant?: "dark" | "light";
 }
 
-export default function DesktopNav({ items, variant = "dark" }: DesktopNavProps) {
+export default function DesktopNav({items, variant = "dark"}: DesktopNavProps) {
     return (
         <div className="hidden md:flex md:flex-1 md:items-center md:gap-1 md:justify-end">
             {items.map((entry) => (
-                <DesktopNavEntry key={entry.label} entry={entry} variant={variant} />
+                <DesktopNavEntry key={entry.label} entry={entry} variant={variant}/>
             ))}
         </div>
     );
 }
 
-function DesktopNavEntry({ entry, variant }: { entry: NavEntry; variant: "dark" | "light" }) {
+function DesktopNavEntry({entry, variant}: { entry: NavEntry; variant: "dark" | "light" }) {
     const palette =
         variant === "light"
             ? {
@@ -73,11 +73,12 @@ function DesktopNavEntry({ entry, variant }: { entry: NavEntry; variant: "dark" 
                     )}
                 >
                     {entry.label}
-                    <ChevronDown className="h-4 w-4 transition group-data-[state=open]:rotate-180" />
+                    <ChevronDown className="h-4 w-4 transition group-data-[state=open]:rotate-180"/>
                 </button>
             </HoverCardTrigger>
-            <HoverCardContent className="w-full border border-white/10 bg-neutral-950 p-0 text-white shadow-2xl backdrop-blur-xl">
-                <MegaContent group={entry} />
+            <HoverCardContent
+                className="w-full border border-white/10 bg-neutral-950 p-0 text-white shadow-2xl backdrop-blur-xl">
+                <MegaContent group={entry}/>
             </HoverCardContent>
         </HoverCard>
     );

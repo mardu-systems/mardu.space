@@ -1,10 +1,10 @@
 export async function sendEmail({
-    subject,
-    text,
-    html,
-    to,
-    replyTo,
-}: {
+                                    subject,
+                                    text,
+                                    html,
+                                    to,
+                                    replyTo,
+                                }: {
     subject: string;
     text?: string;
     html?: string;

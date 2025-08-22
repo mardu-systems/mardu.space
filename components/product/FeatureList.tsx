@@ -1,7 +1,7 @@
 "use client";
 
-import * as React from "react";
 import type {SVGProps} from "react";
+import * as React from "react";
 import {cn} from "@/lib/utils";
 
 /** Nur Komponententypen übergeben: icon={Shield} */
@@ -109,5 +109,5 @@ function FeatureListRoot({
     );
 }
 
-const FeatureList = Object.assign(FeatureListRoot, { Item });
+const FeatureList = Object.assign(FeatureListRoot, {Item});
 export default FeatureList;

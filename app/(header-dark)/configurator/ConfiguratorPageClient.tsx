@@ -1,8 +1,8 @@
 "use client";
 
 import * as React from "react";
-import Image from "next/image";
 import {useMemo, useState} from "react";
+import Image from "next/image";
 import {defineStepper} from "@stepperize/react";
 import {Button} from "@/components/ui/button";
 import {cn} from "@/lib/utils";

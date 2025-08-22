@@ -30,7 +30,7 @@ export function useRecaptcha() {
             return null;
         }
         await new Promise<void>((resolve) => window.grecaptcha!.ready(resolve));
-        return window.grecaptcha!.execute(siteKey, { action });
+        return window.grecaptcha!.execute(siteKey, {action});
     }, [siteKey]);
 }
 

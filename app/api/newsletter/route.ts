@@ -1,7 +1,7 @@
-import { NextResponse } from "next/server";
-import { z } from "zod";
-import { createToken } from "@/lib/newsletter";
-import { sendEmail, renderEmailLayout } from "@/lib/email";
+import {NextResponse} from "next/server";
+import {z} from "zod";
+import {createToken} from "@/lib/newsletter";
+import {renderEmailLayout, sendEmail} from "@/lib/email";
 
 const Schema = z.object({
     email: z.string().email(),
@@ -13,22 +13,22 @@ export async function POST(req: Request) {
     const json = await req.json();
     const parsed = Schema.safeParse(json);
     if (!parsed.success) {
-        return NextResponse.json({ error: "Invalid payload" }, { status: 400 });
+        return NextResponse.json({error: "Invalid payload"}, {status: 400});
     }
 
-    const { email, role, token } = parsed.data;
+    const {email, role, token} = parsed.data;
     const secret = process.env.RECAPTCHA_SECRET_KEY;
     if (!secret) {
-        return NextResponse.json({ error: "Missing captcha secret" }, { status: 500 });
+        return NextResponse.json({error: "Missing captcha secret"}, {status: 500});
     }
     const captchaRes = await fetch("https://www.google.com/recaptcha/api/siteverify", {
         method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        headers: {"Content-Type": "application/x-www-form-urlencoded"},
         body: `secret=${secret}&response=${token}`,
     });
     const captchaJson = await captchaRes.json();
     if (!captchaJson.success) {
-        return NextResponse.json({ error: "Invalid captcha" }, { status: 400 });
+        return NextResponse.json({error: "Invalid captcha"}, {status: 400});
     }
 
     try {
@@ -46,8 +46,8 @@ export async function POST(req: Request) {
         });
     } catch (err) {
         console.error("Failed to send confirmation email", err);
-        return NextResponse.json({ error: "Failed to send email" }, { status: 500 });
+        return NextResponse.json({error: "Failed to send email"}, {status: 500});
     }
 
-    return NextResponse.json({ ok: true });
+    return NextResponse.json({ok: true});
 }

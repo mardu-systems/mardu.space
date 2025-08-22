@@ -27,7 +27,7 @@ export default function DashedConnector({
                                             mobileDash = "12 16",
                                         }: DashedConnectorProps) {
     const svgRef = useRef<SVGSVGElement>(null);
-    const [box, setBox] = useState<{ w: number; h: number }>({ w: 0, h: 0 });
+    const [box, setBox] = useState<{ w: number; h: number }>({w: 0, h: 0});
     const isMobile = useIsMobile();
 
     // Wähle die richtigen Werte basierend auf der Bildschirmgröße
@@ -44,7 +44,7 @@ export default function DashedConnector({
 
         const update = () => {
             const r = root.getBoundingClientRect();
-            setBox({ w: r.width, h: r.height });
+            setBox({w: r.width, h: r.height});
 
             const points = getAnchors()
                 // nur sichtbare Elemente

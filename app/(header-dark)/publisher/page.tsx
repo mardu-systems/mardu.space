@@ -1,5 +1,4 @@
 import type {Metadata} from "next"
-import {Card, CardHeader, CardTitle, CardContent} from "@/components/ui/card"
 import path from "path";
 import fs from "fs/promises";
 import Markdown from "react-markdown";

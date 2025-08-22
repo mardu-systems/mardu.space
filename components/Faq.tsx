@@ -1,12 +1,7 @@
 "use client";
 
-import {
-    Accordion,
-    AccordionContent,
-    AccordionItem,
-    AccordionTrigger,
-} from "@/components/ui/accordion";
-import { cn } from "@/lib/utils";
+import {Accordion, AccordionContent, AccordionItem, AccordionTrigger,} from "@/components/ui/accordion";
+import {cn} from "@/lib/utils";
 
 export type FaqItem = {
     question: string;
@@ -18,7 +13,7 @@ export type FaqProps = {
     className?: string;
 };
 
-export default function Faq({ items, className }: FaqProps) {
+export default function Faq({items, className}: FaqProps) {
     return (
         <Accordion
             type="single"

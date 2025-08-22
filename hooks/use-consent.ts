@@ -1,6 +1,6 @@
 import * as React from "react";
-import type { ConsentPreferences } from "@/types/consent";
-import { setConsent } from "@/lib/consent";
+import type {ConsentPreferences} from "@/types/consent";
+import {setConsent} from "@/lib/consent";
 
 const GA_COOKIE_PREFIXES = ["_ga", "_gid", "_gat", "_gac", "__ga", "__utm"];
 
@@ -54,5 +54,5 @@ export function useConsent() {
         await setConsent(newPrefs);
     }, []);
 
-    return { prefs, setPrefs } as const;
+    return {prefs, setPrefs} as const;
 }

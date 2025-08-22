@@ -1,5 +1,5 @@
-import { createHmac } from "crypto";
-import { promises as fs } from "fs";
+import {createHmac} from "crypto";
+import {promises as fs} from "fs";
 import path from "path";
 
 const SUBSCRIBERS_FILE = path.join(process.cwd(), "data", "newsletter.json");
@@ -24,7 +24,7 @@ export function verifyToken(token: string): { email: string; role: string } | nu
         const [email, role, signature] = decoded.split(":");
         const expected = createHmac("sha256", getSecret()).update(`${email}:${role}`).digest("hex");
         if (signature !== expected) return null;
-        return { email, role };
+        return {email, role};
     } catch {
         return null;
     }
@@ -36,10 +36,11 @@ export async function saveSubscriber(sub: { email: string; role: string }) {
         try {
             const data = await fs.readFile(SUBSCRIBERS_FILE, "utf8");
             subs = JSON.parse(data);
-        } catch {}
+        } catch {
+        }
         if (!subs.find((s) => s.email === sub.email)) {
             subs.push(sub);
-            await fs.mkdir(path.dirname(SUBSCRIBERS_FILE), { recursive: true });
+            await fs.mkdir(path.dirname(SUBSCRIBERS_FILE), {recursive: true});
             await fs.writeFile(SUBSCRIBERS_FILE, JSON.stringify(subs, null, 2));
         }
     } catch (err) {

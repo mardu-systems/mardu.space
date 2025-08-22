@@ -1,6 +1,6 @@
 "use client";
 
-import {useState, useEffect, useRef} from "react";
+import {useEffect, useRef, useState} from "react";
 import Link from "next/link";
 import type {ConsentPreferences} from "@/types/consent";
 import {Button} from "@/components/ui/button";
