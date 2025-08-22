@@ -29,7 +29,7 @@ const defaultState: State = {
     schukoMachines: {count: 0, cablePerUnitM: 10},
     doors: {count: 0, cablePerDoorM: 15},
     gates: {count: 0, cablePerGateM: 20},
-    fridges: {enabled: "later", count: 0},
+    fridges: {count: 0},
     centralRooms: {count: 0},
     contact: {name: "", email: "", company: "", message: ""},
 };
