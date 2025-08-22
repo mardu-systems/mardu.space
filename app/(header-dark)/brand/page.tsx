@@ -22,7 +22,11 @@ export default function BrandPage() {
                             Hier findest du Logos von mardu.space zur Verwendung in Presse und Marketingmaterialien.
                         </p>
                         <div className="flex flex-col sm:flex-row items-center justify-center gap-8">
-                            <a href="/marduspace_logo_bg_white.svg" download>
+                            <a
+                                href="/marduspace_logo_bg_white.svg"
+                                download
+                                className="flex flex-col items-center"
+                            >
                                 <Image
                                     src="/marduspace_logo_bg_white.svg"
                                     alt="mardu.space Logo auf dunklem Hintergrund"
@@ -30,15 +34,13 @@ export default function BrandPage() {
                                     height={200}
                                     className="border rounded-md bg-white p-4"
                                 />
-                                <a
-                                    href="/marduspace_logo_bg_white.svg"
-                                    download
-                                    className="underline mt-2"
-                                >
-                                    Download (SVG)
-                                </a>
+                                <span className="underline mt-2">Download (SVG)</span>
                             </a>
-                            <a href="/marduspace_logo_bg_black.svg" download>
+                            <a
+                                href="/marduspace_logo_bg_black.svg"
+                                download
+                                className="flex flex-col items-center"
+                            >
                                 <Image
                                     src="/marduspace_logo_bg_black.svg"
                                     alt="mardu.space Logo auf hellem Hintergrund"
@@ -46,13 +48,7 @@ export default function BrandPage() {
                                     height={200}
                                     className="border rounded-md bg-black p-4"
                                 />
-                                <a
-                                    href="/marduspace_logo_bg_black.svg"
-                                    download
-                                    className="underline mt-2"
-                                >
-                                    Download (SVG)
-                                </a>
+                                <span className="underline mt-2">Download (SVG)</span>
                             </a>
                         </div>
                         <div className="flex justify-center pt-6">
