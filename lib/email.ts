@@ -1,3 +1,5 @@
+import {Resend} from "resend";
+
 export async function sendEmail({
                                     subject,
                                     text,
@@ -19,29 +21,51 @@ export async function sendEmail({
         throw new Error("Email service not configured");
     }
 
-    const body: Record<string, unknown> = {
-        from,
-        to: recipient,
-        subject,
-    };
+    const resend = new Resend(apiKey);
 
-    if (text) body.text = text;
-    if (html) body.html = html;
-    if (replyTo) body.reply_to = replyTo;
+    const fromHeader = from.includes("<") ? from : `Mardu.space <${from}>`;
 
-    const res = await fetch("https://api.resend.com/emails", {
-        method: "POST",
-        headers: {
-            "Authorization": `Bearer ${apiKey}`,
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(body),
-    });
-
-    if (!res.ok) {
-        const errText = await res.text();
-        throw new Error(`Failed to send email: ${res.status} ${errText}`);
+    if (!apiKey || !from || !recipient) {
+        throw new Error("Email service not configured");
     }
+
+    // Bestimme den Content-Type und erstelle entsprechendes Objekt
+    let emailData;
+
+    if (html) {
+        emailData = {
+            from: fromHeader,
+            to: recipient,
+            subject,
+            html,
+            ...(replyTo && {reply_to: replyTo}),
+        };
+    } else if (text) {
+        emailData = {
+            from: fromHeader,
+            to: recipient,
+            subject,
+            text,
+            ...(replyTo && {reply_to: replyTo}),
+        };
+    } else {
+        emailData = {
+            from: fromHeader,
+            to: recipient,
+            subject,
+            text: subject,
+            ...(replyTo && {reply_to: replyTo}),
+        };
+    }
+
+
+    const {error} = await resend.emails.send(emailData);
+
+    if (error) {
+        throw new Error(`Failed to send email: ${error.name ?? "Error"} ${error.message ?? String(error)}`);
+    }
+
+
 }
 
 export function renderEmailLayout(title: string, content: string): string {
