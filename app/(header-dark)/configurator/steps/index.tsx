@@ -35,6 +35,7 @@ export const createSteps = (
                 }
             />
         ),
+        hoverImg:"/configurator/schuko.jpg",
         valid: (s: State) => s.schukoMachines.count >= 0,
     },
     {
@@ -80,7 +81,7 @@ export const createSteps = (
                 note="Hinweis: Die Geräte-Integration ist aktuell noch nicht vollständig realisiert."
             />
         ),
-        hoverImg:"/configurator/device.jpg",
+        hoverImg:"/configurator/fridge.jpg",
         valid: (s: State) => s.fridges.count >= 0,
     },
     {
