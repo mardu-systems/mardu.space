@@ -24,7 +24,7 @@ Alter Schlachthof 39
 ## EU-Streitschlichtung
 
 Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit:  
-[https://ec.europa.eu/consumers/odr](https://ec.europa.eu/consumers/odr)
+[https://consumer-redress.ec.europa.eu/index_de](https://consumer-redress.ec.europa.eu/index_de)
 
 Unsere E-Mail-Adresse finden Sie oben im Impressum.
 
