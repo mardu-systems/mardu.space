@@ -4,7 +4,6 @@ import fs from "fs/promises";
 import Markdown from "react-markdown";
 import Link from "next/link";
 import {Button} from "@/components/ui/button";
-import {CookieSettingsButton} from "@/components/CookieSettingsButton";
 
 export const metadata: Metadata = {
     title: "Impressum",
