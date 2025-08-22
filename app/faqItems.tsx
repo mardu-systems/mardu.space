@@ -7,7 +7,7 @@ export const faqItems: FaqItem[] = [
             <>
                 Das hängt von eurer Einrichtung ab. Mit unserem{" "}
                 <a
-                    href="/konfigurator"
+                    href="/configurator"
                     className="text-blue-600 hover:underline"
                 >
                     Konfigurator
