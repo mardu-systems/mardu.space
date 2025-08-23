@@ -307,7 +307,7 @@ function MainContent({
                     {!isValid && <span className="text-sm text-rose-600">Bitte gültige Eingabe.</span>}
                     <Button
                         onClick={async () => {
-                            stepper.beforeNext(() => !!isValid);
+                            if (!isValid) return;
                             if (!stepper.isLast) stepper.next();
                             else await onSubmit();
                         }}
