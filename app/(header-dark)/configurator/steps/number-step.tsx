@@ -8,7 +8,16 @@ export default function NumberStep({value, onChange, note}: {
     onChange: (v: number) => void;
     note?: string
 }) {
-    const clamp = (v: number) => Math.max(0, Math.min(999, v));
+    const clamp = React.useCallback((v: number) => Math.max(0, Math.min(999, v)), []);
+    const [display, setDisplay] = React.useState(value === 0 ? "" : String(value));
+
+    React.useEffect(() => {
+        const numericDisplay = clamp(Number(display || 0));
+        if (value !== numericDisplay) {
+            setDisplay(value === 0 ? "" : String(value));
+        }
+    }, [value, display, clamp]);
+
     return (
         <>
             {note && (
@@ -22,8 +31,13 @@ export default function NumberStep({value, onChange, note}: {
                     <div className="flex-1 rounded-2xl border-2 bg-white text-ink-600">
                         <Input
                             type="number"
-                            value={value}
-                            onChange={(e) => onChange(clamp(Number(e.target.value || 0)))}
+                            value={display}
+                            onChange={(e) => {
+                                const text = e.target.value;
+                                setDisplay(text);
+                                onChange(clamp(Number(text || 0)));
+                            }}
+                            placeholder="0"
                             className="h-20 text-center text-4xl font-extrabold border-0 focus-visible:ring-0"
                         />
                     </div>
