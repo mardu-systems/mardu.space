@@ -20,18 +20,21 @@ export async function POST(req: Request) {
 
     try {
         const {token, ...data} = parsed.data;
-        const secret = process.env.RECAPTCHA_SECRET_KEY;
-        if (!secret) {
-            return NextResponse.json({error: "Missing captcha secret"}, {status: 500});
-        }
-        const captchaRes = await fetch("https://www.google.com/recaptcha/api/siteverify", {
-            method: "POST",
-            headers: {"Content-Type": "application/x-www-form-urlencoded"},
-            body: `secret=${secret}&response=${token}`,
-        });
-        const captchaJson = await captchaRes.json();
-        if (!captchaJson.success) {
-            return NextResponse.json({error: "Invalid captcha"}, {status: 400});
+        const isDev = process.env.NODE_ENV === "development";
+        if (!isDev) {
+            const secret = process.env.RECAPTCHA_SECRET_KEY;
+            if (!secret) {
+                return NextResponse.json({error: "Missing captcha secret"}, {status: 500});
+            }
+            const captchaRes = await fetch("https://www.google.com/recaptcha/api/siteverify", {
+                method: "POST",
+                headers: {"Content-Type": "application/x-www-form-urlencoded"},
+                body: `secret=${secret}&response=${token}`,
+            });
+            const captchaJson = await captchaRes.json();
+            if (!captchaJson.success) {
+                return NextResponse.json({error: "Invalid captcha"}, {status: 400});
+            }
         }
 
         await sendContactEmail(data);
