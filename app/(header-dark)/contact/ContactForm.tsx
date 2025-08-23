@@ -21,6 +21,19 @@ const FormSchema = z.object({
 
 type FormValues = z.infer<typeof FormSchema>;
 
+const SuccessMessage = React.memo(function SuccessMessage({onClose}: {onClose: () => void}) {
+    React.useEffect(() => {
+        const t = setTimeout(onClose, 4000);
+        return () => clearTimeout(t);
+    }, [onClose]);
+
+    return (
+        <Alert className="mt-4 animate-fade-in" variant="default" role="status" aria-live="polite">
+            <AlertDescription>Danke! Nachricht gesendet.</AlertDescription>
+        </Alert>
+    );
+});
+
 export default function ContactForm() {
     const form = useForm<FormValues>({
         resolver: zodResolver(FormSchema),
@@ -30,12 +43,14 @@ export default function ContactForm() {
 
     const [status, setStatus] = React.useState<"idle" | "success" | "error">("idle");
     const [submitting, setSubmitting] = React.useState(false);
+    const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
     const executeRecaptcha = useRecaptcha();
 
     const onSubmit = async (values: FormValues) => {
         try {
             setSubmitting(true);
             setStatus("idle");
+            setErrorMessage(null);
             const token = await executeRecaptcha("contact");
             if (!token) throw new Error("reCAPTCHA failed");
             const res = await fetch("/api/contact", {
@@ -46,9 +61,10 @@ export default function ContactForm() {
             if (!res.ok) throw new Error("Request failed");
             setStatus("success");
             form.reset();
-        } catch (e) {
+        } catch (e: unknown) {
             console.error(e);
             setStatus("error");
+            setErrorMessage(e instanceof Error ? e.message : null);
         } finally {
             setSubmitting(false);
         }
@@ -116,15 +132,11 @@ export default function ContactForm() {
                     {submitting && <Loader2 className="h-4 w-4 animate-spin" />}
                     {submitting ? "Sende…" : "Senden"}
                 </Button>
-                {status === "success" && (
-                    <Alert className="animate-fade-in" variant="default" role="status" aria-live="polite">
-                        <AlertDescription>Danke! Nachricht gesendet.</AlertDescription>
-                    </Alert>
-                )}
+                {status === "success" && <SuccessMessage onClose={() => setStatus("idle")} />}
                 {status === "error" && (
-                    <Alert className="animate-fade-in" variant="destructive" role="alert" aria-live="assertive">
+                    <Alert className="mt-4 animate-fade-in" variant="destructive" role="alert" aria-live="assertive">
                         <AlertDescription>
-                            Etwas ist schiefgelaufen. Versuch es erneut.
+                            {errorMessage ?? "Etwas ist schiefgelaufen. Versuch es erneut."}
                         </AlertDescription>
                     </Alert>
                 )}

@@ -9,8 +9,9 @@ import {cn} from "@/lib/utils";
 import {HoverCard, HoverCardContent, HoverCardTrigger} from "@/components/ui/hover-card";
 import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover";
 import {createSteps} from "./steps";
-import {toast} from "sonner";
 import {useRecaptcha} from "@/lib/recaptcha";
+import {Alert, AlertDescription} from "@/components/ui/alert";
+import {Loader2} from "lucide-react";
 
 /* ===================== Typen & Defaults ===================== */
 
@@ -35,6 +36,19 @@ const defaultState: State = {
 };
 
 const STORAGE_KEY = "configurator-state";
+
+const SuccessMessage = React.memo(function SuccessMessage({onClose}: {onClose: () => void}) {
+    React.useEffect(() => {
+        const t = setTimeout(onClose, 4000);
+        return () => clearTimeout(t);
+    }, [onClose]);
+
+    return (
+        <Alert className="mt-4 animate-fade-in" variant="default" role="status" aria-live="polite">
+            <AlertDescription>Danke! Anfrage versendet.</AlertDescription>
+        </Alert>
+    );
+});
 
 /* ===================== Stepper-Definition ===================== */
 
@@ -71,6 +85,9 @@ export default function ConfiguratorPageClient() {
     }, [state]);
     const steps = useMemo(() => createSteps(state, setState), [state]);
     const executeRecaptcha = useRecaptcha();
+    const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
+    const [submitting, setSubmitting] = useState(false);
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
     return (
         <div
@@ -88,6 +105,9 @@ export default function ConfiguratorPageClient() {
                     state={state}
                     onSubmit={async () => {
                         try {
+                            setSubmitting(true);
+                            setStatus("idle");
+                            setErrorMessage(null);
                             const token = await executeRecaptcha("contact");
                             if (!token) throw new Error("reCAPTCHA failed");
                             const {contact, ...config} = state;
@@ -97,16 +117,23 @@ export default function ConfiguratorPageClient() {
                                 body: JSON.stringify({...contact, config, token}),
                             });
                             if (!res.ok) throw new Error("Request failed");
-                            toast.success("Danke! Anfrage versendet.");
+                            setStatus("success");
                             setState(defaultState);
                             if (typeof window !== "undefined") {
                                 window.sessionStorage.removeItem(STORAGE_KEY);
                             }
-                        } catch (e) {
+                        } catch (e: unknown) {
                             console.error(e);
-                            toast.error("Etwas ist schiefgelaufen. Versuch es erneut.");
+                            setStatus("error");
+                            setErrorMessage(e instanceof Error ? e.message : null);
+                        } finally {
+                            setSubmitting(false);
                         }
                     }}
+                    status={status}
+                    submitting={submitting}
+                    errorMessage={errorMessage}
+                    onResetStatus={() => setStatus("idle")}
                 />
             </Wizard.Scoped>
         </div>
@@ -119,6 +146,10 @@ function MainContent({
                          steps,
                          state,
                          onSubmit,
+                         status,
+                         submitting,
+                         errorMessage,
+                         onResetStatus,
                      }: {
     steps: {
         id: string;
@@ -130,6 +161,10 @@ function MainContent({
     }[];
     state: State;
     onSubmit: () => Promise<void>;
+    status: "idle" | "success" | "error";
+    submitting: boolean;
+    errorMessage: string | null;
+    onResetStatus: () => void;
 }) {
     const stepper = Wizard.useStepper({initialStep: "tri"});
     const idx = stepper.all.findIndex((s) => s.id === stepper.current.id);
@@ -276,12 +311,24 @@ function MainContent({
                             if (!stepper.isLast) stepper.next();
                             else await onSubmit();
                         }}
-                        className="disabled:opacity-50 disabled:cursor-not-allowed"
+                        disabled={submitting}
+                        aria-disabled={submitting}
+                        aria-busy={submitting && stepper.isLast}
+                        className="disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
                     >
-                        {stepper.isLast ? "Angebot anfordern" : "Weiter"}
+                        {submitting && stepper.isLast && <Loader2 className="h-4 w-4 animate-spin" />}
+                        {stepper.isLast ? (submitting ? "Sende…" : "Angebot anfordern") : "Weiter"}
                     </Button>
                 </div>
             </div>
+            {status === "success" && <SuccessMessage onClose={onResetStatus} />}
+            {status === "error" && (
+                <Alert className="mt-4 animate-fade-in" variant="destructive" role="alert" aria-live="assertive">
+                    <AlertDescription>
+                        {errorMessage ?? "Etwas ist schiefgelaufen. Versuch es erneut."}
+                    </AlertDescription>
+                </Alert>
+            )}
         </main>
     );
 }
