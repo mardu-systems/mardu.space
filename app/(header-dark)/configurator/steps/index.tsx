@@ -2,7 +2,7 @@ import * as React from "react";
 import type {State} from "../page";
 import NumberStep from "./number-step";
 import SummaryStep from "@/app/(header-dark)/configurator/steps/summary";
-import ContactStep from "@/app/(header-dark)/configurator/steps/contact";
+import ContactStep, {ContactSchema} from "@/app/(header-dark)/configurator/steps/contact";
 
 export const createSteps = (
     state: State,
@@ -121,7 +121,7 @@ export const createSteps = (
                 }
             />
         ),
-        valid: (s: State) => /\S/.test(s.contact.name) && /^\S+@\S+\.\S+$/.test(s.contact.email),
+        valid: (s: State) => ContactSchema.safeParse(s.contact).success,
     },
 ];
 

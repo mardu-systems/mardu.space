@@ -3,12 +3,14 @@
 import * as React from "react";
 import {useMemo, useState, useEffect} from "react";
 import Image from "next/image";
+import Link from "next/link";
 import {defineStepper} from "@stepperize/react";
 import {Button} from "@/components/ui/button";
 import {cn} from "@/lib/utils";
 import {HoverCard, HoverCardContent, HoverCardTrigger} from "@/components/ui/hover-card";
 import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover";
 import {createSteps} from "./steps";
+import {ContactSchema} from "./steps/contact";
 import {useRecaptcha} from "@/lib/recaptcha";
 import {Alert, AlertDescription} from "@/components/ui/alert";
 import {Loader2} from "lucide-react";
@@ -36,19 +38,6 @@ const defaultState: State = {
 };
 
 const STORAGE_KEY = "configurator-state";
-
-const SuccessMessage = React.memo(function SuccessMessage({onClose}: {onClose: () => void}) {
-    React.useEffect(() => {
-        const t = setTimeout(onClose, 4000);
-        return () => clearTimeout(t);
-    }, [onClose]);
-
-    return (
-        <Alert className="mt-4 animate-fade-in" variant="default" role="status" aria-live="polite">
-            <AlertDescription>Danke! Anfrage versendet.</AlertDescription>
-        </Alert>
-    );
-});
 
 /* ===================== Stepper-Definition ===================== */
 
@@ -111,6 +100,9 @@ export default function ConfiguratorPageClient() {
                             const token = await executeRecaptcha("contact");
                             if (!token) throw new Error("reCAPTCHA failed");
                             const {contact, ...config} = state;
+                            const validation = ContactSchema.safeParse(contact);
+                            if (!validation.success)
+                                throw new Error(validation.error.issues.map((i) => i.message).join(", "));
                             const res = await fetch("/api/contact", {
                                 method: "POST",
                                 headers: {"Content-Type": "application/json"},
@@ -133,7 +125,6 @@ export default function ConfiguratorPageClient() {
                     status={status}
                     submitting={submitting}
                     errorMessage={errorMessage}
-                    onResetStatus={() => setStatus("idle")}
                 />
             </Wizard.Scoped>
         </div>
@@ -149,7 +140,6 @@ function MainContent({
                          status,
                          submitting,
                          errorMessage,
-                         onResetStatus,
                      }: {
     steps: {
         id: string;
@@ -164,11 +154,23 @@ function MainContent({
     status: "idle" | "success" | "error";
     submitting: boolean;
     errorMessage: string | null;
-    onResetStatus: () => void;
 }) {
     const stepper = Wizard.useStepper({initialStep: "tri"});
     const idx = stepper.all.findIndex((s) => s.id === stepper.current.id);
     const isValid = steps[idx]?.valid?.(state);
+
+    if (status === "success") {
+        return (
+            <main className="w-full max-w-4xl mx-auto px-0 sm:px-2 pb-24 mt-10 md:mt-0 text-center">
+                <Alert className="mt-4 animate-fade-in" variant="default" role="status" aria-live="polite">
+                    <AlertDescription>Danke! Anfrage versendet.</AlertDescription>
+                </Alert>
+                <Button asChild className="mt-6">
+                    <Link href="/">Zur Startseite</Link>
+                </Button>
+            </main>
+        );
+    }
 
     return (
         <main className="w-full max-w-4xl mx-auto px-0 sm:px-2 pb-24 mt-10 md:mt-0">
@@ -304,7 +306,6 @@ function MainContent({
                 </Button>
 
                 <div className="flex items-center gap-4">
-                    {!isValid && <span className="text-sm text-rose-600">Bitte gültige Eingabe.</span>}
                     <Button
                         onClick={async () => {
                             if (!isValid) return;
@@ -321,7 +322,6 @@ function MainContent({
                     </Button>
                 </div>
             </div>
-            {status === "success" && <SuccessMessage onClose={onResetStatus} />}
             {status === "error" && (
                 <Alert className="mt-4 animate-fade-in" variant="destructive" role="alert" aria-live="assertive">
                     <AlertDescription>
