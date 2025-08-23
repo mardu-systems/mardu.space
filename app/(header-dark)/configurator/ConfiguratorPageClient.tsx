@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import {useMemo, useState} from "react";
+import {useMemo, useState, useEffect} from "react";
 import Image from "next/image";
 import {defineStepper} from "@stepperize/react";
 import {Button} from "@/components/ui/button";
@@ -34,6 +34,8 @@ const defaultState: State = {
     contact: {name: "", email: "", company: "", message: ""},
 };
 
+const STORAGE_KEY = "configurator-state";
+
 /* ===================== Stepper-Definition ===================== */
 
 const Wizard = defineStepper(
@@ -50,7 +52,23 @@ const Wizard = defineStepper(
 /* ===================== Seite ===================== */
 
 export default function ConfiguratorPageClient() {
-    const [state, setState] = useState<State>(defaultState);
+    const [state, setState] = useState<State>(() => {
+        if (typeof window !== "undefined") {
+            const stored = window.sessionStorage.getItem(STORAGE_KEY);
+            if (stored) {
+                try {
+                    return JSON.parse(stored) as State;
+                } catch {
+                }
+            }
+        }
+        return defaultState;
+    });
+    useEffect(() => {
+        if (typeof window !== "undefined") {
+            window.sessionStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        }
+    }, [state]);
     const steps = useMemo(() => createSteps(state, setState), [state]);
     const executeRecaptcha = useRecaptcha();
 
@@ -80,6 +98,10 @@ export default function ConfiguratorPageClient() {
                             });
                             if (!res.ok) throw new Error("Request failed");
                             toast.success("Danke! Anfrage versendet.");
+                            setState(defaultState);
+                            if (typeof window !== "undefined") {
+                                window.sessionStorage.removeItem(STORAGE_KEY);
+                            }
                         } catch (e) {
                             console.error(e);
                             toast.error("Etwas ist schiefgelaufen. Versuch es erneut.");
