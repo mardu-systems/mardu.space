@@ -5,7 +5,7 @@ import {ChevronDown} from "lucide-react";
 import {HoverCard, HoverCardContent, HoverCardTrigger} from "@/components/ui/hover-card";
 import React from "react";
 import clsx from "clsx";
-import MegaContent from "./MegaContent";
+import MegaContent from "./mega-content";
 import {NavEntry} from "@/types/header";
 
 interface DesktopNavProps {

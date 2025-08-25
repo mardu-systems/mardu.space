@@ -1,6 +1,6 @@
 import type {Metadata} from "next";
-import Faq from "@/components/Faq";
-import {faqItems} from "@/app/faqItems";
+import Faq from "@/components/faq";
+import {faqItems} from "@/data/faq-items";
 
 export const metadata: Metadata = {
     title: "FAQ",

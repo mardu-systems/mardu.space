@@ -1,9 +1,9 @@
-"use client"
-import SiteHeader from "@/components/nav/header/SiteHeader";
-import {defaultHeaderItems} from "@/app/defaultHeaderItems";
+"use client";
+import SiteHeader from "@/components/nav/header/site-header";
+import {defaultHeaderItems} from "@/data/default-header-items";
 import SiteFooter from "@/components/nav/footer/footer";
 import React from "react";
-import {defaultFooterMetaLinks, defaultFooterNavLinks} from "@/app/defaultFooterItems";
+import {defaultFooterMetaLinks, defaultFooterNavLinks} from "@/data/default-footer-items";
 import dynamic from "next/dynamic";
 import {usePathname} from "next/navigation";
 

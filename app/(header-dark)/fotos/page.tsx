@@ -1,7 +1,7 @@
 import type {Metadata} from "next";
 import fs from "fs/promises";
 import path from "path";
-import Gallery, {GalleryImage} from "@/components/Gallery";
+import Gallery, {GalleryImage} from "@/components/gallery";
 
 export const metadata: Metadata = {
     title: "Fotos",

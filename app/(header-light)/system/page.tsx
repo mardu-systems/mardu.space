@@ -3,13 +3,13 @@
 import Image from "next/image";
 import {useMemo, useState} from "react";
 import clsx from "clsx";
-import ProductShowcase from "@/components/product/ProductShowcase";
-import FeatureList from "@/components/product/FeatureList";
+import ProductShowcase from "@/features/product/product-showcase";
+import FeatureList from "@/features/product/feature-list";
 import {Building, Monitor, Shield, Wifi} from "lucide-react";
 import Link from "next/link";
 import {Button} from "@/components/ui/button";
-import Faq from "@/components/Faq";
-import {faqItems} from "@/app/faqItems";
+import Faq from "@/components/faq";
+import {faqItems} from "@/data/faq-items";
 import {
     Dialog,
     DialogContent,

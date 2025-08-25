@@ -7,6 +7,3 @@ export const defaultHeaderItems: NavEntry[] = [
     {type: "link", label: "Kontakt", href: "/contact"},
 ];
 
-export const x: NavEntry[] = [
-    {type: "link", label: "Das System", href: "/system"},
-];

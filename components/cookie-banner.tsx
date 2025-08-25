@@ -10,7 +10,7 @@ import dynamic from "next/dynamic";
 import clsx from "clsx";
 
 const CookieSettings = dynamic(
-    () => import("@/components/CookieSettings"),
+    () => import("@/components/cookie-settings"),
     {
         loading: () => (
             <div className="p-4">
@@ -18,7 +18,7 @@ const CookieSettings = dynamic(
             </div>
         ),
     },
-) as unknown as typeof import("@/components/CookieSettings").default;
+) as unknown as typeof import("@/components/cookie-settings").default;
 
 declare global {
     interface Window {

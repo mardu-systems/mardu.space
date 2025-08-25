@@ -3,7 +3,7 @@
 import * as React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import NewsletterForm from "@/components/nav/footer/newsletterForm";
+import NewsletterForm from "@/components/nav/footer/newsletter-form";
 
 /* ---------- Footer Props ---------- */
 export type FooterLink = {
