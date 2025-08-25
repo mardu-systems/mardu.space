@@ -1,9 +1,9 @@
 import type {Metadata, Viewport} from "next";
 import "./globals.css";
 import React, {Suspense} from "react";
-import CookieConsentBanner from "@/components/CookieBanner";
-import TrackingProvider from "@/components/TrackingProvider";
-import RecaptchaProvider from "@/components/RecaptchaProvider";
+import CookieConsentBanner from "@/components/cookie-banner";
+import TrackingProvider from "@/components/tracking-provider";
+import RecaptchaProvider from "@/components/recaptcha-provider";
 
 export const viewport: Viewport = {
     width: "device-width",

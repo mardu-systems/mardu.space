@@ -5,9 +5,9 @@ import Link from "next/link";
 import Image from "next/image";
 import clsx from "clsx";
 
-import DesktopNav from "./DesktopNav";
-import MobileNav from "./MobileNav";
-import Topbar, {TOPBAR_HEIGHT} from "./Topbar";
+import DesktopNav from "./desktop-nav";
+import MobileNav from "./mobile-nav";
+import Topbar, {TOPBAR_HEIGHT} from "./topbar";
 import {NavEntry} from "@/types/header";
 
 export type {NavEntry} from "@/types/header";

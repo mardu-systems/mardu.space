@@ -3,8 +3,8 @@
 import Image from "next/image";
 import {Button} from "@/components/ui/button";
 import {useRef} from "react";
-import CircleNumber from "@/components/CircleNumber";
-import DashedConnector from "@/components/DashedConnector";
+import CircleNumber from "@/components/circle-number";
+import DashedConnector from "@/components/dashed-connector";
 import Link from "next/link";
 
 /* ===================== Seite ===================== */
