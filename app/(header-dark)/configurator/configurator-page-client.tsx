@@ -78,6 +78,8 @@ export default function ConfiguratorPageClient() {
     const [submitting, setSubmitting] = useState(false);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
+    // (scroll-to-top on step change handled inside MainContent where step index is known)
+
     return (
         <div
             className={cn(
@@ -158,6 +160,13 @@ function MainContent({
     const stepper = Wizard.useStepper({initialStep: "tri"});
     const idx = stepper.all.findIndex((s) => s.id === stepper.current.id);
     const isValid = steps[idx]?.valid?.(state);
+
+    // Scroll to top on step changes (both directions, all layouts)
+    useEffect(() => {
+        if (typeof window !== "undefined") {
+            window.scrollTo({top: 0, behavior: "smooth"});
+        }
+    }, [idx]);
 
     if (status === "success") {
         return (
