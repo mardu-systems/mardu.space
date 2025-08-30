@@ -168,6 +168,21 @@ function MainContent({
         }
     }, [idx]);
 
+    // Keep current step centered in mobile horizontal scroller
+    const mobileStepperRef = React.useRef<HTMLDivElement | null>(null);
+    const stepRefs = React.useRef<HTMLDivElement[]>([]);
+    useEffect(() => {
+        const container = mobileStepperRef.current;
+        const el = stepRefs.current[idx];
+        if (!el) return;
+        if (container) {
+            const target = el.offsetLeft - (container.clientWidth - el.clientWidth) / 2;
+            container.scrollTo({left: Math.max(0, target), behavior: "smooth"});
+        } else {
+            el.scrollIntoView({behavior: "smooth", inline: "center", block: "nearest"});
+        }
+    }, [idx]);
+
     if (status === "success") {
         return (
             <main className="w-full max-w-4xl mx-auto px-0 sm:px-2 pb-24 mt-10 md:mt-0 text-center">
@@ -190,6 +205,7 @@ function MainContent({
                 <div className="relative mt-6 sm:mt-8 mb-8 sm:mb-10">
                     {/* MOBILE: horizontal scroll mit Connectors */}
                     <div
+                        ref={mobileStepperRef}
                         className="
       sm:hidden
       -mx-4
@@ -204,7 +220,13 @@ function MainContent({
                                 const isCompleted = i <= idx;
                                 const isCurrent = i === idx;
                                 return (
-                                    <div key={s.id} className="flex items-center snap-start">
+                                    <div
+                                        key={s.id}
+                                        ref={(el) => {
+                                            if (el) stepRefs.current[i] = el;
+                                        }}
+                                        className="flex items-center snap-start"
+                                    >
                                         {/* Dot */}
                                         <button
                                             onClick={() => stepper.goTo(s.id)}
