@@ -1,14 +1,17 @@
 import {NextResponse} from "next/server";
 import {z} from "zod";
-import {sendContactEmail} from "@/lib/email";
+import {sendContactEmail, type ContactEmailData} from "@/lib/email";
 
 const Schema = z.object({
     name: z.string().min(1),
     email: z.string().email(),
     company: z.string().optional(),
+    phone: z.string().optional(),
     message: z.string().optional(),
     config: z.any().optional(),
     token: z.string(),
+    source: z.enum(["contact", "wizard"]).optional(),
+    consent: z.boolean().optional(),
 });
 
 export async function POST(req: Request) {
@@ -19,7 +22,7 @@ export async function POST(req: Request) {
     }
 
     try {
-        const {token, ...data} = parsed.data;
+        const {token, ...data} = parsed.data as z.infer<typeof Schema>;
         const isDev = process.env.NODE_ENV === "development";
         if (!isDev) {
             const secret = process.env.RECAPTCHA_SECRET_KEY;
@@ -37,7 +40,7 @@ export async function POST(req: Request) {
             }
         }
 
-        await sendContactEmail(data);
+        await sendContactEmail(data as ContactEmailData);
         return NextResponse.json({ok: true});
     } catch (err) {
         console.error("Failed to send contact email", err);

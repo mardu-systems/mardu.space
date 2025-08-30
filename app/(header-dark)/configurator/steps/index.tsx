@@ -116,6 +116,8 @@ export const createSteps = (
                 email={state.contact.email}
                 company={state.contact.company || ""}
                 message={state.contact.message || ""}
+                phone={state.contact.phone || ""}
+                consent={state.contact.consent || false}
                 onChange={(patch) =>
                     setState((p) => ({...p, contact: {...p.contact, ...patch}}))
                 }
@@ -126,4 +128,3 @@ export const createSteps = (
 ];
 
 export type Step = ReturnType<typeof createSteps>[number];
-

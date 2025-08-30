@@ -24,7 +24,7 @@ export type State = {
     gates: { count: number; cablePerGateM: number; photoUrl?: string };
     fridges: { count: number; photoUrl?: string };
     centralRooms: { count: number; photoUrl?: string };
-    contact: { name: string; email: string; company?: string; message?: string };
+    contact: { name: string; email: string; company?: string; message?: string; phone?: string; consent?: boolean };
 };
 
 const defaultState: State = {
@@ -34,7 +34,7 @@ const defaultState: State = {
     gates: {count: 0, cablePerGateM: 20},
     fridges: {count: 0},
     centralRooms: {count: 0},
-    contact: {name: "", email: "", company: "", message: ""},
+    contact: {name: "", email: "", company: "", message: "", phone: "", consent: false},
 };
 
 const STORAGE_KEY = "configurator-state";
@@ -108,7 +108,7 @@ export default function ConfiguratorPageClient() {
                             const res = await fetch("/api/contact", {
                                 method: "POST",
                                 headers: {"Content-Type": "application/json"},
-                                body: JSON.stringify({...contact, config, token}),
+                                body: JSON.stringify({...contact, config, token, source: "wizard"}),
                             });
                             if (!res.ok) throw new Error("Request failed");
                             setStatus("success");

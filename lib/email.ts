@@ -102,23 +102,36 @@ export function renderEmailLayout(title: string, content: string): string {
 </html>`;
 }
 
-export async function sendContactEmail(data: {
+export type ContactEmailData = {
     name: string;
     email: string;
     company?: string;
     message?: string;
     config?: unknown;
-}) {
+    source?: "contact" | "wizard";
+    phone?: string;
+    consent?: boolean;
+};
+
+export async function sendContactEmail(data: ContactEmailData) {
     const lines = [
         `Name: ${data.name}`,
         `Email: ${data.email}`,
         data.company ? `Company: ${data.company}` : "",
+        data.phone ? `Phone: ${data.phone}` : "",
         data.message ? `Message: ${data.message}` : "",
         data.config ? `Config:\n${JSON.stringify(data.config, null, 2)}` : "",
+        typeof data.consent === 'boolean' ? `Consent: ${data.consent ? 'yes' : 'no'}` : "",
     ].filter(Boolean);
 
+    const subject = (() => {
+        if (data.source === "contact") return "Neue Kontaktanfrage";
+        if (data.source === "wizard" || data.config) return "Neue Konfigurator-Anfrage";
+        return "Neue Anfrage";
+    })();
+
     await sendEmail({
-        subject: "New configurator request",
+        subject,
         text: lines.join("\n\n"),
         replyTo: data.email,
     });
