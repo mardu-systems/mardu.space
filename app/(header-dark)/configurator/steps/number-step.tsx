@@ -31,11 +31,27 @@ export default function NumberStep({value, onChange, note}: {
                     <div className="flex-1 rounded-2xl border-2 bg-white text-ink-600">
                         <Input
                             type="number"
+                            min={0}
+                            inputMode="numeric"
+                            pattern="[0-9]*"
                             value={display}
                             onChange={(e) => {
-                                const text = e.target.value;
-                                setDisplay(text);
-                                onChange(clamp(Number(text || 0)));
+                                const raw = e.target.value;
+                                if (raw === "") {
+                                    setDisplay("");
+                                    onChange(0);
+                                    return;
+                                }
+                                const parsed = Number(raw);
+                                const safe = Number.isFinite(parsed) ? clamp(parsed) : 0;
+                                setDisplay(safe === 0 ? "" : String(safe));
+                                onChange(safe);
+                            }}
+                            onKeyDown={(e) => {
+                                // Prevent entering characters like '-', '+', 'e'
+                                if (e.key === "-" || e.key === "+" || e.key.toLowerCase() === "e") {
+                                    e.preventDefault();
+                                }
                             }}
                             placeholder="0"
                             className="h-20 text-center text-4xl font-extrabold border-0 focus-visible:ring-0"
@@ -47,4 +63,3 @@ export default function NumberStep({value, onChange, note}: {
         </>
     );
 }
-
