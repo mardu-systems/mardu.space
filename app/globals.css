@@ -24,8 +24,9 @@
     --popover: oklch(1 0 0);
     --popover-foreground: var(--foreground);
 
-    --primary: oklch(0.63 0.14 255); /* Payload Blau */
-    --primary-foreground: oklch(0.98 0 0); /* Weiß */
+    /* MARDU brand purple */
+    --primary: #351b5a;
+    --primary-foreground: #ffffff;
 
     --secondary: oklch(0.92 0.01 275); /* Light Gray */
     --secondary-foreground: var(--foreground);
@@ -33,15 +34,16 @@
     --muted: oklch(0.95 0.005 275); /* Soft Gray */
     --muted-foreground: oklch(0.45 0.01 275);
 
-    --accent: oklch(0.75 0.19 15); /* Coral / Pink */
-    --accent-foreground: oklch(1 0 0);
+    /* MARDU brand orange accent */
+    --accent: #CA452A;
+    --accent-foreground: #ffffff;
 
     --destructive: oklch(0.55 0.22 25); /* Rot */
     --destructive-foreground: oklch(1 0 0);
 
     --border: oklch(0.9 0.01 275);
     --input: oklch(0.9 0.01 275);
-    --ring: oklch(0.63 0.14 255); /* Blau */
+    --ring: var(--primary);
 }
 
 .dark {
@@ -54,8 +56,9 @@
     --popover: oklch(0.22 0.01 275);
     --popover-foreground: var(--foreground);
 
-    --primary: oklch(0.63 0.14 255);
-    --primary-foreground: oklch(0.98 0 0);
+    /* Slightly lighter purple for dark surfaces */
+    --primary: #8D69C0;
+    --primary-foreground: #0b0b0b;
 
     --secondary: oklch(0.25 0.01 275);
     --secondary-foreground: var(--foreground);
@@ -63,15 +66,15 @@
     --muted: oklch(0.25 0.01 275);
     --muted-foreground: oklch(0.7 0.01 275);
 
-    --accent: oklch(0.7 0.18 15);
-    --accent-foreground: oklch(0.98 0 0);
+    --accent: #CA452A;
+    --accent-foreground: #0b0b0b;
 
     --destructive: oklch(0.65 0.2 25);
     --destructive-foreground: oklch(0.98 0 0);
 
     --border: oklch(0.25 0.01 275);
     --input: oklch(0.3 0.01 275);
-    --ring: oklch(0.63 0.14 255);
+    --ring: var(--primary);
 }
 
 @theme inline {
