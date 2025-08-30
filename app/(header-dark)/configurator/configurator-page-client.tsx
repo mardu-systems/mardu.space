@@ -469,12 +469,7 @@ function HelpContent({
                 <div className="flex items-center justify-between">
                     <div className="text-left">
                         <h3 className="text-lg font-bold text-ink-800">{title}</h3>
-                        <p className="text-sm text-ink-500">Kurze Hilfe</p>
                     </div>
-                    <span
-                        className="text-xs font-semibold text-red-700 bg-red-50 border border-red-200 px-2 py-1 rounded-full">
-                        Schritt {stepIndex + 1}/{stepCount}
-                    </span>
                 </div>
             </div>
 
