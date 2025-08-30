@@ -8,10 +8,11 @@ import {Input} from "@/components/ui/input";
 import {Textarea} from "@/components/ui/textarea";
 import {Button} from "@/components/ui/button";
 import {Alert, AlertDescription} from "@/components/ui/alert";
-import {Form, FormControl, FormField, FormItem, FormMessage} from "@/components/ui/form";
+import {Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form";
 import {useRecaptcha} from "@/lib/recaptcha";
 import {Loader2} from "lucide-react";
 import {Card, CardContent} from "@/components/ui/card";
+import {Checkbox} from "@/components/ui/checkbox";
 
 export const contactSchema = z.object({
     name: z.string().min(1, "Bitte Name angeben"),
@@ -27,28 +28,26 @@ export type ContactValues = z.infer<typeof contactSchema>;
 type Props = {
     initialValues?: Partial<ContactValues>;
     onChange?: (values: Partial<ContactValues>) => void;
-    // Submit mode: if true, shows submit button and handles POST
     submit?: boolean;
-    action?: string; // default "/api/contact"
-    extra?: Record<string, unknown>; // merged into POST body
-    submitLabel?: string; // default "Senden"
-    successMessage?: string; // default "Danke! Nachricht gesendet."
-    recaptchaAction?: string; // default "contact"
-    // UI
+    action?: string;
+    extra?: Record<string, unknown>;
+    submitLabel?: string;
+    successMessage?: string;
+    recaptchaAction?: string;
     layout?: "plain" | "card";
 };
 
 export function ContactForm({
-    initialValues,
-    onChange,
-    submit = false,
-    action = "/api/contact",
-    extra,
-    submitLabel = "Senden",
-    successMessage = "Danke! Nachricht gesendet.",
-    recaptchaAction = "contact",
-    layout = "plain",
-}: Props) {
+                                initialValues,
+                                onChange,
+                                submit = false,
+                                action = "/api/contact",
+                                extra,
+                                submitLabel = "Senden",
+                                successMessage = "Danke! Nachricht gesendet.",
+                                recaptchaAction = "contact",
+                                layout = "plain",
+                            }: Props) {
     const form = useForm<ContactValues>({
         resolver: zodResolver(contactSchema),
         defaultValues: {
@@ -131,9 +130,13 @@ export function ContactForm({
                     name="name"
                     render={({field}) => (
                         <FormItem>
+                            <FormLabel className="sr-only">Name</FormLabel>
                             <FormControl>
                                 <Input placeholder="Name*" {...field} />
                             </FormControl>
+                            <FormDescription>
+                                Ihr vollständiger Name für die Kontaktaufnahme
+                            </FormDescription>
                             <FormMessage/>
                         </FormItem>
                     )}
@@ -143,9 +146,13 @@ export function ContactForm({
                     name="email"
                     render={({field}) => (
                         <FormItem>
+                            <FormLabel className="sr-only">E-Mail</FormLabel>
                             <FormControl>
                                 <Input type="email" placeholder="E‑Mail*" {...field} />
                             </FormControl>
+                            <FormDescription>
+                                Ihre E-Mail-Adresse für unsere Antwort
+                            </FormDescription>
                             <FormMessage/>
                         </FormItem>
                     )}
@@ -155,9 +162,13 @@ export function ContactForm({
                     name="company"
                     render={({field}) => (
                         <FormItem className="sm:col-span-2">
+                            <FormLabel className="sr-only">Firma</FormLabel>
                             <FormControl>
                                 <Input placeholder="Firma (optional)" {...field} />
                             </FormControl>
+                            <FormDescription>
+                                Name Ihres Unternehmens oder Ihrer Organisation (optional)
+                            </FormDescription>
                             <FormMessage/>
                         </FormItem>
                     )}
@@ -166,10 +177,14 @@ export function ContactForm({
                     control={form.control}
                     name="phone"
                     render={({field}) => (
-                        <FormItem>
+                        <FormItem className="sm:col-span-2">
+                            <FormLabel>Telefon</FormLabel>
                             <FormControl>
-                                <Input type="tel" placeholder="Telefon (optional)" {...field} />
+                                <Input type="tel" placeholder="+49 123 456789" {...field} />
                             </FormControl>
+                            <FormDescription>
+                                Format: +49 für Deutschland, dann Vorwahl und Nummer
+                            </FormDescription>
                             <FormMessage/>
                         </FormItem>
                     )}
@@ -179,35 +194,44 @@ export function ContactForm({
                     name="message"
                     render={({field}) => (
                         <FormItem className="sm:col-span-2">
+                            <FormLabel>Nachricht</FormLabel>
                             <FormControl>
-                                <Textarea rows={3} placeholder="Nachricht (optional)" {...field} />
+                                <Textarea rows={3} placeholder="Ihre Nachricht..." {...field} />
                             </FormControl>
+                            <FormDescription>
+                                Beschreiben Sie kurz Ihr Anliegen (optional, max. 500 Zeichen)
+                            </FormDescription>
                             <FormMessage/>
                         </FormItem>
                     )}
                 />
-                {submit && (
-                    <FormField
-                        control={form.control}
-                        name="consent"
-                        render={({field}) => (
-                            <FormItem className="sm:col-span-2">
-                                <label className="flex items-start gap-3 text-sm">
-                                    <input
-                                        type="checkbox"
-                                        checked={!!field.value}
-                                        onChange={(e) => field.onChange(e.target.checked)}
-                                        className="mt-1 size-4 rounded border border-input bg-background text-primary focus-visible:ring-ring"
+                <FormField
+                    control={form.control}
+                    name="consent"
+                    render={({field}) => (
+                        <FormItem className="sm:col-span-2">
+                            <div className="flex items-start gap-3">
+                                <FormControl>
+                                    <Checkbox
+                                        checked={field.value}
+                                        onCheckedChange={field.onChange}
+                                        className="mt-0.5"
                                     />
-                                    <span>
-                                        Ich stimme zu, dass meine Angaben zur Beantwortung meiner Anfrage verarbeitet werden.
-                                    </span>
-                                </label>
-                                <FormMessage/>
-                            </FormItem>
-                        )}
-                    />
-                )}
+                                </FormControl>
+                                <div className="flex-1">
+                                    <FormLabel className="text-sm leading-5 cursor-pointer">
+                                        Ich stimme zu, dass meine Angaben zur Beantwortung meiner Anfrage
+                                        verarbeitet werden.
+                                    </FormLabel>
+                                    <FormDescription className="text-xs text-muted-foreground mt-1">
+                                        Ihre Daten werden gemäß DSGVO verarbeitet und nicht an Dritte weitergegeben.
+                                    </FormDescription>
+                                </div>
+                            </div>
+                            <FormMessage/>
+                        </FormItem>
+                    )}
+                />
 
                 {submit && (
                     <div className="sm:col-span-2">
