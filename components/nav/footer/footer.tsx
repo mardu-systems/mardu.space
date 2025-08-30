@@ -23,7 +23,7 @@ export default function SiteFooter({
                                    }: SiteFooterProps) {
     return (
         <footer
-            className="w-full text-neutral-50 bg-[radial-gradient(ellipse_at_5%_50%,hsl(240,5%,10%)_0%,hsl(240,5%,10%)_70%,#37093F_100%)]">
+            className="dark w-full bg-[radial-gradient(ellipse_at_5%_50%,hsl(240,5%,10%)_0%,hsl(240,5%,10%)_70%,#37093F_100%)] text-foreground">
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 {/* Logo */}
                 <div className="flex items-center justify-start py-10 md:py-12">
@@ -39,12 +39,12 @@ export default function SiteFooter({
                 </div>
 
                 {/* Content */}
-                <div className="grid grid-cols-1 gap-8 border-t border-neutral-800/70 py-12 md:grid-cols-2">
+                <div className="grid grid-cols-1 gap-8 border-t border-border py-12 md:grid-cols-2">
                     <div>
-                        <h2 className="text-balance font-bold text-4xl tracking-tight sm:text-5xl">
+                        <h2 className="text-balance font-bold text-4xl tracking-tight sm:text-5xl text-foreground">
                             Bleib auf dem Laufenden
                         </h2>
-                        <p className="mt-3 text-sm/6 text-neutral-400">Abonniere unseren Newsletter.</p>
+                        <p className="mt-3 text-sm/6 text-muted-foreground">Abonniere unseren Newsletter.</p>
                     </div>
 
                     <div className="w-full sm:w-auto">
@@ -54,27 +54,27 @@ export default function SiteFooter({
 
                 {/* Bottom */}
                 <div className="pt-6">
-                    <div aria-hidden className="h-px w-full bg-gradient-to-r from-orange-500 to-gray-500/70"/>
+                    <div aria-hidden className="h-px w-full bg-gradient-to-r from-accent to-muted-foreground/70"/>
                     <div className="flex flex-col gap-6 py-6 md:flex-row md:items-center md:justify-between">
                         <nav aria-label="Footer Navigation"
-                             className="flex flex-wrap gap-x-8 gap-y-3 text-sm text-neutral-300">
+                             className="flex flex-wrap gap-x-8 gap-y-3 text-sm text-muted-foreground">
                             {navLinks.map((link) => (
                                 <Link
                                     key={link.href}
                                     href={link.href}
-                                    className="hover:text-white"
+                                    className="hover:text-foreground"
                                     onClick={link.onClick}
                                 >
                                     {link.label}
                                 </Link>
                             ))}
                         </nav>
-                        <div className="flex flex-wrap items-center gap-6 text-sm text-neutral-300">
+                        <div className="flex flex-wrap items-center gap-6 text-sm text-muted-foreground">
                             {metaLinks.map((link) => (
                                 <Link
                                     key={link.href}
                                     href={link.href}
-                                    className="hover:text-white"
+                                    className="hover:text-foreground"
                                     onClick={link.onClick}
                                 >
                                     {link.label}

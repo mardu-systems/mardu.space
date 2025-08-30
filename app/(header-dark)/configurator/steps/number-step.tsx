@@ -28,7 +28,8 @@ export default function NumberStep({value, onChange, note}: {
             )}
             <div className="mx-auto w-full max-w-sm">
                 <div className="flex flex-col items-stretch justify-center gap-4">
-                    <div className="flex-1 rounded-2xl border-2 bg-white text-ink-600">
+                    <div
+                        className="flex-1 rounded-2xl border-2 bg-white text-ink-600 focus-within:ring-2">
                         <Input
                             type="number"
                             min={0}
@@ -54,7 +55,7 @@ export default function NumberStep({value, onChange, note}: {
                                 }
                             }}
                             placeholder="0"
-                            className="h-20 text-center text-4xl font-extrabold border-0 focus-visible:ring-0"
+                            className="h-20 text-center text-4xl font-extrabold border-0 focus-visible:ring-0 focus:outline-none rounded-2xl"
                         />
                     </div>
                 </div>

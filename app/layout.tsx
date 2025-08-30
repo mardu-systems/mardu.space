@@ -91,7 +91,7 @@ export default function RootLayout({children}: { children: React.ReactNode }) {
                 dangerouslySetInnerHTML={{__html: JSON.stringify(jsonLd)}}
             />
         </head>
-        <body className="antialiased overflow-x-hidden">
+        <body className="bg-background text-foreground antialiased overflow-x-hidden">
         <RecaptchaProvider>
             <Suspense fallback={null}>
                 <TrackingProvider>

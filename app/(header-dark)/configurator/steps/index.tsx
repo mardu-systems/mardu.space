@@ -70,7 +70,7 @@ export const createSteps = (
     },
     {
         id: "fridges",
-        title: "Sollen Getränkekühlschränke mit Bezahlsystem ausgestattet werden?",
+        title: "Wie viele Getränkekühlschränke sollen mit einem Bezahlsystem ausgestattet werden?",
         tip: "Getränkekühlschränke lassen sich mit einem elektronischen Bezahlsystem kombinieren. Nutzer können dann Getränke nur gegen genügend Geld auf dem eigenen Ausweis entnehmen.",
         view: (
             <NumberStep

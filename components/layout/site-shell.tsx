@@ -29,7 +29,7 @@ export default function SiteShell({
     const pathname = usePathname();
     // Daten-Attribut optional, falls du CSS abhängig davon schreiben willst
     return (
-        <div data-header-variant="light">
+        <div data-header-variant={headerVariant} className="bg-background text-foreground">
             <SiteHeader
                 items={defaultHeaderItems}
                 logoLightSrc="/marduspace_logo_bg_black.svg"
@@ -37,11 +37,7 @@ export default function SiteShell({
                 logoDarkSrc="/marduspace_logo_bg_white.svg"
                 showTopbar={false}
             />
-            <div
-                className="bg-gradient-to-br from-zinc-200 to-purple-50"
-                data-theme="light"
-                style={{colorScheme: "light"}}
-            >
+            <div className="bg-background" data-theme="light" style={{colorScheme: "light"}}>
                 <AnimatePresence mode="wait">
                     <MotionDiv
                         key={pathname}

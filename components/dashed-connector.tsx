@@ -18,11 +18,11 @@ interface DashedConnectorProps {
 export default function DashedConnector({
                                             rootRef,
                                             anchorSelector = "[data-timeline-anchor]",
-                                            stroke = "#CA452A",
+                                            stroke = "var(--accent)",
                                             strokeWidth = 2,
                                             dash = "6 8",
                                             offsetBeforePoint = 16,
-                                            mobileStroke = "#CA452A40",
+                                            mobileStroke = "color-mix(in oklch, var(--accent) 40%, transparent)",
                                             mobileStrokeWidth = 8,
                                             mobileDash = "12 16",
                                         }: DashedConnectorProps) {

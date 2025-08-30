@@ -13,24 +13,24 @@ export default function HomePage() {
     const timelineRef = useRef<HTMLDivElement>(null);
 
     return (
-        <main className="relative min-h-screen">
+        <main className="relative min-h-screen bg-background text-foreground">
             {/* Hero */}
-            <section className="relative w-full h-[calc(100vh-8rem)]">
+            <section className="relative w-full h-[calc(100vh-8rem)]" data-theme="dark" style={{colorScheme: "dark"}}>
                 <Image src="/_A7_9072_quer.jpg" alt="Zugriffskontrollsysteme im Makerspace" fill priority sizes="100vw"
                        className="object-cover"/>
                 <div className="absolute inset-0 bg-black/50"/>
                 <div className="absolute inset-0 flex items-center justify-center">
                     <div
-                        className="max-w-4xl mx-auto px-6 sm:px-8 lg:px-12 text-center text-white animate-in fade-in slide-in-from-bottom-8 duration-700">
+                        className="max-w-4xl mx-auto px-6 sm:px-8 lg:px-12 text-center text-foreground animate-in fade-in slide-in-from-bottom-8 duration-700">
                         <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-6">
                             mardu.space: Zugriffskontrollsysteme für Makerspaces, FabLabs und Schülerlabore
                         </h1>
-                        <p className="text-lg sm:text-xl text-white/90 mb-8 leading-relaxed">
+                        <p className="text-lg sm:text-xl text-foreground/90 mb-8 leading-relaxed">
                             Entdecke in wenigen Schritten, welche Lösungen dein Space wirklich braucht.
                         </p>
                         <Link href="/configurator">
                             <Button size="lg"
-                                    className="px-8 md:px-12 md:py-8 text-xl md:text-4xl font-futura-bold tracking-wider uppercase bg-[#CA452A] hover:bg-[#B23A21] rounded-full cursor-pointer">
+                                    className="px-8 md:px-12 md:py-8 text-xl md:text-4xl font-futura-bold tracking-wider uppercase bg-accent hover:bg-accent/90 text-accent-foreground rounded-full cursor-pointer">
                                 Konfigurator starten
                             </Button>
                         </Link>
@@ -42,7 +42,7 @@ export default function HomePage() {
                 <div className="flex items-end justify-center">
                     <div className="text-center">
                         <h2
-                            className="uppercase font-futura-heavy text-[clamp(20px,4vw,80px)] text-[#8D69C0] md:leading-[0.9] animate-in fade-in slide-in-from-bottom-4 duration-700 pt-11">
+                            className="uppercase font-futura-heavy text-[clamp(20px,4vw,80px)] text-primary md:leading-[0.9] animate-in fade-in slide-in-from-bottom-4 duration-700 pt-11">
                             Warum brauchst du Mardu.space?
                         </h2>
                     </div>
@@ -124,7 +124,7 @@ export default function HomePage() {
 
                             <div className="col-span-7 md:col-span-4">
                                 <div
-                                    className="font-futura-normal text-[#CA452A] text-sm sm:text-base leading-snug tracking-[0.005em]">
+                                    className="font-futura-normal text-accent text-sm sm:text-base leading-snug tracking-[0.005em]">
                                     <p>
                                         Jochen macht bei Harald einen Schweißkurs. Dieser findet in seinem heimischen
                                         Makerspace statt.
@@ -143,7 +143,7 @@ export default function HomePage() {
                             </div>
 
                             <div className="col-span-12 md:col-span-4 md:col-start-9 md:translate-y-[-40%] text-right">
-                                <h2 className="font-futura-heavy text-[#8D69C0] whitespace-pre-line uppercase text-3xl sm:text-4xl md:text-6xl text-right">
+                                <h2 className="font-futura-heavy text-primary whitespace-pre-line uppercase text-3xl sm:text-4xl md:text-6xl text-right">
                                     {`WIE KANN
                                     MARDU.SPACE
                                     DIR HELFEN?`}
@@ -169,7 +169,7 @@ export default function HomePage() {
 
                             <div className="col-span-10 md:col-span-3">
                                 <div
-                                    className="font-futura-normal text-[#CA452A] text-sm sm:text-base leading-snug tracking-[0.005em]">
+                                    className="font-futura-normal text-accent text-sm sm:text-base leading-snug tracking-[0.005em]">
                                     <p>
                                         Jochen hat erfolgreich an dem Schweißkurs teilgenommen und weiß nun, welche
                                         Gefahren
@@ -207,7 +207,7 @@ export default function HomePage() {
                         <div className="grid grid-cols-12 gap-6 md:gap-10 items-start">
                             <div className="col-span-12 md:col-span-6 flex flex-col items-center md:items-start">
                                 <div
-                                    className="w-full max-w-[720px] rounded-xl border border-[#8D69C0]/30 shadow-[0_10px_40px_rgba(141,105,192,.15)] overflow-hidden">
+                                    className="w-full max-w-[720px] rounded-xl border border-primary/30 shadow-[0_10px_40px_color-mix(in_oklch,var(--primary)_15%,transparent)] overflow-hidden">
                                     <Image
                                         src="/landing/open_badge.png"
                                         alt="Badge erstellen – Webplattform Open Educational Badges"
@@ -228,7 +228,7 @@ export default function HomePage() {
                                 <div className="flex items-start gap-4">
                                     <CircleNumber number={3} className="mt-1 shrink-0" anchor/>
                                     <div
-                                        className="mt-4 max-w-[40ch] font-futura-normal text-[#CA452A] text-sm sm:text-base leading-snug tracking-[0.005em]">
+                                        className="mt-4 max-w-[40ch] font-futura-normal text-accent text-sm sm:text-base leading-snug tracking-[0.005em]">
                                         <p>Jochen möchte nun ein Gestell für einen Wohnzimmertisch schweißen.</p>
                                         <p className="mt-4">
                                             Hierzu authentifiziert er sich an dem <span
@@ -271,7 +271,7 @@ export default function HomePage() {
 
                                 {/* MITTE: Text */}
                                 <div className="col-span-7 md:col-span-7">
-                                    <p className="font-futura-normal text-[#CA452A] text-sm sm:text-base leading-snug tracking-[0.005em]">
+                                    <p className="font-futura-normal text-accent text-sm sm:text-base leading-snug tracking-[0.005em]">
                                         Alle Geräte von <span className="whitespace-nowrap">mardu.space</span> in einem
                                         Gebäude sind untereinander funkvernetzt, um höchste Ausfallsicherheit zu
                                         gewährleisten.
@@ -301,7 +301,7 @@ export default function HomePage() {
                                 />
 
                                 <div
-                                    className="md:absolute relative font-futura-normal text-[#CA452A] text-sm sm:text-base leading-snug tracking-[0.005em] flex items-start gap-4 max-w-[280px] md:max-w-[340px] md:left-[45%] md:bottom-[7%] mt-6 md:mt-0 pointer-events-none">
+                                    className="md:absolute relative font-futura-normal text-accent text-sm sm:text-base leading-snug tracking-[0.005em] flex items-start gap-4 max-w-[280px] md:max-w-[340px] md:left-[45%] md:bottom-[7%] mt-6 md:mt-0 pointer-events-none">
                                     <div className="flex-1">
                                         <p>
                                             Das Gateway von <span
@@ -357,7 +357,7 @@ export default function HomePage() {
                             <div className="col-span-12 md:col-span-6 flex items-start gap-4">
                                 <CircleNumber number={6} className="mt-1 shrink-0 " anchor/>
                                 <div
-                                    className="font-futura-normal text-[#CA452A] text-sm sm:text-base leading-snug tracking-[0.005em] max-w-[56ch]">
+                                    className="font-futura-normal text-accent text-sm sm:text-base leading-snug tracking-[0.005em] max-w-[56ch]">
                                     <p>
                                         Da die Berechtigung vorliegt, schaltet das <span
                                         className="whitespace-nowrap">mardu.space</span> Gerät
@@ -438,7 +438,7 @@ export default function HomePage() {
                         </div>
 
                         {/* Förderhinweis-Text */}
-                        <p className="font-futura-normal mt-10 text-sm md:text-base leading-snug text-zinc-700 max-w-4xl text-center mx-auto">
+                        <p className="font-futura-normal mt-10 text-sm md:text-base leading-snug text-muted-foreground max-w-4xl text-center mx-auto">
                             Die Europäische Union fördert zusammen mit dem Bundesministerium für Wirtschaft und
                             Klimaschutz
                             über den Europäischen Sozialfonds Plus (ESF Plus) das Programm <em>Existenzgründungen aus
@@ -449,7 +449,7 @@ export default function HomePage() {
                 </section>
             </div>
             <small
-                className="font-futura-normal block mt-6 text-center text-xs text-zinc-500"
+                className="font-futura-normal block mt-6 text-center text-xs text-muted-foreground"
             >
                 * Schweißen in Wohnräumen ist nicht empfohlen. Nutze eine geeignete Werkstatt
                 mit ausreichender Belüftung.

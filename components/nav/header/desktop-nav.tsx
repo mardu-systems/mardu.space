@@ -15,45 +15,30 @@ interface DesktopNavProps {
 
 export default function DesktopNav({items, variant = "dark"}: DesktopNavProps) {
     return (
-        <div className="hidden md:flex md:flex-1 md:items-center md:gap-1 md:justify-end">
+        <div
+            className={clsx(
+                "hidden md:flex md:flex-1 md:items-center md:gap-1 md:justify-end",
+                variant === "dark" && "dark"
+            )}
+        >
             {items.map((entry) => (
-                <DesktopNavEntry key={entry.label} entry={entry} variant={variant}/>
+                <DesktopNavEntry key={entry.label} entry={entry}/>
             ))}
         </div>
     );
 }
 
-function DesktopNavEntry({entry, variant}: { entry: NavEntry; variant: "dark" | "light" }) {
-    const palette =
-        variant === "light"
-            ? {
-                text: "text-neutral-900 hover:text-neutral-700",
-                underline: "bg-neutral-900/50 group-hover:bg-neutral-900/80",
-                ring: "focus-visible:ring-neutral-900 focus-visible:ring-offset-white",
-                offset: "focus-visible:ring-offset-2",
-            }
-            : {
-                text: "text-white/90 hover:text-white",
-                underline: "bg-white/50 group-hover:bg-white/80",
-                ring: "focus-visible:ring-white/70 focus-visible:ring-offset-neutral-900",
-                offset: "focus-visible:ring-offset-2",
-            };
+function DesktopNavEntry({entry}: { entry: NavEntry }) {
+    const baseClasses =
+        "group relative rounded-lg px-4 py-3 text-base uppercase focus-visible:outline-none focus-visible:ring focus-visible:ring-offset-2 focus-visible:ring-foreground focus-visible:ring-offset-background text-foreground/90 hover:text-foreground";
 
     if (entry.type === "link") {
         return (
-            <Link
-                href={entry.href}
-                className={clsx(
-                    "group relative rounded-lg px-4 py-3 text-base uppercase",
-                    "focus-visible:outline-none", palette.ring, palette.offset,
-                    palette.text
-                )}
-            >
+            <Link href={entry.href} className={clsx(baseClasses)}>
                 {entry.label}
                 <span
                     className={clsx(
-                        "absolute inset-x-2 -bottom-0.5 h-px scale-x-0 transition-transform duration-200 group-hover:scale-x-100",
-                        palette.underline
+                        "absolute inset-x-2 -bottom-0.5 h-px scale-x-0 bg-foreground/50 transition-transform duration-200 group-hover:scale-x-100 group-hover:bg-foreground/80"
                     )}
                 />
             </Link>
@@ -66,18 +51,13 @@ function DesktopNavEntry({entry, variant}: { entry: NavEntry; variant: "dark" | 
             <HoverCardTrigger asChild>
                 <button
                     aria-haspopup="menu"
-                    className={clsx(
-                        "group flex items-center gap-1 rounded-lg px-4 py-3 text-base uppercase outline-none",
-                        "focus-visible:outline-none", palette.ring, palette.offset,
-                        palette.text
-                    )}
+                    className={clsx(baseClasses, "flex items-center gap-1")}
                 >
                     {entry.label}
                     <ChevronDown className="h-4 w-4 transition group-data-[state=open]:rotate-180"/>
                 </button>
             </HoverCardTrigger>
-            <HoverCardContent
-                className="w-full border border-white/10 bg-neutral-950 p-0 text-white shadow-2xl backdrop-blur-xl">
+            <HoverCardContent className="w-full border border-border bg-background p-0 text-foreground shadow-2xl backdrop-blur-xl">
                 <MegaContent group={entry}/>
             </HoverCardContent>
         </HoverCard>

@@ -78,8 +78,6 @@ export default function ConfiguratorPageClient() {
     const [submitting, setSubmitting] = useState(false);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-    // (scroll-to-top on step change handled inside MainContent where step index is known)
-
     return (
         <div
             className={cn(
@@ -234,11 +232,11 @@ function MainContent({
                                             aria-label={`Schritt ${i + 1}`}
                                             className={cn(
                                                 "flex-shrink-0 grid place-items-center rounded-full border-2 font-black tabular-nums",
-                                                "transition-transform duration-150 focus:outline-none focus:ring-2 focus:ring-red-500/50",
+                                                "transition-transform duration-150 focus:outline-none focus:ring-2 focus:accent-primary",
                                                 "size-11", // 44px mobil
                                                 isCompleted
-                                                    ? "bg-red-500 text-white border-red-500"
-                                                    : "bg-white text-red-500 border-red-500"
+                                                    ? "bg-primary text-white border-primary"
+                                                    : "bg-white text-primary border-primary"
                                             )}
                                         >
                                             {i + 1}
@@ -247,11 +245,11 @@ function MainContent({
                                         {/* Connector (nicht nach letztem Punkt) */}
                                         {i < stepper.all.length - 1 && (
                                             <div
-                                                className="relative mx-2 h-[6px] w-8 rounded-full bg-red-200 overflow-hidden"
+                                                className="relative mx-2 h-[6px] w-8 rounded-full bg-violet-200 overflow-hidden"
                                                 aria-hidden>
                                                 <div
                                                     className={cn(
-                                                        "absolute inset-y-0 left-0 h-full bg-red-500 transition-all duration-500 ease-out",
+                                                        "absolute inset-y-0 left-0 h-full bg-primary transition-all duration-500 ease-out",
                                                         i < idx ? "w-full" : "w-0"
                                                     )}
                                                 />
@@ -278,11 +276,11 @@ function MainContent({
                                             aria-label={`Schritt ${i + 1}`}
                                             className={cn(
                                                 "mx-auto flex-shrink-0 grid place-items-center rounded-full border-2 font-black tabular-nums",
-                                                "transition-transform duration-150 focus:outline-none focus:ring-2 focus:ring-red-500/50",
+                                                "transition-transform duration-150 focus:outline-none focus:ring-2 focus:accent-primary",
                                                 "size-[52px]", // Desktop
                                                 isCompleted
-                                                    ? "bg-red-500 text-white border-red-500"
-                                                    : "bg-white text-red-500 border-red-500"
+                                                    ? "bg-primary text-white border-primary"
+                                                    : "bg-white text-primary border-primary"
                                             )}
                                         >
                                             {i + 1}
@@ -292,11 +290,11 @@ function MainContent({
                                     {/* Connector bis zum nächsten Punkt (nicht nach letztem) */}
                                     {i < stepper.all.length - 1 ? (
                                         <div
-                                            className="relative flex-1 h-[6px] mx-2 rounded-full bg-red-200 overflow-hidden"
+                                            className="relative flex-1 h-[6px] mx-2 rounded-full bg-violet-200 overflow-hidden"
                                             aria-hidden>
                                             <div
                                                 className={cn(
-                                                    "absolute inset-y-0 left-0 h-full bg-red-500 transition-all duration-500 ease-out",
+                                                    "absolute inset-y-0 left-0 h-full bg-primary transition-all duration-500 ease-out",
                                                     i < idx ? "w-full" : "w-0"
                                                 )}
                                             />
@@ -348,7 +346,7 @@ function MainContent({
                         aria-busy={submitting && stepper.isLast}
                         className="disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
                     >
-                        {submitting && stepper.isLast && <Loader2 className="h-4 w-4 animate-spin" />}
+                        {submitting && stepper.isLast && <Loader2 className="h-4 w-4 animate-spin"/>}
                         {stepper.isLast ? (submitting ? "Sende…" : "Angebot anfordern") : "Weiter"}
                     </Button>
                 </div>
@@ -417,7 +415,7 @@ function ResponsiveHelp({
                 sideOffset={8}
                 className="w-[calc(100vw-1.5rem)] max-w-[420px] p-0 overflow-hidden rounded-2xl border shadow-md"
             >
-                <HelpContent title={title} tip={tip} stepIndex={stepIndex} stepCount={stepCount} image={image}/>
+                <HelpContent title={title} tip={tip} image={image}/>
             </PopoverContent>
         </Popover>
     );
@@ -426,8 +424,9 @@ function ResponsiveHelp({
     const HoverBody = (
         <HoverCard openDelay={80} closeDelay={120}>
             <HoverCardTrigger asChild>
-                <button className="group mx-auto block focus:outline-none min-h-[44px] px-2"
-                        aria-label="Weitere Informationen">
+                <button
+                    className="group mx-auto block focus:outline-none min-h-[44px] px-2 animate-[pulseGlow_3s_ease-in-out_infinite]"
+                    aria-label="Weitere Informationen">
                     {Header}
                 </button>
             </HoverCardTrigger>
@@ -437,7 +436,7 @@ function ResponsiveHelp({
                 sideOffset={8}
                 className="w-[min(92vw,680px)] p-0 overflow-hidden rounded-2xl border shadow-md"
             >
-                <HelpContent title={title} tip={tip} stepIndex={stepIndex} stepCount={stepCount} image={image}/>
+                <HelpContent title={title} tip={tip} image={image}/>
             </HoverCardContent>
         </HoverCard>
     );
@@ -453,14 +452,10 @@ function ResponsiveHelp({
 function HelpContent({
                          title,
                          tip,
-                         stepIndex,
-                         stepCount,
                          image,
                      }: {
     title: React.ReactNode;
     tip: string;
-    stepIndex: number;
-    stepCount: number;
     image?: string;
 }) {
     return (
