@@ -5,7 +5,6 @@ Alter Schlachthof 39
 76131 Karlsruhe  
 Deutschland
 
-Telefon: 015202189213
 E-Mail: [info@mardu.de](mailto:info@mardu.de)
 
 Vertreten durch:  

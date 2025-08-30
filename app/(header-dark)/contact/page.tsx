@@ -31,8 +31,10 @@ export default function ContactPage() {
                             Deutschland
                         </p>
                         <p>
+                            {/*
                             Telefon: <a href="tel:015202189213" className="underline">015202189213</a>
-                            <br/>
+                            <br/>*/}
+
                             E-Mail: <a href="mailto:info@mardu.de" className="underline">info@mardu.de</a>
                         </p>
                     </div>
