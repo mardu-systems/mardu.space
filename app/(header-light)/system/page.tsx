@@ -88,7 +88,7 @@ function HeroSystem({
                             draggable={false}
                             priority
                         />
-                        <div aria-hidden="true" className="absolute inset-0 bg-black/40"/>
+                        <div aria-hidden="true" className="absolute inset-0 bg-overlay/40"/>
                     </div>
                     <div className="relative">
                         <Image
@@ -100,7 +100,7 @@ function HeroSystem({
                             draggable={false}
                             priority
                         />
-                        <div aria-hidden="true" className="absolute inset-0 bg-black/40"/>
+                        <div aria-hidden="true" className="absolute inset-0 bg-overlay/40"/>
                     </div>
                 </div>
 
@@ -113,7 +113,7 @@ function HeroSystem({
                     >
                         <strong
                             className="
-              bg-linear-to-r from-purple-500 to-purple-500
+              bg-linear-to-r from-primary to-primary
               bg-no-repeat
               bg-[length:96%_0.5em]
               bg-[position:0_95%]
@@ -130,7 +130,7 @@ function HeroSystem({
                         <Link href="/system/#products">
                             <Button
                                 size="lg"
-                                className="px-8 md:px-12 md:py-8 text-xl md:text-4xl font-futura-bold tracking-wider uppercase bg-[#CA452A] hover:bg-[#B23A21] rounded-full cursor-pointer"
+                                className="px-8 md:px-12 md:py-8 text-xl md:text-4xl font-futura-bold tracking-wider uppercase rounded-full cursor-pointer"
                             >
                                 Zu den Produkten
                             </Button>

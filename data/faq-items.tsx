@@ -8,7 +8,7 @@ export const faqItems: FaqItem[] = [
                 Das hängt von eurer Einrichtung ab. Mit unserem{" "}
                 <a
                     href="/configurator"
-                    className="text-blue-600 hover:underline"
+                    className="text-primary hover:underline"
                 >
                     Konfigurator
                 </a>{" "}
@@ -27,7 +27,7 @@ export const faqItems: FaqItem[] = [
                 Meldet euch bei Interesse einfach unter{" "}
                 <a
                     href="mailto:info@mardu.de"
-                    className="text-blue-600 hover:underline"
+                    className="text-primary hover:underline"
                 >
                     info@mardu.de
                 </a>
@@ -55,7 +55,7 @@ export const faqItems: FaqItem[] = [
                 Falls ihr vorab Interesse habt oder Fragen klären möchtet, schreibt uns gerne an{" "}
                 <a
                     href="mailto:info@mardu.de"
-                    className="text-blue-600 hover:underline"
+                    className="text-primary hover:underline"
                 >
                     info@mardu.de
                 </a>
@@ -86,4 +86,3 @@ export const faqItems: FaqItem[] = [
         ),
     },
 ];
-

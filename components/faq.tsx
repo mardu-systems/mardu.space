@@ -22,10 +22,10 @@ export default function Faq({items, className}: FaqProps) {
         >
             {items.map((item) => (
                 <AccordionItem key={item.question} value={item.question}>
-                    <AccordionTrigger className="text-xl font-semibold text-neutral-900">
+                    <AccordionTrigger className="text-xl font-semibold text-foreground">
                         {item.question}
                     </AccordionTrigger>
-                    <AccordionContent className="text-base text-neutral-700 leading-relaxed">
+                    <AccordionContent className="text-base text-muted-foreground leading-relaxed">
                         {item.answer}
                     </AccordionContent>
                 </AccordionItem>

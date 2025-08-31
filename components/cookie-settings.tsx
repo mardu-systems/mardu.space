@@ -61,13 +61,13 @@ export default function CookieSettings({onSave}: CookieSettingsProps) {
         >
             {/* Backdrop */}
             <div
-                className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[-1]"
+                className="fixed inset-0 bg-overlay/50 backdrop-blur-sm z-[-1]"
                 aria-hidden="true"
             />
 
             <div className="mx-auto w-full px-2 sm:px-4 pb-[calc(1rem+env(safe-area-inset-bottom))]">
                 <div
-                    className="mx-auto w-full max-w-[min(92vw,720px)] rounded-t-2xl border border-border bg-[#DDDDDD] shadow-lg p-4 sm:p-6"
+                    className="mx-auto w-full max-w-[min(92vw,720px)] rounded-t-2xl border border-border bg-card shadow-lg p-4 sm:p-6"
                 >
                     <div className="mb-3 flex items-baseline justify-between gap-2">
                         <h2 className="text-lg md:text-2xl font-bold leading-none">COOKIE</h2>

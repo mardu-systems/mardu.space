@@ -56,7 +56,7 @@ function Item({
                   iconAriaLabel,
                   size = "md",
                   iconClassName,
-                  iconColorClassName = "text-[#5e3aa6]",
+                  iconColorClassName = "text-primary",
                   className,
               }: ItemProps) {
     const textSize = textBySize(size);
@@ -85,7 +85,7 @@ function FeatureListRoot({
                              columns = 1,
                              className,
                              iconClassName,
-                             iconColorClassName = "text-[#5e3aa6]",
+                             iconColorClassName = "text-primary",
                          }: FeatureListProps) {
     const layout = layoutByCols(columns);
 

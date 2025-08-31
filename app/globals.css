@@ -14,6 +14,7 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
 }
+
 :root {
     --background: oklch(0.9797 0.0026 286.3509);
     --foreground: oklch(0.2182 0.0019 286.2389);
@@ -34,6 +35,7 @@
     --border: oklch(0.9011 0.0098 273.3462);
     --input: oklch(0.9011 0.0098 273.3462);
     --ring: var(--primary);
+    --overlay: oklch(0.15 0 0);
     --chart-1: oklch(0.8093 0.0985 252.2024);
     --chart-2: oklch(0.6207 0.1894 259.9358);
     --chart-3: oklch(0.5495 0.2202 263.0917);
@@ -83,6 +85,7 @@
     --border: oklch(0.2493 0.0114 278.0437);
     --input: oklch(0.2986 0.0109 278.1972);
     --ring: var(--primary);
+    --overlay: oklch(0.15 0 0);
     --chart-1: oklch(0.8093 0.0985 252.2024);
     --chart-2: oklch(0.6207 0.1894 259.9358);
     --chart-3: oklch(0.5495 0.2202 263.0917);
@@ -130,6 +133,7 @@
     --color-border: var(--border);
     --color-input: var(--input);
     --color-ring: var(--ring);
+    --color-overlay: var(--overlay);
     --color-chart-1: var(--chart-1);
     --color-chart-2: var(--chart-2);
     --color-chart-3: var(--chart-3);
@@ -255,11 +259,49 @@ img {
     0%, 100% {
         opacity: 0.6;
         transform: scale(1);
-        filter: drop-shadow(0 0 0px rgba(255,255,255,0.6));
+        filter: drop-shadow(0 0 0px rgba(255, 255, 255, 0.6));
     }
     50% {
         opacity: 1;
         transform: scale(1.05);
-        filter: drop-shadow(0 0 6px rgba(255,255,255,0.9));
+        filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.9));
     }
 }
+
+:root {
+    --shadow-color: rgba(177, 100, 191, 0.4);
+    --shadow-color-fade: rgba(177, 100, 191, 0.0);
+    --shadow-color-outer: rgba(177, 100, 191, 0.2);
+    --shadow-color-outer-fade: rgba(177, 100, 191, 0.0);
+}
+
+.dark {
+    --shadow-color: rgba(177, 100, 191, 0.4);
+    --shadow-color-fade: rgba(177, 100, 191, 0.0);
+    --shadow-color-outer: rgba(177, 100, 191, 0.2);
+    --shadow-color-outer-fade: rgba(177, 100, 191, 0.0);
+}
+
+@keyframes shadowPulse {
+    0% {
+        transform: scale(1);
+        box-shadow:
+                0 0 0 0 var(--shadow-color, rgba(59, 130, 246, 0.4)),
+                0 0 0 0 var(--shadow-color-outer, rgba(59, 130, 246, 0.2));
+    }
+    50% {
+        transform: scale(1.05);
+        box-shadow:
+                0 0 0 8px var(--shadow-color-fade, rgba(59, 130, 246, 0.0)),
+                0 0 0 11px var(--shadow-color-outer-fade, rgba(59, 130, 246, 0.0));
+    }
+    100% {
+        transform: scale(1);
+        box-shadow:
+                0 0 0 0 var(--shadow-color-fade, rgba(59, 130, 246, 0.0)),
+                0 0 0 0 var(--shadow-color-outer-fade, rgba(59, 130, 246, 0.0));
+    }
+}
+
+
+

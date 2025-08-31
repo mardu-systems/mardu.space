@@ -33,7 +33,7 @@ export default function Gallery({images}: {images: GalleryImage[]}) {
             </div>
             {selected && (
                 <div
-                    className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4"
+                    className="fixed inset-0 bg-overlay/80 z-50 flex items-center justify-center p-4"
                     onClick={() => setSelected(null)}
                 >
                     <Image

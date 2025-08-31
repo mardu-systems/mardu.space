@@ -23,7 +23,7 @@ export default function HomePage() {
                     <div
                         className="max-w-4xl mx-auto px-6 sm:px-8 lg:px-12 text-center text-foreground animate-in fade-in slide-in-from-bottom-8 duration-700">
                         <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-6">
-                            mardu.space: Zugriffskontrollsysteme für Makerspaces, FabLabs und Schülerlabore
+                            Zugriffskontrollsysteme für Makerspaces, FabLabs und Schülerlabore
                         </h1>
                         <p className="text-lg sm:text-xl text-foreground/90 mb-8 leading-relaxed">
                             Entdecke in wenigen Schritten, welche Lösungen dein Space wirklich braucht.
