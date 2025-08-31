@@ -13,7 +13,7 @@ import {createSteps} from "./steps";
 import {ContactSchema} from "./steps/contact";
 import {useRecaptcha} from "@/lib/recaptcha";
 import {Alert, AlertDescription} from "@/components/ui/alert";
-import {Loader2} from "lucide-react";
+import {Loader2, PlusIcon} from "lucide-react";
 
 /* ===================== Typen & Defaults ===================== */
 
@@ -384,16 +384,11 @@ function ResponsiveHelp({
                    text-[clamp(1.125rem,3.2vw,2rem)] sm:text-3xl md:text-4xl"
             >
                 {title}
+                <span
+                    className="ml-2 inline-flex items-center justify-center w-8 h-8 bg-primary text-white rounded-full text-sm font-bold shadow-[0_0_0_0px_rgba(59,130,246,0.5)] animate-[shadowPulse_3s_ease-in-out_infinite]">
+                    <PlusIcon className="h-4 w-4 items-center justify-center"/>
+                </span>
             </h1>
-            <span className="mt-2 inline-flex items-center gap-1 text-sm text-ink-400">
-        Mehr Infos anzeigen
-        <svg width="16" height="16" viewBox="0 0 24 24" className="opacity-70" aria-hidden="true">
-          <path
-              d="M12 22a10 10 0 1 1 0-20 10 10 0 0 1 0 20Zm0-11.5a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm-1.25 7h2.5a.75.75 0 0 0 .75-.75v-5a.75.75 0 0 0-.75-.75h-2.5a.75.75 0 0 0-.75.75v5c0 .414.336.75.75.75Z"
-              fill="currentColor"
-          />
-        </svg>
-      </span>
         </>
     );
 
@@ -425,7 +420,7 @@ function ResponsiveHelp({
         <HoverCard openDelay={80} closeDelay={120}>
             <HoverCardTrigger asChild>
                 <button
-                    className="group mx-auto block focus:outline-none min-h-[44px] px-2 animate-[pulseGlow_3s_ease-in-out_infinite]"
+                    className="group mx-auto block focus:outline-none min-h-[44px] px-2"
                     aria-label="Weitere Informationen">
                     {Header}
                 </button>
@@ -460,7 +455,7 @@ function HelpContent({
 }) {
     return (
         <>
-            <div className="bg-gradient-to-r from-red-50 to-transparent px-5 py-4 border-b">
+            <div className="bg-gradient-to-r from-destructive/10 to-transparent px-5 py-4 border-b">
                 <div className="flex items-center justify-between">
                     <div className="text-left">
                         <h3 className="text-lg font-bold text-ink-800">{title}</h3>
