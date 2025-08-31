@@ -50,9 +50,9 @@ type StepState = "active" | "done" | "pending";
  * The object is immutable (`as const`) to ensure type safety.
  */
 const SIZE_CONFIG = {
-    sm: {circle: "w-7 h-7 text-xs", gap: "gap-2", label: "text-[11px]", padding: "p-1"},
-    md: {circle: "w-9 h-9 text-sm", gap: "gap-3", label: "text-xs", padding: "p-1.5"},
-    lg: {circle: "w-12 h-12 text-base", gap: "gap-4", label: "text-sm", padding: "p-2"},
+    sm: {circle: "w-7 h-7 text-xs", gap: "gap-1", label: "text-[11px]", padding: "p-1", lineHeight: "h-0.5"},
+    md: {circle: "w-9 h-9 text-sm", gap: "gap-1", label: "text-xs", padding: "p-1.5", lineHeight: "h-0.75"},
+    lg: {circle: "w-12 h-12 text-base", gap: "gap-1", label: "text-sm", padding: "p-2", lineHeight: "h-1"},
 } as const;
 
 /**
@@ -193,10 +193,11 @@ function ProgressLine({isDone, size}: ProgressLineProps) {
 
     return (
         <li aria-hidden="true" className={clsx("flex-1 min-w-6", config.gap)}>
-            <div className="relative h-0.5 w-full bg-border/70">
+            <div className={clsx("relative  w-full bg-border/70", config.lineHeight)}>
                 <div
                     className={clsx(
-                        "absolute inset-y-0 left-0 h-0.5 transition-all duration-300",
+                        "absolute inset-y-0 left-0 transition-all duration-300",
+                        config.lineHeight,
                         isDone ? "w-full bg-primary" : "w-0"
                     )}
                 />

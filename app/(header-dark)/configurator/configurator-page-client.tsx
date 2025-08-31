@@ -14,6 +14,7 @@ import {ContactSchema} from "./steps/contact";
 import {useRecaptcha} from "@/lib/recaptcha";
 import {Alert, AlertDescription} from "@/components/ui/alert";
 import {Loader2, PlusIcon} from "lucide-react";
+import StepIndicator from "@/components/stepper/step-indicator";
 
 /* ===================== Typen & Defaults ===================== */
 
@@ -166,20 +167,7 @@ function MainContent({
         }
     }, [idx]);
 
-    // Keep current step centered in mobile horizontal scroller
-    const mobileStepperRef = React.useRef<HTMLDivElement | null>(null);
-    const stepRefs = React.useRef<HTMLDivElement[]>([]);
-    useEffect(() => {
-        const container = mobileStepperRef.current;
-        const el = stepRefs.current[idx];
-        if (!el) return;
-        if (container) {
-            const target = el.offsetLeft - (container.clientWidth - el.clientWidth) / 2;
-            container.scrollTo({left: Math.max(0, target), behavior: "smooth"});
-        } else {
-            el.scrollIntoView({behavior: "smooth", inline: "center", block: "nearest"});
-        }
-    }, [idx]);
+    // Stepper indicator replaces custom mobile/desktop steppers
 
     if (status === "success") {
         return (
@@ -197,116 +185,15 @@ function MainContent({
     return (
         <main className="w-full max-w-4xl mx-auto px-0 sm:px-2 pb-24 mt-10 md:mt-0">
             {/* Progress + Stepper */}
-            <div className="relative mb-8 sm:mb-10">
-
-                {/* Stepper */}
-                <div className="relative mt-6 sm:mt-8 mb-8 sm:mb-10">
-                    {/* MOBILE: horizontal scroll mit Connectors */}
-                    <div
-                        ref={mobileStepperRef}
-                        className="
-      sm:hidden
-      -mx-4
-      px-[calc(env(safe-area-inset-left)+16px)]
-      pr-[calc(env(safe-area-inset-right)+16px)]
-      overflow-x-auto no-scrollbar
-      scroll-px-4 snap-x snap-mandatory
-    "
-                    >
-                        <div className="flex items-center">
-                            {stepper.all.map((s, i) => {
-                                const isCompleted = i <= idx;
-                                const isCurrent = i === idx;
-                                return (
-                                    <div
-                                        key={s.id}
-                                        ref={(el) => {
-                                            if (el) stepRefs.current[i] = el;
-                                        }}
-                                        className="flex items-center snap-start"
-                                    >
-                                        {/* Dot */}
-                                        <button
-                                            onClick={() => stepper.goTo(s.id)}
-                                            aria-current={isCurrent}
-                                            aria-label={`Schritt ${i + 1}`}
-                                            className={cn(
-                                                "flex-shrink-0 grid place-items-center rounded-full border-2 font-black tabular-nums",
-                                                "transition-transform duration-150 focus:outline-none focus:ring-2 focus:accent-primary",
-                                                "size-11", // 44px mobil
-                                                isCompleted
-                                                    ? "bg-primary text-white border-primary"
-                                                    : "bg-white text-primary border-primary"
-                                            )}
-                                        >
-                                            {i + 1}
-                                        </button>
-
-                                        {/* Connector (nicht nach letztem Punkt) */}
-                                        {i < stepper.all.length - 1 && (
-                                            <div
-                                                className="relative mx-2 h-[6px] w-8 rounded-full bg-violet-200 overflow-hidden"
-                                                aria-hidden>
-                                                <div
-                                                    className={cn(
-                                                        "absolute inset-y-0 left-0 h-full bg-primary transition-all duration-500 ease-out",
-                                                        i < idx ? "w-full" : "w-0"
-                                                    )}
-                                                />
-                                            </div>
-                                        )}
-                                    </div>
-                                );
-                            })}
-                        </div>
-                    </div>
-
-                    {/* DESKTOP: gleichmäßig verteilt mit Connectors */}
-                    <div className="hidden sm:flex items-center justify-between gap-2 px-2">
-                        {stepper.all.map((s, i) => {
-                            const isCompleted = i <= idx;
-                            const isCurrent = i === idx;
-                            return (
-                                <div key={s.id} className="flex items-center flex-1">
-                                    {/* Dot (zentriert in seinem Segment) */}
-                                    <div className="flex-1 flex items-center">
-                                        <button
-                                            onClick={() => stepper.goTo(s.id)}
-                                            aria-current={isCurrent}
-                                            aria-label={`Schritt ${i + 1}`}
-                                            className={cn(
-                                                "mx-auto flex-shrink-0 grid place-items-center rounded-full border-2 font-black tabular-nums",
-                                                "transition-transform duration-150 focus:outline-none focus:ring-2 focus:accent-primary",
-                                                "size-[52px]", // Desktop
-                                                isCompleted
-                                                    ? "bg-primary text-white border-primary"
-                                                    : "bg-white text-primary border-primary"
-                                            )}
-                                        >
-                                            {i + 1}
-                                        </button>
-                                    </div>
-
-                                    {/* Connector bis zum nächsten Punkt (nicht nach letztem) */}
-                                    {i < stepper.all.length - 1 ? (
-                                        <div
-                                            className="relative flex-1 h-[6px] mx-2 rounded-full bg-violet-200 overflow-hidden"
-                                            aria-hidden>
-                                            <div
-                                                className={cn(
-                                                    "absolute inset-y-0 left-0 h-full bg-primary transition-all duration-500 ease-out",
-                                                    i < idx ? "w-full" : "w-0"
-                                                )}
-                                            />
-                                        </div>
-                                    ) : (
-                                        <div className="flex-1 h-[6px] mx-2 opacity-0" aria-hidden/>
-                                    )}
-                                </div>
-                            );
-                        })}
-                    </div>
-                </div>
+            <div className="relative my-8 sm:my-10">
+                <StepIndicator
+                    current={idx + 1}
+                    total={stepper.all.length}
+                    labels={steps.map((s) => (typeof s.title === "string" ? s.title : ""))}
+                    showLabels={false}
+                    onStepClick={(i) => stepper.goTo(stepper.all[i - 1]?.id)}
+                    size="lg"
+                />
             </div>
 
             {/* Titel + Responsive Help (Popover <sm, HoverCard >=sm) */}
