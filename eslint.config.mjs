@@ -30,7 +30,8 @@ const eslintConfig = [
 
       // General best practices (warnings to avoid breaking CI immediately)
       eqeqeq: ["warn", "smart"],
-      curly: ["warn", "all"],
+      // Enforce braces on multi-line only to reduce noise on one-liners
+      curly: ["warn", "multi-line"],
       "prefer-const": "warn",
       "no-var": "warn",
       "object-shorthand": ["warn", "always"],

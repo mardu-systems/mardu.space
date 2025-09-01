@@ -16,7 +16,7 @@ export const Context = createContext<CodeBlipContextType>({
   openModal: () => {},
 });
 
-export const Provider: React.FC<any> = ({ children }) => {
+export const Provider: React.FC<React.PropsWithChildren> = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [data, setData] = useState<CodeBlip>();
 

@@ -263,12 +263,12 @@ function MainContent({
 
 /* ===================== Responsive Help ===================== */
 function ResponsiveHelp({
-  title,
-  tip,
-  stepIndex,
-  stepCount,
-  image,
-}: {
+                            title,
+                            tip,
+                            stepIndex: _stepIndex,
+                            stepCount: _stepCount,
+                            image,
+                        }: {
   title: React.ReactNode;
   tip: string;
   stepIndex: number;

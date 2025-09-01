@@ -30,7 +30,7 @@ export default function DesktopNav({ items, variant = 'dark' }: DesktopNavProps)
 
 function DesktopNavEntry({ entry }: { entry: NavEntry }) {
   const baseClasses =
-    'group relative rounded-lg px-4 py-3 text-base uppercase focus-visible:outline-none focus-visible:ring focus-visible:ring-offset-2 focus-visible:ring-foreground focus-visible:ring-offset-background text-foreground/90 hover:text-foreground';
+    'group relative rounded-lg px-4 py-3 text-[0.85rem] tracking-[0.35em] uppercase focus-visible:outline-none focus-visible:ring focus-visible:ring-offset-2 focus-visible:ring-foreground focus-visible:ring-offset-background text-foreground/90 hover:text-foreground';
 
   if (entry.type === 'link') {
     return (
