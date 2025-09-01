@@ -79,6 +79,7 @@
     "eslint": "^9.33.0",
     "eslint-config-next": "15.4.6",
     "imagemin": "^9.0.1",
+    "sass": "^1.91.0",
     "imagemin-jpegtran": "^8.0.0",
     "imagemin-mozjpeg": "^10.0.0",
     "imagemin-pngquant": "^10.0.0",

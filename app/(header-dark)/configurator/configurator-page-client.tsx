@@ -3,18 +3,16 @@
 import * as React from "react";
 import {useMemo, useState, useEffect} from "react";
 import Image from "next/image";
-import Link from "next/link";
 import {defineStepper} from "@stepperize/react";
 import {Button} from "@/components/ui/button";
 import {cn} from "@/lib/utils";
-import {HoverCard, HoverCardContent, HoverCardTrigger} from "@/components/ui/hover-card";
-import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover";
 import {createSteps} from "./steps";
 import {ContactSchema} from "./steps/contact";
 import {useRecaptcha} from "@/lib/recaptcha";
 import {Alert, AlertDescription} from "@/components/ui/alert";
-import {Loader2, PlusIcon} from "lucide-react";
+import {Loader2} from "lucide-react";
 import StepIndicator from "@/components/stepper/step-indicator";
+import CodeBlip from "@/components/CodeBlip";
 
 /* ===================== Typen & Defaults ===================== */
 
@@ -175,9 +173,7 @@ function MainContent({
                 <Alert className="mt-4 animate-fade-in" variant="default" role="status" aria-live="polite">
                     <AlertDescription>Danke! Anfrage versendet.</AlertDescription>
                 </Alert>
-                <Button asChild className="mt-6">
-                    <Link href="/">Zur Startseite</Link>
-                </Button>
+                <Button asChild className="mt-6" onClick={() => (window.location.href = "/")}>Zur Startseite</Button>
             </main>
         );
     }
@@ -196,16 +192,19 @@ function MainContent({
                 />
             </div>
 
-            {/* Titel + Responsive Help (Popover <sm, HoverCard >=sm) */}
-            <div className="text-center">
-                <ResponsiveHelp
-                    title={steps[idx]?.title}
-                    tip={steps[idx]?.tip ?? ""}
-                    stepIndex={idx}
-                    stepCount={steps.length}
-                    image={steps[idx]?.hoverImg}
-                />
-            </div>
+            {/* Titel + CodeBlip Help */}
+            <CodeBlip.Provider>
+                <div className="text-center">
+                    <ResponsiveHelp
+                        title={steps[idx]?.title}
+                        tip={steps[idx]?.tip ?? ""}
+                        stepIndex={idx}
+                        stepCount={steps.length}
+                        image={steps[idx]?.hoverImg}
+                    />
+                    <CodeBlip.Modal/>
+                </div>
+            </CodeBlip.Provider>
 
             {/* Aktueller Step-View */}
             <div className="mt-8">{steps[idx]?.view}</div>
@@ -264,106 +263,41 @@ function ResponsiveHelp({
     stepCount: number;
     image?: string;
 }) {
-    const Header = (
-        <>
-            <h1
-                className="font-extrabold text-ink-500 leading-tight whitespace-pre-wrap
-                   text-[clamp(1.125rem,3.2vw,2rem)] sm:text-3xl md:text-4xl"
-            >
-                {title}
-                <span
-                    className="ml-2 inline-flex items-center justify-center w-8 h-8 bg-primary text-white rounded-full text-sm font-bold shadow-[0_0_0_0px_rgba(59,130,246,0.5)] animate-[shadowPulse_3s_ease-in-out_infinite]">
-                    <PlusIcon className="h-4 w-4 items-center justify-center"/>
-                </span>
-            </h1>
-        </>
-    );
-
-    // Mobile: Popover (tap)
-    const PopBody = (
-        <Popover>
-            <PopoverTrigger asChild>
-                <button
-                    className="group mx-auto block focus:outline-none min-h-[44px] px-2"
-                    aria-haspopup="dialog"
-                    aria-label="Weitere Informationen"
-                >
-                    {Header}
-                </button>
-            </PopoverTrigger>
-            <PopoverContent
-                align="center"
-                side="bottom"
-                sideOffset={8}
-                className="w-[calc(100vw-1.5rem)] max-w-[420px] p-0 overflow-hidden rounded-2xl border shadow-md"
-            >
-                <HelpContent title={title} tip={tip} image={image}/>
-            </PopoverContent>
-        </Popover>
-    );
-
-    // Desktop: HoverCard (hover/focus)
-    const HoverBody = (
-        <HoverCard openDelay={80} closeDelay={120}>
-            <HoverCardTrigger asChild>
-                <button
-                    className="group mx-auto block focus:outline-none min-h-[44px] px-2"
-                    aria-label="Weitere Informationen">
-                    {Header}
-                </button>
-            </HoverCardTrigger>
-            <HoverCardContent
-                side="bottom"
-                align="center"
-                sideOffset={8}
-                className="w-[min(92vw,680px)] p-0 overflow-hidden rounded-2xl border shadow-md"
-            >
-                <HelpContent title={title} tip={tip} image={image}/>
-            </HoverCardContent>
-        </HoverCard>
-    );
-
+    // Replace Dialog tooltip with CodeBlip button
     return (
-        <>
-            <div className="sm:hidden">{PopBody}</div>
-            <div className="hidden sm:block">{HoverBody}</div>
-        </>
+        <div className="mx-auto block min-h-[44px] px-2 text-center">
+            <div className="inline-flex items-baseline gap-0">
+                <h1
+                    className="font-extrabold text-ink-500 leading-tight whitespace-pre-wrap
+                           text-[clamp(1.125rem,3.2vw,2rem)] sm:text-3xl md:text-4xl">
+                    {title}
+                    <span className="ml-2 inline-flex align-baseline">
+                        <CodeBlip.Button
+                          blip={{
+                            label: typeof title === 'string' ? title : 'Info',
+                            feature: <HelpContent tip={tip} image={image} />,
+                          }}
+                          delay={400}
+                          index={1}
+                        />
+                    </span>
+                </h1>
+            </div>
+        </div>
     );
 }
 
 function HelpContent({
-                         title,
                          tip,
                          image,
                      }: {
-    title: React.ReactNode;
     tip: string;
     image?: string;
 }) {
     return (
         <>
-            <div className="bg-gradient-to-r from-destructive/10 to-transparent px-5 py-4 border-b">
-                <div className="flex items-center justify-between">
-                    <div className="text-left">
-                        <h3 className="text-lg font-bold text-ink-800">{title}</h3>
-                    </div>
-                </div>
-            </div>
-
-            <div className="p-5 grid grid-cols-1 md:grid-cols-5 gap-5">
-                <div className="md:col-span-3 text-left">
-                    <p className="text-ink-700 leading-relaxed">{tip}</p>
-                </div>
-                {image && (
-                    <div className="md:col-span-2">
-                        <div className="relative aspect-[4/3] w-full overflow-hidden rounded-xl border bg-ink-50">
-                            {image && (
-                                <Image src={image} alt="Vorschau" fill className="object-cover" quality={30}
-                                />
-                            )}
-                        </div>
-                    </div>
-                )}
+            <div className="space-y-4">
+                <p className="text-base sm:text-lg leading-relaxed text-white/90">{tip}</p>
             </div>
         </>
     );

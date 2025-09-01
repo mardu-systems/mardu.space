@@ -2,11 +2,9 @@
   width: 0.6rem;
   height: 0.6rem;
   overflow: visible;
-
-  :global(path) {
-    vector-effect: non-scaling-stroke;
-  }
-
+}
+.icon :global(path) {
+  vector-effect: non-scaling-stroke;
 }
 
 .small {
@@ -28,3 +26,5 @@
   height: 100%;
   width: 100%;
 }
+
+/*# sourceMappingURL=index.module.css.map */
