@@ -15,11 +15,7 @@ export default function HomePage() {
   return (
     <main className="relative min-h-screen bg-background text-foreground">
       {/* Hero */}
-      <section
-        className="relative w-full h-[calc(100vh-8rem)]"
-        data-theme="dark"
-        style={{ colorScheme: 'dark' }}
-      >
+      <section className="relative w-full h-[calc(100vh-8rem)]">
         <Image
           src="/_A7_9072_quer.jpg"
           alt="Zugriffskontrollsysteme im Makerspace"
@@ -30,11 +26,12 @@ export default function HomePage() {
         />
         <div className="absolute inset-0 bg-black/50" />
         <div className="absolute inset-0 flex items-center justify-center">
-          <div className="max-w-4xl mx-auto px-6 sm:px-8 lg:px-12 text-center text-foreground animate-in fade-in slide-in-from-bottom-8 duration-700">
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-6">
+          <div className="max-w-4xl mx-auto px-6 sm:px-8 lg:px-12 text-center animate-in fade-in slide-in-from-bottom-8 duration-700">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl text-neutral-300 font-bold leading-tight mb-6">
               Zugriffskontrollsysteme für Makerspaces, FabLabs und Schülerlabore
             </h1>
-            <p className="text-lg sm:text-xl text-foreground/90 mb-8 leading-relaxed">
+
+            <p className="text-lg sm:text-xl text-neutral-300/90 mb-8 leading-relaxed">
               Entdecke in wenigen Schritten, welche Lösungen dein Space wirklich braucht.
             </p>
             <Link href="/configurator">

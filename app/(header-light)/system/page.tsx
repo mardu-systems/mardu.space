@@ -36,7 +36,7 @@ function HeroSystem({
   rightSrc = '/device/near.jpg',
   leftAlt = 'Gateway – Zentrale Steuereinheit',
   rightAlt = 'Zutrittspunkt – Türmodul mit NFC',
-  heightClass = 'h-[80vh] sm:h-[90vh] lg:h-[11/12]',
+  heightClass = 'min-h-[60svh] sm:min-h-[70svh] lg:min-h-[80svh]',
   stackOnMobile = true,
 }: HeroProps) {
   const gridCols = useMemo(
@@ -77,13 +77,13 @@ function HeroSystem({
       >
         {/* Bild-Layer */}
         <div className={clsx('grid', gridCols, heightClass)}>
-          <div className="relative overflow-hidden">
+          <div className="relative overflow-hidden min-h-[40svh] md:min-h-0">
             <Image
               src={leftSrc}
               alt={leftAlt}
               role="img"
               fill
-              className="object-cover select-none scale-200"
+              className="object-cover select-none sm:scale-110 md:scale-100"
               draggable={false}
               priority
             />
@@ -104,7 +104,7 @@ function HeroSystem({
         </div>
 
         {/* Headline + CTAs */}
-        <div className="pointer-events-none absolute left-1/2 top-1/2 z-20 flex w-full max-w-5xl -translate-x-1/2 -translate-y-1/2 flex-col items-center px-4">
+        <div className="pointer-events-none absolute left-1/2 top-1/2 z-20 flex w-full max-w-5xl -translate-x-1/2 -translate-y-1/2 flex-col items-center px-6">
           <h1
             id="system-heading"
             className="pointer-events-auto select-none text-balance text-center font-black"
@@ -137,7 +137,7 @@ function HeroSystem({
         </div>
       </section>
 
-      <section id="products">
+      <section id="products" className="scroll-mt-24">
         {/*
                 Texte für den Zugriffspunkt
                 Der Zugriffspunkt [ˈtsuːɡrɪfsˌpʊŋkt] liest die Schlüsselkarten der Benutzer und fragt die Berechtigung bei dem Gateway an.
