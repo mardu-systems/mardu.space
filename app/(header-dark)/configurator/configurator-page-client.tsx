@@ -275,7 +275,22 @@ function ResponsiveHelp({
                         <CodeBlip.Button
                           blip={{
                             label: typeof title === 'string' ? title : 'Info',
-                            feature: <HelpContent tip={tip} image={image} />,
+                            feature: (
+                              <div className="space-y-4">
+                                {tip && (
+                                  <p className="text-base sm:text-lg leading-relaxed text-white/90">{tip}</p>
+                                )}
+                                {image && (
+                                  <Image
+                                    src={image}
+                                    alt=""
+                                    width={720}
+                                    height={405}
+                                    className="rounded-md border border-white/10"
+                                  />
+                                )}
+                              </div>
+                            ),
                           }}
                           delay={400}
                           index={1}
@@ -284,21 +299,5 @@ function ResponsiveHelp({
                 </h1>
             </div>
         </div>
-    );
-}
-
-function HelpContent({
-                         tip,
-                         image,
-                     }: {
-    tip: string;
-    image?: string;
-}) {
-    return (
-        <>
-            <div className="space-y-4">
-                <p className="text-base sm:text-lg leading-relaxed text-white/90">{tip}</p>
-            </div>
-        </>
     );
 }

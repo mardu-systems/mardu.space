@@ -44,7 +44,7 @@ const Modal: React.FC = ({}) => {
 
     return (
         <dialog
-            className="fixed inset-0 z-50 w-full h-full bg-black/50 backdrop-blur-2xl p-8 sm:p-16 overflow-auto"
+            className="fixed inset-0 z-50 w-full h-full bg-black/50 backdrop-blur-2xl p-8 sm:p-16 overflow-auto flex items-center justify-center"
             data-theme={'dark'}
             open={isOpen}
             ref={dialogRef}
@@ -53,7 +53,7 @@ const Modal: React.FC = ({}) => {
             <div className="absolute left-0 top-0 h-full w-px bg-white/10"/>
             <button
                 autoFocus
-                className="absolute right-6 top-6 sm:right-12 sm:top-12 inline-flex items-center justify-center rounded-full p-5 border border-white/40 text-white/70 transition-colors duration-300 ease-[cubic-bezier(0.165,0.84,0.44,1)] hover:text-white/90 hover:border-white/60"
+                className="absolute right-6 top-6 sm:right-12 sm:top-12 inline-flex items-center justify-center rounded-full p-5 border border-white/40 text-white/70 transition-colors duration-300 ease-[cubic-bezier(0.165,0.84,0.44,1)] hover:text-white/90 hover:border-white/60 z-50"
                 onClick={handleClose}
                 ref={closeRef}
                 style={{transform: 'scale(0.5)'}}
@@ -75,11 +75,11 @@ const Modal: React.FC = ({}) => {
                     </div>
                     {data.enableLink && data.link && (
                         <Link
-                          href={data.link.href}
-                          target={data.link.target}
-                          className="mt-6 inline-flex items-center text-white/90 hover:text-white underline decoration-white/40 underline-offset-4"
+                            href={data.link.href}
+                            target={data.link.target}
+                            className="mt-6 inline-flex items-center text-white/90 hover:text-white underline decoration-white/40 underline-offset-4"
                         >
-                          {data.link.label}
+                            {data.link.label}
                         </Link>
                     )}
                 </motion.div>
