@@ -43,17 +43,16 @@ const Modal: React.FC = ({}) => {
     }
 
     return (
-        <dialog
-            className="fixed inset-0 z-50 w-full h-full bg-black/50 backdrop-blur-2xl p-8 sm:p-16 overflow-auto flex items-center justify-center"
+        <div
+            className={`fixed inset-0 z-50 w-full h-full bg-black/50 backdrop-blur-2xl p-8 sm:p-16 overflow-auto flex items-center justify-center ${isOpen ? '' : 'pointer-events-none'}`}
             data-theme={'dark'}
-            open={isOpen}
             ref={dialogRef}
             style={{opacity: 0}}
         >
             <div className="absolute left-0 top-0 h-full w-px bg-white/10"/>
             <button
                 autoFocus
-                className="absolute right-6 top-6 sm:right-12 sm:top-12 inline-flex items-center justify-center rounded-full p-5 border border-white/40 text-white/70 transition-colors duration-300 ease-[cubic-bezier(0.165,0.84,0.44,1)] hover:text-white/90 hover:border-white/60 z-50"
+                className="fixed right-6 top-6 sm:right-12 sm:top-12 inline-flex items-center justify-center rounded-full p-5 border border-white/40 text-white/70 transition-colors duration-300 ease-[cubic-bezier(0.165,0.84,0.44,1)] hover:text-white/90 hover:border-white/60 z-[51]"
                 onClick={handleClose}
                 ref={closeRef}
                 style={{transform: 'scale(0.5)'}}
@@ -63,7 +62,7 @@ const Modal: React.FC = ({}) => {
             </button>
             {data && (
                 <motion.div
-                    className="relative mx-auto w-full max-w-[720px] px-6 sm:px-12 md:px-20 text-left text-white"
+                    className="relative w-full max-w-[720px] px-6 sm:px-12 md:px-20 text-left text-white"
                     initial={{x: 20}}
                     ref={containerRef}
                 >
@@ -84,7 +83,7 @@ const Modal: React.FC = ({}) => {
                     )}
                 </motion.div>
             )}
-        </dialog>
+        </div>
     )
 }
 

@@ -249,7 +249,6 @@ function MainContent({
 }
 
 /* ===================== Responsive Help ===================== */
-
 function ResponsiveHelp({
                             title,
                             tip,

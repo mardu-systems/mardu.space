@@ -21,38 +21,54 @@ const CodeBlipButton: React.FC<{ blip: CodeBlip; delay?: number; index?: number 
     const style = {['--animation-delay' as any]: `${delayFromProps * index}ms`} as React.CSSProperties
 
     return (
-        <button
+        <motion.button
             aria-pressed={isOpen}
             onClick={() => openModal(blip)}
             style={style}
             className={[
-                // base button
                 'relative inline-flex items-center justify-center rounded-full p-3',
                 'transition-all duration-300 ease-[cubic-bezier(0.165,0.84,0.44,1)]',
-                // positioning (was absolute near heading). Leave positioning to parent; consumers can wrap.
-                // enter animation
                 'opacity-100 scale-100',
                 isOpen ? 'pointer-events-none opacity-0 scale-0' : '',
                 'group',
             ].join(' ')}
+            whileTap={{scale: 0.95}}
         >
             <span className="sr-only">Code feature</span>
 
-            {/* background on hover */}
-            <span
-                className="absolute inset-0 -z-10 rounded-full bg-background/60 opacity-0 scale-0 transition-all duration-300 ease-[cubic-bezier(0.165,0.84,0.44,1)] group-hover:opacity-25 group-hover:scale-100"
+            {/* Pulsing shadows */}
+            <motion.span
+                className="absolute inset-0 rounded-full bg-foreground/20"
+                animate={{
+                    scale: [1, 1.2, 1],
+                    opacity: [0.3, 0.1, 0.3]
+                }}
+                transition={{
+                    duration: 1.2,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                }}
+            />
+            <motion.span
+                className="absolute inset-0 rounded-full bg-foreground/10"
+                animate={{
+                    scale: [1.05, 1.15, 1.05],
+                    opacity: [0.2, 0.1, 0.2]
+                }}
+                transition={{
+                    duration: 1.2,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                    delay: 0.3
+                }}
             />
 
-            {/* icon in center */}
+            {/* Central button with icon */}
             <span
-                className="relative z-10 inline-flex items-center justify-center rounded-full border border-border bg-background text-foreground">
-                <Plus className="size-[1.1rem]"/>
+                className="relative z-10 inline-flex items-center justify-center rounded-full border border-border bg-background p-2 shadow-lg">
+                <Plus className="size-[0.7rem]"/>
             </span>
-
-            {/* decorative gradient ring + pulses */}
-            <GradientBorderIcon className="pointer-events-none absolute inset-0 opacity-80"/>
-            <GradientBorderPulsing className="" delaySec={delay} showStaticRing={false}/>
-        </button>
+        </motion.button>
     )
 }
 
