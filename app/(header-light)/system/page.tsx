@@ -158,8 +158,8 @@ function HeroSystem({
           textImageAlt="Weboberfläche des Gateways"
           title="DER ZUGRIFFSPUNKT"
           description="Der Zugriffspunkt [ˈtsuːɡrɪfsˌpʊŋkt] kombiniert Lesegerät und Schützmodul. Er liest die Schlüsselkarten der Nutzer, fragt beim Gateway die Berechtigung an und schaltet Maschinen zuverlässig frei."
-          price="200,00 €"
-          priceNote="Vorläufiger Preis – Produkt in Kürze erhältlich"
+          price="TBA"
+          priceNote="Preis wird noch bekannt gegeben"
           ctaLabel="Vormerken"
           onCtaClick={() => setOpen(true)}
         >
@@ -200,8 +200,8 @@ Das Produkt ist in kürze erhältlich, es handelt sich um einen Vorläufigen Pre
           textImageAlt="Gateways Coutout"
           title="Das Gateway"
           description="Das Gateway [ˈɡeɪtweɪ] koordiniert das Funknetzwerk, prüft Zugriffsberechtigungen anhand der Open Badges und sendet Freigaben an die Zugriffspunkte."
-          price="400,00 €"
-          priceNote="Vorläufiger Preis – Produkt in Kürze erhältlich"
+          price="TBA"
+          priceNote="Preis wird noch bekannt gegeben"
           ctaLabel="Vormerken"
           onCtaClick={() => setOpen(true)}
         >
