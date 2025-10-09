@@ -135,4 +135,33 @@ export async function sendContactEmail(data: ContactEmailData) {
         text: lines.join("\n\n"),
         replyTo: data.email,
     });
+
+    if (data.email && (data.source === "wizard" || data.config)) {
+        const firstName = data.name.trim().split(/\s+/)[0] ?? data.name;
+        const confirmationSubject = "Wir haben deine Konfigurator-Anfrage erhalten";
+        const textLines = [
+            firstName ? `Hallo ${firstName},` : "Hallo,",
+            "",
+            "vielen Dank für deine Anfrage über unseren Konfigurator. Unser Team meldet sich in Kürze bei dir, um die nächsten Schritte zu besprechen.",
+            "",
+            "Wenn du in der Zwischenzeit Fragen hast, erreichst du uns jederzeit unter info@mardu.de.",
+            "",
+            "Viele Grüße",
+            "dein Mardu.space Team",
+        ];
+
+        const htmlContent = [
+            `<p>${firstName ? `Hallo ${firstName}` : "Hallo"},</p>`,
+            "<p>vielen Dank für deine Anfrage über unseren Konfigurator. Unser Team meldet sich in Kürze bei dir, um die nächsten Schritte zu besprechen.</p>",
+            "<p>Wenn du in der Zwischenzeit Fragen hast, erreichst du uns jederzeit unter <a href=\"mailto:info@mardu.de\">info@mardu.de</a>.</p>",
+            "<p>Viele Grüße<br />dein Mardu.space Team</p>",
+        ].join("\n");
+
+        await sendEmail({
+            subject: confirmationSubject,
+            to: data.email,
+            text: textLines.join("\n"),
+            html: renderEmailLayout(confirmationSubject, htmlContent),
+        });
+    }
 }
