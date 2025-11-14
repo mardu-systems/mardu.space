@@ -1,8 +1,10 @@
-import fs from "fs/promises";
-import path from "path";
+import fs from "node:fs/promises";
+import path from "node:path";
+
+import {dataPath} from "@/lib/data-dir";
 import type {ProductPageData} from "@/types/shop";
 
-const productsDir = path.join(process.cwd(), "data", "products");
+const productsDir = dataPath("products");
 
 export async function getProductData(slug: string): Promise<ProductPageData | null> {
     try {
@@ -14,13 +16,17 @@ export async function getProductData(slug: string): Promise<ProductPageData | nu
 }
 
 export async function listProducts(): Promise<ProductPageData[]> {
-    const entries = await fs.readdir(productsDir);
-    const products: ProductPageData[] = [];
-    for (const entry of entries) {
-        if (entry.endsWith(".json")) {
-            const data = await getProductData(entry.replace(/\.json$/, ""));
-            if (data) products.push(data);
+    try {
+        const entries = await fs.readdir(productsDir);
+        const products: ProductPageData[] = [];
+        for (const entry of entries) {
+            if (entry.endsWith(".json")) {
+                const data = await getProductData(entry.replace(/\.json$/, ""));
+                if (data) products.push(data);
+            }
         }
+        return products;
+    } catch {
+        return [];
     }
-    return products;
 }

@@ -1,8 +1,10 @@
 import {createHmac} from "crypto";
-import {promises as fs} from "fs";
-import path from "path";
+import {promises as fs} from "node:fs";
+import path from "node:path";
 
-const SUBSCRIBERS_FILE = path.join(process.cwd(), "data", "newsletter.json");
+import {dataPath} from "@/lib/data-dir";
+
+const SUBSCRIBERS_FILE = dataPath("newsletter.json");
 
 function getSecret() {
     const secret = process.env.NEWSLETTER_SECRET;
@@ -53,6 +55,7 @@ export async function removeSubscriber(email: string) {
         const data = await fs.readFile(SUBSCRIBERS_FILE, "utf8");
         const subs: { email: string; role: string }[] = JSON.parse(data);
         const filtered = subs.filter((s) => s.email !== email);
+        await fs.mkdir(path.dirname(SUBSCRIBERS_FILE), {recursive: true});
         await fs.writeFile(SUBSCRIBERS_FILE, JSON.stringify(filtered, null, 2));
     } catch (err) {
         console.error("Failed to remove subscriber", err);
