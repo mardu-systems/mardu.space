@@ -24,9 +24,12 @@ EMAIL_FROM=
 EMAIL_TO=
 APP_URL=
 NEWSLETTER_SECRET=
+DATA_DIR=
 ```
 
 The newsletter signup uses a double opt-in process. `APP_URL` should match your site and `NEWSLETTER_SECRET` can be any random string used to sign confirmation tokens.
+
+`DATA_DIR` allows you to point newsletter and preorder JSON storage to a directory outside of the repo. When omitted, the app falls back to `./data` inside the project root.
 
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.

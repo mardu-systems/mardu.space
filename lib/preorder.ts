@@ -1,7 +1,9 @@
-import {promises as fs} from "fs";
-import path from "path";
+import {promises as fs} from "node:fs";
+import path from "node:path";
 
-const PREORDERS_FILE = path.join(process.cwd(), "data", "preorders.json");
+import {dataPath} from "@/lib/data-dir";
+
+const PREORDERS_FILE = dataPath("preorders.json");
 
 export async function savePreorder(email: string) {
     try {
