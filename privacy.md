@@ -43,25 +43,7 @@ Detaillierte Informationen zu diesen Analyseprogrammen finden Sie in der folgend
 
 ---
 
-## 2. Hosting
-
-Wir hosten die Inhalte unserer Website bei folgendem Anbieter:
-
-### Hetzner
-Anbieter ist die **Hetzner Online GmbH, Industriestr. 25, 91710 Gunzenhausen** (nachfolgend Hetzner).
-
-Details entnehmen Sie der Datenschutzerklärung von Hetzner:
-[https://www.hetzner.com/de/legal/privacy-policy/](https://www.hetzner.com/de/legal/privacy-policy/)
-
-Die Verwendung von Hetzner erfolgt auf Grundlage von **Art. 6 Abs. 1 lit. f DSGVO**.
-Wir haben ein berechtigtes Interesse an einer möglichst zuverlässigen Darstellung unserer Website.
-
-Sofern eine entsprechende Einwilligung abgefragt wurde, erfolgt die Verarbeitung ausschließlich auf Grundlage von **Art. 6 Abs. 1 lit. a DSGVO** und **§ 25 Abs. 1 TDDDG**, soweit die Einwilligung die Speicherung von Cookies oder den Zugriff auf Informationen im Endgerät des Nutzers (z. B. Device-Fingerprinting) umfasst.
-Die Einwilligung ist jederzeit widerrufbar.
-
----
-
-## 3. Allgemeine Hinweise und Pflichtinformationen
+## 2. Allgemeine Hinweise und Pflichtinformationen
 
 ### Datenschutz
 Die Betreiber dieser Seiten nehmen den Schutz Ihrer persönlichen Daten sehr ernst.
@@ -167,7 +149,7 @@ Die Betreiber der Seiten behalten sich ausdrücklich rechtliche Schritte im Fall
 
 ---
 
-## 4. Datenerfassung auf dieser Website
+## 3. Datenerfassung auf dieser Website
 
 ### Cookies
 Unsere Internetseiten verwenden sogenannte „Cookies“. Cookies sind kleine Datenpakete und richten auf Ihrem Endgerät keinen Schaden an.
@@ -227,7 +209,7 @@ Zwingende gesetzliche Bestimmungen – insbesondere gesetzliche Aufbewahrungsfri
 
 ---
 
-## 5. Soziale Medien
+## 4. Soziale Medien
 
 ### Instagram
 Auf dieser Website sind Funktionen des Dienstes Instagram eingebunden.
@@ -276,7 +258,7 @@ Weitere Informationen hierzu:
 
 ---
 
-## 6. Newsletter
+## 5. Newsletter
 
 ### Newsletterdaten
 Wenn Sie den auf der Website angebotenen Newsletter beziehen möchten, benötigen wir von Ihnen eine E-Mail-Adresse sowie Informationen, welche uns die Überprüfung gestatten, dass Sie der Inhaber der angegebenen E-Mail-Adresse sind und mit dem Empfang des Newsletters einverstanden sind.
@@ -302,7 +284,7 @@ Die Speicherung in der Blacklist ist zeitlich nicht befristet.
 
 ---
 
-## 7. Plugins und Tools
+## 6. Plugins und Tools
 
 ### Google reCAPTCHA
 Wir nutzen **„Google reCAPTCHA“** (im Folgenden „reCAPTCHA“) auf dieser Website.
@@ -333,33 +315,9 @@ Das Unternehmen verfügt über eine Zertifizierung nach dem **„EU-US Data Priv
 Weitere Informationen hierzu:
 [https://www.dataprivacyframework.gov/participant/5780](https://www.dataprivacyframework.gov/participant/5780)
 
-## 8. Verschlüsselter Zahlungsverkehr auf dieser Website
-Besteht nach dem Abschluss eines kostenpflichtigen Vertrags eine Verpflichtung, uns Ihre Zahlungsdaten (z. B. Kontonummer bei SEPA-Lastschrift) zu übermitteln, werden diese Daten zur Zahlungsabwicklung verarbeitet.
-
-Der Zahlungsverkehr über gängige Zahlungsmittel (z. B. Visa/MasterCard, SEPA) erfolgt ausschließlich über eine **verschlüsselte SSL-/TLS-Verbindung**.
-Eine verschlüsselte Verbindung erkennen Sie an der Adresszeile des Browsers „https://“ und am Schloss-Symbol.
-Bei aktivierter Verschlüsselung können die von Ihnen übermittelten Zahlungsdaten nicht von Dritten mitgelesen werden.
-
 ---
 
-## 9. LinkedIn
-Auf dieser Website können Funktionen und Inhalte von **LinkedIn** (LinkedIn Ireland Unlimited Company, Wilton Place, Dublin 2, Irland; Muttergesellschaft: LinkedIn Corporation, USA) eingebunden sein (z. B. Social-Sharing-Buttons, Feeds oder Pixel).
-
-Wenn das entsprechende Element aktiv ist, wird eine direkte Verbindung zu den Servern von LinkedIn hergestellt und es werden personenbezogene Daten (u. a. IP-Adresse, Browser-Informationen, besuchte Seite, Zeitstempel) an LinkedIn übermittelt.
-Sofern Sie bei LinkedIn eingeloggt sind, kann LinkedIn den Besuch Ihrem Konto zuordnen.
-
-**Rechtsgrundlage:** Ihre Einwilligung gem. Art. 6 Abs. 1 lit. a DSGVO i. V. m. § 25 Abs. 1 TDDDG (Speicherung/Zugriff auf Endgeräteinformationen). Die Einwilligung ist jederzeit widerrufbar.
-
-*Gemeinsame Verantwortlichkeit:* Soweit LinkedIn sog. „Page Insights“ bereitstellt, sind wir und LinkedIn gemeinsam Verantwortliche (Art. 26 DSGVO). Wesentliche Inhalte der Vereinbarung stellt LinkedIn bereit.
-
-*Datenübermittlung in Drittländer:* Eine Übermittlung in die USA ist möglich. LinkedIn Corporation ist am **EU-US Data Privacy Framework** beteiligt.
-
-- Datenschutz von LinkedIn: [Privacy Policy](https://www.linkedin.com/legal/privacy-policy)
-- DPF-Teilnehmerstatus (LinkedIn Corporation): [DPF-Liste](https://www.dataprivacyframework.gov/)
-
----
-
-## 10. Google Analytics
+## 7. Google Analytics
 Diese Website nutzt – sofern Sie eingewilligt haben – **Google Analytics**. Anbieter ist die Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland (Mutterunternehmen: Google LLC, USA).
 Google Analytics ermöglicht die Analyse des Website-Verhaltens (z. B. Seitenaufrufe, Verweildauern, Regionen, Geräte).
 
@@ -377,7 +335,7 @@ Google Analytics ermöglicht die Analyse des Website-Verhaltens (z. B. Seitenauf
 
 ---
 
-## 11. Verarbeiten von Kunden- und Vertragsdaten
+## 8. Verarbeiten von Kunden- und Vertragsdaten
 Wir verarbeiten **Kunden-, Vertrags- und Zahlungsdaten** (z. B. Name, Adresse, Kontakt- und Kommunikationsdaten, Bestell-/Vertragsinhalte, Zahlungsinformationen) zur Anbahnung, Durchführung und Abwicklung von Vertragsverhältnissen inkl. Support sowie zur Erfüllung gesetzlicher Pflichten (z. B. steuer-/handelsrechtliche Aufbewahrung).
 
 **Rechtsgrundlagen:**
@@ -389,7 +347,7 @@ Die Daten werden nur so lange gespeichert, wie es für die genannten Zwecke erfo
 
 ---
 
-## 12. Datenübermittlung bei Vertragsschluss für Online-Shops, Händler und Warenversand
+## 9. Datenübermittlung bei Vertragsschluss für Online-Shops, Händler und Warenversand
 Wenn über unsere Website Waren bestellt werden, geben wir personenbezogene Daten *nur* soweit erforderlich an Dritte weiter (z. B. an Logistik-/Versandunternehmen, Zahlungsdienstleister, Banken, IT-/Hosting-Dienstleister).
 Umfang und Empfänger richten sich nach der konkreten Bestellung und dem gewählten Zahlungsmittel.
 
@@ -397,39 +355,12 @@ Umfang und Empfänger richten sich nach der konkreten Bestellung und dem gewähl
 
 ---
 
-## 13. Datenübermittlung bei Vertragsschluss für Dienstleistungen und digitale Inhalte
+## 10. Datenübermittlung bei Vertragsschluss für Dienstleistungen und digitale Inhalte
 Bei Bestellungen von **Dienstleistungen oder digitalen Inhalten** verarbeiten und übermitteln wir personenbezogene Daten (z. B. Kontakt-, Abrechnungs- und Nutzungsdaten) zweckgebunden an Zahlungs- und Abrechnungsdienstleister sowie an technisch notwendige Erfüllungsgehilfen (z. B. Hosting/Support).
 Eine weitergehende Übermittlung erfolgt nicht, es sei denn, sie ist zur Vertragserfüllung erforderlich oder gesetzlich vorgeschrieben.
 
 **Rechtsgrundlagen:** Art. 6 Abs. 1 lit. b, lit. c DSGVO; ggf. Art. 6 Abs. 1 lit. f DSGVO.
 
 ---
-
-## 14. Zahlungsdienste
-Wir binden externe **Zahlungsdienste** ein. Bei Nutzung eines Zahlungsdienstes werden die zur Abwicklung erforderlichen Daten an den jeweiligen Anbieter übermittelt (z. B. Betrag, Zahlungsmittel, technische Identifikatoren, Rechnungs-/Lieferdaten, teilweise auch Geräte-/Nutzungsdaten).
-Für die Verarbeitung beim Zahlungsdienst ist dessen Datenschutzerklärung maßgeblich.
-
-**Rechtsgrundlagen:**
-- Art. 6 Abs. 1 lit. b DSGVO (Zahlungsabwicklung)
-- soweit Einwilligungen für Cookies/Device-Zugriffe erforderlich sind: Art. 6 Abs. 1 lit. a DSGVO i. V. m. § 25 Abs. 1 TDDDG
-- zusätzlich Art. 6 Abs. 1 lit. f DSGVO (Betrugsprävention, Missbrauchsvermeidung)
-
-### 14.1 Stripe
-Anbieter: **Stripe Payments Europe, Ltd., 1 Grand Canal Street Lower, Grand Canal Dock, Dublin, Irland** (Mutter: Stripe, Inc., USA).
-Bei Auswahl von Stripe verarbeitet Stripe die zur Zahlung erforderlichen Daten in eigener Verantwortlichkeit.
-
-Eine Übermittlung in die USA ist möglich. Stripe ist am *EU-US Data Privacy Framework* beteiligt; zusätzlich kommen Standardvertragsklauseln und ergänzende Maßnahmen zur Anwendung.
-Details entnehmen Sie den Stripe-Datenschutzhinweisen.
-
-### 14.2 PayPal / Braintree
-Anbieter: **PayPal (Europe) S.à r.l. et Cie, S.C.A., Luxemburg** (konzernweit inkl. Braintree).
-Bei Auswahl von PayPal/Braintree werden die für die Zahlungsabwicklung erforderlichen Daten an PayPal übermittelt.
-
-PayPal verarbeitet diese Daten als eigener Verantwortlicher; es kann zu konzerninternen Übermittlungen in Drittländer kommen (SCCs u. a. Garantien).
-Näheres ergibt sich aus den PayPal-Datenschutzhinweisen und -Zusatzvereinbarungen.
-
-### 14.3 Sonstige Zahlungsarten
-Je nach gewähltem Zahlungsweg (z. B. SEPA-Lastschrift, Kreditkarte über andere Acquirer) können weitere Dienstleister eingebunden sein.
-Die konkrete Benennung erfolgt jeweils im Checkout bzw. in den Zahlungsdetails.
 
 **Quelle:** [https://www.datenschutzerklaerung.de](https://www.datenschutzerklaerung.de)
