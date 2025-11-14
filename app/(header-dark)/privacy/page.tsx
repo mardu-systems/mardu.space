@@ -20,7 +20,7 @@ export default async function Privacy() {
   const today = new Intl.DateTimeFormat('de-DE', {
     timeZone: 'Europe/Berlin',
   }).format(new Date());
-  const changed = '20.8.2025';
+  const changed = '14.11.2025';
 
   return (
     <main className="pt-[calc(var(--app-header-height,64px)+env(safe-area-inset-top))]">
