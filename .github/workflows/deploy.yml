@@ -25,6 +25,7 @@ jobs:
           RECAPTCHA_SECRET_KEY: ${{ secrets.RECAPTCHA_SECRET_KEY }}
           APP_URL: ${{ secrets.APP_URL }}
           NEWSLETTER_SECRET: ${{ secrets.NEWSLETTER_SECRET }}
+          DATA_DIR: ${{ secrets.DATA_DIR }}
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
@@ -53,6 +54,7 @@ jobs:
 
             APP_URL=${APP_URL}
             NEWSLETTER_SECRET=${NEWSLETTER_SECRET}
+            DATA_DIR=${DATA_DIR}
             EOF
 
             # 4) Dependencies & Build
