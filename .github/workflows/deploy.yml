@@ -1,0 +1,74 @@
+name: Deploy to VPS
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: SSH Deploy
+        uses: appleboy/ssh-action@v1.2.3
+        # 1) Secrets im Action-Job als env verfügbar machen
+        env:
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          EMAIL_FROM: ${{ secrets.EMAIL_FROM }}
+          EMAIL_TO: ${{ secrets.EMAIL_TO }}
+          NEXT_PUBLIC_GOOGLE_MEASUREMENT_ID: ${{ secrets.NEXT_PUBLIC_GOOGLE_MEASUREMENT_ID }}
+          NEXT_PUBLIC_RECAPTCHA_SITE_KEY: ${{ secrets.NEXT_PUBLIC_RECAPTCHA_SITE_KEY }}
+          RECAPTCHA_SECRET_KEY: ${{ secrets.RECAPTCHA_SECRET_KEY }}
+          APP_URL: ${{ secrets.APP_URL }}
+          NEWSLETTER_SECRET: ${{ secrets.NEWSLETTER_SECRET }}
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          # 2) Diese envs in die SSH-Session durchreichen
+          envs: RESEND_API_KEY,EMAIL_FROM,EMAIL_TO,NEXT_PUBLIC_GOOGLE_MEASUREMENT_ID,NEXT_PUBLIC_RECAPTCHA_SITE_KEY,RECAPTCHA_SECRET_KEY,APP_URL,NEWSLETTER_SECRET
+          script: |
+            # nvm + node laden (falls du nvm nutzt)
+            export NVM_DIR="$HOME/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+
+            cd /var/www/mardu.space
+
+            # Code aktualisieren
+            git pull
+
+            # 3) .env.production aus den Secrets bauen
+            cat > .env.production << EOF
+            RESEND_API_KEY=${RESEND_API_KEY}
+            EMAIL_FROM=${EMAIL_FROM}
+            EMAIL_TO=${EMAIL_TO}
+
+            NEXT_PUBLIC_GOOGLE_MEASUREMENT_ID=${NEXT_PUBLIC_GOOGLE_MEASUREMENT_ID}
+            NEXT_PUBLIC_RECAPTCHA_SITE_KEY=${NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
+            RECAPTCHA_SECRET_KEY=${RECAPTCHA_SECRET_KEY}
+
+            APP_URL=${APP_URL}
+            NEWSLETTER_SECRET=${NEWSLETTER_SECRET}
+            EOF
+
+            # 4) Dependencies & Build
+            pnpm install --frozen-lockfile
+            pnpm build
+
+            # 5) App neu starten (Name anpassen!)
+            pm2 restart mardu-space || pm2 start pnpm --name mardu.space -- start
