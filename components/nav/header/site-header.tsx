@@ -115,11 +115,10 @@ export default function SiteHeader({
 
             <DesktopNav items={items} variant="light" />
 
-            {/* CTA Button - Desktop only */}
             <div className="hidden md:block ml-4">
               <Link
                 href="/contact"
-                className="inline-flex items-center justify-center h-11 px-6 rounded-full bg-[#F5C842] hover:bg-[#F5D25C] text-black font-medium text-sm tracking-wide transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F5C842] focus-visible:ring-offset-2"
+                className="inline-flex items-center justify-center h-11 px-6 rounded-lg bg-[#F5C842] hover:bg-[#F5D25C] text-black font-medium text-sm tracking-wide transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F5C842] focus-visible:ring-offset-2"
               >
                 Demo Vereinbaren
               </Link>

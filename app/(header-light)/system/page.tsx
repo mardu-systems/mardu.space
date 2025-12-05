@@ -1,8 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useMemo, useState } from 'react';
-import clsx from 'clsx';
+import { useState } from 'react';
 import ProductShowcase from '@/features/product/product-showcase';
 import FeatureList from '@/features/product/feature-list';
 import { Building, Monitor, Shield, Wifi } from 'lucide-react';
@@ -10,6 +9,7 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import Faq from '@/components/faq';
 import { faqItems } from '@/data/faq-items';
+import HeroSection from '@/components/layout/hero-section';
 import {
   Dialog,
   DialogContent,
@@ -22,27 +22,7 @@ import { Label } from '@/components/ui/label';
 import { toast } from 'sonner';
 import { Toaster } from '@/components/ui/sonner';
 
-export type HeroProps = {
-  leftSrc?: string;
-  rightSrc?: string;
-  leftAlt?: string;
-  rightAlt?: string;
-  heightClass?: string;
-  stackOnMobile?: boolean;
-};
-
-function HeroSystem({
-  leftSrc = '/gateway/mounted.jpg',
-  rightSrc = '/device/near.jpg',
-  leftAlt = 'Gateway – Zentrale Steuereinheit',
-  rightAlt = 'Zutrittspunkt – Türmodul mit NFC',
-  heightClass = 'min-h-[60svh] sm:min-h-[70svh] lg:min-h-[80svh]',
-  stackOnMobile = true,
-}: HeroProps) {
-  const gridCols = useMemo(
-    () => (stackOnMobile ? 'grid-cols-1 md:grid-cols-2' : 'grid-cols-2'),
-    [stackOnMobile],
-  );
+function SystemPageContent() {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -70,73 +50,6 @@ function HeroSystem({
 
   return (
     <>
-      <section
-        className="relative w-full text-white"
-        aria-labelledby="system-heading"
-        role="region"
-      >
-        {/* Bild-Layer */}
-        <div className={clsx('grid', gridCols, heightClass)}>
-          <div className="relative overflow-hidden min-h-[40svh] md:min-h-0">
-            <Image
-              src={leftSrc}
-              alt={leftAlt}
-              role="img"
-              fill
-              className="object-cover select-none sm:scale-110 md:scale-100"
-              draggable={false}
-              priority
-            />
-            <div aria-hidden="true" className="absolute inset-0 bg-overlay/40" />
-          </div>
-          <div className="relative">
-            <Image
-              src={rightSrc}
-              alt={rightAlt}
-              role="img"
-              fill
-              className="object-cover select-none"
-              draggable={false}
-              priority
-            />
-            <div aria-hidden="true" className="absolute inset-0 bg-overlay/40" />
-          </div>
-        </div>
-
-        {/* Headline + CTAs */}
-        <div className="pointer-events-none absolute left-1/2 top-1/2 z-20 flex w-full max-w-5xl -translate-x-1/2 -translate-y-1/2 flex-col items-center px-6">
-          <h1
-            id="system-heading"
-            className="pointer-events-auto select-none text-balance text-center font-black"
-          >
-            <strong
-              className="
-              bg-linear-to-r from-primary to-primary
-              bg-no-repeat
-              bg-[length:96%_0.5em]
-              bg-[position:0_95%]
-              px-[10px]
-              font-bold uppercase tracking-[0.3em]
-              text-[clamp(22px,6vw,40px)] leading-[1.2]
-              lg:text-[clamp(40px,6vw,80px)] lg:leading-[0.9]
-            "
-            >
-              Das System
-            </strong>
-          </h1>
-          <div className="pointer-events-auto mt-10 flex flex-col items-center gap-4 md:flex-row">
-            <Link href="/system/#products">
-              <Button
-                size="lg"
-                className="px-8 md:px-12 md:py-8 text-xl md:text-4xl font-futura-bold tracking-wider uppercase rounded-full cursor-pointer"
-              >
-                Zu den Produkten
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </section>
-
       <section id="products" className="scroll-mt-24">
         {/*
                 Texte für den Zugriffspunkt
@@ -249,7 +162,23 @@ export default function Page() {
   return (
     <>
       <main>
-        <HeroSystem />
+        <HeroSection
+          title="Das System"
+          description={
+            <>
+              <p className="mb-4">
+                Intelligente Zugriffskontrolle für Makerspaces – sicher, zuverlässig und einfach zu verwalten.
+              </p>
+              <p>
+                Entdecken Sie unsere Hard- und Software-Lösung für maximale Sicherheit und Ausfallsicherheit in Ihrer Werkstatt.
+              </p>
+            </>
+          }
+          buttonText='Jetzt Demo vereinbaren'
+          imageSrc="/gateway/mounted.jpg"
+          imageAlt="Gateway und Zugriffspunkt in der Werkstatt"
+        />
+        <SystemPageContent />
         <section className="max-w-4xl mx-auto px-4 py-16">
           <h2 className="mb-8 text-center text-3xl font-bold">FAQ</h2>
           <Faq items={faqItems} />
