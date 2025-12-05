@@ -7,6 +7,7 @@ import CircleNumber from '@/components/circle-number';
 import DashedConnector from '@/components/dashed-connector';
 import HeroSection from '@/components/layout/hero-section';
 import CTASection from '@/components/layout/cta-section';
+import FeatureSection from '@/components/layout/feature-section';
 import Link from 'next/link';
 
 /* ===================== Seite ===================== */
@@ -37,59 +38,28 @@ export default function HomePage() {
       />
 
 
-      <section
-        id="info"
-        className="relative w-full py-14 md:py-20 animate-in fade-in slide-in-from-bottom-8 duration-700"
-      >
-        <div className="max-w-7xl mx-auto px-5 sm:px-6 md:px-8">
-          {/* 1–Spalte mobil, 2–Spalten ab md */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-y-10 md:gap-y-0 md:gap-x-12 items-center">
-            {/* Linke Seite: Warnsymbol */}
-            <div className="order-2 md:order-1 flex items-center justify-center">
-              <Image
-                src="/landing/warning.svg"
-                alt="Warnsymbol Verletzungsgefahr"
-                width={1200}
-                height={1200}
-                sizes="(min-width: 768px) 32rem, 80vw"
-                className="w-1/2 h-auto md:w-full md:max-w-2xl drop-shadow-2xl"
-                loading="lazy"
-              />
-            </div>
-
-            {/* Rechte Seite: Wortwolke + Text */}
-            <div className="order-1 md:order-2 flex flex-col items-center md:items-start gap-8 md:gap-6">
-              {/* Wortwolke */}
-              <div className="flex justify-center md:translate-y-[-20%] md:translate-x-[-18%]">
-                <Image
-                  src="/landing/words.svg"
-                  alt="Wortwolke zu Themen wie Sicherheit, Verantwortung, Zutritt"
-                  width={1000}
-                  height={1000}
-                  sizes="(min-width: 768px) 36rem, 90vw"
-                  className="w-[clamp(260px,86vw,540px)] h-auto "
-                  loading="lazy"
-                />
-              </div>
-
-              {/* Fließtext – ein Block für alle Breakpoints */}
-              <div className="font-futura-normal space-y-4 leading-snug text-[15px] sm:text-base md:text-lg max-w-prose text-center md:text-left">
-                <p>
-                  Makerspaces und FabLabs eröffnen kreative Möglichkeiten, bringen aber auch Risiken
-                  durch leistungsstarke Maschinen mit sich. Besonders beim Zugang für Minderjährige
-                  ist klare Verantwortung gefragt.
-                </p>
-                <p>
-                  Das mardu.space System sorgt mit eigener Hard- und Software sowie einer europaweit
-                  anerkannten Kenntnisdatenbank (Open Education Badges) für sichere Zutritts- und
-                  Zugriffskontrollen. So werden nur geschulte Nutzer freigeschaltet – und ihre
-                  Qualifikationen lassen sich standortübergreifend einsetzen.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <FeatureSection
+        title="Sicherheit & Verantwortung in Makerspaces"
+        description={
+          <>
+            <p>
+              Makerspaces und FabLabs eröffnen kreative Möglichkeiten, bringen aber auch Risiken
+              durch leistungsstarke Maschinen mit sich. Besonders beim Zugang für Minderjährige
+              ist klare Verantwortung gefragt.
+            </p>
+            <p className="mt-4">
+              Das mardu.space System sorgt mit eigener Hard- und Software sowie einer europaweit
+              anerkannten Kenntnisdatenbank (Open Education Badges) für sichere Zutritts- und
+              Zugriffskontrollen. So werden nur geschulte Nutzer freigeschaltet – und ihre
+              Qualifikationen lassen sich standortübergreifend einsetzen.
+            </p>
+          </>
+        }
+        imageSrc="/landing/warning.svg"
+        imageAlt="Warnsymbol Verletzungsgefahr"
+        buttonText="Mehr erfahren"
+        buttonHref="#info"
+      />
 
       <div ref={timelineRef} className="relative">
         <DashedConnector rootRef={timelineRef} offsetBeforePoint={50} strokeWidth={5} />

@@ -1,14 +1,18 @@
-import {FooterLink} from "@/components/nav/footer/footer";
+import { FooterLink } from "@/components/nav/footer/footer";
 
 export const defaultFooterNavLinks: FooterLink[] = [
-    {href: "/faq", label: "FAQ"},
-    {href: "/brand", label: "Brand Assets"},
-    {href: "/fotos", label: "Fotos"},
+    { href: "/faq", label: "Startseite" },
+    { href: "/brand", label: "Konfigurator" },
+    { href: "/fotos", label: "System" },
+    { href: "/faq", label: "FAQ" },
+    { href: "/brand", label: "Brand Assets" },
+    { href: "/fotos", label: "Fotos" },
+    { href: "/fotos", label: "Kontakt" },
 ];
 
 export const defaultFooterMetaLinks: FooterLink[] = [
-    {href: "/publisher", label: "Impressum"},
-    {href: "/privacy", label: "Datenschutz"},
+    { href: "/publisher", label: "Impressum" },
+    { href: "/privacy", label: "Datenschutz" },
     {
         href: "#",
         label: "Cookie-Einstellungen",

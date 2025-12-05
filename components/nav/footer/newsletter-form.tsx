@@ -119,7 +119,7 @@ export default function NewsletterForm() {
 
   return (
     <Form {...form}>
-      <form noValidate onSubmit={form.handleSubmit(onSubmit)} className="max-w-md md:ms-auto">
+      <form noValidate onSubmit={form.handleSubmit(onSubmit)}>
         {/* E-Mail */}
         <FormField
           control={form.control}
@@ -136,7 +136,7 @@ export default function NewsletterForm() {
                   inputMode="email"
                   autoComplete="email"
                   placeholder="E-Mail-Adresse eingeben"
-                  className="h-11"
+                  className="h-11 w-full"
                   {...field}
                 />
               </FormControl>
@@ -146,12 +146,12 @@ export default function NewsletterForm() {
         />
 
         {/* Rolle + Button */}
-        <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-end">
+        <div className="mt-4 flex flex-col gap-3">
           <FormField
             control={form.control}
             name="role"
             render={({ field }) => (
-              <FormItem className="flex-1">
+              <FormItem className="w-full">
                 <FormLabel id="role-label" className="mb-2 block text-sm">
                   Wer bist du?
                 </FormLabel>
@@ -159,7 +159,7 @@ export default function NewsletterForm() {
                   <FormControl>
                     <SelectTrigger
                       aria-labelledby="role-label"
-                      className="h-11 w-full sm:w-auto justify-between"
+                      className="h-11 w-full justify-between"
                     >
                       <SelectValue placeholder="Kategorie wählen…" />
                     </SelectTrigger>
@@ -184,7 +184,7 @@ export default function NewsletterForm() {
 
           <Button
             type="submit"
-            className="px-6 font-semibold shadow-lg sm:w-auto w-full flex items-center justify-center gap-2"
+            className="w-full h-11 px-6 font-semibold shadow-lg flex items-center justify-center gap-2 bg-[#FFB703]"
             disabled={submitting}
             aria-disabled={submitting}
             aria-busy={submitting}

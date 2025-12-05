@@ -86,7 +86,7 @@ export default function HeroSection({
               <div className="absolute inset-0 flex items-center justify-center">
                 <button
                   onClick={handlePlayClick}
-                  className="flex items-center justify-center w-[88px] h-[88px] bg-white rounded-full shadow-lg hover:scale-110 transition-transform duration-200"
+                  className="flex items-center justify-center w-[88px] h-[88px] bg-white rounded-lg shadow-lg hover:scale-110 transition-transform duration-200"
                   aria-label="Video abspielen"
                 >
                   <svg

@@ -31,6 +31,13 @@ Unsere E-Mail-Adresse finden Sie oben im Impressum.
 
 ---
 
+## Technische Realisation
+
+frechekoepfe GmbH:  
+[https://frechekoepfe.de/](https://frechekoepfe.de/)
+
+---
+
 ## Verbraucherstreitbeilegung / Universalschlichtungsstelle
 
 Wir sind nicht verpflichtet und nicht bereit, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.
