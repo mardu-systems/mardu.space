@@ -1,6 +1,5 @@
 'use client';
 
-import { Menu } from 'lucide-react';
 import React, { useState } from 'react';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
@@ -14,6 +13,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import clsx from 'clsx';
 import { NavEntry } from '@/types/header';
+import BurgerIcon from './burger-icon';
 
 export default function MobileNav({
   items,
@@ -23,11 +23,6 @@ export default function MobileNav({
   variant?: 'dark' | 'light';
 }) {
   const [open, setOpen] = useState(false);
-
-  const iconColor =
-    variant === 'light'
-      ? 'text-neutral-900 hover:text-neutral-700'
-      : 'text-white hover:text-white/90';
 
   const linkColor = 'text-white/90 hover:text-white';
 
@@ -40,31 +35,29 @@ export default function MobileNav({
           variant="ghost"
           size="icon"
           className={clsx(
-            iconColor,
             'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2',
             variant === 'light'
               ? 'focus-visible:ring-neutral-900 focus-visible:ring-offset-white'
               : 'focus-visible:ring-white focus-visible:ring-offset-neutral-950',
           )}
           aria-label="Navigation öffnen"
-          onClick={() => setOpen(true)}
         >
-          <Menu className="h-5 w-5" />
+          <BurgerIcon isOpen={open} variant={variant} />
         </Button>
       </SheetTrigger>
 
       <SheetContent
         side="left"
-        className="w-[85vw] max-w-sm p-0 bg-radial-[at_5%_5%] from-zinc-900 from-70% to-[#37093F] text-white border-0 flex flex-col"
+        className="w-full h-full p-0 bg-radial-[at_5%_5%] from-zinc-900 from-70% to-[#37093F] text-white border-0 flex flex-col"
       >
         {/* Header */}
-        <SheetHeader className="flex items-center justify-between">
+        <SheetHeader className="flex items-center justify-between px-6 pt-6">
           <SheetTitle className="text-white tracking-wide uppercase">Navigation</SheetTitle>
         </SheetHeader>
 
-        {/* Navigation */}
-        <nav className="px-2 pb-8 flex-1 overflow-y-auto">
-          <Accordion type="multiple" className="w-full divide-y divide-white/5">
+        {/* Navigation - Centered */}
+        <nav className="flex-1 flex items-center justify-center px-6 overflow-y-auto">
+          <Accordion type="multiple" className="w-full max-w-md">
             {items.map((entry) => (
               <div key={entry.label}>
                 {entry.type === 'link' ? (
@@ -72,7 +65,7 @@ export default function MobileNav({
                     href={entry.href}
                     onClick={closeAndGo}
                     className={clsx(
-                      'h-12 rounded-md px-4 font-futura-normal uppercase flex items-center',
+                      'h-14 rounded-md px-4 font-futura-normal text-lg uppercase flex items-center justify-center',
                       linkColor,
                       'hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-950',
                     )}
@@ -83,20 +76,20 @@ export default function MobileNav({
                   <AccordionItem value={entry.label} className="border-0">
                     <AccordionTrigger
                       className={clsx(
-                        'h-12 px-4 font-futura-normal uppercase hover:no-underline',
+                        'h-14 px-4 font-futura-normal text-lg uppercase hover:no-underline justify-center',
                         linkColor,
                       )}
                     >
                       {entry.label}
                     </AccordionTrigger>
                     <AccordionContent>
-                      <ul className="space-y-1 px-2 pb-3">
+                      <ul className="space-y-2 px-2 pb-3">
                         {entry.items.map((item) => (
                           <li key={item.label}>
                             <Link
                               href={item.href || '#'}
                               onClick={closeAndGo}
-                              className="flex items-center gap-3 rounded-md p-2 text-sm hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-950"
+                              className="flex items-center gap-3 rounded-md p-3 text-sm hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-950"
                             >
                               {item.image && (
                                 <Image
@@ -127,13 +120,13 @@ export default function MobileNav({
         </nav>
 
         {/* Footer-CTA */}
-        <div className="mt-auto p-4 pb-[max(env(safe-area-inset-bottom),1rem)]">
+        <div className="p-6 pb-[max(env(safe-area-inset-bottom),1.5rem)] flex justify-center">
           <Button
             asChild
-            className="w-full h-14 text-base tracking-wide uppercase font-futura-normal"
+            className="w-full max-w-md h-14 text-base tracking-wide uppercase font-futura-normal bg-yellow-500 hover:bg-yellow-400 text-black"
           >
             <Link href="/configurator" onClick={closeAndGo}>
-              KONFIGURATOR STARTEN
+              Demo Vereinbaren
             </Link>
           </Button>
         </div>

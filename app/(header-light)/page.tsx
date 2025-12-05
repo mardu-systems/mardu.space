@@ -13,48 +13,42 @@ export default function HomePage() {
   const timelineRef = useRef<HTMLDivElement>(null);
 
   return (
-    <main className="relative min-h-screen bg-background text-foreground">
-      {/* Hero */}
-      <section className="relative w-full h-[calc(100vh-8rem)]">
-        <Image
-          src="/_A7_9072_quer.jpg"
-          alt="Zugriffskontrollsysteme im Makerspace"
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover"
-        />
-        <div className="absolute inset-0 bg-black/50" />
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="max-w-4xl mx-auto px-6 sm:px-8 lg:px-12 text-center animate-in fade-in slide-in-from-bottom-8 duration-700">
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl text-neutral-300 font-bold leading-tight mb-6">
-              Zugriffskontrollsysteme für Makerspaces, FabLabs und Schülerlabore
-            </h1>
+    <main className="relative min-h-screen bg-[#F5F6F7]">
+      {/* Hero Header Section */}
+      <section className="flex flex-col items-center px-4 md:px-8 pt-20 md:pt-8 bg-[#F5F6F7]">
+        {/* Heading Section */}
+        <div className="w-full max-w-7xl flex flex-col lg:flex-row justify-between items-start lg:items-center gap-8 lg:gap-[136px] py-12 lg:py-24">
+          {/* Main Heading */}
+          <h1 className="text-[32px] md:text-[40px] lg:text-[50px] font-semibold leading-[1.2] text-[#351B5A] max-w-[760px]">
+            Zugriffskontrollsysteme für Makerspaces, FabLabs und Schülerlabore
+          </h1>
 
-            <p className="text-lg sm:text-xl text-neutral-300/90 mb-8 leading-relaxed">
-              Entdecke in wenigen Schritten, welche Lösungen dein Space wirklich braucht.
+          {/* Description Text */}
+          <div className="text-[16px] md:text-[18px] lg:text-[20px] leading-[1.4] text-[#061C3D] max-w-[424px]">
+            <p className="mb-4">
+              Makerspaces brauchen klare Verantwortung – besonders beim Zugang für Minderjährige.
             </p>
-            <Link href="/configurator">
-              <Button
-                size="lg"
-                className="px-8 md:px-12 md:py-8 text-xl md:text-4xl font-futura-bold tracking-wider uppercase bg-accent hover:bg-accent/90 text-accent-foreground rounded-full cursor-pointer"
-              >
-                Konfigurator starten
-              </Button>
-            </Link>
+            <p>
+              mardu.space stellt mit eigener Hard- und Software sowie einer europaweit anerkannten 
+              Kompetenzdatenbank sicher, dass nur geschulte Personen Zugang zu Maschinen erhalten – 
+              standortübergreifend und zuverlässig.
+            </p>
           </div>
+        </div>
+
+        {/* Image Section */}
+        <div className="relative w-full max-w-7xl h-[400px] md:h-[550px] lg:h-[640px] rounded-[34px] overflow-hidden shadow-lg mt-8 mb-12">
+          <Image
+            src="/_A7_9072_quer.jpg"
+            alt="Zugriffskontrollsysteme im Makerspace"
+            fill
+            priority
+            sizes="(max-width: 768px) 100vw, 1280px"
+            className="object-cover"
+          />
         </div>
       </section>
 
-      <section className="relative w-full">
-        <div className="flex items-end justify-center">
-          <div className="text-center">
-            <h2 className="uppercase font-futura-heavy text-[clamp(20px,4vw,80px)] text-primary md:leading-[0.9] animate-in fade-in slide-in-from-bottom-4 duration-700 pt-11">
-              Warum brauchst du Mardu.space?
-            </h2>
-          </div>
-        </div>
-      </section>
 
       <section
         id="info"

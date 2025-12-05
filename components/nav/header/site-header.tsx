@@ -84,27 +84,22 @@ export default function SiteHeader({
 
       <div
         className={clsx(
-          'fixed inset-x-0 z-50 border-b border-transparent transition-colors  duration-200',
+          'fixed z-50 transition-colors duration-200',
           scrolled && 'border-white/10',
         )}
-        style={{ top: navTopOffset }}
+        style={{ 
+          top: `calc(${navTopOffset}px + 1rem)`,
+          left: '1rem',
+          right: '1rem',
+        }}
       >
-        <div
-          aria-hidden
-          style={bgStyle}
-          className={clsx(
-            'absolute inset-0 transition-[background-color,backdrop-filter] duration-200 motion-reduce:transition-none',
-            scrolled && 'bg-radial-[at_5%_50%] from-zinc-900 from-70% to-[#37093F]',
-          )}
-        />
-
-        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <nav className="flex h-20 items-center gap-3">
+        <div className="relative mx-auto max-w-7xl bg-white rounded-2xl shadow-lg border border-gray-200/50">
+          <nav className="flex h-20 items-center gap-3 px-6">
             <div className="flex items-center">
               <Link href="/" aria-label="Mardu Home" className="block">
-                <div className="relative h-16 w-[200px]">
+                <div className="relative h-12 w-[150px]">
                   <Image
-                    src={effectiveVariant === 'light' ? logoDarkSrc : logoLightSrc}
+                    src={logoDarkSrc}
                     alt="Mardu Logo"
                     fill
                     className="object-contain"
@@ -115,10 +110,20 @@ export default function SiteHeader({
             </div>
 
             <div className="flex flex-1 md:hidden justify-end">
-              <MobileNav items={items} variant={effectiveVariant} />
+              <MobileNav items={items} variant="light" />
             </div>
 
-            <DesktopNav items={items} variant={effectiveVariant} />
+            <DesktopNav items={items} variant="light" />
+
+            {/* CTA Button - Desktop only */}
+            <div className="hidden md:block ml-4">
+              <Link
+                href="/contact"
+                className="inline-flex items-center justify-center h-11 px-6 rounded-full bg-[#F5C842] hover:bg-[#F5D25C] text-black font-medium text-sm tracking-wide transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F5C842] focus-visible:ring-offset-2"
+              >
+                Demo Vereinbaren
+              </Link>
+            </div>
           </nav>
         </div>
       </div>
