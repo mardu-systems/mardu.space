@@ -6,6 +6,7 @@ import { useRef } from 'react';
 import CircleNumber from '@/components/circle-number';
 import DashedConnector from '@/components/dashed-connector';
 import HeroSection from '@/components/layout/hero-section';
+import CTASection from '@/components/layout/cta-section';
 import Link from 'next/link';
 
 /* ===================== Seite ===================== */
@@ -419,6 +420,17 @@ export default function HomePage() {
           </div>
         </section>
       </div>
+
+      {/* CTA Section */}
+      <CTASection
+        title="Sichere Makerspaces beginnen mit klaren Standards."
+        description="In unserem Whitepaper zeigen wir, wie verantwortungsvolle Zugangs- und Maschinenkontrollen in Makerspaces zuverlässig funktionieren. Laden Sie es jetzt herunter und erhalten Sie praxisnahe Empfehlungen für sichere, skalierbare Abläufe."
+        primaryButtonText="Jetzt Whitepaper Downloaden"
+        primaryButtonHref="/whitepaper"
+        secondaryButtonText="Beratung Vereinbaren"
+        secondaryButtonHref="/contact"
+      />
+
       <small className="font-futura-normal block mt-6 text-center text-xs text-muted-foreground">
         * Schweißen in Wohnräumen ist nicht empfohlen. Nutze eine geeignete Werkstatt mit
         ausreichender Belüftung.

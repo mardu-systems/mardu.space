@@ -5,23 +5,23 @@ import Image from 'next/image';
 import { useState } from 'react';
 
 export interface HeroSectionProps {
-  
+
   title: string;
-  
+
   description: React.ReactNode;
-  
+
   imageSrc: string;
-  
+
   imageAlt: string;
 
   className?: string;
 
   buttonText?: string;
-  
+
   mediaType?: 'image' | 'video';
-  
+
   videoUrl?: string;
-  
+
   onPlayClick?: () => void;
 }
 
@@ -59,13 +59,13 @@ export default function HeroSection({
         </div>
 
         <div>
-              <Link
-                href="/contact"
-                className="inline-flex items-center justify-center h-11 px-6 rounded-lg bg-[#F5C842] hover:bg-[#F5D25C] text-black font-medium text-sm tracking-wide transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F5C842] focus-visible:ring-offset-2"
-              >
-                {buttonText}
-              </Link>
-            </div>
+          <Link
+            href="/contact"
+            className="inline-flex items-center justify-center h-11 px-6 rounded-lg bg-[#F5C842] hover:bg-[#F5D25C] text-black font-medium text-sm tracking-wide transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F5C842] focus-visible:ring-offset-2"
+          >
+            {buttonText}
+          </Link>
+        </div>
       </div>
 
       {/* Image/Video Section */}
@@ -80,7 +80,7 @@ export default function HeroSection({
               sizes="(max-width: 768px) 100vw, 1280px"
               className="object-cover"
             />
-            
+
             {/* Play Button Overlay - nur bei Video */}
             {mediaType === 'video' && (
               <div className="absolute inset-0 flex items-center justify-center">
