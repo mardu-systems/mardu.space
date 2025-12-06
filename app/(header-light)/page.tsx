@@ -59,9 +59,10 @@ export default function HomePage() {
         imageAlt="Warnsymbol Verletzungsgefahr"
         buttonText="Mehr erfahren"
         buttonHref="#info"
+        className="mb-20"
       />
 
-      <div ref={timelineRef} className="relative">
+      <div ref={timelineRef} className="relative mt-9">
         <DashedConnector rootRef={timelineRef} offsetBeforePoint={50} strokeWidth={5} />
         <section className="w-full py-8 md:py-10 z-20">
           <div className="max-w-7xl mx-auto px-6 md:px-8">

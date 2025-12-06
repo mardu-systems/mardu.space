@@ -37,10 +37,10 @@ export default function FeatureSection({
             className={`w-full py-12 md:py-16 lg:py-20 my-10 ${className}`}
             style={{ backgroundColor }}
         >
-            <div className="max-w-7xl mx-auto px-6 md:px-8">
+            <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-1">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
                     {/* Left Column - Text Content */}
-                    <div className="space-y-6 text-white">
+                    <div className="space-y-6">
                         <h2 className="font-futura-heavy text-3xl sm:text-4xl md:text-5xl leading-tight">
                             {title}
                         </h2>
@@ -64,7 +64,7 @@ export default function FeatureSection({
 
                     {/* Right Column - Image */}
                     <div className="relative flex items-center justify-center">
-                        <div className="bg-white rounded-2xl p-8 md:p-10 lg:p-12 shadow-2xl w-full max-w-[600px]">
+                        <div className="rounded-2xl p-8 md:p-10 lg:p-12 w-full max-w-[600px]">
                             <Image
                                 src={imageSrc}
                                 alt={imageAlt}
