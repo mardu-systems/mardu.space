@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import Faq from '@/components/faq';
+import Faq from '@/components/utilities/faq';
 import { faqItems } from '@/data/faq-items';
 
 export const metadata: Metadata = {

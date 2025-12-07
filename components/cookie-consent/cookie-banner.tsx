@@ -9,13 +9,13 @@ import { Skeleton } from '@/components/ui/skeleton';
 import dynamic from 'next/dynamic';
 import clsx from 'clsx';
 
-const CookieSettings = dynamic(() => import('@/components/cookie-settings'), {
+const CookieSettings = dynamic(() => import('@/components/cookie-consent/cookie-settings'), {
   loading: () => (
     <div className="p-4">
       <Skeleton className="h-32 w-full" />
     </div>
   ),
-}) as unknown as typeof import('@/components/cookie-settings').default;
+}) as unknown as typeof import('@/components/cookie-consent/cookie-settings').default;
 
 declare global {
   interface Window {

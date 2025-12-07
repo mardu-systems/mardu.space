@@ -127,12 +127,13 @@ export function ContactForm({
 
   const gap = 'gap-4';
   const content = (
-    <Form {...form}>
-      <form
-        noValidate
-        onSubmit={submit ? form.handleSubmit(handleSubmit) : undefined}
-        className={`grid sm:grid-cols-2 ${gap}`}
-      >
+    <div className="w-full">
+      <Form {...form}>
+        <form
+          noValidate
+          onSubmit={submit ? form.handleSubmit(handleSubmit) : undefined}
+          className={`grid sm:grid-cols-2 ${gap}`}
+        >
         <FormField
           control={form.control}
           name="name"
@@ -140,9 +141,12 @@ export function ContactForm({
             <FormItem>
               <FormLabel className="sr-only">Name</FormLabel>
               <FormControl>
-                <Input placeholder="Name*" {...field} />
+                <Input
+                  placeholder="Name*"
+                    className="rounded-none border-0 border-b border-neutral-800/70 bg-transparent px-0 py-2 focus-visible:ring-0 focus-visible:border-b focus-visible:border-neutral-800/70"
+                  {...field}
+                />
               </FormControl>
-              <FormDescription>Ihr vollständiger Name für die Kontaktaufnahme</FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -154,9 +158,13 @@ export function ContactForm({
             <FormItem>
               <FormLabel className="sr-only">E-Mail</FormLabel>
               <FormControl>
-                <Input type="email" placeholder="E‑Mail*" {...field} />
+                <Input
+                  type="email"
+                  placeholder="E‑Mail*"
+                    className="rounded-none border-0 border-b border-neutral-800/70 bg-transparent px-0 py-2"
+                  {...field}
+                />
               </FormControl>
-              <FormDescription>Ihre E-Mail-Adresse für unsere Antwort</FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -168,11 +176,12 @@ export function ContactForm({
             <FormItem className="sm:col-span-2">
               <FormLabel className="sr-only">Firma</FormLabel>
               <FormControl>
-                <Input placeholder="Firma (optional)" {...field} />
+                <Input
+                  placeholder="Firma (optional)"
+                    className="rounded-none border-0 border-b border-neutral-800/70 bg-transparent px-0 py-2"
+                  {...field}
+                />
               </FormControl>
-              <FormDescription>
-                Name Ihres Unternehmens oder Ihrer Organisation (optional)
-              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -184,11 +193,13 @@ export function ContactForm({
             <FormItem className="sm:col-span-2">
               <FormLabel>Telefon</FormLabel>
               <FormControl>
-                <Input type="tel" placeholder="+49 123 456789" {...field} />
+                <Input
+                  type="tel"
+                  placeholder="+49 123 456789"
+                    className="rounded-none border-0 border-b border-neutral-800/70 bg-transparent px-0 py-2"
+                  {...field}
+                />
               </FormControl>
-              <FormDescription>
-                Format: +49 für Deutschland, dann Vorwahl und Nummer
-              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -200,7 +211,12 @@ export function ContactForm({
             <FormItem className="sm:col-span-2">
               <FormLabel>Nachricht</FormLabel>
               <FormControl>
-                <Textarea rows={3} placeholder="Ihre Nachricht..." {...field} />
+                <Textarea
+                  rows={3}
+                  placeholder="Ihre Nachricht..."
+                    className="rounded-none border-0 border-b border-neutral-800/70 bg-transparent px-0 py-2"
+                  {...field}
+                />
               </FormControl>
               <FormDescription>
                 Beschreiben Sie kurz Ihr Anliegen (optional, max. 500 Zeichen)
@@ -269,12 +285,13 @@ export function ContactForm({
         </Alert>
       )}
     </Form>
+    </div>
   );
 
   if (layout === 'card') {
     return (
-      <Card className="rounded-2xl">
-        <CardContent className="p-6">{content}</CardContent>
+      <Card className="rounded-2xl border-0 shadow-none bg-transparent">
+        <CardContent>{content}</CardContent>
       </Card>
     );
   }

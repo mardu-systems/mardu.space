@@ -5,9 +5,10 @@ import { Button } from '@/components/ui/button';
 import { useRef } from 'react';
 import CircleNumber from '@/components/circle-number';
 import DashedConnector from '@/components/dashed-connector';
-import HeroSection from '@/components/layout/hero-section';
-import CTASection from '@/components/layout/cta-section';
-import FeatureSection from '@/components/layout/feature-section';
+import HeroSection from '@/components/utilities/hero-section';
+import CTASection from '@/components/utilities/cta-section';
+import FeatureSection from '@/components/utilities/feature-section';
+import ThreeArguments from '@/components/utilities/three-arguments';
 import Link from 'next/link';
 
 /* ===================== Seite ===================== */
@@ -16,7 +17,7 @@ export default function HomePage() {
   const timelineRef = useRef<HTMLDivElement>(null);
 
   return (
-    <main className="relative min-h-screen bg-[#F5F6F7]">
+    <main className="relative min-h-screen bg-[#F5F6F7] flex flex-col justify-center md:justify-start">
       {/* Hero Header Section */}
       <HeroSection
         title="Zugriffskontrollsysteme für Makerspaces, FabLabs und Schülerlabore"
@@ -35,6 +36,56 @@ export default function HomePage() {
         buttonText='Jetzt Demo vereinbaren'
         imageSrc="/_A7_9072_quer.jpg"
         imageAlt="Zugriffskontrollsysteme im Makerspace"
+      />
+      
+      <ThreeArguments
+        title={<span>3 gute Argumente für OEB</span>}
+        items={[
+          {
+            title: 'Gemeinsam Brücken bauen',
+            description: (
+              <>
+                Mit Mardu ermöglichen Sie es Ihren Studierenden und Lernenden, sicher Kompetenzen zu erwerben und anzuwenden.
+              </>
+            ),
+            icon: (
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 21s-6-4.35-8-6.5C1.5 12.5 3 8 6 6c3-2 6 1 6 1s3-3 6-1c3 2.05 4.5 6.5 2 8.5C18 16.65 12 21 12 21z" stroke="#7CFFB2" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            ),
+          },
+          {
+            title: 'Messbarer Fortschritt',
+            description: (
+              <>
+                Wir stärken die Souveränität der Lernenden, indem wir ihnen Transparenz über ihre
+                Kompetenzen geben.
+              </>
+            ),
+            icon: (
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 3v18" stroke="#7CFFB2" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M21 12h-18" stroke="#7CFFB2" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M7 7l3 3 7-7" stroke="#7CFFB2" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            ),
+          },
+          {
+            title: 'Datenschutz & Sicherheit',
+            description: (
+              <>
+                Gehostet in Deutschland oder On-Premise auf Ihren Systemen – für maximale Datensicherheit
+                und rechtliche Sicherheit.
+              </>
+            ),
+            icon: (
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2a7 7 0 00-7 7v3a7 7 0 007 7 7 7 0 007-7V9a7 7 0 00-7-7z" stroke="#7CFFB2" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                <rect x="9" y="11" width="6" height="4" rx="1" stroke="#7CFFB2" strokeWidth="1.5" />
+              </svg>
+            ),
+          },
+        ]}
       />
 
 

@@ -25,7 +25,6 @@ export default function SiteShell({
   headerVariant?: HeaderVariant;
 }) {
   const pathname = usePathname();
-  // Daten-Attribut optional, falls du CSS abhängig davon schreiben willst
   return (
     <div data-header-variant={headerVariant} className="bg-background text-foreground">
       <SiteHeader

@@ -7,9 +7,9 @@ import FeatureList from '@/features/product/feature-list';
 import { Building, Monitor, Shield, Wifi } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import Faq from '@/components/faq';
+import Faq from '@/components/utilities/faq';
 import { faqItems } from '@/data/faq-items';
-import HeroSection from '@/components/layout/hero-section';
+import HeroSection from '@/components/utilities/hero-section';
 import {
   Dialog,
   DialogContent,

@@ -117,7 +117,7 @@ export default function SiteFooter({ navLinks = [], metaLinks = [] }: SiteFooter
           <div>
             <h3 className="text-foreground font-semibold text-lg mb-6">Sitemap</h3>
             <nav aria-label="Footer Navigation" className="flex flex-col gap-3">
-              {navLinks.map((link) => (
+              {navLinks?.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
@@ -134,7 +134,7 @@ export default function SiteFooter({ navLinks = [], metaLinks = [] }: SiteFooter
           <div>
             <h3 className="text-foreground font-semibold text-lg mb-6">Rechtliches</h3>
             <nav aria-label="Legal Links" className="flex flex-col gap-3">
-              {metaLinks.map((link) => (
+              {metaLinks?.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
