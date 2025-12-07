@@ -127,10 +127,10 @@ function MobileShowcase({
     <section className="lg:hidden relative mt-10">
       <div className="relative w-full space-y-6">
         <div className="relative z-10 max-w-[40ch] mx-6">
-          <h2 className="text-3xl leading-tight text-neutral-900 font-futura-bold uppercase tracking-wide">
+          <h2 className="text-3xl leading-tight text-neutral-900 uppercase tracking-wide">
             {title}
           </h2>
-          <p className="mt-3 text-lg leading-snug text-neutral-800 font-futura-normal">
+          <p className="mt-3 text-lg leading-snug text-neutral-800">
             {description}
           </p>
         </div>
@@ -238,7 +238,7 @@ function DesktopShowcase(props: ProductAdvertisementProps) {
         {/* Header */}
         <header className="pt-[7%] text-center">
           {title && (
-            <h2 className="text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-futura-heavy uppercase tracking-wide">
+            <h2 className="text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl uppercase tracking-wide">
               {title}
             </h2>
           )}

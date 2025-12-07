@@ -4,7 +4,7 @@ import * as React from 'react';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Input } from '@/components/ui/input';
+// Use native input elements instead of the shadcn `Input` component
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription } from '@/components/ui/alert';
@@ -141,9 +141,9 @@ export function ContactForm({
             <FormItem>
               <FormLabel className="sr-only">Name</FormLabel>
               <FormControl>
-                <Input
+                <input
                   placeholder="Name*"
-                    className="rounded-none border-0 border-b border-neutral-800/70 bg-transparent px-0 py-2 focus-visible:ring-0 focus-visible:border-b focus-visible:border-neutral-800/70"
+                  className="rounded-none border-0 border-b border-neutral-800/70 bg-transparent px-0 py-2 focus-visible:ring-0 focus-visible:border-b focus-visible:border-neutral-800/70"
                   {...field}
                 />
               </FormControl>
@@ -158,10 +158,10 @@ export function ContactForm({
             <FormItem>
               <FormLabel className="sr-only">E-Mail</FormLabel>
               <FormControl>
-                <Input
+                <input
                   type="email"
                   placeholder="E‑Mail*"
-                    className="rounded-none border-0 border-b border-neutral-800/70 bg-transparent px-0 py-2"
+                  className="rounded-none border-0 border-b border-neutral-800/70 bg-transparent px-0 py-2"
                   {...field}
                 />
               </FormControl>
@@ -176,9 +176,9 @@ export function ContactForm({
             <FormItem className="sm:col-span-2">
               <FormLabel className="sr-only">Firma</FormLabel>
               <FormControl>
-                <Input
+                <input
                   placeholder="Firma (optional)"
-                    className="rounded-none border-0 border-b border-neutral-800/70 bg-transparent px-0 py-2"
+                  className="rounded-none border-0 border-b border-neutral-800/70 bg-transparent px-0 py-2"
                   {...field}
                 />
               </FormControl>
@@ -193,10 +193,10 @@ export function ContactForm({
             <FormItem className="sm:col-span-2">
               <FormLabel>Telefon</FormLabel>
               <FormControl>
-                <Input
+                <input
                   type="tel"
                   placeholder="+49 123 456789"
-                    className="rounded-none border-0 border-b border-neutral-800/70 bg-transparent px-0 py-2"
+                  className="rounded-none border-0 border-b border-neutral-800/70 bg-transparent px-0 py-2"
                   {...field}
                 />
               </FormControl>

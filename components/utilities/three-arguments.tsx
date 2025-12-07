@@ -29,7 +29,7 @@ export default function ThreeArguments({ title = '3 gute Argumente', items, clas
     <section className={`w-full ${className} bg-primary text-white py-12 md:py-20`}>
       <div className="max-w-7xl mx-auto px-1">
         <header className="text-center mb-10">
-          <h2 className="font-futura-heavy text-2xl md:text-4xl">{title}</h2>
+          <h2 className="text-2xl md:text-4xl">{title}</h2>
         </header>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
@@ -50,9 +50,9 @@ export default function ThreeArguments({ title = '3 gute Argumente', items, clas
                 )}
               </div>
 
-              <h3 className="font-futura-heavy text-lg md:text-xl mb-3 md:mb-4 text-white">{it.title}</h3>
+              <h3 className="text-lg md:text-xl mb-3 md:mb-4 text-white">{it.title}</h3>
 
-              <div className="font-futura-normal text-sm md:text-base text-white/90 max-w-[38ch]">
+              <div className="text-sm md:text-base text-white/90 max-w-[38ch]">
                 {it.description}
               </div>
             </article>

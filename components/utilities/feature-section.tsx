@@ -41,11 +41,11 @@ export default function FeatureSection({
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
                     {/* Left Column - Text Content */}
                     <div className="space-y-6">
-                        <h2 className="font-futura-heavy text-3xl sm:text-4xl md:text-5xl leading-tight">
+                        <h2 className="text-3xl sm:text-4xl md:text-5xl leading-tight">
                             {title}
                         </h2>
 
-                        <div className="font-futura-normal text-base md:text-lg leading-relaxed opacity-95 space-y-4">
+                        <div className="text-base md:text-lg leading-relaxed opacity-95 space-y-4">
                             {typeof description === 'string' ? <p>{description}</p> : description}
                         </div>
 

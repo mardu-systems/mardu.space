@@ -1,4 +1,5 @@
 @import url("https://use.typekit.net/agw4xrt.css");
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
 
@@ -9,6 +10,17 @@
 .no-scrollbar::-webkit-scrollbar {
     display: none;
 }
+/* Global font setup: Inter regular for body, Inter bold for headings/buttons */
+body, input, textarea, select {
+    font-family: 'Inter', var(--font-sans) !important;
+    font-weight: 400 !important;
+}
+
+h1, h2, h3, h4, h5, h6, button, .btn, [role="button"] {
+    font-family: 'Inter', var(--font-sans) !important;
+    font-weight: 700 !important;
+}
+
 
 .no-scrollbar {
     -ms-overflow-style: none;
@@ -215,6 +227,14 @@ img {
 :focus-visible {
     outline: 2px solid var(--ring);
     outline-offset: 2px;
+}
+
+/* Remove focus outline specifically for form controls to keep the underline-only style */
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+    outline: none !important;
+    box-shadow: none !important;
 }
 
 @layer utilities {

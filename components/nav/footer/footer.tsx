@@ -40,7 +40,7 @@ export default function SiteFooter({ navLinks = [], metaLinks = [] }: SiteFooter
             />
             
             <p className="text-muted-foreground text-sm leading-relaxed max-w-sm">
-              Empowering innovation with advanced multi-modal tools to improve solutions and outcomes.
+              Mit Mardu ermöglichen Sie es Ihren Studierenden und Lernenden, sicher Kompetenzen zu erwerben und anzuwenden.
             </p>
 
             {/* Social Media Icons */}

@@ -65,7 +65,7 @@ export default function MobileNav({
                     href={entry.href}
                     onClick={closeAndGo}
                     className={clsx(
-                      'h-14 rounded-md px-4 font-futura-normal text-lg uppercase flex items-center justify-center',
+                      'h-14 rounded-md px-4 text-lg uppercase flex items-center justify-center',
                       linkColor,
                       'hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-950',
                     )}
@@ -76,7 +76,7 @@ export default function MobileNav({
                   <AccordionItem value={entry.label} className="border-0">
                     <AccordionTrigger
                       className={clsx(
-                        'h-14 px-4 font-futura-normal text-lg uppercase hover:no-underline justify-center',
+                        'h-14 px-4 text-lg uppercase hover:no-underline justify-center',
                         linkColor,
                       )}
                     >
@@ -102,7 +102,7 @@ export default function MobileNav({
                                 />
                               )}
                               <div>
-                                <div className="font-futura-normal">{item.label}</div>
+                                <div>{item.label}</div>
                                 {item.description && (
                                   <p className="text-xs text-neutral-400">{item.description}</p>
                                 )}
@@ -123,7 +123,7 @@ export default function MobileNav({
         <div className="p-6 pb-[max(env(safe-area-inset-bottom),1.5rem)] flex justify-center">
           <Button
             asChild
-            className="w-full max-w-md h-14 text-base tracking-wide uppercase font-futura-normal bg-yellow-500 hover:bg-yellow-400 text-black"
+            className="w-full max-w-md h-14 text-base tracking-wide uppercase bg-yellow-500 hover:bg-yellow-400 text-black"
           >
             <Link href="/configurator" onClick={closeAndGo}>
               Demo Vereinbaren

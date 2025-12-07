@@ -179,7 +179,7 @@ export default function Page() {
           imageAlt="Gateway und Zugriffspunkt in der Werkstatt"
         />
         <SystemPageContent />
-        <section className="max-w-4xl mx-auto px-4 py-16">
+        <section className="max-w-7xl mx-auto px-1 my-20">
           <h2 className="mb-8 text-center text-3xl font-bold">FAQ</h2>
           <Faq items={faqItems} />
         </section>
