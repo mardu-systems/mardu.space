@@ -1,8 +1,8 @@
 import * as React from 'react';
 import type { State } from '../page';
 import NumberStep from './number-step';
-import SummaryStep from '@/app/(header-dark)/configurator/steps/summary';
-import ContactStep, { ContactSchema } from '@/app/(header-dark)/configurator/steps/contact';
+import SummaryStep from '@/app/configurator/steps/summary';
+import ContactStep, { ContactSchema } from '@/app/configurator/steps/contact';
 
 export const createSteps = (
   state: State,

@@ -4,6 +4,7 @@ import React, { Suspense } from 'react';
 import CookieConsentBanner from '@/components/cookie-consent/cookie-banner';
 import TrackingProvider from '@/components/cookie-consent/tracking-provider';
 import RecaptchaProvider from '@/components/cookie-consent/recaptcha-provider';
+import SiteShell from '@/components/layout/site-shell';
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -94,8 +95,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <RecaptchaProvider>
           <Suspense fallback={null}>
             <TrackingProvider>
-              {children}
-              <CookieConsentBanner />
+              <SiteShell>
+                {children}
+                <CookieConsentBanner />
+              </SiteShell>
             </TrackingProvider>
           </Suspense>
         </RecaptchaProvider>
