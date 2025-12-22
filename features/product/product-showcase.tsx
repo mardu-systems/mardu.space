@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import * as React from 'react';
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
+import NewsletterButton from '@/components/utilities/newsletter-button';
 
 export type ProductAdvertisementProps = {
   leftImageSrc: string;
@@ -175,20 +176,10 @@ function MobileShowcase({
         />
       </div>
 
-      {/* Sticky CTA unten */}
-      <div className="sticky bottom-0 inset-x-0 z-30 border-t backdrop-blur supports-[backdrop-filter]:bg-white/60">
-        <div className="mx-auto max-w-screen-sm px-4 py-3 flex items-center justify-between gap-3">
-          <div className="leading-tight">
-            <div className="text-base font-semibold">{price}</div>
-            {priceNote && <div className="text-[10px] text-neutral-500">{priceNote}</div>}
-          </div>
-          {ctaLabel ? (
-            <Button className="h-11 px-5 rounded-lg" onClick={onCtaClick}>
-              {ctaLabel}
-            </Button>
-          ) : null}
-        </div>
+      <div className="mx-auto flex justify-center items-center px-4 mt-3 max-w-7xl">
+        <NewsletterButton primaryButtonText="Vormerken" />
       </div>
+    
     </section>
   );
 }
@@ -276,11 +267,7 @@ function DesktopShowcase(props: ProductAdvertisementProps) {
                 {priceNote && <div className="mt-1 text-xs text-neutral-500">{priceNote}</div>}
               </div>
             )}
-            {ctaLabel && (
-              <Button className="h-12 rounded-lg px-7 text-base font-semibold" onClick={onCtaClick}>
-                {ctaLabel}
-              </Button>
-            )}
+            <NewsletterButton primaryButtonText="Vormerken" />
           </div>
         </footer>
       </div>

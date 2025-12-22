@@ -2,6 +2,7 @@ import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { ReactNode } from 'react';
+import { MeetergoCTAButton } from './meetergo-cta-button';
 
 export type FeatureSectionProps = {
 
@@ -29,7 +30,7 @@ export default function FeatureSection({
     imageAlt,
     buttonText,
     buttonHref,
-    backgroundColor = '#8e5ddd60',
+    backgroundColor = '#F786AE',
     className = '',
 }: FeatureSectionProps) {
     return (
@@ -51,13 +52,7 @@ export default function FeatureSection({
 
                         {buttonText && buttonHref && (
                             <div className="pt-4">
-                                <Button
-                                    asChild
-                                    size="lg"
-                                    className="bg-[#FFB703] hover:bg-[#FFB703]/90 text-black font-semibold px-8 py-6 text-base rounded-lg shadow-lg transition-all"
-                                >
-                                    <Link href={buttonHref}>{buttonText}</Link>
-                                </Button>
+                                <MeetergoCTAButton>Jetzt Beratung vereinbaren</MeetergoCTAButton>
                             </div>
                         )}
                     </div>

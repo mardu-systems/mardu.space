@@ -1,9 +1,38 @@
-@import url("https://use.typekit.net/agw4xrt.css");
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
 
 @plugin "@tailwindcss/typography";
+
+@custom-variant dark (&:is(.dark *));
+
+/* Local Inter font - declare all variants before using */
+@font-face {
+    font-family: 'Inter';
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Inter';
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Inter';
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Inter';
+    font-weight: 800;
+    font-style: normal;
+    font-display: swap;
+}
 
 @custom-variant dark (&:is(.dark *));
 
@@ -19,6 +48,17 @@ body, input, textarea, select {
 h1, h2, h3, h4, h5, h6, button, .btn, [role="button"] {
     font-family: 'Inter', var(--font-sans) !important;
     font-weight: 700 !important;
+}
+
+a, p, button {
+    font-family: 'Inter', var(--font-sans) !important;
+    font-weight: 500 !important;
+}
+
+link[type="text/css"] {
+    font-family: 'Inter', var(--font-sans) !important;
+    font-weight: 700 !important;
+    background-color: #FFB703 !important;
 }
 
 

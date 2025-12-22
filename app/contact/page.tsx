@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 export default function ContactPage() {
   return (
-    <main className="pt-[calc(var(--app-header-height,64px)+env(safe-area-inset-top))]">
+    <main className="pt-[calc(var(--app-header-height,64px)+env(safe-area-inset-top))] min-h-screen">
       <section className="max-w-7xl mx-auto px-4 py-10">
         <div className="pt-8">
           <div className="grid lg:grid-cols-2 gap-12 items-start">

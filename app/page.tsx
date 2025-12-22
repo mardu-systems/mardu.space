@@ -11,6 +11,7 @@ import FeatureSection from '@/components/utilities/feature-section';
 import ThreeArguments from '@/components/utilities/three-arguments';
 import Foerderung from '@/components/utilities/foerderung';
 import Link from 'next/link';
+import { DoorClosedLocked, ShieldCheck } from 'lucide-react';
 
 /* ===================== Seite ===================== */
 
@@ -28,8 +29,8 @@ export default function HomePage() {
               Makerspaces brauchen klare Verantwortung – besonders beim Zugang für Minderjährige.
             </p>
             <p>
-              mardu.space stellt mit eigener Hard- und Software sowie einer europaweit anerkannten 
-              Kompetenzdatenbank sicher, dass nur geschulte Personen Zugang zu Maschinen erhalten – 
+              mardu.space stellt mit eigener Hard- und Software sowie einer europaweit anerkannten
+              Kompetenzdatenbank sicher, dass nur geschulte Personen Zugang zu Maschinen erhalten –
               standortübergreifend und zuverlässig.
             </p>
           </>
@@ -329,48 +330,33 @@ export default function HomePage() {
         title={<span>3 gute Argumente für Mardu</span>}
         items={[
           {
-            title: 'Gemeinsam Brücken bauen',
+            title: 'Sichere Nutzung',
             description: (
               <>
-                Mit Mardu ermöglichen Sie es Ihren Studierenden und Lernenden, sicher Kompetenzen zu erwerben und anzuwenden.
+                mardu.space stellt sicher, dass nur nachweislich geschulte Nutzer Zugang zu Maschinen erhalten – automatisiert, nachvollziehbar und in Echtzeit.
+              </>
+            ),
+            icon: <ShieldCheck className="text-[#351B59]" size={72} />,
+          },
+          {
+            title: 'Standortübergreifende Anerkennung von Kompetenzen',
+            description: (
+              <>
+                Durch die europaweit anerkannten Open Education Badges sind einmal erworbene Qualifikationen in allen angebundenen Makerspaces und FabLabs gültig.
               </>
             ),
             icon: (
-              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 21s-6-4.35-8-6.5C1.5 12.5 3 8 6 6c3-2 6 1 6 1s3-3 6-1c3 2.05 4.5 6.5 2 8.5C18 16.65 12 21 12 21z" stroke="#7CFFB2" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" width="72" height="72" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-cloud-sync-icon lucide-cloud-sync"><path d="m17 18-1.535 1.605a5 5 0 0 1-8-1.5"/><path d="M17 22v-4h-4"/><path d="M20.996 15.251A4.5 4.5 0 0 0 17.495 8h-1.79a7 7 0 1 0-12.709 5.607"/><path d="M7 10v4h4"/><path d="m7 14 1.535-1.605a5 5 0 0 1 8 1.5"/></svg>
             ),
           },
           {
-            title: 'Messbarer Fortschritt',
+            title: 'Klare Verantwortung auch bei Minderjährigen',
             description: (
               <>
-                Wir stärken die Souveränität der Lernenden, indem wir ihnen Transparenz über ihre
-                Kompetenzen geben.
+                Das System kombiniert Zutritts- und Maschinenfreigabe mit dokumentierten Kenntnisständen und schafft so rechtssichere Verantwortlichkeit für Betreiber und Betreuungspersonen.
               </>
             ),
-            icon: (
-              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 3v18" stroke="#7CFFB2" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                <path d="M21 12h-18" stroke="#7CFFB2" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                <path d="M7 7l3 3 7-7" stroke="#7CFFB2" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            ),
-          },
-          {
-            title: 'Datenschutz & Sicherheit',
-            description: (
-              <>
-                Gehostet in Deutschland oder On-Premise auf Ihren Systemen – für maximale Datensicherheit
-                und rechtliche Sicherheit.
-              </>
-            ),
-            icon: (
-              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 2a7 7 0 00-7 7v3a7 7 0 007 7 7 7 0 007-7V9a7 7 0 00-7-7z" stroke="#7CFFB2" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                <rect x="9" y="11" width="6" height="4" rx="1" stroke="#7CFFB2" strokeWidth="1.5" />
-              </svg>
-            ),
+            icon: <DoorClosedLocked className="text-[#351B59]" size={72} />,
           },
         ]}
       />
