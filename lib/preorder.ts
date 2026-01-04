@@ -1,23 +1,12 @@
-import {promises as fs} from "node:fs";
-import path from "node:path";
-
-import {dataPath} from "@/lib/data-dir";
-
-const PREORDERS_FILE = dataPath("preorders.json");
+import { prisma } from "@/lib/prisma";
 
 export async function savePreorder(email: string) {
     try {
-        let preorders: string[] = [];
-        try {
-            const data = await fs.readFile(PREORDERS_FILE, "utf8");
-            preorders = JSON.parse(data);
-        } catch {
-        }
-        if (!preorders.includes(email)) {
-            preorders.push(email);
-            await fs.mkdir(path.dirname(PREORDERS_FILE), {recursive: true});
-            await fs.writeFile(PREORDERS_FILE, JSON.stringify(preorders, null, 2));
-        }
+        await prisma.preorder.upsert({
+            where: { email },
+            update: {},
+            create: { email },
+        });
     } catch (err) {
         console.error("Failed to save preorder", err);
     }
@@ -25,8 +14,10 @@ export async function savePreorder(email: string) {
 
 export async function listPreorders(): Promise<string[]> {
     try {
-        const data = await fs.readFile(PREORDERS_FILE, "utf8");
-        return JSON.parse(data);
+        const preorders = await prisma.preorder.findMany({
+            select: { email: true }
+        });
+        return preorders.map(p => p.email);
     } catch {
         return [];
     }

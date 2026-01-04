@@ -1,10 +1,5 @@
 import {createHmac} from "crypto";
-import {promises as fs} from "node:fs";
-import path from "node:path";
-
-import {dataPath} from "@/lib/data-dir";
-
-const SUBSCRIBERS_FILE = dataPath("newsletter.json");
+import { prisma } from "@/lib/prisma";
 
 function getSecret() {
     const secret = process.env.NEWSLETTER_SECRET;
@@ -34,17 +29,14 @@ export function verifyToken(token: string): { email: string; role: string } | nu
 
 export async function saveSubscriber(sub: { email: string; role: string }) {
     try {
-        let subs: { email: string; role: string }[] = [];
-        try {
-            const data = await fs.readFile(SUBSCRIBERS_FILE, "utf8");
-            subs = JSON.parse(data);
-        } catch {
-        }
-        if (!subs.find((s) => s.email === sub.email)) {
-            subs.push(sub);
-            await fs.mkdir(path.dirname(SUBSCRIBERS_FILE), {recursive: true});
-            await fs.writeFile(SUBSCRIBERS_FILE, JSON.stringify(subs, null, 2));
-        }
+        await prisma.subscriber.upsert({
+            where: { email: sub.email },
+            update: {},
+            create: {
+                email: sub.email,
+                role: sub.role,
+            },
+        });
     } catch (err) {
         console.error("Failed to save subscriber", err);
     }
@@ -52,11 +44,9 @@ export async function saveSubscriber(sub: { email: string; role: string }) {
 
 export async function removeSubscriber(email: string) {
     try {
-        const data = await fs.readFile(SUBSCRIBERS_FILE, "utf8");
-        const subs: { email: string; role: string }[] = JSON.parse(data);
-        const filtered = subs.filter((s) => s.email !== email);
-        await fs.mkdir(path.dirname(SUBSCRIBERS_FILE), {recursive: true});
-        await fs.writeFile(SUBSCRIBERS_FILE, JSON.stringify(filtered, null, 2));
+        await prisma.subscriber.delete({
+            where: { email },
+        });
     } catch (err) {
         console.error("Failed to remove subscriber", err);
     }

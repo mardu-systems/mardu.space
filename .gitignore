@@ -201,3 +201,5 @@ $RECYCLE.BIN/
 
 # End of https://www.toptal.com/developers/gitignore/api/nextjs,react,intellij+all,macos,windows
 /.env.development
+
+/lib/generated/prisma
