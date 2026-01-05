@@ -38,8 +38,7 @@ const WavyBackground = ({
   const [isSafari, setIsSafari] = React.useState(false);
 
   const waveColors = React.useMemo(
-    () =>
-      colors ?? ['#38bdf8', '#818cf8', '#c084fc', '#e879f9', '#22d3ee'],
+    () => colors ?? ['#38bdf8', '#818cf8', '#c084fc', '#e879f9', '#22d3ee'],
     [colors],
   );
 
@@ -95,32 +94,30 @@ const WavyBackground = ({
 
   const timeRef = React.useRef<number>(0);
 
-  const render = React.useCallback(() => {
+  const renderRef = React.useRef<() => void>(() => {});
+
+  renderRef.current = () => {
     const ctx = ctxRef.current;
     if (!ctx) return;
 
     const w = ctx.canvas.width;
     const h = ctx.canvas.height;
 
-    // Clear previous frame
     ctx.globalAlpha = 1;
     ctx.clearRect(0, 0, w, h);
 
-    // Optional background fill
     if (backgroundFill && backgroundFill !== 'transparent') {
       ctx.fillStyle = backgroundFill;
       ctx.fillRect(0, 0, w, h);
     }
 
-    // Draw waves with configured opacity
     ctx.globalAlpha = waveOpacity;
     drawWave(5);
 
-    // Advance time
     timeRef.current += getSpeed();
 
-    animationIdRef.current = window.requestAnimationFrame(render);
-  }, [backgroundFill, drawWave, getSpeed, waveOpacity]);
+    animationIdRef.current = window.requestAnimationFrame(renderRef.current);
+  };
 
   const init = React.useCallback(() => {
     const canvas = canvasRef.current;
@@ -136,8 +133,8 @@ const WavyBackground = ({
     window.addEventListener('resize', resizeCanvas);
 
     // Start animation loop
-    render();
-  }, [render, resizeCanvas]);
+    renderRef.current();
+  }, [resizeCanvas]);
 
   React.useEffect(() => {
     // Detect Safari (kept because you explicitly supported it)
@@ -168,8 +165,8 @@ const WavyBackground = ({
       cancelAnimationFrame(animationIdRef.current);
       animationIdRef.current = null;
     }
-    render();
-  }, [blur, backgroundFill, waveOpacity, speed, waveWidth, waveColors, render]);
+    renderRef.current();
+  }, [blur, backgroundFill, waveOpacity, speed, waveWidth, waveColors]);
 
   return (
     <div
