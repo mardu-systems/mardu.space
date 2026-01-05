@@ -1,7 +1,6 @@
 'use client';
 
 import Image from 'next/image';
-import { Button } from '@/components/ui/button';
 import { useRef } from 'react';
 import CircleNumber from '@/components/circle-number';
 import DashedConnector from '@/components/dashed-connector';
@@ -10,8 +9,7 @@ import CTASection from '@/components/utilities/cta-section';
 import FeatureSection from '@/components/utilities/feature-section';
 import ThreeArguments from '@/components/utilities/three-arguments';
 import Foerderung from '@/components/utilities/foerderung';
-import Link from 'next/link';
-import { DoorClosedLocked, ShieldCheck } from 'lucide-react';
+import { DoorClosedLocked, ShieldCheck, CloudSync } from 'lucide-react';
 
 /* ===================== Seite ===================== */
 
@@ -35,7 +33,7 @@ export default function HomePage() {
             </p>
           </>
         }
-        buttonText='Jetzt Demo vereinbaren'
+        buttonText="Jetzt Demo vereinbaren"
         imageSrc="/_A7_9072_quer.jpg"
         imageAlt="Zugriffskontrollsysteme im Makerspace"
       />
@@ -46,8 +44,8 @@ export default function HomePage() {
           <>
             <p>
               Makerspaces und FabLabs eröffnen kreative Möglichkeiten, bringen aber auch Risiken
-              durch leistungsstarke Maschinen mit sich. Besonders beim Zugang für Minderjährige
-              ist klare Verantwortung gefragt.
+              durch leistungsstarke Maschinen mit sich. Besonders beim Zugang für Minderjährige ist
+              klare Verantwortung gefragt.
             </p>
             <p className="mt-4">
               Das mardu.space System sorgt mit eigener Hard- und Software sowie einer europaweit
@@ -163,7 +161,7 @@ export default function HomePage() {
           <div className="max-w-7xl mx-auto px-6 md:px-8">
             <div className="grid grid-cols-12 gap-6 md:gap-10 items-start">
               <div className="col-span-12 md:col-span-6 flex flex-col items-center md:items-start">
-                <div className="w-full max-w-[720px] rounded-xl border border-primary/30 shadow-[0_10px_40px_color-mix(in_oklch,var(--primary)_15%,transparent)] overflow-hidden">
+                <div className="w-full max-w-180 rounded-xl border border-primary/30 shadow-[0_10px_40px_color-mix(in_oklch,var(--primary)_15%,transparent)] overflow-hidden">
                   <Image
                     src="/landing/open_badge.png"
                     alt="Badge erstellen – Webplattform Open Educational Badges"
@@ -193,7 +191,7 @@ export default function HomePage() {
                   </div>
                 </div>
 
-                <div className="relative mt-6 md:-mt-20 md:mb-[-16px] flex items-end justify-end">
+                <div className="relative mt-6 md:-mt-20 md:-mb-4 flex items-end justify-end">
                   <Image
                     src="/landing/person_schweiss_nfc.svg"
                     alt="Illustration einer Person, die sich per NFC am Gerät authentifiziert"
@@ -249,11 +247,11 @@ export default function HomePage() {
                   alt="Open Educational Badges – Cloud / Gateway"
                   width={1200}
                   height={900}
-                  className="w-full max-w-[600px] h-auto object-contain"
+                  className="w-full max-w-150 h-auto object-contain"
                   loading="lazy"
                 />
 
-                <div className="md:absolute relative text-accent text-sm sm:text-base leading-snug tracking-[0.005em] flex items-start gap-4 max-w-[280px] md:max-w-[340px] md:left-[45%] md:bottom-[7%] mt-6 md:mt-0 pointer-events-none">
+                <div className="md:absolute relative text-accent text-sm sm:text-base leading-snug tracking-[0.005em] flex items-start gap-4 max-w-70 md:max-w-85 md:left-[45%] md:bottom-[7%] mt-6 md:mt-0 pointer-events-none">
                   <div className="flex-1">
                     <p>
                       Das Gateway von <span className="whitespace-nowrap">mardu.space</span>{' '}
@@ -266,7 +264,7 @@ export default function HomePage() {
                   </div>
                   <CircleNumber
                     number={5}
-                    className="shrink-0 translate-y-[100%] translate-x-[20%]"
+                    className="shrink-0 translate-y-full translate-x-[20%]"
                     anchor
                   />
                 </div>
@@ -299,7 +297,7 @@ export default function HomePage() {
                   alt="Jochen schweißt mit freigeschaltetem Gerät"
                   width={1000}
                   height={800}
-                  className="w-[90%] md:w-full max-w-[580px] h-auto object-contain z-20"
+                  className="w-[90%] md:w-full max-w-145 h-auto object-contain z-20"
                   loading="lazy"
                 />
               </div>
@@ -333,7 +331,8 @@ export default function HomePage() {
             title: 'Sichere Nutzung',
             description: (
               <>
-                mardu.space stellt sicher, dass nur nachweislich geschulte Nutzer Zugang zu Maschinen erhalten – automatisiert, nachvollziehbar und in Echtzeit.
+                mardu.space stellt sicher, dass nur nachweislich geschulte Nutzer Zugang zu
+                Maschinen erhalten – automatisiert, nachvollziehbar und in Echtzeit.
               </>
             ),
             icon: <ShieldCheck className="text-[#351B59]" size={72} />,
@@ -342,18 +341,19 @@ export default function HomePage() {
             title: 'Standortübergreifende Anerkennung von Kompetenzen',
             description: (
               <>
-                Durch die europaweit anerkannten Open Education Badges sind einmal erworbene Qualifikationen in allen angebundenen Makerspaces und FabLabs gültig.
+                Durch die europaweit anerkannten Open Education Badges sind einmal erworbene
+                Qualifikationen in allen angebundenen Makerspaces und FabLabs gültig.
               </>
             ),
-            icon: (
-              <svg xmlns="http://www.w3.org/2000/svg" width="72" height="72" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-cloud-sync-icon lucide-cloud-sync"><path d="m17 18-1.535 1.605a5 5 0 0 1-8-1.5"/><path d="M17 22v-4h-4"/><path d="M20.996 15.251A4.5 4.5 0 0 0 17.495 8h-1.79a7 7 0 1 0-12.709 5.607"/><path d="M7 10v4h4"/><path d="m7 14 1.535-1.605a5 5 0 0 1 8 1.5"/></svg>
-            ),
+            icon: <CloudSync className="text-[#351B59]" size={72} />,
           },
           {
             title: 'Klare Verantwortung auch bei Minderjährigen',
             description: (
               <>
-                Das System kombiniert Zutritts- und Maschinenfreigabe mit dokumentierten Kenntnisständen und schafft so rechtssichere Verantwortlichkeit für Betreiber und Betreuungspersonen.
+                Das System kombiniert Zutritts- und Maschinenfreigabe mit dokumentierten
+                Kenntnisständen und schafft so rechtssichere Verantwortlichkeit für Betreiber und
+                Betreuungspersonen.
               </>
             ),
             icon: <DoorClosedLocked className="text-[#351B59]" size={72} />,
