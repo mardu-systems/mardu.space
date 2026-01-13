@@ -1,6 +1,6 @@
 ## Angaben gemäß § 5 TMG
 
-**Mardu**
+**Mardu GmbH i. G.**
 A1
 Alter Schlachthof 39  
 76131 Karlsruhe  
@@ -8,14 +8,14 @@ Deutschland
 
 E-Mail: [info@mardu.de](mailto:info@mardu.de)
 
-Vertreten durch:  
+Geschäftsführung:  
 Luca Schöneberg, Erik Frey
 
 ---
 
 ## Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV / MStV
 
-**Mardu**
+**Mardu GmbH i. G.**
 A1
 Alter Schlachthof 39  
 76131 Karlsruhe
@@ -78,4 +78,4 @@ Downloads und Kopien dieser Seite sind nur für den privaten, nicht kommerzielle
 Soweit die Inhalte auf dieser Seite nicht vom Betreiber erstellt wurden, werden die Urheberrechte Dritter beachtet und Inhalte Dritter entsprechend gekennzeichnet.
 
 Sollten Sie dennoch auf eine Urheberrechtsverletzung aufmerksam werden, bitten wir um einen entsprechenden Hinweis.  
-Bei Bekanntwerden von Rechtsverletzungen werden wir derartige Inhalte umgehend entfernen.
+Bei Bekanntwerden von Rechtsverletzungen werden wir diese Inhalte umgehend entfernen.
