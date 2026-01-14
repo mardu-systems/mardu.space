@@ -1,6 +1,7 @@
 ## Angaben gemäß § 5 TMG
 
 **Mardu GmbH i. G.**
+
 A1
 Alter Schlachthof 39  
 76131 Karlsruhe  
@@ -16,6 +17,7 @@ Luca Schöneberg, Erik Frey
 ## Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV / MStV
 
 **Mardu GmbH i. G.**
+
 A1
 Alter Schlachthof 39  
 76131 Karlsruhe
