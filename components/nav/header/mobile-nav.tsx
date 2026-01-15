@@ -10,10 +10,13 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion';
 import Link from 'next/link';
+import { usePathname, useRouter } from 'next/navigation';
 import Image from 'next/image';
 import clsx from 'clsx';
 import { NavEntry } from '@/types/header';
 import BurgerIcon from './burger-icon';
+import { useScrollToSection } from '@/hooks/use-scroll-to-section';
+import { MeetergoCTAButton } from '@/components/utilities/meetergo-cta-button';
 
 export default function MobileNav({
   items,
@@ -23,10 +26,24 @@ export default function MobileNav({
   variant?: 'dark' | 'light';
 }) {
   const [open, setOpen] = useState(false);
+  const { scrollToSection } = useScrollToSection();
+  const router = useRouter();
+  const pathname = usePathname();
 
   const linkColor = 'text-white/90 hover:text-white';
 
   const closeAndGo = () => setOpen(false);
+
+  const handleSectionClick = (href: string) => {
+    if (href.startsWith('#')) {
+      if (pathname !== '/') {
+        router.push('/' + href);
+      } else {
+        scrollToSection(href);
+      }
+    }
+    closeAndGo();
+  };
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
@@ -56,27 +73,43 @@ export default function MobileNav({
         </SheetHeader>
 
         {/* Navigation - Centered */}
-        <nav className="flex-1 flex items-center justify-center px-6 overflow-y-auto">
+        <nav
+          className="flex-1 flex items-center justify-center px-6 overflow-y-auto"
+          aria-label="Mobile Navigation"
+        >
           <Accordion type="multiple" className="w-full max-w-md">
             {items.map((entry) => (
               <div key={entry.label}>
                 {entry.type === 'link' ? (
-                  <Link
-                    href={entry.href}
-                    onClick={closeAndGo}
-                    className={clsx(
-                      'h-14 rounded-md px-4 text-lg uppercase flex items-center justify-center',
-                      linkColor,
-                      'hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-950',
-                    )}
-                  >
-                    {entry.label}
-                  </Link>
+                  entry.href.startsWith('#') ? (
+                    <button
+                      onClick={() => handleSectionClick(entry.href)}
+                      className={clsx(
+                        'h-14 rounded-md px-4 text-lg uppercase flex items-center justify-center w-full font-medium',
+                        linkColor,
+                        'hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-950',
+                      )}
+                    >
+                      {entry.label}
+                    </button>
+                  ) : (
+                    <Link
+                      href={entry.href}
+                      onClick={closeAndGo}
+                      className={clsx(
+                        'h-14 rounded-md px-4 text-lg uppercase flex items-center justify-center font-medium',
+                        linkColor,
+                        'hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-950',
+                      )}
+                    >
+                      {entry.label}
+                    </Link>
+                  )
                 ) : (
                   <AccordionItem value={entry.label} className="border-0">
                     <AccordionTrigger
                       className={clsx(
-                        'h-14 px-4 text-lg uppercase hover:no-underline justify-center',
+                        'h-14 px-4 text-lg uppercase hover=no-underline justify-center font-medium',
                         linkColor,
                       )}
                     >
@@ -121,14 +154,12 @@ export default function MobileNav({
 
         {/* Footer-CTA */}
         <div className="p-6 pb-[max(env(safe-area-inset-bottom),1.5rem)] flex justify-center">
-          <Button
-            asChild
-            className="w-full max-w-md h-14 text-base tracking-wide uppercase bg-yellow-500 hover:bg-yellow-400 text-black"
+          <MeetergoCTAButton
+            onClick={closeAndGo}
+            className="w-full max-w-md h-14 text-base tracking-wide uppercase bg-accent hover:bg-accent/90 text-accent-foreground"
           >
-            <Link href="/configurator" onClick={closeAndGo}>
-              Demo Vereinbaren
-            </Link>
-          </Button>
+            Demo Vereinbaren
+          </MeetergoCTAButton>
         </div>
       </SheetContent>
     </Sheet>

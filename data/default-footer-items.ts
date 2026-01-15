@@ -13,12 +13,4 @@ export const defaultFooterNavLinks: FooterLink[] = [
 export const defaultFooterMetaLinks: FooterLink[] = [
     { href: "/publisher", label: "Impressum" },
     { href: "/privacy", label: "Datenschutz" },
-    {
-        href: "#",
-        label: "Cookie-Einstellungen",
-        onClick: (e) => {
-            e.preventDefault();
-            window.openCookieSettings?.();
-        },
-    },
 ];
