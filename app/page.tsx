@@ -1,362 +1,379 @@
 'use client';
 
-import Image from 'next/image';
-import { useRef } from 'react';
-import CircleNumber from '@/components/circle-number';
-import DashedConnector from '@/components/dashed-connector';
+import {
+  Activity,
+  AlertTriangle,
+  Briefcase,
+  CheckCircle,
+  Cpu,
+  Key,
+  Lock,
+  Server,
+  Settings,
+  ShieldCheck,
+  Users,
+  Wrench,
+} from 'lucide-react';
+
 import HeroSection from '@/components/utilities/hero-section';
 import CTASection from '@/components/utilities/cta-section';
-import FeatureSection from '@/components/utilities/feature-section';
-import ThreeArguments from '@/components/utilities/three-arguments';
 import Foerderung from '@/components/utilities/foerderung';
-import { DoorClosedLocked, ShieldCheck, CloudSync } from 'lucide-react';
-
-/* ===================== Seite ===================== */
+import SplitContent from '@/components/utilities/split-content';
+import CardGrid from '@/components/utilities/card-grid';
+import InfoGrid from '@/components/utilities/info-grid';
+import ProcessSteps from '@/components/utilities/process-steps';
+import SecurityAccordion from '@/components/utilities/security-accordion';
+import ScenarioGrid from '@/components/utilities/scenario-grid';
 
 export default function HomePage() {
-  const timelineRef = useRef<HTMLDivElement>(null);
-
   return (
-    <main className="relative min-h-screen bg-[#F5F6F7] flex flex-col justify-center md:justify-start">
-      {/* Hero Header Section */}
+    <main className="min-h-screen bg-background flex flex-col">
+      {/* 1. Hero Header Section */}
       <HeroSection
-        title="Zugriffskontrollsysteme für Makerspaces, FabLabs und Schülerlabore"
+        title="Digitale Zutritts- und Maschinenfreigabe"
         description={
           <>
-            <p className="mb-4">
-              Makerspaces brauchen klare Verantwortung – besonders beim Zugang für Minderjährige.
+            <p className="mb-4 text-lg font-medium">
+              Für Unternehmenswerkstätten, Hochschulen, Makerspaces und private Werkstätten.
             </p>
             <p>
-              mardu.space stellt mit eigener Hard- und Software sowie einer europaweit anerkannten
-              Kompetenzdatenbank sicher, dass nur geschulte Personen Zugang zu Maschinen erhalten –
-              standortübergreifend und zuverlässig.
+              mardu.space ersetzt Schlüssel und Listen durch ein konsistentes Berechtigungsmodell
+              für Räume und Maschinen – skalierbar von der privaten Werkstatt bis zum Campus oder
+              Produktionsstandort.
             </p>
           </>
         }
         buttonText="Jetzt Demo vereinbaren"
         imageSrc="/_A7_9072_quer.jpg"
-        imageAlt="Zugriffskontrollsysteme im Makerspace"
+        imageAlt="mardu.space System in einer Werkstatt"
       />
 
-      <FeatureSection
-        title="Sicherheit & Verantwortung in Makerspaces"
+      {/* 2. Management Summary */}
+      <SplitContent
+        title="Management Summary"
         description={
           <>
             <p>
-              Makerspaces und FabLabs eröffnen kreative Möglichkeiten, bringen aber auch Risiken
-              durch leistungsstarke Maschinen mit sich. Besonders beim Zugang für Minderjährige ist
-              klare Verantwortung gefragt.
+              In Unternehmenswerkstätten, Hochschulen und Makerspaces treffen wechselnde Rollen auf
+              Bereiche mit erhöhtem Gefahrenpotenzial. Sicherheits- und Compliance-Lücken entstehen
+              oft nicht durch fehlende Regeln, sondern durch mangelnde Durchsetzung.
             </p>
-            <p className="mt-4">
-              Das mardu.space System sorgt mit eigener Hard- und Software sowie einer europaweit
-              anerkannten Kenntnisdatenbank (Open Education Badges) für sichere Zutritts- und
-              Zugriffskontrollen. So werden nur geschulte Nutzer freigeschaltet – und ihre
-              Qualifikationen lassen sich standortübergreifend einsetzen.
+            <p>
+              mardu.space verknüpft Türzugang und Maschinenfreigabe in einem System. Berechtigungen
+              werden rollenbasiert und zeitlich definiert. Maschinen lassen sich so steuern, dass
+              eine Bedienung nur mit gültiger Qualifikation möglich ist.
+            </p>
+            <p>
+              Ereignisprotokolle unterstützen die Vorfallklärung und den Nachweis, dass
+              organisatorische Vorgaben umgesetzt sind.
             </p>
           </>
         }
-        imageSrc="/landing/warning.svg"
-        imageAlt="Warnsymbol Verletzungsgefahr"
-        buttonText="Mehr erfahren"
-        buttonHref="#info"
-        className="mb-20"
-      />
-
-      <div ref={timelineRef} className="relative mt-9">
-        <DashedConnector rootRef={timelineRef} offsetBeforePoint={50} strokeWidth={5} />
-        <section className="w-full py-8 md:py-10 z-20">
-          <div className="max-w-7xl mx-auto px-6 md:px-8">
-            <div className="grid grid-cols-12 gap-6 md:gap-10 items-center">
-              <div className="col-span-2 flex justify-center md:justify-start">
-                <Image
-                  src="/landing/person.svg"
-                  alt="Person"
-                  width={192}
-                  height={192}
-                  className="w-24 h-24 md:w-32 md:h-32 object-contain"
-                  loading="lazy"
-                />
-              </div>
-
-              <div className="col-span-7 md:col-span-4">
-                <div className="text-accent text-sm sm:text-base leading-snug tracking-[0.005em]">
-                  <p>
-                    Jochen macht bei Harald einen Schweißkurs. Dieser findet in seinem heimischen
-                    Makerspace statt.
-                  </p>
-                  <p className="mt-4">
-                    Harald ist ein im Ruhestand befindlicher professioneller Schweißer, der sein
-                    Wissen und seine Erfahrung als Ausbilder im Makerspace gerne weitergibt.
-                  </p>
-                </div>
-              </div>
-
-              <div className="col-span-3 md:col-span-2 flex justify-top">
-                <CircleNumber number={1} className="mt-1" anchor />
-              </div>
-
-              <div className="col-span-12 md:col-span-4 md:col-start-9 md:translate-y-[-40%] text-right">
-                <h2 className="text-primary whitespace-pre-line uppercase text-3xl sm:text-4xl md:text-6xl text-right">
-                  {`WIE KANN
-                                    MARDU.SPACE
-                                    DIR HELFEN?`}
-                </h2>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section className="w-full py-10 md:py-14 z-20">
-          <div className="max-w-7xl mx-auto px-6 md:px-8">
-            <div className="grid grid-cols-12 gap-6 md:gap-10 items-center">
-              <div className="col-span-2 flex justify-center md:justify-start">
-                <Image
-                  src="/landing/person_happy.svg"
-                  alt="Person freut sich"
-                  width={192}
-                  height={192}
-                  className="w-24 h-24 md:w-32 md:h-32 object-contain"
-                  loading="lazy"
-                />
-              </div>
-
-              <div className="col-span-10 md:col-span-3">
-                <div className="text-accent text-sm sm:text-base leading-snug tracking-[0.005em]">
-                  <p>
-                    Jochen hat erfolgreich an dem Schweißkurs teilgenommen und weiß nun, welche
-                    Gefahren von einem Schweißgerät ausgehen und wie man dieses fachgerecht
-                    verwendet.
-                  </p>
-                  <p className="mt-4">
-                    Harald hat ihm dafür das Open-Educational-Badge „Kenntnisse im Schweißen"
-                    digital verliehen.
-                  </p>
-                </div>
-              </div>
-
-              <div className="col-span-12 md:col-span-2 flex justify-center md:justify-start">
-                <CircleNumber number={2} className="mt-1" anchor />
-              </div>
-
-              <div className="col-span-12 md:col-span-4">
-                <div className="space-y-2">
-                  <Image
-                    src="/landing/HaraldundJochen.jpg"
-                    alt="Harald zeigt Jochen das Schweißen"
-                    width={1200}
-                    height={1200}
-                    className="w-full h-auto drop-shadow-2xl"
-                    loading="lazy"
-                  />
-                  <p className="mt-3 text-center md:text-left text-xl leading-snug">
-                    Wissensweitergabe durch Kurse
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section className="w-full pt-6 md:pt-8 z-20">
-          <div className="max-w-7xl mx-auto px-6 md:px-8">
-            <div className="grid grid-cols-12 gap-6 md:gap-10 items-start">
-              <div className="col-span-12 md:col-span-6 flex flex-col items-center md:items-start">
-                <div className="w-full max-w-180 rounded-xl border border-primary/30 shadow-[0_10px_40px_color-mix(in_oklch,var(--primary)_15%,transparent)] overflow-hidden">
-                  <Image
-                    src="/landing/open_badge.png"
-                    alt="Badge erstellen – Webplattform Open Educational Badges"
-                    width={1440}
-                    height={890}
-                    className="w-full h-auto object-contain"
-                    loading="lazy"
-                  />
-                </div>
-
-                <p className="mt-3 text-center md:text-left text-xl leading-snug">
-                  <span className="block">Webplattform Open Educational Badges</span>
-                  <span className="block text-zinc-600">Zur Ausstellung der Berechtigungen</span>
-                </p>
-              </div>
-
-              <div className="col-span-12 md:col-span-6 grid grid-rows-[auto_auto_1fr]">
-                <div className="flex items-start gap-4">
-                  <CircleNumber number={3} className="mt-1 shrink-0" anchor />
-                  <div className="mt-4 max-w-[40ch] text-accent text-sm sm:text-base leading-snug tracking-[0.005em]">
-                    <p>Jochen möchte nun ein Gestell für einen Wohnzimmertisch schweißen.</p>
-                    <p className="mt-4">
-                      Hierzu authentifiziert er sich an dem{' '}
-                      <span className="whitespace-nowrap">mardu.space</span> Gerät, welches dem
-                      Schweißgerät vorgeschaltet ist.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="relative mt-6 md:-mt-20 md:-mb-4 flex items-end justify-end">
-                  <Image
-                    src="/landing/person_schweiss_nfc.svg"
-                    alt="Illustration einer Person, die sich per NFC am Gerät authentifiziert"
-                    width={1100}
-                    height={900}
-                    className="w-[88%] md:w-[84%] h-auto object-contain"
-                    loading="lazy"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-        <section className="w-full z-20 md:-mt-12">
-          <div className="max-w-7xl mx-auto px-6 md:px-8">
-            <div className="w-full md:w-4/6">
-              <div className="grid grid-cols-12 gap-4 md:gap-6 items-center">
-                {/* LINKS: Icon/Illustration */}
-                <div className="col-span-3 md:col-span-2 flex justify-center md:justify-start">
-                  <Image
-                    src="/landing/mesh.png"
-                    alt="Illustration eines Funknetzwerks"
-                    width={220}
-                    height={220}
-                    className="w-24 h-24 md:w-32 md:h-32 object-contain"
-                    loading="lazy"
-                  />
-                </div>
-
-                {/* MITTE: Text */}
-                <div className="col-span-7 md:col-span-7">
-                  <p className="text-accent text-sm sm:text-base leading-snug tracking-[0.005em]">
-                    Alle Geräte von <span className="whitespace-nowrap">mardu.space</span> in einem
-                    Gebäude sind untereinander funkvernetzt, um höchste Ausfallsicherheit zu
-                    gewährleisten. Dadurch erreicht jede Anfrage immer ihr Ziel.
-                  </p>
-                </div>
-
-                {/* RECHTS: Nummer-Kreis */}
-                <div className="col-span-2 flex justify-center md:justify-start">
-                  <CircleNumber number={4} className="mt-1 shrink-0" anchor />
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-        <section className="w-full z-20 -mt-8 md:-mt-12">
-          <div className="max-w-7xl mx-auto px-6 md:px-8">
-            <div className="grid grid-cols-12 gap-6 md:gap-10 items-start">
-              <div className="col-span-11 md:col-span-6 relative">
-                <Image
-                  src="/landing/open_badge_mardu_cloud.svg"
-                  alt="Open Educational Badges – Cloud / Gateway"
-                  width={1200}
-                  height={900}
-                  className="w-full max-w-150 h-auto object-contain"
-                  loading="lazy"
-                />
-
-                <div className="md:absolute relative text-accent text-sm sm:text-base leading-snug tracking-[0.005em] flex items-start gap-4 max-w-70 md:max-w-85 md:left-[45%] md:bottom-[7%] mt-6 md:mt-0 pointer-events-none">
-                  <div className="flex-1">
-                    <p>
-                      Das Gateway von <span className="whitespace-nowrap">mardu.space</span>{' '}
-                      empfängt die Daten und fragt bei Open Education Badges an, ob die
-                      erforderlichen Kenntnisse vorliegen.
-                    </p>
-                    <p className="mt-4">
-                      Ein Offline-Cache sorgt für einen Betrieb auch bei einem Internetausfall.
-                    </p>
-                  </div>
-                  <CircleNumber
-                    number={5}
-                    className="shrink-0 translate-y-full translate-x-[20%]"
-                    anchor
-                  />
-                </div>
-              </div>
-
-              {/* RECHTS: Gerät-Kachel + Caption */}
-              <figure className="col-span-12 md:col-span-5 flex flex-col items-center md:items-end md:self-end">
-                <Image
-                  src="/landing/blende.svg"
-                  alt="mardu.space Gerät zur Freischaltung der Maschinen"
-                  width={1200}
-                  height={1200}
-                  className="w-[82%] md:w-[88%] lg:w-[80%] h-auto object-contain rounded-2xl drop-shadow-xl"
-                  loading="lazy"
-                />
-                <figcaption className="mt-3 text-center md:text-left text-xl leading-snug">
-                  Gerät zur Freischaltung der Maschinen
-                </figcaption>
-              </figure>
-            </div>
-          </div>
-        </section>
-        <section className="w-full py-10 md:py-14 z-20">
-          <div className="max-w-7xl mx-auto px-6 md:px-8">
-            <div className="grid grid-cols-12 gap-6 md:gap-10 items-center">
-              {/* LINKS: Illustration Person + Schweißgerät */}
-              <div className="col-span-12 md:col-span-6 flex justify-center md:justify-start">
-                <Image
-                  src="/landing/person_schweiss.svg"
-                  alt="Jochen schweißt mit freigeschaltetem Gerät"
-                  width={1000}
-                  height={800}
-                  className="w-[90%] md:w-full max-w-145 h-auto object-contain z-20"
-                  loading="lazy"
-                />
-              </div>
-
-              {/* RECHTS: Kreisnummer + Text */}
-              <div className="col-span-12 md:col-span-6 flex items-start gap-4">
-                <CircleNumber number={6} className="mt-1 shrink-0 " anchor />
-                <div className="text-accent text-sm sm:text-base leading-snug tracking-[0.005em] max-w-[56ch]">
-                  <p>
-                    Da die Berechtigung vorliegt, schaltet das{' '}
-                    <span className="whitespace-nowrap">mardu.space</span> Gerät den Strom für das
-                    Schweißgerät frei und Jochen kann seinen Wohnzimmertisch zusammenschweißen.
-                    <sup>*</sup>
-                  </p>
-                  <p className="mt-4">
-                    Dank des Kurses von Harald weiß er auch, wie man den Verzug beim Schweißen
-                    gering hält.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-      </div>
-
-      <ThreeArguments
-        className="mt-12"
-        title={<span>3 gute Argumente für Mardu</span>}
+        sideTitle="Mehrwert aus Betreibersicht"
+        sideIcon={CheckCircle}
         items={[
           {
-            title: 'Sichere Nutzung',
-            description: (
-              <>
-                mardu.space stellt sicher, dass nur nachweislich geschulte Nutzer Zugang zu
-                Maschinen erhalten – automatisiert, nachvollziehbar und in Echtzeit.
-              </>
-            ),
-            icon: <ShieldCheck className="text-[#351B59]" size={72} />,
+            title: 'Sicherheit & Nachvollziehbarkeit',
+            description:
+              'Personenbezogene, zeitlich definierte Berechtigungen und lückenlose Ereignisprotokolle.',
+            icon: ShieldCheck,
           },
           {
-            title: 'Standortübergreifende Anerkennung von Kompetenzen',
-            description: (
-              <>
-                Durch die europaweit anerkannten Open Education Badges sind einmal erworbene
-                Qualifikationen in allen angebundenen Makerspaces und FabLabs gültig.
-              </>
-            ),
-            icon: <CloudSync className="text-[#351B59]" size={72} />,
+            title: 'Reduzierter Verwaltungsaufwand',
+            description:
+              'Digitale Vergabe, Anpassung und sofortiger Entzug von Rechten ohne Schlüsselmanagement.',
+            icon: Settings,
           },
           {
-            title: 'Klare Verantwortung auch bei Minderjährigen',
+            title: 'Flexibler Betrieb',
+            description:
+              'Lokal oder zentral administrierbar, passend zu Ihrer Infrastruktur und IT-Vorgaben.',
+            icon: Server,
+          },
+        ]}
+      />
+
+      {/* 3. Ausgangslage & Herausforderungen */}
+      <CardGrid
+        title="Ausgangslage & Herausforderungen"
+        variant="muted"
+        items={[
+          {
+            title: 'Unternehmen & Hochschulen',
             description: (
-              <>
-                Das System kombiniert Zutritts- und Maschinenfreigabe mit dokumentierten
-                Kenntnisständen und schafft so rechtssichere Verantwortlichkeit für Betreiber und
-                Betreuungspersonen.
-              </>
+              <ul className="space-y-3">
+                <li className="flex items-start gap-2">
+                  <span className="text-primary">•</span>
+                  <span>Zahlreiche Türen, Zonen & Maschinen</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-primary">•</span>
+                  <span>Hohe Gefährdungspotenziale</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-primary">•</span>
+                  <span>Strenge Nachweispflichten</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-primary">•</span>
+                  <span>Diverse Nutzergruppen</span>
+                </li>
+              </ul>
             ),
-            icon: <DoorClosedLocked className="text-[#351B59]" size={72} />,
+            icon: Briefcase,
+            className: 'bg-card',
+          },
+          {
+            title: 'Makerspaces',
+            description: (
+              <ul className="space-y-3">
+                <li className="flex items-start gap-2">
+                  <span className="text-primary">•</span>
+                  <span>Wenig Personal, hohe Fluktuation</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-primary">•</span>
+                  <span>Maschinen mit hohem Risiko</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-primary">•</span>
+                  <span>Einweisungen oft nicht gekoppelt</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-primary">•</span>
+                  <span>Unterschiedliche Schutzzonen</span>
+                </li>
+              </ul>
+            ),
+            icon: Users,
+            className: 'bg-card',
+          },
+          {
+            title: 'Private Werkstätten',
+            description: (
+              <ul className="space-y-3">
+                <li className="flex items-start gap-2">
+                  <span className="text-primary">•</span>
+                  <span>Fokus auf Komfort & Sicherheit</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-primary">•</span>
+                  <span>Schutz vor unbefugtem Zugriff</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-primary">•</span>
+                  <span>Einfache Verwaltung gewünscht</span>
+                </li>
+              </ul>
+            ),
+            icon: Wrench,
+            className: 'bg-card',
+          },
+        ]}
+      />
+      <div className="max-w-7xl mx-auto px-6 md:px-8 w-full -mt-6 mb-20">
+        <div className="border-l-4 border-yellow-400 bg-yellow-50/50 p-8 rounded-r-2xl shadow-sm">
+          <h3 className="font-bold text-yellow-800 flex items-center gap-3 mb-3 text-lg">
+            <AlertTriangle className="w-6 h-6" />
+            Konkrete Probleme
+          </h3>
+          <p className="text-yellow-900/80 leading-relaxed">
+            Schlüsselweitergabe ist schwer kontrollierbar. Einweisungen sind oft nicht mit der
+            technischen Freigabe gekoppelt. Es herrscht Unklarheit darüber, wer wann welche Maschine
+            genutzt hat. Unternehmen müssen Audit- und Nachweispflichten erfüllen.
+          </p>
+        </div>
+      </div>
+
+      {/* 4. Spezifikation & Funktionsumfang */}
+      <InfoGrid
+        title="Spezifikation & Funktionsumfang"
+        items={[
+          {
+            title: 'Identität & Zugang',
+            icon: Key,
+            features: [
+              { label: 'RBAC', description: 'Granulare Rechte für Benutzer, Gruppen & Admins.' },
+              {
+                label: 'Auth',
+                description: 'Passwortloser Login, Passkeys (FIDO2), NFC & App.',
+              },
+              {
+                label: 'Zeitsteuerung',
+                description: 'Regeln nach Zeit, Wochentag & Feiertag.',
+              },
+            ],
+          },
+          {
+            title: 'Geräte & Maschinen',
+            icon: Cpu,
+            features: [
+              {
+                label: 'Sicheres Provisioning',
+                description: 'Automatischer Schlüsselaustausch (ECC).',
+              },
+              {
+                label: 'Maschinenfreigabe',
+                description: 'Steuerung basierend auf Qualifikation.',
+              },
+              {
+                label: 'Vernetzung',
+                description: 'IP500-Mesh-Netzwerke via MQTT & LAN/WLAN.',
+              },
+            ],
+          },
+          {
+            title: 'Monitoring',
+            icon: Activity,
+            features: [
+              { label: 'Access Logs', description: 'Wer, Wann, Wo, Ergebnis.' },
+              {
+                label: 'Reason Codes',
+                description: 'Details bei Ablehnung (z.B. "Qualifikation fehlt").',
+              },
+              {
+                label: 'Audit Trail',
+                description: 'Nachvollziehbarkeit aller Änderungen.',
+              },
+            ],
+          },
+          {
+            title: 'System & Sicherheit',
+            icon: Lock,
+            features: [
+              { label: 'API-First', description: 'REST-API mit OpenAPI-Spezifikation.' },
+              {
+                label: 'Kryptografie',
+                description: 'Ende-zu-Ende (AES, ECDSA, TLS/DTLS).',
+              },
+              {
+                label: 'Container-basiert',
+                description: 'Docker für Edge (Raspberry Pi) oder Server.',
+              },
+            ],
+          },
+        ]}
+      />
+
+      {/* 5. Einsatzszenarien */}
+      <ScenarioGrid
+        title="Einsatzszenarien"
+        leftTitle="Funktionsblöcke"
+        leftBlocks={[
+          {
+            title: 'Benutzer & Rollen',
+            description:
+              'Rollen (Mitglied, Trainer, EHS, Gast) definieren. Rechte sofort zuweisen oder entziehen. Identifikationsmittel (Karte, Chip, App) zuordnen.',
+          },
+          {
+            title: 'Maschinenfreigabe',
+            description:
+              'Maschinen einzeln oder als Gruppen verwalten. Qualifikation als zwingende Voraussetzung für die technische Freigabe (Strom/Logik).',
+          },
+          {
+            title: 'Zutritt & Zonen',
+            description:
+              'Türen zu Zonen zusammenfassen (Holz, Metall, Chemie). Zeitfenster für Schichtbetrieb oder Kurse abbilden.',
+          },
+        ]}
+        rightHighlights={[
+          {
+            title: 'Gebäude- & Bereichszutritt',
+            description:
+              'Geregelter Zutritt statt Schlüsseltresor. Zonensteuerung für Werkstattbereiche, Lager und Rüstbereiche.',
+          },
+          {
+            title: 'Unternehmensspezifisch',
+            description:
+              'Ausbildungswerkstatt (Trennung nach Stand), Instandhaltung (Zeitfenster), Fremdfirmen (zweckgebunden).',
+          },
+          {
+            title: 'Prototyping & Labore',
+            description: 'Projektbezogene Berechtigungen und optionale Kostenstellenlogik.',
+          },
+        ]}
+      />
+
+      {/* 6. Umsetzung & Praxis */}
+      <ProcessSteps
+        title="Umsetzung in der Praxis"
+        steps={[
+          {
+            title: 'Analyse',
+            description:
+              'Welche Türen, Maschinen, Rollen und Zeitmodelle sind vorhanden? Welche Qualifikationen sind nötig?',
+          },
+          {
+            title: 'Installation',
+            description:
+              'Anschluss der Endgeräte an Strom und Schaltpunkte. Integration in die Kommunikationsstruktur (Netzwerk/Mesh).',
+          },
+          {
+            title: 'Konfiguration',
+            description:
+              'Einrichtung von Rollen, Zonen, Zeitfenstern und Maschinenrechten. Definition der Delegationslogik.',
+          },
+          {
+            title: 'Betrieb & Übergabe',
+            description:
+              'Testbetrieb im Alltag. Festlegung von Verantwortlichkeiten, Supportprozessen und Eskalationswegen.',
+          },
+        ]}
+      />
+
+      {/* 7. Sicherheit, Datenschutz & Normen */}
+      <SecurityAccordion
+        title="Sicherheit, Datenschutz & Normen"
+        items={[
+          {
+            id: 'compliance-1',
+            title: 'Arbeitsschutz & Nachweise (DGUV / TRBS)',
+            content: (
+              <div className="space-y-4">
+                <p>
+                  Unterweisungen müssen dokumentiert werden (DGUV Vorschrift 1). Für Arbeitsmittel
+                  ist eine Gefährdungsbeurteilung Pflicht (TRBS 1111).
+                </p>
+                <p>
+                  mardu.space unterstützt die operative Umsetzung: Qualifikationen werden technische
+                  Voraussetzung für Zutritt und Freigabe. Ereignisse werden nachvollziehbar
+                  protokolliert.
+                </p>
+              </div>
+            ),
+          },
+          {
+            id: 'compliance-2',
+            title: 'Maschinensicherheit & Schutzkonzepte',
+            content: (
+              <div className="space-y-4">
+                <p>
+                  Technische Zugangskontrolle ist Teil eines Schutzkonzepts (TRBS 1111). Für
+                  Verriegelungen gelten Normen wie ISO 14119.
+                </p>
+                <p>
+                  Das System unterstützt diese Konzepte durch flexible Sperrlogiken und
+                  qualifikationsbasierte Freigaben.
+                </p>
+              </div>
+            ),
+          },
+          {
+            id: 'compliance-3',
+            title: 'Datenschutz & Governance (DSGVO)',
+            content: (
+              <div className="space-y-4">
+                <p>
+                  Ereignisprotokolle sind personenbezogene Daten. Es gelten Zweckbindung und
+                  Datenminimierung.
+                </p>
+                <p>
+                  <strong>Empfohlene Governance:</strong> Zweck der Protokollierung klar definieren
+                  (Sicherheit, Vorfallklärung), Zugriff restriktiv regeln, Löschfristen einhalten
+                  und Transparenz gegenüber Nutzern sicherstellen.
+                </p>
+              </div>
+            ),
           },
         ]}
       />
@@ -390,18 +407,11 @@ export default function HomePage() {
 
       {/* CTA Section */}
       <CTASection
-        title="Sichere Makerspaces beginnen mit klaren Standards."
-        description="In unserem Whitepaper zeigen wir, wie verantwortungsvolle Zugangs- und Maschinenkontrollen in Makerspaces zuverlässig funktionieren. Laden Sie es jetzt herunter und erhalten Sie praxisnahe Empfehlungen für sichere, skalierbare Abläufe."
-        primaryButtonText="Jetzt Whitepaper Downloaden"
-        primaryButtonHref="/whitepaper"
-        secondaryButtonText="Beratung Vereinbaren"
-        secondaryButtonHref="/contact"
+        title="Sichere Werkstätten beginnen mit klaren Standards."
+        description="Erfahren Sie, wie mardu.space Ihre Verantwortung technisch unterstützt und administrative Lasten reduziert."
+        primaryButtonText="Beratung Vereinbaren"
+        secondaryButtonText="Mehr zum System"
       />
-
-      <small className="block mt-6 text-center text-xs text-muted-foreground">
-        * Schweißen in Wohnräumen ist nicht empfohlen. Nutze eine geeignete Werkstatt mit
-        ausreichender Belüftung.
-      </small>
     </main>
   );
 }
