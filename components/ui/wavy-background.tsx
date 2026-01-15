@@ -29,6 +29,7 @@ const WavyBackground = ({
   const canvasRef = React.useRef<HTMLCanvasElement | null>(null);
   const ctxRef = React.useRef<CanvasRenderingContext2D | null>(null);
   const animationIdRef = React.useRef<number | null>(null);
+  const timeRef = React.useRef<number>(0);
 
   const noiseRef = React.useRef<NoiseFunction3D | null>(null);
   if (noiseRef.current === null) {
@@ -73,14 +74,12 @@ const WavyBackground = ({
       const w = ctx.canvas.width;
       const h = ctx.canvas.height;
 
-      // Time parameter lives outside drawWave; caller increments it.
       for (let i = 0; i < n; i++) {
         ctx.beginPath();
         ctx.lineWidth = waveWidth ?? 50;
         ctx.strokeStyle = waveColors[i % waveColors.length] ?? waveColors[0];
 
         for (let x = 0; x < w; x += 5) {
-          // y in [-100, 100] scaled by simplex noise
           const y = noise(x / 800, 0.3 * i, timeRef.current) * 100;
           ctx.lineTo(x, y + h * 0.5);
         }
@@ -92,32 +91,31 @@ const WavyBackground = ({
     [waveColors, waveWidth],
   );
 
-  const timeRef = React.useRef<number>(0);
+  const render = React.useCallback(
+    function animate() {
+      const ctx = ctxRef.current;
+      if (!ctx) return;
 
-  const renderRef = React.useRef<() => void>(() => {});
+      const w = ctx.canvas.width;
+      const h = ctx.canvas.height;
 
-  renderRef.current = () => {
-    const ctx = ctxRef.current;
-    if (!ctx) return;
+      ctx.globalAlpha = 1;
+      ctx.clearRect(0, 0, w, h);
 
-    const w = ctx.canvas.width;
-    const h = ctx.canvas.height;
+      if (backgroundFill && backgroundFill !== 'transparent') {
+        ctx.fillStyle = backgroundFill;
+        ctx.fillRect(0, 0, w, h);
+      }
 
-    ctx.globalAlpha = 1;
-    ctx.clearRect(0, 0, w, h);
+      ctx.globalAlpha = waveOpacity;
+      drawWave(5);
 
-    if (backgroundFill && backgroundFill !== 'transparent') {
-      ctx.fillStyle = backgroundFill;
-      ctx.fillRect(0, 0, w, h);
-    }
+      timeRef.current += getSpeed();
 
-    ctx.globalAlpha = waveOpacity;
-    drawWave(5);
-
-    timeRef.current += getSpeed();
-
-    animationIdRef.current = window.requestAnimationFrame(renderRef.current);
-  };
+      animationIdRef.current = window.requestAnimationFrame(animate);
+    },
+    [backgroundFill, drawWave, getSpeed, waveOpacity],
+  );
 
   const init = React.useCallback(() => {
     const canvas = canvasRef.current;
@@ -129,15 +127,12 @@ const WavyBackground = ({
     ctxRef.current = ctx;
     resizeCanvas();
 
-    // Use addEventListener instead of clobbering window.onresize
     window.addEventListener('resize', resizeCanvas);
 
-    // Start animation loop
-    renderRef.current();
-  }, [resizeCanvas]);
+    render();
+  }, [render, resizeCanvas]);
 
   React.useEffect(() => {
-    // Detect Safari (kept because you explicitly supported it)
     const ua = typeof window !== 'undefined' ? navigator.userAgent : '';
     setIsSafari(ua.includes('Safari') && !ua.includes('Chrome'));
 
@@ -152,21 +147,18 @@ const WavyBackground = ({
     };
   }, [init, resizeCanvas]);
 
-  // When visual parameters change, restart the loop cleanly
   React.useEffect(() => {
     const ctx = ctxRef.current;
     if (!ctx) return;
 
-    // Update blur immediately
     ctx.filter = `blur(${blur}px)`;
 
-    // Restart animation so the new parameters take effect deterministically
     if (animationIdRef.current !== null) {
       cancelAnimationFrame(animationIdRef.current);
       animationIdRef.current = null;
     }
-    renderRef.current();
-  }, [blur, backgroundFill, waveOpacity, speed, waveWidth, waveColors]);
+    render();
+  }, [blur, backgroundFill, waveOpacity, speed, waveWidth, waveColors, render]);
 
   return (
     <div

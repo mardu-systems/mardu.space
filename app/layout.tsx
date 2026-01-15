@@ -1,10 +1,9 @@
 import type { Metadata, Viewport } from 'next';
 import './globals.css';
-import React, { Suspense } from 'react';
-import CookieConsentBanner from '@/components/cookie-consent/cookie-banner';
-import TrackingProvider from '@/components/cookie-consent/tracking-provider';
-import RecaptchaProvider from '@/components/cookie-consent/recaptcha-provider';
+import React from 'react';
 import SiteShell from '@/components/layout/site-shell';
+import { Analytics } from '@vercel/analytics/next';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -17,17 +16,26 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL('https://mardu.space'),
   title: {
-    default: 'mardu.space – Zugriffskontrollsysteme für Makerspaces',
+    default: 'Digitale Zutritts- und Maschinenfreigabe für Werkstätten | mardu.space',
     template: '%s | mardu.space',
   },
   description:
-    'mardu.space bietet sichere Zutritts- und Zugriffskontrollen mit eigener Hard- und Software sowie einer europaweit anerkannten Kenntnisdatenbank.',
+    'Sichere Maschinenfreigabe & Zutrittskontrolle für Unternehmenswerkstätten, Hochschulen & Makerspaces. Ersetzen Sie Schlüssel durch digitale, qualifikationsbasierte Berechtigungen (RBAC) & lückenlose Protokollierung.',
   keywords: [
-    'Zugriffskontrollsysteme',
+    'Maschinenfreigabe',
+    'Zutrittskontrolle',
+    'Unternehmenswerkstatt',
+    'Hochschule',
     'Makerspace',
     'FabLab',
-    'Schülerlabor',
+    'Arbeitsschutz',
+    'DGUV',
+    'Compliance',
+    'RBAC',
+    'NFC Zugang',
     'Open Education Badges',
+    'Maschinensicherheit',
+    'Werkstattmanagement',
   ],
   alternates: {
     canonical: 'https://mardu.space',
@@ -44,9 +52,9 @@ export const metadata: Metadata = {
   },
   manifest: '/site.webmanifest',
   openGraph: {
-    title: 'mardu.space – Zugriffskontrollsysteme für Makerspaces',
+    title: 'Digitale Zutritts- und Maschinenfreigabe für Werkstätten',
     description:
-      'Sichere Zutritts- und Zugriffskontrollen für Makerspaces, FabLabs und Schülerlabore.',
+      'Sichere Maschinenfreigabe & Zutrittskontrolle für Unternehmenswerkstätten, Hochschulen & Makerspaces. Rollenbasiert, compliant & vernetzt.',
     url: 'https://mardu.space',
     siteName: 'mardu.space',
     locale: 'de_DE',
@@ -56,15 +64,15 @@ export const metadata: Metadata = {
         url: '/_A7_9072_quer.jpg',
         width: 1200,
         height: 630,
-        alt: 'Zugriffskontrollsysteme für Makerspaces',
+        alt: 'mardu.space Maschinenfreigabe in der Werkstatt',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'mardu.space – Zugriffskontrollsysteme für Makerspaces',
+    title: 'Digitale Zutritts- und Maschinenfreigabe für Werkstätten',
     description:
-      'Sichere Zutritts- und Zugriffskontrollen für Makerspaces, FabLabs und Schülerlabore.',
+      'Sichere Maschinenfreigabe & Zutrittskontrolle für Unternehmenswerkstätten, Hochschulen & Makerspaces.',
     images: ['/_A7_9072_quer.jpg'],
   },
 };
@@ -74,6 +82,8 @@ const jsonLd = {
   '@type': 'WebSite',
   name: 'mardu.space',
   url: 'https://mardu.space',
+  description:
+    'Digitale Zutritts- und Maschinenfreigabe für Unternehmenswerkstätten, Hochschulen und Makerspaces.',
   publisher: {
     '@type': 'Organization',
     name: 'mardu.space',
@@ -92,16 +102,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body className="bg-background text-foreground antialiased overflow-x-hidden">
-        <RecaptchaProvider>
-          <Suspense fallback={null}>
-            <TrackingProvider>
-              <SiteShell>
-                {children}
-                <CookieConsentBanner />
-              </SiteShell>
-            </TrackingProvider>
-          </Suspense>
-        </RecaptchaProvider>
+        <SiteShell>{children}</SiteShell>
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
