@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
+import { Button } from '@/components/ui/button';
 
 /* ---------- Footer Props ---------- */
 export type FooterLink = {
@@ -29,13 +30,13 @@ export default function SiteFooter({ metaLinks = [] }: SiteFooterProps) {
   };
 
   return (
-    <footer className="dark w-full bg-[#351B59] text-foreground">
+    <footer className="w-full bg-primary text-foreground">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 md:py-10">
         {/* Main Content Row: Logo, Text and Scroll-to-Top */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-8">
           <div className="flex flex-col md:flex-row md:items-center gap-6 md:gap-8">
             <Link href="/" aria-label="Mardu Home" className="block">
-              <div className="relative h-12 w-[150px]">
+              <div className="relative h-12 w-50">
                 <Image
                   src="/marduspace_logo_bg_black.svg"
                   alt="Mardu Logo"
@@ -46,22 +47,29 @@ export default function SiteFooter({ metaLinks = [] }: SiteFooterProps) {
               </div>
             </Link>
             <p className="text-white/80 text-sm leading-relaxed max-w-sm">
-              Mit Mardu können Studierende und Lernende, sicher Kompetenzen zu erwerben und
-              anzuwenden.
+              mardu.space ermöglicht die digitale Zutritts- und Maschinenfreigabe für Werkstätten,
+              Hochschulen und Unternehmen – sicher, skalierbar und effizient.
             </p>
           </div>
 
           <div className="flex items-center">
-            <button
+            <Button
               onClick={scrollToTop}
-              className="inline-flex items-center gap-2 px-6 py-3 border border-muted-foreground/30 rounded-sm text-sm text-foreground hover:bg-muted/20 transition-colors"
+              variant="ghost"
+              className="dark inline-flex items-center text-foreground gap-2 px-6 py-3"
               aria-label="Zurück nach oben"
             >
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2}
+              >
                 <path strokeLinecap="round" strokeLinejoin="round" d="M5 15l7-7 7 7" />
               </svg>
               Nach oben
-            </button>
+            </Button>
           </div>
         </div>
 
@@ -103,7 +111,7 @@ export default function SiteFooter({ metaLinks = [] }: SiteFooterProps) {
       </div>
 
       {/* Copyright Bar */}
-      <div className="w-full bg-[#FFB703] py-4">
+      <div className="w-full bg-accent py-4">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <p className="text-center text-sm text-accent-foreground">
             Copyright © {new Date().getFullYear()}, Mardu, All Rights Reserved.
