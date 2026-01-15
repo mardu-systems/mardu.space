@@ -61,7 +61,6 @@ link[type="text/css"] {
     background-color: #FFB703 !important;
 }
 
-
 .no-scrollbar {
     -ms-overflow-style: none;
     scrollbar-width: none;
@@ -360,5 +359,12 @@ select:focus-visible {
     }
 }
 
-
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+    }
+  body {
+    @apply bg-background text-foreground;
+    }
+}
 

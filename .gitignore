@@ -38,14 +38,13 @@
 # .idea/artifacts
 # .idea/compiler.xml
 # .idea/jarRepositories.xml
-# .idea/modules.xml
 # .idea/*.iml
 # .idea/modules
 # *.iml
 # *.ipr
 
 # CMake
-cmake-build-*/
+cmake-build-*
 
 # Mongo Explorer plugin
 .idea/**/mongoSettings.xml
@@ -85,6 +84,7 @@ fabric.properties
 # that are supposed to be shared within teams.
 
 .idea/*
+.idea/
 
 !.idea/codeStyles
 !.idea/runConfigurations
@@ -149,6 +149,7 @@ yarn-error.log*
 
 # local env files
 .env*.local
+.env
 
 # vercel
 .vercel
