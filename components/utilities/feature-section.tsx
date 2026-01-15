@@ -1,77 +1,95 @@
+'use client';
+
 import Image from 'next/image';
-import { Button } from '@/components/ui/button';
-import Link from 'next/link';
+import * as React from 'react';
 import { ReactNode } from 'react';
+import { cn } from '@/lib/utils';
+import { ScrollReveal } from '@/components/ui/motion/scroll-reveal';
+import { motion, useReducedMotion } from 'framer-motion';
 import { MeetergoCTAButton } from './meetergo-cta-button';
 
 export type FeatureSectionProps = {
+  title: string | ReactNode;
 
-    title: string | ReactNode;
+  description: string | ReactNode;
 
-    description: string | ReactNode;
+  imageSrc: string;
 
-    imageSrc: string;
+  imageAlt: string;
 
-    imageAlt: string;
+  buttonText?: string;
 
-    buttonText?: string;
+  buttonHref?: string;
 
-    buttonHref?: string;
+  backgroundColor?: string;
 
-    backgroundColor?: string;
-
-    className?: string;
+  className?: string;
 };
 
 export default function FeatureSection({
-    title,
-    description,
-    imageSrc,
-    imageAlt,
-    buttonText,
-    buttonHref,
-    backgroundColor = '#F786AE',
-    className = '',
-}: FeatureSectionProps) {
-    return (
-        <section
-            className={`w-full py-12 md:py-16 lg:py-20 my-10 ${className}`}
-            style={{ backgroundColor }}
-        >
-            <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-1">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-                    {/* Left Column - Text Content */}
-                    <div className="space-y-6">
-                        <h2 className="text-3xl sm:text-4xl md:text-5xl leading-tight">
-                            {title}
-                        </h2>
+  className,
+  title,
+  description,
+  imageSrc,
+  imageAlt,
+  buttonText,
+  buttonHref,
+  backgroundColor,
+}: React.ComponentProps<'div'> & FeatureSectionProps) {
+  const shouldReduceMotion = useReducedMotion();
 
-                        <div className="text-base md:text-lg leading-relaxed opacity-95 space-y-4">
-                            {typeof description === 'string' ? <p>{description}</p> : description}
-                        </div>
+  return (
+    <section
+      className={cn(
+        'w-full py-12 md:py-16 lg:py-20 my-10 px-4 md:px-8 bg-primary text-primary-foreground',
+        className,
+      )}
+      style={backgroundColor ? { backgroundColor } : undefined}
+    >
+      <div className="mx-auto max-w-7xl">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+          {/* Left Column - Text Content */}
+          <ScrollReveal className="space-y-6" direction="up">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl leading-tight font-bold">{title}</h2>
 
-                        {buttonText && buttonHref && (
-                            <div className="pt-4">
-                                <MeetergoCTAButton>Jetzt Beratung vereinbaren</MeetergoCTAButton>
-                            </div>
-                        )}
-                    </div>
-
-                    {/* Right Column - Image */}
-                    <div className="relative flex items-center justify-center">
-                        <div className="rounded-2xl p-8 md:p-10 lg:p-12 w-full max-w-[600px]">
-                            <Image
-                                src={imageSrc}
-                                alt={imageAlt}
-                                width={1200}
-                                height={800}
-                                className="w-full h-auto object-contain"
-                                loading="lazy"
-                            />
-                        </div>
-                    </div>
-                </div>
+            <div className="text-base md:text-lg leading-relaxed opacity-95 space-y-4">
+              {typeof description === 'string' ? <p>{description}</p> : description}
             </div>
-        </section>
-    );
+
+            {buttonText && buttonHref && (
+              <div className="pt-4">
+                <MeetergoCTAButton>Jetzt Beratung vereinbaren</MeetergoCTAButton>
+              </div>
+            )}
+          </ScrollReveal>
+
+          {/* Right Column */}
+          <ScrollReveal
+            className="relative flex items-center justify-center"
+            delay={0.1}
+            direction="right"
+          >
+            <motion.div
+              className="md:pl-10 lg:pl-12 md:pt-10 lg:pt-12 w-full max-w-150 rounded-2xl"
+              animate={shouldReduceMotion ? undefined : { scale: [1, 1.02, 1] }}
+              transition={
+                shouldReduceMotion
+                  ? undefined
+                  : { duration: 10, repeat: Infinity, repeatType: 'mirror', ease: 'easeInOut' }
+              }
+            >
+              <Image
+                src={imageSrc}
+                alt={imageAlt}
+                width={1200}
+                height={500}
+                className="w-full h-auto object-contain rounded-2xl"
+                loading="lazy"
+              />
+            </motion.div>
+          </ScrollReveal>
+        </div>
+      </div>
+    </section>
+  );
 }

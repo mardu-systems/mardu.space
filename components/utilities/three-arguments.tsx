@@ -39,7 +39,7 @@ export default function ThreeArguments({
   className = '',
 }: Props) {
   return (
-    <section className={cn("w-full bg-primary text-primary-foreground py-12 md:py-20", className)}>
+    <section className={cn('w-full bg-primary text-primary-foreground py-12 md:py-20', className)}>
       <div className="max-w-7xl mx-auto px-1">
         <ScrollReveal className="text-center mb-10" direction="up">
           <h2 className="text-2xl md:text-4xl font-bold">{title}</h2>
@@ -73,7 +73,9 @@ export default function ThreeArguments({
                   )}
                 </div>
 
-                <h3 className="text-lg md:text-xl mb-3 md:mb-4 text-primary-foreground font-semibold">{it.title}</h3>
+                <h3 className="text-lg md:text-xl mb-3 md:mb-4 text-primary-foreground font-semibold">
+                  {it.title}
+                </h3>
 
                 <div className="text-primary-foreground/90 max-w-[38ch]">
                   {typeof it.description === 'string' ? <p>{it.description}</p> : it.description}

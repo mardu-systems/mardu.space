@@ -17,7 +17,6 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
-import { useRecaptcha } from '@/lib/recaptcha';
 import { Loader2 } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -41,7 +40,6 @@ type Props = {
   extra?: Record<string, unknown>;
   submitLabel?: string;
   successMessage?: string;
-  recaptchaAction?: string;
   layout?: 'plain' | 'card';
 };
 
@@ -52,8 +50,7 @@ export function ContactForm({
   action = '/api/contact',
   extra,
   submitLabel = 'Senden',
-  successMessage = 'Danke! Nachricht gesendet.',
-  recaptchaAction = 'contact',
+  successMessage = 'Danke! Nachricht gesendet',
   layout = 'plain',
 }: Props) {
   const form = useForm<ContactValues>({
@@ -90,7 +87,6 @@ export function ContactForm({
   const [status, setStatus] = React.useState<'idle' | 'success' | 'error'>('idle');
   const [submitting, setSubmitting] = React.useState(false);
   const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
-  const executeRecaptcha = useRecaptcha();
 
   async function handleSubmit(values: ContactValues) {
     if (!submit) return;
@@ -102,15 +98,12 @@ export function ContactForm({
         form.setError('consent', { type: 'required', message: 'Bitte Zustimmung erteilen' });
         throw new Error('validation');
       }
-      const token = await executeRecaptcha(recaptchaAction);
-      if (!token) throw new Error('reCAPTCHA failed');
       const res = await fetch(action, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           ...values,
           ...(extra || {}),
-          token,
         }),
       });
       if (!res.ok) throw new Error('Request failed');
@@ -134,157 +127,162 @@ export function ContactForm({
           onSubmit={submit ? form.handleSubmit(handleSubmit) : undefined}
           className={`grid sm:grid-cols-2 ${gap}`}
         >
-        <FormField
-          control={form.control}
-          name="name"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="sr-only">Name</FormLabel>
-              <FormControl>
-                <input
-                  placeholder="Name*"
-                  className="rounded-none border-0 border-b border-neutral-800/70 bg-transparent px-0 py-2 focus-visible:ring-0 focus-visible:border-b focus-visible:border-neutral-800/70"
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="sr-only">E-Mail</FormLabel>
-              <FormControl>
-                <input
-                  type="email"
-                  placeholder="E‑Mail*"
-                  className="rounded-none border-0 border-b border-neutral-800/70 bg-transparent px-0 py-2"
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="company"
-          render={({ field }) => (
-            <FormItem className="sm:col-span-2">
-              <FormLabel className="sr-only">Firma</FormLabel>
-              <FormControl>
-                <input
-                  placeholder="Firma (optional)"
-                  className="rounded-none border-0 border-b border-neutral-800/70 bg-transparent px-0 py-2"
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="phone"
-          render={({ field }) => (
-            <FormItem className="sm:col-span-2">
-              <FormLabel>Telefon</FormLabel>
-              <FormControl>
-                <input
-                  type="tel"
-                  placeholder="+49 123 456789"
-                  className="rounded-none border-0 border-b border-neutral-800/70 bg-transparent px-0 py-2"
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="message"
-          render={({ field }) => (
-            <FormItem className="sm:col-span-2">
-              <FormLabel>Nachricht</FormLabel>
-              <FormControl>
-                <Textarea
-                  rows={3}
-                  placeholder="Ihre Nachricht..."
-                    className="rounded-none border-0 border-b border-neutral-800/70 bg-transparent px-0 py-2"
-                  {...field}
-                />
-              </FormControl>
-              <FormDescription>
-                Beschreiben Sie kurz Ihr Anliegen (optional, max. 500 Zeichen)
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="consent"
-          render={({ field }) => (
-            <FormItem className="sm:col-span-2">
-              <div className="flex items-start gap-3">
+          <FormField
+            control={form.control}
+            name="name"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="sr-only">Name</FormLabel>
                 <FormControl>
-                  <Checkbox
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
-                    className="mt-0.5"
+                  <input
+                    placeholder="Name*"
+                    className="rounded-none border-0 border-b border-neutral-800/70 bg-transparent px-0 py-2 focus-visible:ring-0 focus-visible:border-b focus-visible:border-neutral-800/70"
+                    {...field}
                   />
                 </FormControl>
-                <div className="flex-1">
-                  <FormLabel className="text-sm leading-5 cursor-pointer">
-                    Ich stimme zu, dass meine Angaben zur Beantwortung meiner Anfrage verarbeitet
-                    werden.
-                  </FormLabel>
-                  <FormDescription className="text-xs text-muted-foreground mt-1">
-                    Ihre Daten werden gemäß DSGVO verarbeitet und nicht an Dritte weitergegeben.
-                  </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="sr-only">E-Mail</FormLabel>
+                <FormControl>
+                  <input
+                    type="email"
+                    placeholder="E‑Mail*"
+                    className="rounded-none border-0 border-b border-neutral-800/70 bg-transparent px-0 py-2"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="company"
+            render={({ field }) => (
+              <FormItem className="sm:col-span-2">
+                <FormLabel className="sr-only">Firma</FormLabel>
+                <FormControl>
+                  <input
+                    placeholder="Firma (optional)"
+                    className="rounded-none border-0 border-b border-neutral-800/70 bg-transparent px-0 py-2"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="phone"
+            render={({ field }) => (
+              <FormItem className="sm:col-span-2">
+                <FormLabel>Telefon</FormLabel>
+                <FormControl>
+                  <input
+                    type="tel"
+                    placeholder="+49 123 456789"
+                    className="rounded-none border-0 border-b border-neutral-800/70 bg-transparent px-0 py-2"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="message"
+            render={({ field }) => (
+              <FormItem className="sm:col-span-2">
+                <FormLabel>Nachricht</FormLabel>
+                <FormControl>
+                  <Textarea
+                    rows={3}
+                    placeholder="Ihre Nachricht..."
+                    className="rounded-none border-0 border-b border-neutral-800/70 bg-transparent px-0 py-2"
+                    {...field}
+                  />
+                </FormControl>
+                <FormDescription>
+                  Beschreiben Sie kurz Ihr Anliegen (optional, max. 500 Zeichen)
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="consent"
+            render={({ field }) => (
+              <FormItem className="sm:col-span-2">
+                <div className="flex items-start gap-3">
+                  <FormControl>
+                    <Checkbox
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                      className="mt-0.5"
+                    />
+                  </FormControl>
+                  <div className="flex-1">
+                    <FormLabel className="text-sm leading-5 cursor-pointer">
+                      Ich stimme zu, dass meine Angaben zur Beantwortung meiner Anfrage verarbeitet
+                      werden.
+                    </FormLabel>
+                    <FormDescription className="text-xs text-muted-foreground mt-1">
+                      Ihre Daten werden gemäß DSGVO verarbeitet und nicht an Dritte weitergegeben.
+                    </FormDescription>
+                  </div>
                 </div>
-              </div>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-        {submit && (
-          <div className="sm:col-span-2">
-            <Button
-              type="submit"
-              disabled={submitting}
-              aria-disabled={submitting}
-              aria-busy={submitting}
-            >
-              {submitting && <Loader2 className="h-4 w-4 animate-spin" />}
-              {submitting ? 'Sende…' : submitLabel}
-            </Button>
-          </div>
+          {submit && (
+            <div className="sm:col-span-2">
+              <Button
+                type="submit"
+                disabled={submitting}
+                aria-disabled={submitting}
+                aria-busy={submitting}
+              >
+                {submitting && <Loader2 className="h-4 w-4 animate-spin" />}
+                {submitting ? 'Sende…' : submitLabel}
+              </Button>
+            </div>
+          )}
+        </form>
+        {submit && status === 'success' && (
+          <Alert
+            className="mt-4 animate-fade-in"
+            variant="default"
+            role="status"
+            aria-live="polite"
+          >
+            <AlertDescription>{successMessage}</AlertDescription>
+          </Alert>
         )}
-      </form>
-      {submit && status === 'success' && (
-        <Alert className="mt-4 animate-fade-in" variant="default" role="status" aria-live="polite">
-          <AlertDescription>{successMessage}</AlertDescription>
-        </Alert>
-      )}
-      {submit && status === 'error' && (
-        <Alert
-          className="mt-4 animate-fade-in"
-          variant="destructive"
-          role="alert"
-          aria-live="assertive"
-        >
-          <AlertDescription>
-            {errorMessage ?? 'Etwas ist schiefgelaufen. Versuch es erneut.'}
-          </AlertDescription>
-        </Alert>
-      )}
-    </Form>
+        {submit && status === 'error' && (
+          <Alert
+            className="mt-4 animate-fade-in"
+            variant="destructive"
+            role="alert"
+            aria-live="assertive"
+          >
+            <AlertDescription>
+              {errorMessage ?? 'Etwas ist schiefgelaufen. Versuch es erneut.'}
+            </AlertDescription>
+          </Alert>
+        )}
+      </Form>
     </div>
   );
 

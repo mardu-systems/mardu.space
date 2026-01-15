@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { CookieSettingsButton } from '@/components/cookie-consent/cookie-settings-button';
 import fs from 'fs/promises';
 import path from 'path';
 import Markdown from 'react-markdown';
@@ -39,8 +38,6 @@ export default async function Privacy() {
             <Link href="/">
               <Button variant="outline">Zurück zur Startseite</Button>
             </Link>
-
-            <CookieSettingsButton />
           </div>
         </div>
       </section>

@@ -37,7 +37,7 @@ export default function InfoGrid({ title, items, columns = 4, className }: InfoG
         {items.map((item, idx) => (
           // Using Card for semantics but stripping visual defaults for a list-like appearance
           <Card key={idx} className="bg-transparent border-none shadow-none">
-            <CardHeader className="px-0 pt-0 pb-4 border-b border-primary/10 mb-6">
+            <CardHeader className="px-0 pt-0 border-b border-primary/10 mb-2">
               <div className="flex items-center gap-3">
                 {item.icon && <item.icon className="text-primary w-7 h-7" />}
                 <CardTitle className="font-bold text-xl text-primary">{item.title}</CardTitle>

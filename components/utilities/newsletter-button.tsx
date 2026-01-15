@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
@@ -14,11 +14,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
 
-export default function NewsletterButton({
-  primaryButtonText,
-}: {
-  primaryButtonText: string;
-}) {
+export default function NewsletterButton({ primaryButtonText }: { primaryButtonText: string }) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -88,10 +84,10 @@ export default function NewsletterButton({
           <div className="flex items-start space-x-3 pt-2">
             <Checkbox id="tags" name="tags[]" value="accept" required className="mt-1" />
             <Label htmlFor="tags" className="text-xs font-normal leading-relaxed">
-              Ihre hier eingegebenen Daten werden lediglich zur Personalisierung des
-              Newsletters verwendet und nicht an Dritte weitergegeben. Durch Absenden der
-              von Ihnen eingegebenen Daten willigen Sie in die Datenverarbeitung ein und
-              bestätigen unsere Datenschutzerklärung.
+              Ihre hier eingegebenen Daten werden lediglich zur Personalisierung des Newsletters
+              verwendet und nicht an Dritte weitergegeben. Durch Absenden der von Ihnen eingegebenen
+              Daten willigen Sie in die Datenverarbeitung ein und bestätigen unsere
+              Datenschutzerklärung.
             </Label>
           </div>
 

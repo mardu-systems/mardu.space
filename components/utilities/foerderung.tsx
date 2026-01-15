@@ -35,7 +35,9 @@ export default function Foerderung({
           <h2 className="text-2xl md:text-4xl font-bold text-primary">{title}</h2>
         </ScrollReveal>
         {description ? (
-          <ScrollReveal className="mb-6 text-center text-muted-foreground">{description}</ScrollReveal>
+          <ScrollReveal className="mb-6 text-center text-muted-foreground">
+            {description}
+          </ScrollReveal>
         ) : null}
 
         <div className="flex flex-wrap items-center justify-center gap-10 md:gap-16">
@@ -45,7 +47,7 @@ export default function Foerderung({
                 href={it.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={cn("flex items-center", it.className)}
+                className={cn('flex items-center', it.className)}
                 aria-label={it.alt}
               >
                 <motion.div

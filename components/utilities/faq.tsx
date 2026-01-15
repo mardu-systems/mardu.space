@@ -7,10 +7,11 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion';
 import { cn } from '@/lib/utils';
+import React from 'react';
 
 export type FaqItem = {
   question: string;
-  answer: React.ReactNode; // flexibler als string
+  answer: React.ReactNode;
 };
 
 export type FaqProps = {
