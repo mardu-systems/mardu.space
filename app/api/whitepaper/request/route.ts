@@ -11,8 +11,33 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Email is required" }, { status: 400 });
     }
 
-    // 1. Save subscriber locally (acts as our "database" for now)
+    // 1. Save subscriber locally
     await saveSubscriber({ email, role: "whitepaper_requester" });
+
+    // 1b. Forward to CleverReach (External Newsletter Provider)
+    // We do this "fire and forget" style or await it, but don't block the user flow on it failing 
+    // unless it's critical. Here we log errors but proceed to send the download link.
+    try {
+      const crFormData = new FormData();
+      crFormData.append("email", email);
+      if (firstName) crFormData.append("global.vorname", firstName);
+      if (lastName) crFormData.append("global.nachname", lastName);
+      crFormData.append("tags[]", "Whitepaper"); // Tag user specifically
+
+      // Helper field often used by CR to prevent bots, usually empty
+      crFormData.append("email_confirm", ""); 
+
+      await fetch(
+        "https://flow.cleverreach.com/fl/dc9cc0ca-817c-4e47-bad3-f00510d3efc3/confirm",
+        {
+          method: "POST",
+          body: crFormData,
+        }
+      );
+    } catch (crError) {
+      console.error("Failed to sync with CleverReach:", crError);
+      // We continue execution so the user still gets their whitepaper link
+    }
 
     // 2. Generate secure token
     // Token valid for the specific action 'whitepaper_download'
