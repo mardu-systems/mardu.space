@@ -13,6 +13,7 @@ export type FooterLink = {
 type SiteFooterProps = {
   navLinks?: ReadonlyArray<FooterLink>;
   metaLinks?: ReadonlyArray<FooterLink>;
+  description?: string;
 };
 
 declare global {
@@ -22,7 +23,7 @@ declare global {
 }
 
 /* ------------------------------ Component ------------------------------ */
-export default function SiteFooter({ metaLinks = [] }: SiteFooterProps) {
+export default function SiteFooter({ metaLinks = [], description }: SiteFooterProps) {
   const scrollToTop = () => {
     if (typeof window !== 'undefined') {
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -46,10 +47,9 @@ export default function SiteFooter({ metaLinks = [] }: SiteFooterProps) {
                 />
               </div>
             </Link>
-            <p className="text-white/80 text-sm leading-relaxed max-w-sm">
-              mardu.space ermöglicht die digitale Zutritts- und Maschinenfreigabe für Werkstätten,
-              Hochschulen und Unternehmen – sicher, skalierbar und effizient.
-            </p>
+            {description && (
+              <p className="text-white/80 text-sm leading-relaxed max-w-sm">{description}</p>
+            )}
           </div>
 
           <div className="flex items-center">

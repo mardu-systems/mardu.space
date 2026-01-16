@@ -11,7 +11,13 @@ export default function SiteShell({ children }: { children: React.ReactNode }) {
       <div data-theme="light" style={{ colorScheme: 'light' }}>
         {children}
       </div>
-      <SiteFooter navLinks={defaultFooterNavLinks} metaLinks={defaultFooterMetaLinks} />
+      <SiteFooter
+        description={
+          'mardu.space ermöglicht die digitale Zutritts- und Maschinenfreigabe für Werkstätten, Hochschulen und Unternehmen – sicher, skalierbar und effizient.'
+        }
+        navLinks={defaultFooterNavLinks}
+        metaLinks={defaultFooterMetaLinks}
+      />
     </div>
   );
 }

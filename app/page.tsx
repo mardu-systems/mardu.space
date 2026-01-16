@@ -50,6 +50,7 @@ export default function HomePage() {
 
       {/* 2. Management Summary */}
       <SplitContent
+        className="text-white"
         title="Management Summary"
         description={
           <>
