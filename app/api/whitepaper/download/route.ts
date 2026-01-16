@@ -33,7 +33,7 @@ export async function GET(req: NextRequest) {
   return new NextResponse(fileBuffer, {
     headers: {
       "Content-Type": "application/pdf",
-      "Content-Disposition": 'attachment; filename="Mardu_Whitepaper_2026.pdf"',
+      "Content-Disposition": 'attachment; filename="Mardu_space_Whitepaper_2026_v1.0.pdf"',
     },
   });
 }
