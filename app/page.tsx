@@ -25,6 +25,8 @@ import ProcessSteps from '@/components/utilities/process-steps';
 import SecurityAccordion from '@/components/utilities/security-accordion';
 import ScenarioGrid from '@/components/utilities/scenario-grid';
 
+import WhitepaperTeaser from '@/components/utilities/whitepaper-teaser';
+
 export default function HomePage() {
   return (
     <main className="min-h-screen bg-background flex flex-col">
@@ -405,6 +407,9 @@ export default function HomePage() {
           </>
         }
       />
+
+      {/* Whitepaper Teaser */}
+      <WhitepaperTeaser className="bg-muted/30" />
 
       {/* CTA Section */}
       <CTASection
