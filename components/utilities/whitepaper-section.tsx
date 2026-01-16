@@ -34,14 +34,38 @@ export default function WhitepaperSection({
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  // Handle fake submit to show UI feedback before actual form submission happens via target="_blank" or if we want to intercept
-  const handleSubmit = (e: React.FormEvent) => {
-    // The form actually submits to the iframe target, so we just set loading state briefly
+  // Handle submit via internal API
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
+
+    const formData = new FormData(e.currentTarget);
+    const data = {
+      email: formData.get('email'),
+      firstName: formData.get('firstName'),
+      lastName: formData.get('lastName'),
+    };
+
+    try {
+      const response = await fetch('/api/whitepaper/request', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        throw new Error('Something went wrong');
+      }
+
       setIsSubmitted(true);
-    }, 1500);
+    } catch (error) {
+      console.error(error);
+      alert('Ein Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -113,30 +137,18 @@ export default function WhitepaperSection({
                 Jetzt anmelden & herunterladen
               </h3>
 
-              {/* CleverReach Form Structure adapted from your newsletter components */}
+              {/* Internal API Form */}
               <form
-                method="post"
-                action="https://flow.cleverreach.com/fl/dc9cc0ca-817c-4e47-bad3-f00510d3efc3/confirm"
-                target="_blank"
-                className="space-y-4"
                 onSubmit={handleSubmit}
+                className="space-y-4"
               >
-                 <input
-                  type="text"
-                  tabIndex={-1}
-                  autoComplete="off"
-                  className="hidden"
-                  name="email_confirm"
-                  aria-hidden
-                />
-
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                    <div className="space-y-2">
                     <Label htmlFor="wp-vorname">Vorname</Label>
                     <Input
                       type="text"
                       id="wp-vorname"
-                      name="global.vorname"
+                      name="firstName"
                       placeholder="Max"
                     />
                   </div>
@@ -145,7 +157,7 @@ export default function WhitepaperSection({
                     <Input
                       type="text"
                       id="wp-nachname"
-                      name="global.nachname"
+                      name="lastName"
                       placeholder="Mustermann"
                     />
                   </div>
@@ -167,8 +179,7 @@ export default function WhitepaperSection({
                 <div className="flex items-start space-x-3 pt-2">
                   <Checkbox
                     id="wp-consent"
-                    name="tags[]"
-                    value="Whitepaper" 
+                    name="consent"
                     required
                     className="mt-1"
                   />
@@ -200,10 +211,9 @@ export default function WhitepaperSection({
               Fast geschafft!
             </DialogTitle>
             <DialogDescription className="pt-2 text-base">
-              Vielen Dank für Ihr Interesse. Wir haben Ihnen eine <strong>Bestätigungs-E-Mail</strong> gesendet.
+              Vielen Dank für Ihr Interesse. Wir haben Ihnen eine <strong>E-Mail mit dem Download-Link</strong> gesendet.
               <br /><br />
-              Bitte klicken Sie auf den Link in der E-Mail, um Ihre Anmeldung zu bestätigen. 
-              Anschließend erhalten Sie das Whitepaper automatisch.
+              Bitte prüfen Sie Ihr Postfach (und den Spam-Ordner). Der Link ist aus Sicherheitsgründen nur begrenzt gültig.
             </DialogDescription>
           </DialogHeader>
           <div className="flex justify-end mt-4">
