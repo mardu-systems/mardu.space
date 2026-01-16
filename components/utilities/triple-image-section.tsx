@@ -41,7 +41,7 @@ export default function TripleImageSection({ cards, className = '' }: TripleImag
             <ScrollReveal key={card.title ?? index} delay={index * 0.1} className="flex flex-col">
               <motion.article
                 layout
-                className="flex flex-col h-full bg-card rounded-[24px] overflow-hidden shadow-sm border border-border"
+                className="flex flex-col h-full bg-card rounded-[24px] overflow-hidden shadow-sm"
               >
                 {/* Image */}
                 <motion.div

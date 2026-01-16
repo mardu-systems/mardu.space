@@ -46,7 +46,7 @@ export default function CardGrid({
           <Card
             key={`${item.title}-${idx}`}
             className={cn(
-              'rounded-3xl overflow-hidden transition-shadow duration-300 hover:shadow-md h-full',
+              'rounded-3xl overflow-hidden transition-shadow duration-300 hover:shadow-md h-full border-none',
               // Default variant relies on Card's default styles (bg-card, border, shadow-sm)
 
               // Outline variant: semi-transparent background, standard border

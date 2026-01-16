@@ -39,7 +39,7 @@ export default function DualImageSection({ cards, className = '' }: DualImageSec
                 transition={{ type: 'spring', stiffness: 140, damping: 16 }}
               >
                 {/* Image */}
-                <div className="relative w-full h-[300px] md:h-[400px] rounded-3xl overflow-hidden mb-6 shadow-sm border border-border bg-muted">
+                <div className="relative w-full h-[300px] md:h-[400px] rounded-3xl overflow-hidden mb-6 shadow-sm bg-muted">
                   <Image
                     src={card.imageSrc}
                     alt={card.imageAlt}

@@ -24,7 +24,7 @@ type Props = {
 function HexagonIconWrapper({ children }: { children: React.ReactNode }) {
   return (
     <motion.div
-      className="w-28 h-28 rounded-[18px] bg-card flex items-center justify-center shadow-md border border-border"
+      className="w-28 h-28 rounded-[18px] bg-card flex items-center justify-center shadow-md"
       whileHover={{ rotate: -2 }}
       transition={{ type: 'spring', stiffness: 200, damping: 18 }}
     >

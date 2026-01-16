@@ -31,7 +31,7 @@ export default function ScenarioGrid({
     <section className={cn('py-16 px-6 md:px-8 max-w-7xl mx-auto w-full', className)}>
       <h2 className="text-3xl md:text-4xl font-bold text-center text-primary mb-10">{title}</h2>
       <div className="grid md:grid-cols-2 gap-8 lg:gap-12 items-stretch">
-        <Card className="rounded-3xl border bg-card shadow-sm h-full overflow-hidden">
+        <Card className="rounded-3xl bg-card shadow-sm h-full overflow-hidden">
           <CardHeader className="p-8 border-primary/10">
             <CardTitle className="text-lg md:text-xl font-semibold text-primary">
               {leftTitle}
@@ -59,7 +59,7 @@ export default function ScenarioGrid({
           {rightHighlights.map((highlight, idx) => (
             <Card
               key={`${highlight.title}-${idx}`}
-              className="rounded-3xl border bg-card shadow-sm overflow-hidden transition-shadow duration-300 hover:shadow-md"
+              className="rounded-3xl bg-card shadow-sm overflow-hidden transition-shadow duration-300 hover:shadow-md"
             >
               <CardContent className="p-8 md:p-10">
                 <div className="flex items-start gap-4">

@@ -1,15 +1,15 @@
 // roadmap-timeline.tsx
 import { ReactNode } from 'react';
 import { cn } from '@/lib/utils';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { LucideIcon } from 'lucide-react';
 
 export type RoadmapCard = {
-  title: string;
   description: string | ReactNode;
   icon?: LucideIcon;
   badge?: string; // optional small label, e.g. "Q4 2025"
+  title?: string;
 };
 
 export type RoadmapMilestone = {
@@ -49,15 +49,10 @@ export default function RoadmapTimeline({
           <div key={`${m.title}-${idx}`} className="relative flex gap-6 md:gap-8">
             {/* timeline column */}
             <div className="w-11 shrink-0">
-              <div className={cn('sticky', compact ? 'top-20' : 'top-24')}>
+              <div>
                 <div className="w-9 h-9 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-xs font-semibold shadow-sm ring-[6px] ring-background">
                   {idx + 1}
                 </div>
-                {m.time && (
-                  <div className="mt-3 text-xs font-semibold tracking-wide uppercase text-primary/80 text-center">
-                    {m.time}
-                  </div>
-                )}
               </div>
             </div>
 
@@ -79,43 +74,48 @@ export default function RoadmapTimeline({
                 {/* right cards */}
                 <div className={cn('grid gap-6', m.cards.length > 1 ? 'md:grid-cols-2' : '')}>
                   {m.cards.map((c, cIdx) => {
-                    const Icon = c.icon;
+                    const topRight = c.badge ?? m.time;
+
                     return (
                       <Card
-                        key={`${c.title}-${cIdx}`}
-                        className="rounded-3xl border bg-card shadow-sm overflow-hidden transition-shadow duration-300 hover:shadow-md h-full"
+                        key={`${c.title ?? 'card'}-${cIdx}`}
+                        className={cn(
+                          'relative rounded-3xl bg-card shadow-sm transition-shadow duration-300 hover:shadow-md h-full',
+                          compact && 'shadow-none hover:shadow-sm',
+                        )}
                       >
-                        <CardHeader className="p-8 pb-6 border-b border-primary/10 relative">
-                          {c.badge && (
-                            <div className="absolute top-4 right-4">
-                              <Badge
-                                variant="secondary"
-                                className="bg-primary/10 text-primary hover:bg-primary/20 border-0 rounded-full px-3 py-1"
-                              >
-                                {c.badge}
-                              </Badge>
+                        {topRight && (
+                          <div className={cn('absolute', compact ? 'top-4 right-4' : 'top-6 right-6')}>
+                            <Badge
+                              variant="secondary"
+                              className="bg-primary/10 text-primary hover:bg-primary/20 border-0 rounded-full px-3 py-1 text-xs font-semibold"
+                            >
+                              {topRight}
+                            </Badge>
+                          </div>
+                        )}
+
+                        <CardContent
+                          className={cn(
+                            compact ? 'p-6' : 'p-8',
+                            topRight ? (compact ? 'pr-20' : 'pr-24') : null,
+                          )}
+                        >
+                          {c.title && (
+                            <div className={cn('font-semibold text-primary', compact ? 'text-base md:text-lg' : 'text-lg md:text-xl')}>
+                              {c.title}
                             </div>
                           )}
 
-                          <div className="flex items-center gap-4">
-                            {Icon && (
-                              <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center shrink-0">
-                                <Icon className="text-primary w-6 h-6" aria-hidden="true" />
-                              </div>
+                          <div
+                            className={cn(
+                              c.title ? (compact ? 'mt-3' : 'mt-4') : null,
+                              'text-muted-foreground leading-relaxed',
+                              compact ? 'text-sm' : 'text-sm md:text-base',
+                              '[&_ul]:my-0 [&_ul]:pl-5 [&_ol]:my-0 [&_ol]:pl-5 [&_p]:my-0',
                             )}
-                            <CardTitle className="text-lg md:text-xl font-semibold text-primary">
-                              {c.title}
-                            </CardTitle>
-                          </div>
-                        </CardHeader>
-
-                        <CardContent className="p-8 pt-6">
-                          <div className="text-sm md:text-base text-muted-foreground leading-relaxed max-w-prose">
-                            {typeof c.description === 'string' ? (
-                              <p>{c.description}</p>
-                            ) : (
-                              c.description
-                            )}
+                          >
+                            {typeof c.description === 'string' ? <p>{c.description}</p> : c.description}
                           </div>
                         </CardContent>
                       </Card>

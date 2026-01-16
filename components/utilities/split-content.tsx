@@ -29,7 +29,7 @@ export default function SplitContent({
   reverse = false,
 }: SplitContentProps) {
   return (
-    <section className={cn('py-16 px-6 md:px-8 max-w-7xl mx-auto w-full', className)}>
+    <section className={cn('py-16 px-6 md:px-8 max-w-7xl mx-auto w-full bg-primary', className)}>
       <div
         className={cn(
           'grid gap-10 md:grid-cols-2 lg:gap-16 items-start',
@@ -37,13 +37,13 @@ export default function SplitContent({
         )}
       >
         <div className={cn('space-y-6', reverse && 'md:order-2')}>
-          <h2 className="text-3xl md:text-4xl font-bold text-primary">{title}</h2>
-          <div className="space-y-4 text-muted-foreground text-base md:text-lg leading-relaxed max-w-prose">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl leading-tight font-bold">{title}</h2>
+          <div className="text-base md:text-lg leading-relaxed opacity-95 space-y-4">
             {description}
           </div>
         </div>
 
-        <Card className={cn('rounded-3xl overflow-hidden', reverse && 'md:order-1')}>
+        <Card className={cn('rounded-3xl overflow-hidden border-none', reverse && 'md:order-1')}>
           {sideTitle && (
             <CardHeader className="pb-4">
               <CardTitle className="text-lg md:text-xl font-semibold flex items-center gap-3 text-primary">
@@ -52,7 +52,7 @@ export default function SplitContent({
               </CardTitle>
             </CardHeader>
           )}
-          <CardContent className="p-8 md:p-10">
+          <CardContent>
             <ul className="space-y-6">
               {items.map((item, idx) => {
                 const ItemIcon = item.icon ?? CheckCircle;
@@ -61,9 +61,15 @@ export default function SplitContent({
                   <li key={`${item.title}-${idx}`} className="flex gap-4 items-start">
                     <ItemIcon className="shrink-0 text-primary w-5 h-5 mt-0.5" aria-hidden="true" />
                     <div className="space-y-1">
-                      <h4 className="font-semibold text-primary text-base md:text-lg">{item.title}</h4>
+                      <h4 className="font-semibold text-primary text-base md:text-lg">
+                        {item.title}
+                      </h4>
                       <div className="text-sm md:text-base text-muted-foreground leading-relaxed">
-                        {typeof item.description === 'string' ? <p>{item.description}</p> : item.description}
+                        {typeof item.description === 'string' ? (
+                          <p>{item.description}</p>
+                        ) : (
+                          item.description
+                        )}
                       </div>
                     </div>
                   </li>
