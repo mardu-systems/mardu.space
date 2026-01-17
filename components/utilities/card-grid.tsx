@@ -58,7 +58,7 @@ export default function CardGrid({
               item.className,
             )}
           >
-            <CardHeader className="relative p-8 pb-4">
+            <CardHeader className="relative p-6">
               {item.badge && (
                 <div className="absolute top-4 right-4">
                   <Badge
@@ -69,17 +69,19 @@ export default function CardGrid({
                   </Badge>
                 </div>
               )}
-              {item.icon && (
-                <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-5">
-                  <item.icon className="text-primary w-6 h-6" aria-hidden="true" />
-                </div>
-              )}
-              <CardTitle className="text-lg md:text-xl font-semibold leading-tight text-primary">
-                {item.title}
-              </CardTitle>
+              <div className="flex items-center gap-4">
+                {item.icon && (
+                  <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center shrink-0">
+                    <item.icon className="text-primary w-5 h-5" aria-hidden="true" />
+                  </div>
+                )}
+                <CardTitle className="text-lg md:text-xl font-semibold leading-tight text-primary">
+                  {item.title}
+                </CardTitle>
+              </div>
             </CardHeader>
-            <CardContent className="px-8 pb-8">
-              <div className="text-sm md:text-base text-muted-foreground leading-relaxed">
+            <CardContent className="p-6 pt-0">
+              <div className="text-sm md:text-base text-foreground leading-relaxed">
                 {typeof item.description === 'string' ? (
                   <p>{item.description}</p>
                 ) : (
@@ -87,7 +89,7 @@ export default function CardGrid({
                 )}
               </div>
               {item.list && (
-                <ul className="mt-5 space-y-2 text-sm md:text-base text-muted-foreground list-disc list-inside">
+                <ul className="mt-5 space-y-2 text-sm md:text-base text-foreground list-disc list-inside">
                   {item.list.map((li, lIdx) => (
                     <li key={lIdx}>{li}</li>
                   ))}
