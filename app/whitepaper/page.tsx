@@ -1,4 +1,3 @@
-import SiteShell from '@/components/layout/site-shell';
 import WhitepaperSection from '@/components/utilities/whitepaper-section';
 import { Metadata } from 'next';
 

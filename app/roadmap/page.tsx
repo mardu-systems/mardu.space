@@ -17,7 +17,7 @@ export default function RoadmapPage() {
             <ul className="space-y-3">
               <li>
                 <strong>Erweiterte Regel-Engine:</strong> Implementierung komplexer
-                Freigabe-Szenarien, wie z.B. das "Vier-Augen-Prinzip" (Freigabe nur durch zwei
+                Freigabe-Szenarien, wie z.B. das &quot;Vier-Augen-Prinzip&quot; (Freigabe nur durch zwei
                 autorisierte Personen).
               </li>
               <li>
@@ -46,8 +46,8 @@ export default function RoadmapPage() {
                 Systemeinstellungen direkt über die Weboberfläche anpassen, ohne Neustarts oder Serverzugriff.
               </li>
               <li>
-                <strong>Interlock-Zwang:</strong> Technische Kopplung von Maschinenbedingungen, z.B. "Maschine
-                startet nur, wenn die Absaugung aktiv ist" oder "Kühlmittel läuft".
+                <strong>Interlock-Zwang:</strong> Technische Kopplung von Maschinenbedingungen, z.B. &quot;Maschine
+                startet nur, wenn die Absaugung aktiv ist&quot; oder &quot;Kühlmittel läuft&quot;.
               </li>
               <li>
                 <strong>Self-Onboarding:</strong> Neue Nutzer können sich selbst registrieren und Freigaben

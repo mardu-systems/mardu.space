@@ -1,6 +1,4 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
-import { Button } from '@/components/ui/button';
 import ContactForm from './contact-form';
 
 export const metadata: Metadata = {

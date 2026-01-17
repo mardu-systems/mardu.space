@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react';
 import path from 'path';
 
 export default defineConfig({
-  // @ts-ignore
+  // @ts-expect-error: vite plugin react types issue
   plugins: [react()],
   test: {
     environment: 'jsdom',

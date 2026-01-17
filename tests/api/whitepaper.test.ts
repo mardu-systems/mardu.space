@@ -105,7 +105,7 @@ describe('Whitepaper API', () => {
 
     it('should return 404 if file does not exist', async () => {
       vi.mocked(verifyToken).mockReturnValue({ email: 'test@example.com', role: 'whitepaper_download' });
-      // @ts-ignore
+      // @ts-expect-error: mocking fs module for test
       vi.mocked(fs.existsSync).mockReturnValue(false);
 
       const req = new NextRequest('http://localhost:3000/api/whitepaper/download?token=valid', {
@@ -121,9 +121,9 @@ describe('Whitepaper API', () => {
 
     it('should return file content if everything is valid', async () => {
       vi.mocked(verifyToken).mockReturnValue({ email: 'test@example.com', role: 'whitepaper_download' });
-      // @ts-ignore
+      // @ts-expect-error: mocking fs module for test
       vi.mocked(fs.existsSync).mockReturnValue(true);
-      // @ts-ignore
+      // @ts-expect-error: mocking fs module for test
       vi.mocked(fs.readFileSync).mockReturnValue(Buffer.from('pdf-content'));
 
       const req = new NextRequest('http://localhost:3000/api/whitepaper/download?token=valid', {

@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { ArrowRight, Settings, Sliders, CheckSquare } from 'lucide-react';
+import { ArrowRight, Settings, CheckSquare } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { ScrollReveal } from '@/components/ui/motion/scroll-reveal';

@@ -18,17 +18,42 @@ export async function GET(req: Request) {
 
   try {
     const origin = process.env.APP_URL ?? req.headers.get('origin') ?? '';
-    const unsubscribeToken = createToken(data.email, 'unsubscribe');
-    const unsubscribeUrl = `${origin}/api/newsletter/unsubscribe?token=${encodeURIComponent(unsubscribeToken)}`;
-    await sendEmail({
-      to: data.email,
-      subject: 'Newsletter Anmeldung bestätigt',
-      text: `Vielen Dank für deine Bestätigung! Wenn du den Newsletter nicht mehr erhalten möchtest, kannst du dich hier abmelden: ${unsubscribeUrl}`,
-      html: renderEmailLayout(
-        'Newsletter Anmeldung bestätigt',
-        `<p>Vielen Dank für deine Bestätigung!</p><p>Wenn du den Newsletter nicht mehr erhalten möchtest, kannst du dich <a href="${unsubscribeUrl}">hier abmelden</a>.</p>`,
-      ),
-    });
+    
+    // Fallunterscheidung: Whitepaper vs. normaler Newsletter
+    if (data.role === 'whitepaper') {
+      const downloadToken = createToken(data.email, 'whitepaper_download');
+      const downloadUrl = `${origin}/api/whitepaper/download?token=${encodeURIComponent(downloadToken)}`;
+      
+      await sendEmail({
+        to: data.email,
+        subject: 'Ihr Whitepaper Download',
+        text: `Vielen Dank für Ihre Bestätigung! Hier ist Ihr persönlicher Download-Link für das Whitepaper: ${downloadUrl}`,
+        html: renderEmailLayout(
+          'Ihr Whitepaper',
+          `<p>Vielen Dank für Ihre Bestätigung!</p>
+           <p>Sie können das Whitepaper jetzt über den folgenden Link herunterladen:</p>
+           <p style="text-align:center; margin: 24px 0;">
+             <a href="${downloadUrl}" style="display:inline-block; background-color:#FFB703; color:#000; padding:12px 24px; border-radius:6px; text-decoration:none; font-weight:bold;">
+               Whitepaper herunterladen
+             </a>
+           </p>
+           <p>Der Link ist aus Sicherheitsgründen zeitlich begrenzt gültig.</p>`
+        ),
+      });
+    } else {
+      // Standard Newsletter Bestätigung
+      const unsubscribeToken = createToken(data.email, 'unsubscribe');
+      const unsubscribeUrl = `${origin}/api/newsletter/unsubscribe?token=${encodeURIComponent(unsubscribeToken)}`;
+      await sendEmail({
+        to: data.email,
+        subject: 'Newsletter Anmeldung bestätigt',
+        text: `Vielen Dank für deine Bestätigung! Wenn du den Newsletter nicht mehr erhalten möchtest, kannst du dich hier abmelden: ${unsubscribeUrl}`,
+        html: renderEmailLayout(
+          'Newsletter Anmeldung bestätigt',
+          `<p>Vielen Dank für deine Bestätigung!</p><p>Wenn du den Newsletter nicht mehr erhalten möchtest, kannst du dich <a href="${unsubscribeUrl}">hier abmelden</a>.</p>`,
+        ),
+      });
+    }
   } catch (err) {
     console.error('Failed to send confirmation email', err);
   }

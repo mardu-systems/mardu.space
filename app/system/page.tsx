@@ -1,11 +1,9 @@
 'use client';
 
-import Image from 'next/image';
 import { useState } from 'react';
 import ProductShowcase from '@/features/product/product-showcase';
 import FeatureList from '@/features/product/feature-list';
 import { Building, Monitor, Shield, Wifi } from 'lucide-react';
-import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import Faq from '@/components/utilities/faq';
 import { faqItems } from '@/data/faq-items';

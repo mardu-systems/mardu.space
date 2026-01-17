@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, FileText, Download } from 'lucide-react';
+import { ArrowRight, FileText, Download, Loader2, CheckSquare } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { ScrollReveal } from '@/components/ui/motion/scroll-reveal';
@@ -17,6 +17,8 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
+import { useRecaptcha } from '@/lib/recaptcha';
+import { Alert, AlertDescription } from '@/components/ui/alert';
 
 interface WhitepaperTeaserProps {
   className?: string;
@@ -24,6 +26,50 @@ interface WhitepaperTeaserProps {
 
 export default function WhitepaperTeaser({ className }: WhitepaperTeaserProps) {
   const [open, setOpen] = useState(false);
+  const [email, setEmail] = useState('');
+  const [consent, setConsent] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [errorMessage, setErrorMessage] = useState('');
+  
+  const executeRecaptcha = useRecaptcha();
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!consent) return;
+    setLoading(true);
+    setStatus('idle');
+    setErrorMessage('');
+
+    try {
+      const token = await executeRecaptcha('whitepaper_signup');
+      if (!token) throw new Error('Recaptcha verification failed');
+
+      const res = await fetch('/api/newsletter', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, role: 'whitepaper', token }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.error || 'Something went wrong');
+      }
+
+      setStatus('success');
+      setEmail('');
+      setConsent(false);
+      
+      // Close dialog after success (optional, or keep open to show message)
+      // setTimeout(() => setOpen(false), 3000); 
+    } catch (err: unknown) {
+      setStatus('error');
+      setErrorMessage(err instanceof Error ? err.message : 'Ein Fehler ist aufgetreten.');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <section className={cn('w-full py-20 px-4 md:px-8', className)}>
@@ -60,104 +106,73 @@ export default function WhitepaperTeaser({ className }: WhitepaperTeaserProps) {
                         <ArrowRight className="ml-2 w-5 h-5" />
                       </Button>
                     </DialogTrigger>
-                    <DialogContent className="sm:max-w-150 max-h-[90vh] overflow-y-auto bg-card text-foreground">
+                    <DialogContent className="sm:max-w-md bg-card text-foreground">
                       <DialogHeader>
                         <DialogTitle>Whitepaper anfordern</DialogTitle>
                         <DialogDescription>
-                          Bitte füllen Sie das Formular aus. Wir senden Ihnen das Whitepaper umgehend per E-Mail zu.
+                          Melden Sie sich an, um das Whitepaper zu erhalten. Wir senden Ihnen einen Bestätigungslink per E-Mail.
                         </DialogDescription>
                       </DialogHeader>
 
-                      <form
-                        method="post"
-                        action="https://flow.cleverreach.com/fl/dc9cc0ca-817c-4e47-bad3-f00510d3efc3/confirm"
-                        target="_blank"
-                        className="space-y-6 pt-4"
-                        onSubmit={() => setTimeout(() => setOpen(false), 2000)}
-                      >
-                        <input
-                          type="text"
-                          tabIndex={-1}
-                          autoComplete="off"
-                          className="hidden"
-                          name="email_confirm"
-                          aria-hidden
-                        />
-
-                        {/* Tag zur Identifizierung in CleverReach für Automations-Trigger */}
-                        <input type="hidden" name="tags[]" value="Whitepaper" />
-
-                        <div className="space-y-2">
-                          <Label htmlFor="wp.vorname">Vorname</Label>
-                          <Input
-                            type="text"
-                            id="wp.vorname"
-                            name="global.vorname"
-                            placeholder="Ihr Vorname"
-                          />
+                      {status === 'success' ? (
+                        <div className="py-6 text-center space-y-4">
+                          <div className="mx-auto w-12 h-12 rounded-full bg-green-100 flex items-center justify-center">
+                             <CheckSquare className="w-6 h-6 text-green-600" />
+                          </div>
+                          <p className="text-lg font-medium">Vielen Dank!</p>
+                          <p className="text-muted-foreground">
+                            Wir haben Ihnen eine Bestätigungs-E-Mail gesendet. 
+                            Bitte klicken Sie auf den Link darin, um Ihre Anmeldung abzuschließen.
+                          </p>
+                          <Button variant="outline" onClick={() => setOpen(false)}>Schließen</Button>
                         </div>
+                      ) : (
+                        <form onSubmit={handleSubmit} className="space-y-6 pt-4">
+                          <div className="space-y-2">
+                            <Label htmlFor="wp.email">E-Mail Adresse</Label>
+                            <Input
+                              type="email"
+                              id="wp.email"
+                              required
+                              placeholder="name@example.com"
+                              value={email}
+                              onChange={(e) => setEmail(e.target.value)}
+                            />
+                          </div>
 
-                        <div className="space-y-2">
-                          <Label htmlFor="wp.nachname">Nachname</Label>
-                          <Input
-                            type="text"
-                            id="wp.nachname"
-                            name="global.nachname"
-                            placeholder="Ihr Nachname"
-                          />
-                        </div>
+                          <div className="flex items-start space-x-3">
+                            <Checkbox
+                              id="wp.terms"
+                              checked={consent}
+                              onCheckedChange={(c) => setConsent(c === true)}
+                              required
+                              className="mt-1"
+                            />
+                            <Label
+                              htmlFor="wp.terms"
+                              className="text-xs font-normal leading-relaxed text-muted-foreground"
+                            >
+                              Ich stimme zu, dass ich per E-Mail kontaktiert werde. 
+                              Diese Einwilligung kann jederzeit widerrufen werden.
+                            </Label>
+                          </div>
 
-                        <div className="space-y-2">
-                          <Label htmlFor="wp.firma">Firma</Label>
-                          <Input
-                            type="text"
-                            id="wp.firma"
-                            name="global.firma"
-                            placeholder="Ihre Firma"
-                          />
-                        </div>
+                          {status === 'error' && (
+                             <Alert variant="destructive">
+                               <AlertDescription>{errorMessage}</AlertDescription>
+                             </Alert>
+                          )}
 
-                        <div className="space-y-2">
-                          <Label
-                            htmlFor="wp.email"
-                            className="after:content-['*'] after:ml-0.5 after:text-destructive"
+                          <Button
+                            type="submit"
+                            className="w-full bg-accent hover:bg-accent/90 text-accent-foreground"
+                            disabled={loading || !consent}
                           >
-                            E-Mail
-                          </Label>
-                          <Input
-                            type="email"
-                            id="wp.email"
-                            name="email"
-                            required
-                            placeholder="name@example.com"
-                          />
-                        </div>
-
-                        <div className="flex items-start space-x-3 pt-2">
-                          <Checkbox
-                            id="wp.terms"
-                            name="tags[]"
-                            value="accept"
-                            required
-                            className="mt-1"
-                          />
-                          <Label
-                            htmlFor="wp.terms"
-                            className="text-xs font-normal leading-relaxed text-muted-foreground"
-                          >
-                            Ich stimme zu, dass meine Daten zur Zusendung des Whitepapers verarbeitet werden. 
-                            Gleichzeitig melde ich mich zum Newsletter an (jederzeit widerrufbar). 
-                            Details in der Datenschutzerklärung.
-                          </Label>
-                        </div>
-
-                        <Button
-                          type="submit"
-                          className="w-full sm:w-auto h-12 px-6 rounded-lg bg-accent hover:bg-accent/90 text-accent-foreground font-medium text-sm tracking-wide transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-                        >
-                          Jetzt anfordern
-                        </Button>
-                      </form>
+                            {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                            Jetzt anfordern
+                          </Button>
+                        </form>
+                      )}
                     </DialogContent>
                   </Dialog>
                 </div>

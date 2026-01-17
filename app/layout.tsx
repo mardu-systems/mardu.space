@@ -4,6 +4,7 @@ import React from 'react';
 import SiteShell from '@/components/layout/site-shell';
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
+import RecaptchaProvider from '@/components/providers/recaptcha-provider';
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -102,9 +103,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body className="bg-background text-foreground antialiased overflow-x-hidden">
-        <SiteShell>{children}</SiteShell>
-        <Analytics />
-        <SpeedInsights />
+        <RecaptchaProvider>
+          <SiteShell>{children}</SiteShell>
+          <Analytics />
+          <SpeedInsights />
+        </RecaptchaProvider>
       </body>
     </html>
   );
