@@ -1,0 +1,10 @@
+onlyBuiltDependencies:
+  - '@parcel/watcher'
+  - '@prisma/engines'
+  - esbuild
+  - jpegtran-bin
+  - mozjpeg
+  - pngquant-bin
+  - prisma
+  - sharp
+  - unrs-resolver

@@ -1,0 +1,60 @@
+name: Deploy to VPS
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: SSH Deploy
+        uses: appleboy/ssh-action@v1.2.3
+        # 1) Secrets im Action-Job als env verfügbar machen
+        env:
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          EMAIL_FROM: ${{ secrets.EMAIL_FROM }}
+          EMAIL_TO: ${{ secrets.EMAIL_TO }}
+          NEXT_PUBLIC_GOOGLE_MEASUREMENT_ID: ${{ secrets.NEXT_PUBLIC_GOOGLE_MEASUREMENT_ID }}
+          NEXT_PUBLIC_RECAPTCHA_SITE_KEY: ${{ secrets.NEXT_PUBLIC_RECAPTCHA_SITE_KEY }}
+          RECAPTCHA_SECRET_KEY: ${{ secrets.RECAPTCHA_SECRET_KEY }}
+          APP_URL: ${{ secrets.APP_URL }}
+          NEWSLETTER_SECRET: ${{ secrets.NEWSLETTER_SECRET }}
+          DATA_DIR: ${{ secrets.DATA_DIR }}
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          # 2) Diese envs in die SSH-Session durchreichen
+          envs: RESEND_API_KEY,EMAIL_FROM,EMAIL_TO,NEXT_PUBLIC_GOOGLE_MEASUREMENT_ID,NEXT_PUBLIC_RECAPTCHA_SITE_KEY,RECAPTCHA_SECRET_KEY,APP_URL,NEWSLETTER_SECRET, DATA_DIR
+          script: |
+            APP_NAME="mardu.space"
+            export NVM_DIR="$HOME/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+
+            cd /var/www/"${APP_NAME}"
+
+            git pull
+
+            cat > .env.production << EOF
+            RESEND_API_KEY=${RESEND_API_KEY}
+            EMAIL_FROM=${EMAIL_FROM}
+            EMAIL_TO=${EMAIL_TO}
+
+            NEXT_PUBLIC_GOOGLE_MEASUREMENT_ID=${NEXT_PUBLIC_GOOGLE_MEASUREMENT_ID}
+            NEXT_PUBLIC_RECAPTCHA_SITE_KEY=${NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
+            RECAPTCHA_SECRET_KEY=${RECAPTCHA_SECRET_KEY}
+
+            APP_URL=${APP_URL}
+            NEWSLETTER_SECRET=${NEWSLETTER_SECRET}
+            DATA_DIR=${DATA_DIR}
+            EOF
+
+            pnpm install --frozen-lockfile
+            pnpm build
+            pm2 restart "${APP_NAME}" --update-env || pm2 start pnpm --name "${APP_NAME}" -- start

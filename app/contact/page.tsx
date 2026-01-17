@@ -1,0 +1,66 @@
+import type { Metadata } from 'next';
+import ContactForm from './contact-form';
+
+export const metadata: Metadata = {
+  title: 'Kontakt',
+  description:
+    'Kontaktiere das Team von mardu.space und erfahre, wie du uns im Alten Schlachthof erreichst.',
+};
+
+export default function ContactPage() {
+  return (
+    <main className="pt-[calc(var(--app-header-height,64px)+env(safe-area-inset-top))] min-h-screen">
+      <section className="max-w-7xl mx-auto px-4 py-10">
+        <div className="pt-8">
+          <div className="grid lg:grid-cols-2 gap-12 items-start">
+            <div className="space-y-6 pt-8 text-base leading-relaxed">
+              <p>Du hast Fragen oder möchtest uns besuchen? Melde dich gerne bei uns.</p>
+              <div className="space-y-1">
+                <p>
+                  <strong>Mardu GmbH i.G.</strong>
+                  <br />
+                  A1
+                  <br />
+                  Alter Schlachthof 39
+                  <br />
+                  76131 Karlsruhe
+                  <br />
+                  Deutschland
+                </p>
+                <p>
+                  {/* Telefon: <a href="tel:015202189213" className="underline">015202189213</a><br/> */}
+                  E-Mail:{' '}
+                  <a href="mailto:info@mardu.de" className="underline">
+                    info@mardu.de
+                  </a>
+                </p>
+              </div>
+              <div className="space-y-2">
+                <h2 className="text-lg font-semibold">Anfahrt</h2>
+                <p>
+                  Unser Büro befindet sich im Kreativpark Alter Schlachthof in Karlsruhe. Die
+                  Straßenbahnhaltestellen Tullastraße sowie Gottesauer Platz/BGV (Linien 1 und 2)
+                  liegen nur wenige Minuten zu Fuß entfernt.
+                </p>
+                <p>
+                  Mit dem Auto erreichst du uns über die Durlacher Allee. Folge der Beschilderung
+                  zum Alten Schlachthof und nutze die Parkplätze auf dem Gelände.
+                </p>
+              </div>
+              <div className="space-y-2">
+                <h2 className="text-lg font-semibold">Schreib uns</h2>
+                <p>
+                  Gib uns einfach deine Kontaktdaten und eine kurze Beschreibung deines Vorhabens —
+                  das Formular steht auf der rechten Seite bereit.
+                </p>
+              </div>
+            </div>
+            <div>
+              <ContactForm />
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  );
+}
