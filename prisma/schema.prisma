@@ -1,0 +1,15 @@
+generator client {
+  provider = "prisma-client"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+model Subscriber {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  role      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
