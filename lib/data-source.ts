@@ -5,7 +5,7 @@ import { Subscriber } from "./entities/Subscriber"
 export const AppDataSource = new DataSource({
     type: "mysql",
     url: process.env.DATABASE_URL,
-    synchronize: true, // Erstellt Tabellen automatisch (ideal für dieses Setup)
+    synchronize: true,
     logging: false,
     entities: [Subscriber],
     migrations: [],

@@ -1,19 +1,25 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from "typeorm"
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
 @Entity()
 export class Subscriber {
-    @PrimaryGeneratedColumn()
-    id!: number
+  @PrimaryGeneratedColumn({ type: 'int' })
+  id!: number;
 
-    @Column({ unique: true })
-    email!: string
+  @Column({ type: 'varchar', length: 320, unique: true })
+  email!: string;
 
-    @Column()
-    role!: string
+  @Column({ type: 'varchar', length: 100 })
+  role!: string;
 
-    @CreateDateColumn()
-    createdAt!: Date
+  @CreateDateColumn({ type: 'datetime' })
+  createdAt!: Date;
 
-    @UpdateDateColumn()
-    updatedAt!: Date
+  @UpdateDateColumn({ type: 'datetime' })
+  updatedAt!: Date;
 }

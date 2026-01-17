@@ -1,3 +1,4 @@
+import "reflect-metadata";
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
 import { createToken } from '@/lib/newsletter';
