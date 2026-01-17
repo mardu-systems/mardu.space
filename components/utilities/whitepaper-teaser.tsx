@@ -19,8 +19,8 @@ export default function WhitepaperTeaser({ className }: WhitepaperTeaserProps) {
           <div className="relative overflow-hidden rounded-[2.5rem] bg-primary text-primary-foreground">
             
             {/* Background Decor */}
-            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/4 pointer-events-none" />
-            <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-accent/10 rounded-full blur-3xl translate-y-1/3 -translate-x-1/4 pointer-events-none" />
+            <div className="absolute top-0 right-0 w-125 h-125 bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/4 pointer-events-none" />
+            <div className="absolute bottom-0 left-0 w-75 h-75 bg-accent/10 rounded-full blur-3xl translate-y-1/3 -translate-x-1/4 pointer-events-none" />
 
             <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 p-8 md:p-12 lg:p-20 items-center">
               
@@ -32,11 +32,11 @@ export default function WhitepaperTeaser({ className }: WhitepaperTeaserProps) {
                 </div>
                 
                 <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight">
-                  Der Report zur <span className="text-accent">Zukunft der Konfiguration</span>
+                  Whitepaper: <span className="text-accent">Digitale Zutritts- und Maschinenfreigabe</span>
                 </h2>
                 
                 <p className="text-lg text-primary-foreground/80 leading-relaxed max-w-xl">
-                  Erhalten Sie exklusive Einblicke, Marktdaten für 2026 und eine Schritt-für-Schritt Anleitung, wie Sie Ihre Produkte digital erlebbar machen.
+                  Erfahren Sie, wie Sie Zutritt, Maschinenfreigaben und Unterweisungen zuverlässig organisieren – für Unternehmenswerkstätten, Hochschulen und Makerspaces.
                 </p>
 
                 <div className="flex flex-wrap gap-4 pt-2">
@@ -44,12 +44,6 @@ export default function WhitepaperTeaser({ className }: WhitepaperTeaserProps) {
                     <Link href="/whitepaper">
                       Jetzt kostenlos herunterladen
                       <ArrowRight className="ml-2 w-5 h-5" />
-                    </Link>
-                  </Button>
-                  
-                  <Button asChild variant="outline" size="lg" className="h-14 px-8 text-base bg-transparent border-2 border-white/20 text-white hover:bg-white/10 hover:text-white hover:border-white/40">
-                    <Link href="/whitepaper">
-                      Mehr erfahren
                     </Link>
                   </Button>
                 </div>

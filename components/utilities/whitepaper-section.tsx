@@ -23,12 +23,8 @@ export interface WhitepaperSectionProps {
 export default function WhitepaperSection({
   title = 'Unser exklusives Whitepaper',
   description = 'Erhalten Sie tiefe Einblicke und wertvolle Strategien in unserem kostenlosen Whitepaper. Melden Sie sich zum Newsletter an, um den Download-Link direkt in Ihr Postfach zu erhalten.',
-  benefits = [
-    'Umfassende Marktanalyse',
-    'Praktische Checklisten für die Umsetzung',
-    'Exklusive Experten-Tipps',
-  ],
-  coverImageSrc, // Optional: if provided, renders image, else renders icon placeholder
+  benefits = [],
+  coverImageSrc,
   className,
 }: WhitepaperSectionProps) {
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -69,7 +65,7 @@ export default function WhitepaperSection({
   };
 
   return (
-    <section className={cn('py-16 px-4 md:px-8 w-full bg-secondary/30', className)}>
+    <section className={cn('py-16 px-4 md:px-8 w-full', className)}>
       <div className="max-w-6xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           
@@ -77,10 +73,10 @@ export default function WhitepaperSection({
           <ScrollReveal direction="right" className="order-last lg:order-first flex justify-center">
             <div className="relative group">
               {/* Abstract decorative background */}
-              <div className="absolute -inset-4 bg-gradient-to-tr from-primary/20 to-accent/20 rounded-2xl blur-xl opacity-70 group-hover:opacity-100 transition-opacity duration-500" />
-              
+              <div className="z-50 absolute -inset-4 bg-linear-to-tr from-primary/20 to-accent/20 rounded-2xl blur-xl opacity-70 group-hover:opacity-100 transition-opacity duration-500" />
+
               <motion.div 
-                className="relative bg-card border border-border rounded-xl shadow-xl overflow-hidden w-full max-w-sm aspect-[3/4] flex items-center justify-center"
+                className="z-60 relative bg-card border border-border rounded-xl shadow-xl overflow-hidden w-full max-w-sm aspect-3/4 flex items-center justify-center"
                 whileHover={{ y: -5 }}
                 transition={{ type: 'spring', stiffness: 300, damping: 20 }}
               >
@@ -111,7 +107,7 @@ export default function WhitepaperSection({
           {/* Right Column: Content & Form */}
           <ScrollReveal direction="left" className="space-y-8">
             <div>
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/10 text-accent-foreground text-xs font-semibold uppercase tracking-wider mb-4">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent text-accent-foreground text-xs font-semibold uppercase tracking-wider mb-4">
                 Kostenloser Download
               </div>
               <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">{title}</h2>
