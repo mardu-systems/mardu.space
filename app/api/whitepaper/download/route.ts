@@ -16,14 +16,16 @@ export async function GET(req: NextRequest) {
   
   // We check if payload exists AND if the role matches what we expect
   if (!payload || payload.role !== "whitepaper_download") {
+    console.error("Download failed: Invalid token or role.", { token, payload });
     return NextResponse.json({ error: "Invalid or expired token" }, { status: 403 });
   }
 
   // 2. Locate File
-  // In a real app, this might be in an S3 bucket or a protected directory
   const filePath = path.join(process.cwd(), "assets/secure/whitepaper_v1.0.pdf");
+  console.log("Attempting to serve file from:", filePath);
 
   if (!fs.existsSync(filePath)) {
+    console.error("Download failed: File not found at", filePath);
     return NextResponse.json({ error: "File not found on server" }, { status: 404 });
   }
 
