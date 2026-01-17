@@ -58,7 +58,7 @@ export default function FeatureSection({
 
             {buttonText && buttonHref && (
               <div className="pt-4">
-                <MeetergoCTAButton>Jetzt Beratung vereinbaren</MeetergoCTAButton>
+                <MeetergoCTAButton>Jetzt Newsletter abonnieren</MeetergoCTAButton>
               </div>
             )}
           </ScrollReveal>
