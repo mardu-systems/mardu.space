@@ -9,48 +9,74 @@ export const metadata: Metadata = {
 export default function RoadmapPage() {
   const items: RoadmapMilestone[] = [
     {
-      title: 'Erweiterte Maschinensteuerung',
-      time: 'Q4 2025',
+      title: 'Phase 1: Erweiterte Maschinensteuerung & Logik',
+      time: 'Q2 2026',
       cards: [
         {
-          title: 'Geplante Erweiterungen',
           description: (
-            <ul className="space-y-2 list-disc list-inside text-sm md:text-base">
-              <li>Erweiterte Regel Engine zum Beispiel Vier Augen Prinzip</li>
-              <li>Interlock Zwang zum Beispiel Absaugung muss laufen</li>
-              <li>Qualifikations Management mit Ablaufdatum</li>
+            <ul className="space-y-3">
+              <li>
+                <strong>Erweiterte Regel-Engine:</strong> Implementierung komplexer
+                Freigabe-Szenarien, wie z.B. das "Vier-Augen-Prinzip" (Freigabe nur durch zwei
+                autorisierte Personen).
+              </li>
+              <li>
+                <strong>First Run Wizard:</strong> Ein web-basierter Einrichtungsassistent führt durch die Erstinstallation
+                (Datenbank, Admin-User), um die Inbetriebnahme ohne Konfigurationsdateien zu
+                ermöglichen. Einrichtung ohne Hilfe von mardu.
+              </li>
+              <li>
+                <strong>Qualifikations-Management:</strong> Tiefere Integration von Zertifikaten und
+                Unterweisungen mit automatischem Ablaufdatum und Benachrichtigungen.
+              </li>
             </ul>
           ),
         },
       ],
     },
     {
-      title: 'UX und Self Service',
-      time: 'Kurzfristig',
+      title: 'Phase 2: User Experience & Self-Service',
+      time: 'Q2-3 2026',
       cards: [
         {
-          title: 'Ziel',
           description: (
-            <ul className="space-y-2 list-disc list-inside text-sm md:text-base">
-              <li>First Run Wizard für einfache Einrichtung</li>
-              <li>Dynamische Konfigurations UI ohne Neustarts</li>
-              <li>Self Onboarding und Approval Flows</li>
+            <ul className="space-y-3">
+              <li>
+                <strong>Dynamische Konfigurations-UI:</strong> Administratoren können
+                Systemeinstellungen direkt über die Weboberfläche anpassen, ohne Neustarts oder Serverzugriff.
+              </li>
+              <li>
+                <strong>Interlock-Zwang:</strong> Technische Kopplung von Maschinenbedingungen, z.B. "Maschine
+                startet nur, wenn die Absaugung aktiv ist" oder "Kühlmittel läuft".
+              </li>
+              <li>
+                <strong>Self-Onboarding:</strong> Neue Nutzer können sich selbst registrieren und Freigaben
+                beantragen, die durch Administratoren genehmigt werden (Approval-Flow).
+              </li>
+              <li>
+                <strong>Energie-Monitoring:</strong> Erfassung und Auswertung von Verbrauchsdaten
+                direkt an den Maschinen zur Optimierung der Energiekosten.
+              </li>
             </ul>
           ),
         },
       ],
     },
     {
-      title: 'Ökosystem',
-      time: 'Langfristig',
+      title: 'Phase 3: Ökosystem & Integration',
+      time: 'Q3 2026 - Q2 2027',
       cards: [
         {
-          title: 'Erweiterungen',
           description: (
-            <ul className="space-y-2 list-disc list-inside text-sm md:text-base">
-              <li>Plugin Marktplatz zum Beispiel LMS und Raumbuchung</li>
-              <li>Energie Monitoring an Maschinen</li>
-              <li>Hardware backed Keystore</li>
+            <ul className="space-y-3">
+              <li>
+                <strong>Plugin-Marktplatz:</strong> Module von Drittanbietern für Raumbuchung,
+                Bezahlsysteme oder LMS (Moodle, ILIAS, Uni-Now).
+              </li>
+              <li>
+                <strong>Hardware-backed Keystore:</strong> Unterstützung spezieller Sicherheits-Chips
+                für maximalen Schutzbedarf.
+              </li>
             </ul>
           ),
         },
@@ -65,7 +91,6 @@ export default function RoadmapPage() {
         <RoadmapTimeline
           title="Roadmap und Ausblick"
           items={items}
-          compact
         />
       </section>
     </main>
