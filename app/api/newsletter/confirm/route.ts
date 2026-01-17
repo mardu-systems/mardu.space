@@ -37,9 +37,11 @@ export async function GET(req: Request) {
                Whitepaper herunterladen
              </a>
            </p>
-           <p>Der Link ist aus Sicherheitsgründen zeitlich begrenzt gültig.</p>`
+           <p>Dieser Link ist Ihr dauerhafter Zugang zum Whitepaper.</p>`
         ),
       });
+
+      return NextResponse.redirect(new URL(`/whitepaper/success?token=${encodeURIComponent(downloadToken)}`, req.url));
     } else {
       // Standard Newsletter Bestätigung
       const unsubscribeToken = createToken(data.email, 'unsubscribe');
@@ -53,10 +55,12 @@ export async function GET(req: Request) {
           `<p>Vielen Dank für deine Bestätigung!</p><p>Wenn du den Newsletter nicht mehr erhalten möchtest, kannst du dich <a href="${unsubscribeUrl}">hier abmelden</a>.</p>`,
         ),
       });
+
+      return NextResponse.redirect(new URL('/newsletter/success', req.url));
     }
   } catch (err) {
     console.error('Failed to send confirmation email', err);
+    // Even on email failure, we confirmed the user, so redirect to success (or maybe error page? defaulting to success for better UX as sub is saved)
+    return NextResponse.redirect(new URL('/newsletter/success', req.url));
   }
-
-  return NextResponse.json({ ok: true });
 }
