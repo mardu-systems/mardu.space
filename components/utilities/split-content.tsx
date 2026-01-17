@@ -29,55 +29,58 @@ export default function SplitContent({
   reverse = false,
 }: SplitContentProps) {
   return (
-    <section className={cn('py-16 px-6 md:px-8 max-w-7xl mx-auto w-full bg-primary', className)}>
-      <div
-        className={cn(
-          'grid gap-10 md:grid-cols-2 lg:gap-16 items-start',
-          reverse && 'md:[&>*:first-child]:order-2 md:[&>*:last-child]:order-1',
-        )}
-      >
-        <div className={cn('space-y-6', reverse && 'md:order-2')}>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl leading-tight font-bold">{title}</h2>
-          <div className="text-base md:text-lg leading-relaxed opacity-95 space-y-4">
+    <section className={cn('py-16 w-full bg-primary', className)}>
+      <div className="max-w-7xl mx-auto px-6 md:px-8">
+        <h2 className="text-3xl sm:text-4xl md:text-5xl leading-tight font-bold mb-8 md:mb-12">
+          {title}
+        </h2>
+
+        <div
+          className={cn(
+            'grid gap-10 md:grid-cols-2 lg:gap-16 items-start',
+            reverse && 'md:[&>*:first-child]:order-2 md:[&>*:last-child]:order-1',
+          )}
+        >
+          <div className={cn('text-base md:text-lg leading-relaxed opacity-95 space-y-4', reverse && 'md:order-2')}>
             {description}
           </div>
-        </div>
 
-        <Card className={cn('rounded-3xl overflow-hidden border-none', reverse && 'md:order-1')}>
-          {sideTitle && (
-            <CardHeader className="pb-4">
-              <CardTitle className="text-lg md:text-xl font-semibold flex items-center gap-3 text-primary">
-                <SideIcon className="text-primary w-5 h-5" aria-hidden="true" />
-                {sideTitle}
-              </CardTitle>
-            </CardHeader>
-          )}
-          <CardContent>
-            <ul className="space-y-6">
-              {items.map((item, idx) => {
-                const ItemIcon = item.icon ?? CheckCircle;
+          <Card className={cn('rounded-3xl overflow-hidden border-none', reverse && 'md:order-1')}>
+            {sideTitle && (
+              <CardHeader className="pb-4">
+                <CardTitle className="text-lg md:text-xl font-semibold flex items-center gap-3 text-primary">
+                  <SideIcon className="text-primary w-5 h-5" aria-hidden="true" />
+                  {sideTitle}
+                </CardTitle>
+              </CardHeader>
+            )}
+            <CardContent>
+              <ul className="space-y-6">
+                {items.map((item, idx) => {
+                  const ItemIcon = item.icon ?? CheckCircle;
 
-                return (
-                  <li key={`${item.title}-${idx}`} className="flex gap-4 items-start">
-                    <ItemIcon className="shrink-0 text-primary w-5 h-5 mt-0.5" aria-hidden="true" />
-                    <div className="space-y-1">
-                      <h4 className="font-semibold text-primary text-base md:text-lg">
-                        {item.title}
-                      </h4>
-                      <div className="text-sm md:text-base text-muted-foreground leading-relaxed">
-                        {typeof item.description === 'string' ? (
-                          <p>{item.description}</p>
-                        ) : (
-                          item.description
-                        )}
+                  return (
+                    <li key={`${item.title}-${idx}`} className="flex gap-4 items-start">
+                      <ItemIcon className="shrink-0 text-primary w-5 h-5 mt-0.5" aria-hidden="true" />
+                      <div className="space-y-1">
+                        <h4 className="font-semibold text-primary text-base md:text-lg">
+                          {item.title}
+                        </h4>
+                        <div className="text-sm md:text-base text-muted-foreground leading-relaxed">
+                          {typeof item.description === 'string' ? (
+                            <p>{item.description}</p>
+                          ) : (
+                            item.description
+                          )}
+                        </div>
                       </div>
-                    </div>
-                  </li>
-                );
-              })}
-            </ul>
-          </CardContent>
-        </Card>
+                    </li>
+                  );
+                })}
+              </ul>
+            </CardContent>
+          </Card>
+        </div>
       </div>
     </section>
   );
