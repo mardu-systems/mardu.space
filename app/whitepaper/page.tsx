@@ -31,7 +31,6 @@ export default function WhitepaperPage() {
             'Compliance: Technische Durchsetzung von Unterweisungen (DGUV/TRBS) und lückenlose Dokumentation',
             'Skalierbarkeit: Vom einzelnen Makerspace bis zum Produktionsstandort',
           ]}
-          // coverImageSrc="/path/to/image.jpg" // Optional: Add a real path if you have one later
         />
 
         <div className="max-w-3xl mx-auto mt-16 text-center px-4">
