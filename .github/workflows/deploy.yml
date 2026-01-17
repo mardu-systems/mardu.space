@@ -33,16 +33,14 @@ jobs:
           # 2) Diese envs in die SSH-Session durchreichen
           envs: RESEND_API_KEY,EMAIL_FROM,EMAIL_TO,NEXT_PUBLIC_GOOGLE_MEASUREMENT_ID,NEXT_PUBLIC_RECAPTCHA_SITE_KEY,RECAPTCHA_SECRET_KEY,APP_URL,NEWSLETTER_SECRET, DATA_DIR
           script: |
-            # nvm + node laden (falls du nvm nutzt)
+            APP_NAME="mardu.space"
             export NVM_DIR="$HOME/.nvm"
             [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
 
-            cd /var/www/mardu.space
+            cd /var/www/"${APP_NAME}"
 
-            # Code aktualisieren
             git pull
 
-            # 3) .env.production aus den Secrets bauen
             cat > .env.production << EOF
             RESEND_API_KEY=${RESEND_API_KEY}
             EMAIL_FROM=${EMAIL_FROM}
@@ -57,10 +55,6 @@ jobs:
             DATA_DIR=${DATA_DIR}
             EOF
 
-            # 4) Dependencies & Build
             pnpm install --frozen-lockfile
             pnpm build
-
-            # 5) App neu starten (Name anpassen!)
-            PM2_APP_NAME="mardu.space"
-            pm2 restart "${PM2_APP_NAME}" --update-env || pm2 start pnpm --name "${PM2_APP_NAME}" -- start
+            pm2 restart "${APP_NAME}" --update-env || pm2 start pnpm --name "${APP_NAME}" -- start
