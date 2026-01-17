@@ -32,16 +32,16 @@ export default function HomePage() {
     <main className="min-h-screen bg-background flex flex-col">
       {/* 1. Hero Header Section */}
       <HeroSection
-        title="Digitale Zutritts- und Maschinenfreigabe"
+        title="Digitale Zutritts und Maschinenfreigabe"
         description={
           <>
             <p className="mb-4 text-lg font-medium">
               Für Unternehmenswerkstätten, Hochschulen, Makerspaces und private Werkstätten.
             </p>
             <p>
-              mardu.space ersetzt Schlüssel und Listen durch ein konsistentes Berechtigungsmodell
-              für Räume und Maschinen – skalierbar von der privaten Werkstatt bis zum Campus oder
-              Produktionsstandort.
+              mardu.space organisiert Zutritt, Maschinenfreigaben und Unterweisungen zuverlässig.
+              Statt Schlüssel, Codes oder manueller Listen erhalten Betreiber ein konsistentes
+              Berechtigungsmodell für Räume und Maschinen und technisch durchgesetzte Regeln.
             </p>
           </>
         }
@@ -53,22 +53,22 @@ export default function HomePage() {
       {/* 2. Management Summary */}
       <SplitContent
         className="text-white"
-        title="Management Summary"
+        title="Management Summary und Kurzfassung"
         description={
           <>
             <p>
               In Unternehmenswerkstätten, Hochschulen und Makerspaces treffen wechselnde Rollen auf
-              Bereiche mit erhöhtem Gefahrenpotenzial. Sicherheits- und Compliance-Lücken entstehen
-              oft nicht durch fehlende Regeln, sondern durch mangelnde Durchsetzung.
+              Bereiche mit erhöhtem Gefahrenpotenzial. Sicherheits und Compliance Lücken entstehen
+              selten durch fehlende Regeln, sondern durch mangelnde Durchsetzung.
             </p>
             <p>
               mardu.space verknüpft Türzugang und Maschinenfreigabe in einem System. Berechtigungen
-              werden rollenbasiert und zeitlich definiert. Maschinen lassen sich so steuern, dass
-              eine Bedienung nur mit gültiger Qualifikation möglich ist.
+              sind rollenbasiert und zeitlich definiert. Maschinen lassen sich so schalten, dass eine
+              Bedienung nur mit gültiger Qualifikation möglich ist.
             </p>
             <p>
-              Ereignisprotokolle unterstützen die Vorfallklärung und den Nachweis, dass
-              organisatorische Vorgaben umgesetzt sind.
+              Ereignisprotokolle unterstützen die Vorfallklärung und liefern belastbare Nachweise,
+              wer wann wo war und was genutzt wurde.
             </p>
           </>
         }
@@ -78,19 +78,19 @@ export default function HomePage() {
           {
             title: 'Sicherheit & Nachvollziehbarkeit',
             description:
-              'Personenbezogene, zeitlich definierte Berechtigungen und lückenlose Ereignisprotokolle.',
+              'Personenbezogene, zeitlich definierte Berechtigungen und Ereignisprotokolle.',
             icon: ShieldCheck,
           },
           {
             title: 'Reduzierter Verwaltungsaufwand',
             description:
-              'Digitale Vergabe, Anpassung und sofortiger Entzug von Rechten ohne Schlüsselmanagement.',
+              'Digitale Vergabe, Anpassung und Entzug von Rechten im Alltag.',
             icon: Settings,
           },
           {
             title: 'Flexibler Betrieb',
             description:
-              'Lokal oder zentral administrierbar, passend zu Ihrer Infrastruktur und IT-Vorgaben.',
+              'Lokal oder zentral, passend zu Infrastruktur, IT Vorgaben und Verfügbarkeitsanforderungen.',
             icon: Server,
           },
         ]}
@@ -176,15 +176,22 @@ export default function HomePage() {
       />
       <div className="max-w-7xl mx-auto px-6 md:px-8 w-full -mt-6 mb-20">
         <div className="border-l-4 border-yellow-400 bg-yellow-50/50 p-8 rounded-r-2xl shadow-sm">
-          <h3 className="font-bold text-yellow-800 flex items-center gap-3 mb-3 text-lg">
-            <AlertTriangle className="w-6 h-6" />
-            Konkrete Probleme
-          </h3>
-          <p className="text-yellow-900/80 leading-relaxed">
-            Schlüsselweitergabe ist schwer kontrollierbar. Einweisungen sind oft nicht mit der
-            technischen Freigabe gekoppelt. Es herrscht Unklarheit darüber, wer wann welche Maschine
-            genutzt hat. Unternehmen müssen Audit- und Nachweispflichten erfüllen.
-          </p>
+          <div className="flex items-start gap-4">
+            <div className="w-12 h-12 bg-yellow-500/10 rounded-xl flex items-center justify-center shrink-0">
+              <AlertTriangle className="w-6 h-6 text-yellow-700" aria-hidden="true" />
+            </div>
+
+            <div className="space-y-3">
+              <h3 className="text-lg md:text-xl font-semibold text-primary">Konkrete Probleme in der Praxis</h3>
+              <ul className="space-y-2 text-sm md:text-base text-muted-foreground leading-relaxed list-disc pl-5">
+                <li>Geteilte Schlüssel oder Codes sind nicht kontrollierbar</li>
+                <li>Einweisungen sind nicht technisch an Freigaben gekoppelt</li>
+                <li>Unklar, wer wann wo war und was genutzt wurde</li>
+                <li>Nachweispflichten sind aufwendig und lückenanfällig</li>
+                <li>Öffnungszeiten werden aus Sicherheitsgründen reduziert</li>
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -244,13 +251,13 @@ export default function HomePage() {
             title: 'System & Sicherheit',
             icon: Lock,
             features: [
-              { label: 'API-First', description: 'REST-API mit OpenAPI-Spezifikation.' },
+              { label: 'API first', description: 'REST-API mit OpenAPI-Spezifikation.' },
               {
                 label: 'Kryptografie',
-                description: 'Ende-zu-Ende (AES, ECDSA, TLS/DTLS).',
+                description: 'Ende zu Ende (AES, ECDSA, TLS und DTLS).',
               },
               {
-                label: 'Container-basiert',
+                label: 'Container basiert',
                 description: 'Docker für Edge (Raspberry Pi) oder Server.',
               },
             ],
@@ -281,7 +288,7 @@ export default function HomePage() {
         ]}
         rightHighlights={[
           {
-            title: 'Gebäude- & Bereichszutritt',
+            title: 'Gebäude und Bereichszutritt',
             description:
               'Geregelter Zutritt statt Schlüsseltresor. Zonensteuerung für Werkstattbereiche, Lager und Rüstbereiche.',
           },
@@ -302,24 +309,29 @@ export default function HomePage() {
         title="Umsetzung in der Praxis"
         steps={[
           {
-            title: 'Analyse',
+            title: 'Erstgespräch',
             description:
-              'Welche Türen, Maschinen, Rollen und Zeitmodelle sind vorhanden? Welche Qualifikationen sind nötig?',
+              'Zielsetzung, Umfang, Zonen, Maschinen, Rollen und Betriebsmodell werden gemeinsam geklärt.',
           },
           {
-            title: 'Installation',
+            title: 'Begehung oder Remote Review',
             description:
-              'Anschluss der Endgeräte an Strom und Schaltpunkte. Integration in die Kommunikationsstruktur (Netzwerk/Mesh).',
+              'Prüfung von Türen, Maschinen, Strom, Netzwerk, Identifikation und Sicherheitsanforderungen.',
           },
           {
-            title: 'Konfiguration',
+            title: 'Angebot',
             description:
-              'Einrichtung von Rollen, Zonen, Zeitfenstern und Maschinenrechten. Definition der Delegationslogik.',
+              'Transparente Positionen für Hardware, Montage, Inbetriebnahme, Schulung und optionalen Support.',
           },
           {
-            title: 'Betrieb & Übergabe',
+            title: 'Installation und Inbetriebnahme',
             description:
-              'Testbetrieb im Alltag. Festlegung von Verantwortlichkeiten, Supportprozessen und Eskalationswegen.',
+              'Montage der Komponenten, Systemkonfiguration, Tests im Alltag und Übergabe an Verantwortliche.',
+          },
+          {
+            title: 'Pilot und Rollout',
+            description:
+              'Klein starten, Wirkung messen, Regeln nachschärfen und anschließend schrittweise erweitern.',
           },
         ]}
       />
@@ -367,13 +379,15 @@ export default function HomePage() {
             content: (
               <div className="space-y-4">
                 <p>
-                  Ereignisprotokolle sind personenbezogene Daten. Es gelten Zweckbindung und
-                  Datenminimierung.
+                  Zutritts und Nutzungsereignisse sind in der Regel personenbezogene Daten. mardu.space
+                  setzt Privacy by Design um: Protokolle werden nur zu klar definierten Zwecken geführt,
+                  insbesondere Betriebssicherheit, Vorfallklärung und Nachweisführung.
                 </p>
                 <p>
-                  <strong>Empfohlene Governance:</strong> Zweck der Protokollierung klar definieren
-                  (Sicherheit, Vorfallklärung), Zugriff restriktiv regeln, Löschfristen einhalten
-                  und Transparenz gegenüber Nutzern sicherstellen.
+                  Es gilt Datenminimierung: Es werden nur Ereignisse erfasst, die für diese Zwecke
+                  erforderlich sind. Ergänzend unterstützt das System Löschkonzepte über konfigurierbare
+                  Aufbewahrungsfristen für Log Daten, damit Retention Policies nachvollziehbar umgesetzt
+                  und an interne Vorgaben angepasst werden können.
                 </p>
               </div>
             ),
