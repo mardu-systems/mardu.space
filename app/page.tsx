@@ -24,6 +24,7 @@ import InfoGrid from '@/components/utilities/info-grid';
 import ProcessSteps from '@/components/utilities/process-steps';
 import SecurityAccordion from '@/components/utilities/security-accordion';
 import ScenarioGrid from '@/components/utilities/scenario-grid';
+import ConfiguratorTeaser from '@/components/utilities/configurator-teaser';
 
 import WhitepaperTeaser from '@/components/utilities/whitepaper-teaser';
 
@@ -63,8 +64,8 @@ export default function HomePage() {
             </p>
             <p>
               mardu.space verknüpft Türzugang und Maschinenfreigabe in einem System. Berechtigungen
-              sind rollenbasiert und zeitlich definiert. Maschinen lassen sich so schalten, dass
-              eine Bedienung nur mit gültiger Qualifikation möglich ist.
+              sind rollenbasiert und zeitlich definiert. Maschinen lassen sich so schalten, dass eine
+              Bedienung nur mit gültiger Qualifikation möglich ist.
             </p>
             <p>
               Ereignisprotokolle unterstützen die Vorfallklärung und liefern belastbare Nachweise,
@@ -83,7 +84,8 @@ export default function HomePage() {
           },
           {
             title: 'Reduzierter Verwaltungsaufwand',
-            description: 'Digitale Vergabe, Anpassung und Entzug von Rechten im Alltag.',
+            description:
+              'Digitale Vergabe, Anpassung und Entzug von Rechten im Alltag.',
             icon: Settings,
           },
           {
@@ -181,9 +183,7 @@ export default function HomePage() {
             </div>
 
             <div className="space-y-3">
-              <h3 className="text-lg md:text-xl font-semibold text-primary">
-                Konkrete Probleme in der Praxis
-              </h3>
+              <h3 className="text-lg md:text-xl font-semibold text-primary">Konkrete Probleme in der Praxis</h3>
               <ul className="space-y-2 text-sm md:text-base text-muted-foreground leading-relaxed list-disc pl-5">
                 <li>Geteilte Schlüssel oder Codes sind nicht kontrollierbar</li>
                 <li>Einweisungen sind nicht technisch an Freigaben gekoppelt</li>
@@ -304,6 +304,9 @@ export default function HomePage() {
           },
         ]}
       />
+
+      {/* Configurator Teaser */}
+      <ConfiguratorTeaser />
 
       {/* 6. Umsetzung & Praxis */}
       <ProcessSteps
