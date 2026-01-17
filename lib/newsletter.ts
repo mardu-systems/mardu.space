@@ -1,5 +1,6 @@
 import { createHmac } from "crypto";
-import { prisma } from "@/lib/prisma";
+import { db } from "./db";
+import { Subscriber } from "./entities/Subscriber";
 
 function getSecret() {
     const secret = process.env.NEWSLETTER_SECRET;
@@ -27,33 +28,40 @@ export function verifyToken(token: string): { email: string; role: string } | nu
         const [email, role, signature] = decoded.split(":");
         const expected = createHmac("sha256", getSecret()).update(`${email}:${role}`).digest("hex");
         if (signature !== expected) return null;
-        return {email, role};
+        return { email, role };
     } catch {
         return null;
     }
 }
 
-export async function saveSubscriber(sub: { email: string; role: string }) {
+export async function saveSubscriber(subData: { email: string; role: string }) {
     try {
-        await prisma.subscriber.upsert({
-            where: { email: sub.email },
-            update: { role: sub.role },
-            create: { email: sub.email, role: sub.role },
-        });
+        if (!db.isInitialized) await db.initialize();
+        const repository = db.getRepository(Subscriber);
+        
+        let subscriber = await repository.findOneBy({ email: subData.email });
+        
+        if (subscriber) {
+            subscriber.role = subData.role;
+            await repository.save(subscriber);
+        } else {
+            subscriber = repository.create({
+                email: subData.email,
+                role: subData.role
+            });
+            await repository.save(subscriber);
+        }
     } catch (err) {
-        console.error("Failed to save subscriber", err);
+        console.error("Failed to save subscriber with TypeORM", err);
     }
 }
 
 export async function removeSubscriber(email: string) {
     try {
-        await prisma.subscriber.delete({
-            where: { email },
-        });
+        if (!db.isInitialized) await db.initialize();
+        const repository = db.getRepository(Subscriber);
+        await repository.delete({ email });
     } catch (err) {
-        // Ignore if not found, but log other errors
-        // Prisma throws P2025 if record not found, which is fine to ignore here if we want idempotent delete
-        // But for debugging, we can log it lightly or check code
-        console.error("Failed to remove subscriber", err);
+        console.error("Failed to remove subscriber with TypeORM", err);
     }
 }

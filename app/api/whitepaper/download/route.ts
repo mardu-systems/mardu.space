@@ -26,6 +26,20 @@ export async function GET(req: NextRequest) {
 
   if (!fs.existsSync(filePath)) {
     console.error("Download failed: File not found at", filePath);
+    // Debug: List directory contents to see what's actually there
+    const dir = path.dirname(filePath);
+    if (fs.existsSync(dir)) {
+      console.error(`Contents of ${dir}:`, fs.readdirSync(dir));
+    } else {
+      console.error(`Directory ${dir} does not exist. CWD is ${process.cwd()}`);
+      // Fallback check: check if 'assets' exists in root
+      const assetsDir = path.join(process.cwd(), 'assets');
+      if (fs.existsSync(assetsDir)) {
+         console.error(`'assets' dir exists. Contents:`, fs.readdirSync(assetsDir));
+      } else {
+         console.error(`'assets' dir MISSING in root.`);
+      }
+    }
     return NextResponse.json({ error: "File not found on server" }, { status: 404 });
   }
 
