@@ -17,9 +17,9 @@ export class Subscriber {
   @Column({ type: 'varchar', length: 100 })
   role!: string;
 
-  @CreateDateColumn({ type: 'datetime' })
+  @CreateDateColumn()
   createdAt!: Date;
 
-  @UpdateDateColumn({ type: 'datetime' })
+  @UpdateDateColumn()
   updatedAt!: Date;
 }
