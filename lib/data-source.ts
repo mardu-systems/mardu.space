@@ -3,8 +3,8 @@ import { DataSource } from "typeorm"
 import { Subscriber } from "./entities/Subscriber"
 
 export const AppDataSource = new DataSource({
-    type: "mysql",
-    url: process.env.DATABASE_URL,
+    type: "postgres",
+    url: process.env.POSTGRES_URL,
     synchronize: true,
     logging: false,
     entities: [Subscriber],

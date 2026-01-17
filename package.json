@@ -3,18 +3,18 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
-    "build": "next build",
-    "start": "next start",
+    "dev": "bun run next dev --turbopack",
+    "build": "bun run next build",
+    "start": "bun run next start",
     "lint": "bun --bun eslint .",
     "lint:fix": "bun --bun eslint . --fix",
-    "format": "prettier --write .",
-    "format:check": "prettier --check .",
-    "type-check": "tsc --noEmit",
-    "type-check:watch": "tsc --noEmit --watch",
-    "clean": "rm -rf .next",
-    "build:analyze": "ANALYZE=true npm run build",
-    "images:compress:overwrite": "node scripts/compress-images.mjs --overwrite"
+    "format": "bun run prettier --write .",
+    "format:check": "bun run prettier --check .",
+    "type-check": "bun run tsc --noEmit",
+    "type-check:watch": "bun run tsc --noEmit --watch",
+    "clean": "bun run rm -rf .next",
+    "build:analyze": "bun run ANALYZE=true bun run build",
+    "images:compress:overwrite": "bun run node scripts/compress-images.mjs --overwrite"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
@@ -30,10 +30,11 @@
     "framer-motion": "^12.23.26",
     "input-otp": "^1.4.2",
     "lucide-react": "^0.562.0",
-    "mysql2": "^3.16.1",
     "mariadb": "^3.4.5",
+    "mysql2": "^3.16.1",
     "next": "16.1.2",
     "next-themes": "^0.4.6",
+    "pg": "^8.17.1",
     "radix-ui": "^1.4.3",
     "react": "19.2.3",
     "react-day-picker": "^9.13.0",
@@ -85,7 +86,7 @@
   },
   "engines": {
     "node": ">=18.17.0",
-    "pnpm": ">=9.0.0"
+    "bun": ">=1.1.0"
   },
   "overrides": {
     "@types/react": "19.2.7",
