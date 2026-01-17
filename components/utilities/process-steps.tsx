@@ -22,7 +22,7 @@ export default function ProcessSteps({ title, steps, className }: ProcessStepsPr
         {steps.map((step, idx) => (
           <div key={idx} className="relative pl-10 md:pl-0">
             {/* Circle on the line */}
-            <div className="absolute -left-[13.5px] md:-left-[61.5px] top-1 w-6 h-6 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-[10px] font-bold ring-[6px] ring-background shadow-sm">
+            <div className="absolute -left-[13.5px] md:-left-[61.5px] top-1 w-6 h-6 rounded-full bg-accent flex items-center justify-center text-accent-foreground text-[10px] font-bold ring-[6px] ring-background shadow-sm">
               {idx + 1}
             </div>
 

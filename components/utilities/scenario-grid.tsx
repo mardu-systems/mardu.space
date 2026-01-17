@@ -64,7 +64,7 @@ export default function ScenarioGrid({
               <CardContent className="p-6">
                 <div className="flex items-start gap-4">
                   <div
-                    className="w-1.5 self-stretch bg-primary/50 rounded-full shrink-0"
+                    className="w-1.5 self-stretch bg-accent rounded-full shrink-0"
                     aria-hidden="true"
                   />
                   <div>

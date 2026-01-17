@@ -18,7 +18,7 @@ export default function DesktopNav({ items }: DesktopNavProps) {
   return (
     <div
       className={clsx(
-        'relative z-20 pointer-events-auto hidden md:flex md:flex-1 md:items-center md:justify-end md:gap-6',
+        'relative z-90 pointer-events-auto hidden md:flex md:flex-1 md:items-center md:justify-end md:gap-6',
       )}
     >
       {items.map((entry) => (

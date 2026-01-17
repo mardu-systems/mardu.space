@@ -26,7 +26,7 @@ export default function ConfiguratorTeaser({ className }: ConfiguratorTeaserProp
               
               {/* Content Side */}
               <div className="space-y-8">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-semibold uppercase tracking-wider border border-primary/10">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/10 text-accent text-xs font-semibold uppercase tracking-wider border border-accent/10">
                   <Settings className="w-3.5 h-3.5" />
                   Interaktiver Konfigurator
                 </div>
@@ -40,7 +40,7 @@ export default function ConfiguratorTeaser({ className }: ConfiguratorTeaserProp
                 </p>
 
                 <div className="flex flex-wrap gap-4 pt-2">
-                  <Button asChild size="lg" className="h-14 px-8 text-base bg-primary hover:bg-primary/90 text-primary-foreground border-none">
+                  <Button asChild size="lg" className="h-14 px-8 text-base bg-accent hover:bg-accent/90 text-accent-foreground border-none">
                     <Link href="/configurator">
                       Konfiguration starten
                       <ArrowRight className="ml-2 w-5 h-5" />
