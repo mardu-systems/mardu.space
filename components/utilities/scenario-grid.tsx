@@ -33,9 +33,7 @@ export default function ScenarioGrid({
       <div className="grid md:grid-cols-2 gap-8 lg:gap-12 items-stretch">
         <Card className="rounded-3xl bg-card shadow-sm h-full overflow-hidden border-none">
           <CardHeader className="p-8 border-primary/10">
-            <CardTitle className="text-lg md:text-xl font-semibold text-primary">
-              {leftTitle}
-            </CardTitle>
+            <CardTitle className="font-bold text-xl text-primary">{leftTitle}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
