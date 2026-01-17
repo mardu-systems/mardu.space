@@ -21,7 +21,7 @@ export async function GET(req: NextRequest) {
 
   // 2. Locate File
   // In a real app, this might be in an S3 bucket or a protected directory
-  const filePath = path.join(process.cwd(), "assets/secure/whitepaper.pdf");
+  const filePath = path.join(process.cwd(), "assets/secure/whitepaper_v1.0.pdf");
 
   if (!fs.existsSync(filePath)) {
     return NextResponse.json({ error: "File not found on server" }, { status: 404 });
