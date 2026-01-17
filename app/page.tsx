@@ -228,7 +228,7 @@ export default function HomePage() {
               },
               {
                 label: 'Vernetzung',
-                description: 'IP500-Mesh-Netzwerke via MQTT & LAN/WLAN.',
+                description: 'IP500 Mesh Netzwerke via MQTT und LAN oder WLAN.',
               },
             ],
           },
