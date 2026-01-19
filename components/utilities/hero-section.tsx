@@ -58,14 +58,14 @@ export default function HeroSection({
         containerClassName="w-full overflow-hidden"
         className="w-full max-w-7xl px-4 md:px-8 mx-auto py-10 lg:py-20"
       >
-        <ScrollReveal className="flex flex-col items-start gap-6">
+        <ScrollReveal className="flex flex-col items-start gap-6 w-full">
           {/* Main Heading */}
-          <h1 className="text-[32px] md:text-[40px] lg:text-[50px] font-semibold leading-[1.2] text-primary w-full">
+          <h1 className="text-4xl md:text-5xl lg:text-5xl font-semibold leading-tight text-primary w-full max-w-4xl text-balance">
             {title}
           </h1>
 
           {/* Description Text */}
-          <div className="text-[16px] md:text-[18px] lg:text-[20px] leading-[1.4] text-foreground w-full">
+          <div className="text-base md:text-lg leading-relaxed text-foreground w-full max-w-3xl">
             {description}
           </div>
 
