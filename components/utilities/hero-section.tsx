@@ -47,7 +47,7 @@ export default function HeroSection({
     }
   };
   return (
-    <section className={cn('flex flex-col items-center pt-20 bg-background', className)}>
+    <section className={cn('flex flex-col items-center py-20 bg-background', className)}>
       {/* Waves behind the copy */}
       <WavyBackground
         colors={['#F5C842', '#F786AE', '#351B59']} // Keeping brand specific wave colors for now as they might be specific assets
@@ -93,7 +93,7 @@ export default function HeroSection({
       </WavyBackground>
 
       {/* Image Section (no waves behind it) */}
-      <ScrollReveal className="w-full max-w-7xl px-4 md:px-8 mx-auto mt-3 mb-12" direction="up">
+      <ScrollReveal className="w-full max-w-7xl px-4 md:px-8 mx-auto mt-3" direction="up">
         <motion.div
           className="relative w-full h-125 md:h-162.5 lg:h-160 rounded-[34px] overflow-hidden shadow-lg bg-muted"
           animate={shouldReduceMotion ? undefined : { y: [0, -10, 0] }}

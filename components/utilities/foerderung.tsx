@@ -29,7 +29,7 @@ export default function Foerderung({
   className = '',
 }: Props) {
   return (
-    <section id="foerderung" className={`w-full py-18 md:py-20 ${className}`}>
+    <section id="foerderung" className={cn('w-full py-20', className)}>
       <div className="max-w-7xl mx-auto px-4 md:px-8">
         <ScrollReveal className="text-center mb-10" direction="up">
           <h2 className="text-2xl md:text-4xl font-bold text-primary">{title}</h2>
