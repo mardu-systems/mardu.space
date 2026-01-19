@@ -118,8 +118,9 @@ export default function HeroSection({
               {mediaType === 'video' && (
                 <div className="absolute inset-0 flex items-center justify-center">
                   <button
+                    type="button"
                     onClick={handlePlayClick}
-                    className="flex items-center justify-center w-22 h-22 bg-background rounded-lg shadow-lg hover:scale-110 transition-transform duration-200"
+                    className="flex items-center justify-center w-22 h-22 bg-background rounded-lg shadow-lg hover:scale-110 transition-transform duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                     aria-label="Video abspielen"
                   >
                     <svg
@@ -129,6 +130,8 @@ export default function HeroSection({
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
                       className="ml-1 text-primary"
+                      aria-hidden="true"
+                      focusable="false"
                     >
                       <path d="M6 4.5L18 12L6 19.5V4.5Z" fill="currentColor" />
                     </svg>
