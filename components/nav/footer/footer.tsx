@@ -86,7 +86,7 @@ export default function SiteFooter({
     'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-primary';
 
   const linkBase =
-    `rounded-sm transition-colors ${focusRing} ` +
+    `rounded-sm transition-colors ${focusRing} touch-manipulation ` +
     'text-primary-foreground/80 hover:text-primary-foreground';
 
   return (

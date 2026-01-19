@@ -22,9 +22,9 @@ export default function SiteHeader({ items }: HeaderProps) {
   return (
     <header>
       <div
-        className={'fixed z-50 transition-colors duration-200'}
+        className="fixed z-50 transition-colors duration-200"
         style={{
-          top: `1rem`,
+          top: 'calc(env(safe-area-inset-top) + 1rem)',
           left: '1rem',
           right: '1rem',
         }}
@@ -32,7 +32,11 @@ export default function SiteHeader({ items }: HeaderProps) {
         <div className="relative mx-auto max-w-7xl bg-white rounded-2xl shadow-lg border border-gray-200/50">
           <nav className="flex h-20 items-center gap-3 px-6" aria-label="Hauptnavigation">
             <div className="flex items-center">
-              <Link href="/" aria-label="Mardu Home" className="block">
+              <Link
+                href="/"
+                aria-label="Mardu Home"
+                className="block rounded-md touch-manipulation focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+              >
                 <div className="relative h-12 w-37.5">
                   <Image
                     src="/marduspace_logo_bg_white.svg"

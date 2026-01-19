@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { ChevronDown } from 'lucide-react';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
 import React from 'react';
@@ -30,27 +30,35 @@ export default function DesktopNav({ items }: DesktopNavProps) {
 
 function DesktopNavEntry({ entry }: { entry: NavEntry }) {
   const { scrollToSection } = useScrollToSection();
-  const router = useRouter();
   const pathname = usePathname();
   const baseClasses =
-    'group relative inline-flex cursor-pointer pointer-events-auto items-center rounded-lg px-3 py-2 text-[0.9rem] font-normal tracking-[0.1em] text-neutral-900/80 transition-colors hover:text-neutral-900 focus-visible:outline-none focus-visible:ring focus-visible:ring-neutral-900 focus-visible:ring-offset-2 focus-visible:ring-offset-white';
+    'group relative inline-flex cursor-pointer pointer-events-auto items-center rounded-lg px-3 py-2 text-[0.9rem] font-normal tracking-[0.1em] text-neutral-900/80 transition-colors hover:text-neutral-900 focus-visible:outline-none focus-visible:ring focus-visible:ring-neutral-900 focus-visible:ring-offset-2 focus-visible:ring-offset-white touch-manipulation';
 
   if (entry.type === 'link') {
     // Prüfe ob es ein Anchor-Link ist (startet mit #)
     if (entry.href.startsWith('#')) {
-      const handleClick = () => {
-        // Wenn wir nicht auf der Startseite sind, zur Startseite mit Hash navigieren
-        if (pathname !== '/') {
-          router.push('/' + entry.href);
+      const handleClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
+        if (
+          event.defaultPrevented ||
+          event.metaKey ||
+          event.ctrlKey ||
+          event.shiftKey ||
+          event.altKey ||
+          event.button !== 0
+        ) {
           return;
         }
-        // Sonst smooth scroll auf derselben Seite
-        scrollToSection(entry.href);
+
+        if (pathname === '/') {
+          event.preventDefault();
+          scrollToSection(entry.href);
+        }
       };
+      const resolvedHref = pathname === '/' ? entry.href : `/${entry.href}`;
       return (
-        <button type="button" onClick={handleClick} className={clsx(baseClasses)}>
+        <Link href={resolvedHref} onClick={handleClick} className={clsx(baseClasses)}>
           {entry.label}
-        </button>
+        </Link>
       );
     }
 
@@ -71,7 +79,10 @@ function DesktopNavEntry({ entry }: { entry: NavEntry }) {
           className={clsx(baseClasses, 'flex items-center gap-1')}
         >
           {entry.label}
-          <ChevronDown className="h-3.5 w-3.5 transition group-data-[state=open]:rotate-180" />
+          <ChevronDown
+            className="h-3.5 w-3.5 transition group-data-[state=open]:rotate-180"
+            aria-hidden="true"
+          />
         </button>
       </HoverCardTrigger>
       <HoverCardContent className="w-full pointer-events-auto border border-border bg-background p-0 text-foreground shadow-2xl backdrop-blur-xl">

@@ -10,7 +10,7 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion';
 import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import Image from 'next/image';
 import clsx from 'clsx';
 import { NavEntry } from '@/types/header';
@@ -27,23 +27,37 @@ export default function MobileNav({
 }) {
   const [open, setOpen] = useState(false);
   const { scrollToSection } = useScrollToSection();
-  const router = useRouter();
   const pathname = usePathname();
 
   const linkColor = 'text-white/90 hover:text-white';
 
   const closeAndGo = () => setOpen(false);
 
-  const handleSectionClick = (href: string) => {
-    if (href.startsWith('#')) {
-      if (pathname !== '/') {
-        router.push('/' + href);
-      } else {
-        scrollToSection(href);
-      }
+  const handleLinkClick = (
+    event: React.MouseEvent<HTMLAnchorElement>,
+    href: string,
+    shouldScroll: boolean,
+  ) => {
+    if (
+      event.defaultPrevented ||
+      event.metaKey ||
+      event.ctrlKey ||
+      event.shiftKey ||
+      event.altKey ||
+      event.button !== 0
+    ) {
+      return;
     }
+
+    if (shouldScroll) {
+      event.preventDefault();
+      scrollToSection(href);
+    }
+
     closeAndGo();
   };
+
+  const resolveHref = (href: string) => (pathname === '/' ? href : `/${href}`);
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
@@ -65,7 +79,7 @@ export default function MobileNav({
 
       <SheetContent
         side="left"
-        className="w-full h-full p-0 bg-radial-[at_5%_5%] from-zinc-900 from-70% to-[#37093F] text-white border-0 flex flex-col"
+        className="w-full h-full p-0 bg-radial-[at_5%_5%] from-zinc-900 from-70% to-[#37093F] text-white border-0 flex flex-col overscroll-contain"
       >
         {/* Header */}
         <SheetHeader className="flex items-center justify-between px-6 pt-6">
@@ -82,22 +96,25 @@ export default function MobileNav({
               <div key={entry.label}>
                 {entry.type === 'link' ? (
                   entry.href.startsWith('#') ? (
-                    <button
-                      onClick={() => handleSectionClick(entry.href)}
+                    <Link
+                      href={resolveHref(entry.href)}
+                      onClick={(event) =>
+                        handleLinkClick(event, entry.href, pathname === '/')
+                      }
                       className={clsx(
-                        'h-14 rounded-md px-4 text-lg uppercase flex items-center justify-center w-full font-medium',
+                        'h-14 rounded-md px-4 text-lg uppercase flex items-center justify-center w-full font-medium touch-manipulation',
                         linkColor,
                         'hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-950',
                       )}
                     >
                       {entry.label}
-                    </button>
+                    </Link>
                   ) : (
                     <Link
                       href={entry.href}
-                      onClick={closeAndGo}
+                      onClick={(event) => handleLinkClick(event, entry.href, false)}
                       className={clsx(
-                        'h-14 rounded-md px-4 text-lg uppercase flex items-center justify-center font-medium',
+                        'h-14 rounded-md px-4 text-lg uppercase flex items-center justify-center font-medium touch-manipulation',
                         linkColor,
                         'hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-950',
                       )}
@@ -109,7 +126,7 @@ export default function MobileNav({
                   <AccordionItem value={entry.label} className="border-0">
                     <AccordionTrigger
                       className={clsx(
-                        'h-14 px-4 text-lg uppercase hover=no-underline justify-center font-medium',
+                        'h-14 px-4 text-lg uppercase hover:no-underline justify-center font-medium touch-manipulation',
                         linkColor,
                       )}
                     >
@@ -121,8 +138,10 @@ export default function MobileNav({
                           <li key={item.label}>
                             <Link
                               href={item.href || '#'}
-                              onClick={closeAndGo}
-                              className="flex items-center gap-3 rounded-md p-3 text-sm hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-950"
+                              onClick={(event) =>
+                                handleLinkClick(event, item.href || '#', false)
+                              }
+                              className="flex items-center gap-3 rounded-md p-3 text-sm hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-950 touch-manipulation"
                             >
                               {item.image && (
                                 <Image

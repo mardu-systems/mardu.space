@@ -16,6 +16,7 @@ export const createSteps = (
       <NumberStep
         value={state.triMachines.count}
         onChange={(v) => setState((p) => ({ ...p, triMachines: { ...p.triMachines, count: v } }))}
+        ariaLabel="Anzahl Drehstrommaschinen"
       />
     ),
     hoverImg: '/configurator/32a.jpg',
@@ -31,6 +32,7 @@ export const createSteps = (
         onChange={(v) =>
           setState((p) => ({ ...p, schukoMachines: { ...p.schukoMachines, count: v } }))
         }
+        ariaLabel="Anzahl Schuko-Maschinen"
       />
     ),
     hoverImg: '/configurator/schuko.jpg',
@@ -44,6 +46,7 @@ export const createSteps = (
       <NumberStep
         value={state.doors.count}
         onChange={(v) => setState((p) => ({ ...p, doors: { ...p.doors, count: v } }))}
+        ariaLabel="Anzahl Eingangstüren"
       />
     ),
     hoverImg: '/configurator/tuer.jpg',
@@ -57,6 +60,7 @@ export const createSteps = (
       <NumberStep
         value={state.gates.count}
         onChange={(v) => setState((p) => ({ ...p, gates: { ...p.gates, count: v } }))}
+        ariaLabel="Anzahl elektrische Tore"
       />
     ),
     hoverImg: '/configurator/tor.jpg',
@@ -71,6 +75,7 @@ export const createSteps = (
         value={state.fridges.count}
         onChange={(v) => setState((p) => ({ ...p, fridges: { ...p.fridges, count: v } }))}
         note="Hinweis: Die Geräte-Integration ist aktuell noch nicht vollständig realisiert."
+        ariaLabel="Anzahl Getränkekühlschränke"
       />
     ),
     hoverImg: '/configurator/fridge.jpg',
@@ -84,6 +89,7 @@ export const createSteps = (
       <NumberStep
         value={state.centralRooms.count}
         onChange={(v) => setState((p) => ({ ...p, centralRooms: { ...p.centralRooms, count: v } }))}
+        ariaLabel="Anzahl zentraler Freigabesysteme"
       />
     ),
     hoverImg: '/configurator/device.jpg',

@@ -16,7 +16,7 @@ export default function BurgerIcon({ isOpen, variant = 'light', className }: Bur
       {/* Top line */}
       <span
         className={clsx(
-          'h-0.5 w-full transform transition-all duration-300 ease-in-out',
+          'h-0.5 w-full transform transition-all duration-300 ease-in-out motion-reduce:transition-none',
           lineColor,
           isOpen && 'translate-y-[6px] rotate-45',
         )}
@@ -24,7 +24,7 @@ export default function BurgerIcon({ isOpen, variant = 'light', className }: Bur
       {/* Middle line */}
       <span
         className={clsx(
-          'h-0.5 w-full transform transition-all duration-300 ease-in-out',
+          'h-0.5 w-full transform transition-all duration-300 ease-in-out motion-reduce:transition-none',
           lineColor,
           isOpen && 'opacity-0',
         )}
@@ -32,7 +32,7 @@ export default function BurgerIcon({ isOpen, variant = 'light', className }: Bur
       {/* Bottom line */}
       <span
         className={clsx(
-          'h-0.5 w-full transform transition-all duration-300 ease-in-out',
+          'h-0.5 w-full transform transition-all duration-300 ease-in-out motion-reduce:transition-none',
           lineColor,
           isOpen && '-translate-y-[6px] -rotate-45',
         )}

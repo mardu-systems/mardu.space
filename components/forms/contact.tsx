@@ -119,12 +119,17 @@ export function ContactForm({
   }
 
   const gap = 'gap-4';
+  const inputClasses =
+    'w-full min-h-11 text-base rounded-none border-0 border-b border-neutral-800/70 bg-transparent px-0 py-2 text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent focus-visible:border-primary/80 touch-manipulation';
+  const textareaClasses =
+    'w-full min-h-28 text-base rounded-none border-0 border-b border-neutral-800/70 bg-transparent px-0 py-2 text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent focus-visible:border-primary/80 touch-manipulation';
+  const submitHandler = submit ? form.handleSubmit(handleSubmit) : undefined;
   const content = (
     <div className="w-full">
       <Form {...form}>
         <form
           noValidate
-          onSubmit={submit ? form.handleSubmit(handleSubmit) : undefined}
+          onSubmit={submitHandler}
           className={`grid sm:grid-cols-2 ${gap}`}
         >
           <FormField
@@ -135,9 +140,15 @@ export function ContactForm({
                 <FormLabel className="sr-only">Name</FormLabel>
                 <FormControl>
                   <input
-                    placeholder="Name*"
-                    className="rounded-none border-0 border-b border-neutral-800/70 bg-transparent px-0 py-2 focus-visible:ring-0 focus-visible:border-b focus-visible:border-neutral-800/70"
                     {...field}
+                    placeholder="z. B. Maria Mustermann…"
+                    autoComplete="name"
+                    className={inputClasses}
+                    onBlur={(event) => {
+                      const trimmed = event.target.value.trim();
+                      field.onChange(trimmed);
+                      field.onBlur();
+                    }}
                   />
                 </FormControl>
                 <FormMessage />
