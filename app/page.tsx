@@ -45,20 +45,16 @@ const heroDescription = (
 
 const summaryDescription = (
   <>
-    <p>
-      In Unternehmenswerkstätten, Hochschulen und Makerspaces treffen wechselnde Rollen auf Bereiche
-      mit erhöhtem Gefahrenpotenzial. Lücken entstehen selten durch fehlende Regeln, sondern durch
-      fehlende technische Durchsetzung.
+    <p className="text-balance">
+      Wo viele Nutzergruppen auf risikobehaftete Bereiche treffen, scheitert Sicherheit oft nicht an
+      Regeln, sondern an der Durchsetzung. mardu.space verknüpft Zutritt, Maschinenfreigabe und
+      Qualifikationen in einem System.
     </p>
-    <p>
-      mardu.space verbindet Türzugang, Maschinenfreigabe und Qualifikationen. Berechtigungen sind
-      rollenbasiert und zeitlich gesteuert. Maschinen lassen sich so schalten, dass eine Bedienung
-      nur mit gültiger Qualifikation möglich ist.
-    </p>
-    <p>
-      Ereignisprotokolle liefern Nachweise für Vorfallklärung und Compliance, inklusive Zeitpunkt,
-      Ort und Ergebnis.
-    </p>
+    <ul className="mt-10 space-y-6 list-disc list-inside">
+      <li>Rollenbasierte und zeitgesteuerte Berechtigungen</li>
+      <li>Maschinenfreigabe nur mit gültiger Qualifikation</li>
+      <li>Ereignisprotokolle als Nachweis mit Zeitpunkt, Ort und Ergebnis</li>
+    </ul>
   </>
 );
 
@@ -440,8 +436,8 @@ const foerderungItems = [
 
 const foerderungDescription = (
   <>
-    Die Europäische Union fördert zusammen mit dem Bundesministerium für Wirtschaft und
-    Klimaschutz über den Europäischen Sozialfonds Plus (ESF Plus) das Programm{' '}
+    Die Europäische Union fördert zusammen mit dem Bundesministerium für Wirtschaft und Klimaschutz
+    über den Europäischen Sozialfonds Plus (ESF Plus) das Programm{' '}
     <em>Existenzgründungen aus der Wissenschaft (EXIST)</em> in Deutschland.
   </>
 );
@@ -508,11 +504,7 @@ export default function HomePage() {
       <WhitepaperTeaser className={SECTION_SPACING} />
 
       {/* 6. Umsetzung & Praxis */}
-      <ProcessSteps
-        className={SECTION_SPACING}
-        title="Projektablauf"
-        steps={processSteps}
-      />
+      <ProcessSteps className={SECTION_SPACING} title="Projektablauf" steps={processSteps} />
 
       {/* 7. Sicherheit, Datenschutz & Normen */}
       <SecurityAccordion
