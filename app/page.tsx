@@ -34,6 +34,7 @@ export default function HomePage() {
       {/* 1. Hero Header Section */}
       <HeroSection
         title="Digitale Zutritts und Maschinenfreigabe"
+        title="Digitale Zutritts- und Maschinenfreigabe"
         description={
           <>
             <p className="mb-4 text-lg font-medium">
@@ -47,29 +48,30 @@ export default function HomePage() {
           </>
         }
         buttonText="Jetzt Demo vereinbaren"
-        imageSrc="/_A7_9072_quer.jpg"
-        imageAlt="mardu.space System in einer Werkstatt"
+        imageSrc="/_A7_9094_quer.jpg"
+        imageAlt="mardu.space-System in einer Werkstatt"
       />
 
       {/* 2. Management Summary */}
       <SplitContent
         className="text-white"
-        title="Management Summary und Kurzfassung"
+        title="Das Wichtigste auf einen Blick"
+        eyebrow="Kurzfassung"
         description={
           <>
             <p>
               In Unternehmenswerkstätten, Hochschulen und Makerspaces treffen wechselnde Rollen auf
-              Bereiche mit erhöhtem Gefahrenpotenzial. Sicherheits und Compliance Lücken entstehen
-              selten durch fehlende Regeln, sondern durch mangelnde Durchsetzung.
+              Bereiche mit erhöhtem Gefahrenpotenzial. Lücken entstehen selten durch fehlende Regeln,
+              sondern durch fehlende technische Durchsetzung.
             </p>
             <p>
-              mardu.space verknüpft Türzugang und Maschinenfreigabe in einem System. Berechtigungen
-              sind rollenbasiert und zeitlich definiert. Maschinen lassen sich so schalten, dass eine
+              mardu.space verbindet Türzugang, Maschinenfreigabe und Qualifikationen. Berechtigungen
+              sind rollenbasiert und zeitlich gesteuert. Maschinen lassen sich so schalten, dass eine
               Bedienung nur mit gültiger Qualifikation möglich ist.
             </p>
             <p>
-              Ereignisprotokolle unterstützen die Vorfallklärung und liefern belastbare Nachweise,
-              wer wann wo war und was genutzt wurde.
+              Ereignisprotokolle liefern Nachweise für Vorfallklärung und Compliance, inklusive
+              Zeitpunkt, Ort und Ergebnis.
             </p>
           </>
         }
@@ -91,7 +93,7 @@ export default function HomePage() {
           {
             title: 'Flexibler Betrieb',
             description:
-              'Lokal oder zentral, passend zu Infrastruktur, IT Vorgaben und Verfügbarkeitsanforderungen.',
+              'Lokal oder zentral, passend zu Infrastruktur, IT-Vorgaben und Verfügbarkeitsanforderungen.',
             icon: Server,
           },
         ]}
