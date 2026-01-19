@@ -74,7 +74,7 @@ export default function HeroSection({
               {buttonText && (
                 <Link
                   href={buttonHref}
-                  className="inline-flex items-center justify-center h-11 px-6 rounded-lg bg-accent hover:bg-accent/90 text-accent-foreground font-medium text-sm tracking-wide transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                  className="inline-flex touch-manipulation items-center justify-center h-11 px-6 rounded-lg bg-accent hover:bg-accent/90 text-accent-foreground font-medium text-sm tracking-wide transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                 >
                   {buttonText}
                 </Link>
@@ -82,7 +82,7 @@ export default function HeroSection({
               {secondaryButtonText && secondaryButtonHref && (
                 <Link
                   href={secondaryButtonHref}
-                  className="inline-flex items-center justify-center h-11 px-6 rounded-lg border-2 border-primary hover:bg-primary hover:text-primary-foreground text-primary font-medium text-sm tracking-wide transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                  className="inline-flex touch-manipulation items-center justify-center h-11 px-6 rounded-lg border-2 border-primary hover:bg-primary hover:text-primary-foreground text-primary font-medium text-sm tracking-wide transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                 >
                   {secondaryButtonText}
                 </Link>
@@ -120,7 +120,7 @@ export default function HeroSection({
                   <button
                     type="button"
                     onClick={handlePlayClick}
-                    className="flex items-center justify-center w-22 h-22 bg-background rounded-lg shadow-lg hover:scale-110 transition-transform duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                    className="flex touch-manipulation items-center justify-center w-22 h-22 bg-background rounded-lg shadow-lg hover:scale-110 transition-transform duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                     aria-label="Video abspielen"
                   >
                     <svg

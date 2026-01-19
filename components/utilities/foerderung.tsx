@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { ScrollReveal } from '@/components/ui/motion/scroll-reveal';
 import { cn } from '@/lib/utils';
 
@@ -28,6 +28,8 @@ export default function Foerderung({
   description,
   className = '',
 }: Props) {
+  const shouldReduceMotion = useReducedMotion();
+
   return (
     <section id="foerderung" className={cn('w-full py-20', className)}>
       <div className="max-w-7xl mx-auto px-4 md:px-8">
@@ -47,13 +49,17 @@ export default function Foerderung({
                 href={it.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={cn('flex items-center', it.className)}
+                className={cn('flex items-center touch-manipulation', it.className)}
                 aria-label={it.alt}
               >
                 <motion.div
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.97 }}
-                  transition={{ type: 'spring', stiffness: 300, damping: 18 }}
+                  whileHover={shouldReduceMotion ? undefined : { scale: 1.05 }}
+                  whileTap={shouldReduceMotion ? undefined : { scale: 0.97 }}
+                  transition={
+                    shouldReduceMotion
+                      ? undefined
+                      : { type: 'spring', stiffness: 300, damping: 18 }
+                  }
                 >
                   <Image
                     src={it.src}

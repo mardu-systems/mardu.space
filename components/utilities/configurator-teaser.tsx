@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowRight, Settings, CheckSquare } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
@@ -12,6 +12,8 @@ interface ConfiguratorTeaserProps {
 }
 
 export default function ConfiguratorTeaser({ className }: ConfiguratorTeaserProps) {
+  const shouldReduceMotion = useReducedMotion();
+
   return (
     <section className={cn('w-full py-20 px-4 md:px-8', className)}>
       <div className="max-w-7xl mx-auto">
@@ -53,8 +55,11 @@ export default function ConfiguratorTeaser({ className }: ConfiguratorTeaserProp
               <div className="flex justify-center lg:justify-end relative">
                 {/* Mockup of UI */}
                 <motion.div 
-                  className="relative w-72 md:w-96 aspect-[4/3] bg-card rounded-xl shadow-2xl flex flex-col overflow-hidden -rotate-2 hover:rotate-0 transition-all duration-500 ease-out border border-border"
-                  whileHover={{ scale: 1.02 }}
+                  className={cn(
+                    'relative w-72 md:w-96 aspect-[4/3] bg-card rounded-xl shadow-2xl flex flex-col overflow-hidden -rotate-2 border border-border',
+                    !shouldReduceMotion && 'hover:rotate-0 transition-all duration-500 ease-out',
+                  )}
+                  whileHover={shouldReduceMotion ? undefined : { scale: 1.02 }}
                 >
                   {/* Header */}
                   <div className="h-12 border-b border-border bg-muted/30 flex items-center px-4 gap-2">

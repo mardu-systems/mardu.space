@@ -1,5 +1,6 @@
 'use client';
 
+import { Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -14,7 +15,7 @@ import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
 import { cn } from '@/lib/utils';
 import { MeetergoCTAButton } from './meetergo-cta-button';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { ScrollReveal } from '@/components/ui/motion/scroll-reveal';
 import { motion, useReducedMotion } from 'framer-motion';
 
@@ -44,7 +45,65 @@ export default function CTASection({
   className = '',
 }: CTASectionProps) {
   const [open, setOpen] = useState(false);
+  const [formErrors, setFormErrors] = useState<{ email?: string; consent?: string }>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [consentChecked, setConsentChecked] = useState(false);
+  const emailInputRef = useRef<HTMLInputElement>(null);
+  const consentRef = useRef<HTMLButtonElement>(null);
   const shouldReduceMotion = useReducedMotion();
+
+  const handleNewsletterSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (isSubmitting) return;
+
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+    const firstName = String(formData.get('global.vorname') ?? '').trim();
+    const lastName = String(formData.get('global.nachname') ?? '').trim();
+    const company = String(formData.get('global.firma') ?? '').trim();
+    const email = String(formData.get('email') ?? '').trim();
+
+    const nextErrors: { email?: string; consent?: string } = {};
+
+    if (!email) {
+      nextErrors.email = 'Bitte geben Sie eine E-Mail-Adresse ein.';
+    } else if (emailInputRef.current && !emailInputRef.current.validity.valid) {
+      nextErrors.email = 'Bitte geben Sie eine gültige E-Mail-Adresse ein.';
+    }
+
+    if (!consentChecked) {
+      nextErrors.consent = 'Bitte bestätigen Sie Ihre Einwilligung.';
+    }
+
+    if (Object.keys(nextErrors).length > 0) {
+      setFormErrors(nextErrors);
+      if (nextErrors.email) {
+        emailInputRef.current?.focus();
+      } else {
+        consentRef.current?.focus();
+      }
+      return;
+    }
+
+    const updateValue = (name: string, value: string) => {
+      const input = form.elements.namedItem(name) as HTMLInputElement | null;
+      if (input) input.value = value;
+    };
+
+    updateValue('global.vorname', firstName);
+    updateValue('global.nachname', lastName);
+    updateValue('global.firma', company);
+    updateValue('email', email);
+
+    setFormErrors({});
+    setIsSubmitting(true);
+    form.submit();
+
+    setTimeout(() => {
+      setOpen(false);
+      setIsSubmitting(false);
+    }, 2000);
+  };
 
   return (
     <section className={cn('w-full py-12 md:py-16 px-4', className)}>
@@ -133,7 +192,17 @@ export default function CTASection({
 
               <div className="flex flex-col sm:flex-row gap-6 sm:gap-4 items-center sm:items-start">
                 {/* Primary Button with Modal */}
-                <Dialog open={open} onOpenChange={setOpen}>
+                <Dialog
+                  open={open}
+                  onOpenChange={(nextOpen) => {
+                    setOpen(nextOpen);
+                    if (!nextOpen) {
+                      setFormErrors({});
+                      setIsSubmitting(false);
+                      setConsentChecked(false);
+                    }
+                  }}
+                >
                   <DialogTrigger asChild>
                     <Button className="w-full sm:w-auto h-12 px-6 rounded-lg bg-accent hover:bg-accent/90 text-accent-foreground font-medium text-sm tracking-wide transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
                       {primaryButtonText}
@@ -152,8 +221,9 @@ export default function CTASection({
                       method="post"
                       action="https://flow.cleverreach.com/fl/dc9cc0ca-817c-4e47-bad3-f00510d3efc3/confirm"
                       target="_blank"
-                      className="space-y-6 pt-4 "
-                      onSubmit={() => setTimeout(() => setOpen(false), 2000)}
+                      className="space-y-6 pt-4"
+                      onSubmit={handleNewsletterSubmit}
+                      noValidate
                     >
                       <input
                         type="text"
@@ -170,7 +240,11 @@ export default function CTASection({
                           type="text"
                           id="global.vorname"
                           name="global.vorname"
-                          placeholder="Ihr Vorname"
+                          placeholder="z. B. Lena…"
+                          autoComplete="given-name"
+                          onBlur={(e) => {
+                            e.currentTarget.value = e.currentTarget.value.trim();
+                          }}
                         />
                       </div>
 
@@ -180,7 +254,11 @@ export default function CTASection({
                           type="text"
                           id="global.nachname"
                           name="global.nachname"
-                          placeholder="Ihr Nachname"
+                          placeholder="z. B. Müller…"
+                          autoComplete="family-name"
+                          onBlur={(e) => {
+                            e.currentTarget.value = e.currentTarget.value.trim();
+                          }}
                         />
                       </div>
 
@@ -190,7 +268,11 @@ export default function CTASection({
                           type="text"
                           id="global.firma"
                           name="global.firma"
-                          placeholder="Ihre Firma"
+                          placeholder="z. B. Muster GmbH…"
+                          autoComplete="organization"
+                          onBlur={(e) => {
+                            e.currentTarget.value = e.currentTarget.value.trim();
+                          }}
                         />
                       </div>
 
@@ -205,34 +287,78 @@ export default function CTASection({
                           type="email"
                           id="email"
                           name="email"
-                          required
-                          placeholder="name@example.com"
+                          placeholder="name@example.com…"
+                          autoComplete="email"
+                          inputMode="email"
+                          autoCapitalize="none"
+                          autoCorrect="off"
+                          spellCheck={false}
+                          ref={emailInputRef}
+                          onChange={() => {
+                            if (formErrors.email) {
+                              setFormErrors((prev) => ({ ...prev, email: undefined }));
+                            }
+                          }}
+                          onBlur={(e) => {
+                            e.currentTarget.value = e.currentTarget.value.trim();
+                          }}
+                          aria-invalid={Boolean(formErrors.email)}
+                          aria-describedby={formErrors.email ? 'cta.email-error' : undefined}
                         />
+                        {formErrors.email ? (
+                          <p
+                            id="cta.email-error"
+                            className="text-xs text-destructive"
+                            aria-live="polite"
+                          >
+                            {formErrors.email}
+                          </p>
+                        ) : null}
                       </div>
 
-                      <div className="flex items-start space-x-3 pt-2">
-                        <Checkbox
-                          id="tags"
-                          name="tags[]"
-                          value="accept"
-                          required
-                          className="mt-1"
-                        />
-                        <Label
-                          htmlFor="tags"
-                          className="text-xs font-normal leading-relaxed text-muted-foreground"
-                        >
+                      <div className="space-y-2 pt-2">
+                        <Label className="flex items-start gap-3 text-xs font-normal leading-relaxed text-muted-foreground cursor-pointer">
+                          <Checkbox
+                            id="tags"
+                            name="tags[]"
+                            value="accept"
+                            ref={consentRef}
+                            className="mt-1"
+                            checked={consentChecked}
+                            onCheckedChange={(checked) => {
+                              setConsentChecked(checked === true);
+                              if (formErrors.consent) {
+                                setFormErrors((prev) => ({ ...prev, consent: undefined }));
+                              }
+                            }}
+                            aria-invalid={Boolean(formErrors.consent)}
+                            aria-describedby={formErrors.consent ? 'cta.consent-error' : undefined}
+                          />
                           Ihre hier eingegebenen Daten werden lediglich zur Personalisierung des
                           Newsletters verwendet und nicht an Dritte weitergegeben. Durch Absenden
                           der von Ihnen eingegebenen Daten willigen Sie in die Datenverarbeitung ein
                           und bestätigen unsere Datenschutzerklärung.
                         </Label>
+                        {formErrors.consent ? (
+                          <p
+                            id="cta.consent-error"
+                            className="text-xs text-destructive"
+                            aria-live="polite"
+                          >
+                            {formErrors.consent}
+                          </p>
+                        ) : null}
                       </div>
 
                       <Button
                         type="submit"
                         className="w-full sm:w-auto h-12 px-6 rounded-lg bg-accent hover:bg-accent/90 text-accent-foreground font-medium text-sm tracking-wide transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                        disabled={isSubmitting}
+                        aria-busy={isSubmitting}
                       >
+                        {isSubmitting && (
+                          <Loader2 className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />
+                        )}
                         Anmelden
                       </Button>
                     </form>

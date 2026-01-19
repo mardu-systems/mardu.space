@@ -1,7 +1,7 @@
 'use client';
 
-import { useState } from 'react';
-import { motion } from 'framer-motion';
+import { useRef, useState } from 'react';
+import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowRight, FileText, Download, Loader2, CheckSquare } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
@@ -31,15 +31,43 @@ export default function WhitepaperTeaser({ className }: WhitepaperTeaserProps) {
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
-  
+  const [fieldErrors, setFieldErrors] = useState<{ email?: string; consent?: string }>({});
+  const emailInputRef = useRef<HTMLInputElement>(null);
+  const consentRef = useRef<HTMLButtonElement>(null);
+  const shouldReduceMotion = useReducedMotion();
+
   const executeRecaptcha = useRecaptcha();
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!consent) return;
+    const trimmedEmail = email.trim();
+    const nextErrors: { email?: string; consent?: string } = {};
+
+    if (!trimmedEmail) {
+      nextErrors.email = 'Bitte geben Sie eine E-Mail-Adresse ein.';
+    } else if (emailInputRef.current && !emailInputRef.current.validity.valid) {
+      nextErrors.email = 'Bitte geben Sie eine gültige E-Mail-Adresse ein.';
+    }
+
+    if (!consent) {
+      nextErrors.consent = 'Bitte stimmen Sie der Kontaktaufnahme zu.';
+    }
+
+    if (Object.keys(nextErrors).length > 0) {
+      setFieldErrors(nextErrors);
+      if (nextErrors.email) {
+        emailInputRef.current?.focus();
+      } else {
+        consentRef.current?.focus();
+      }
+      return;
+    }
+
+    setFieldErrors({});
     setLoading(true);
     setStatus('idle');
     setErrorMessage('');
+    setEmail(trimmedEmail);
 
     try {
       const token = await executeRecaptcha('whitepaper_signup');
@@ -48,7 +76,7 @@ export default function WhitepaperTeaser({ className }: WhitepaperTeaserProps) {
       const res = await fetch('/api/newsletter', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, role: 'whitepaper', token }),
+        body: JSON.stringify({ email: trimmedEmail, role: 'whitepaper', token }),
       });
 
       const data = await res.json();
@@ -60,9 +88,10 @@ export default function WhitepaperTeaser({ className }: WhitepaperTeaserProps) {
       setStatus('success');
       setEmail('');
       setConsent(false);
-      
+      setFieldErrors({});
+
       // Close dialog after success (optional, or keep open to show message)
-      // setTimeout(() => setOpen(false), 3000); 
+      // setTimeout(() => setOpen(false), 3000);
     } catch (err: unknown) {
       setStatus('error');
       setErrorMessage(err instanceof Error ? err.message : 'Ein Fehler ist aufgetreten.');
@@ -99,7 +128,18 @@ export default function WhitepaperTeaser({ className }: WhitepaperTeaserProps) {
                 </p>
 
                 <div className="flex flex-wrap gap-4 pt-2">
-                  <Dialog open={open} onOpenChange={setOpen}>
+                  <Dialog
+                    open={open}
+                    onOpenChange={(nextOpen) => {
+                      setOpen(nextOpen);
+                      if (!nextOpen) {
+                        setStatus('idle');
+                        setErrorMessage('');
+                        setFieldErrors({});
+                        setLoading(false);
+                      }
+                    }}
+                  >
                     <DialogTrigger asChild>
                       <Button
                         size="lg"
@@ -128,53 +168,101 @@ export default function WhitepaperTeaser({ className }: WhitepaperTeaserProps) {
                             Wir haben Ihnen eine Bestätigungs-E-Mail gesendet. Bitte klicken Sie auf
                             den Link darin, um Ihre Anmeldung abzuschließen.
                           </p>
-                          <Button variant="outline" onClick={() => setOpen(false)}>
+                          <Button
+                            type="button"
+                            variant="outline"
+                            className="h-11 px-6"
+                            onClick={() => setOpen(false)}
+                          >
                             Schließen
                           </Button>
                         </div>
                       ) : (
-                        <form onSubmit={handleSubmit} className="space-y-6 pt-4">
+                        <form onSubmit={handleSubmit} className="space-y-6 pt-4" noValidate>
                           <div className="space-y-2">
-                            <Label htmlFor="wp.email">E-Mail Adresse</Label>
+                            <Label htmlFor="wp.email">E-Mail-Adresse</Label>
                             <Input
                               type="email"
                               id="wp.email"
-                              required
-                              placeholder="name@example.com"
+                              name="email"
+                              placeholder="name@example.com…"
+                              autoComplete="email"
+                              inputMode="email"
+                              autoCapitalize="none"
+                              autoCorrect="off"
+                              spellCheck={false}
+                              ref={emailInputRef}
+                              autoFocus
                               value={email}
-                              onChange={(e) => setEmail(e.target.value)}
+                              onChange={(e) => {
+                                setEmail(e.target.value);
+                                if (fieldErrors.email) {
+                                  setFieldErrors((prev) => ({ ...prev, email: undefined }));
+                                }
+                              }}
+                              onBlur={(e) => setEmail(e.target.value.trim())}
+                              aria-invalid={Boolean(fieldErrors.email)}
+                              aria-describedby={fieldErrors.email ? 'wp.email-error' : undefined}
                             />
+                            {fieldErrors.email ? (
+                              <p
+                                id="wp.email-error"
+                                className="text-xs text-destructive"
+                                aria-live="polite"
+                              >
+                                {fieldErrors.email}
+                              </p>
+                            ) : null}
                           </div>
 
-                          <div className="flex items-start space-x-3">
-                            <Checkbox
-                              id="wp.terms"
-                              checked={consent}
-                              onCheckedChange={(c) => setConsent(c === true)}
-                              required
-                              className="mt-1"
-                            />
-                            <Label
-                              htmlFor="wp.terms"
-                              className="text-xs font-normal leading-relaxed text-muted-foreground"
-                            >
+                          <div className="space-y-2">
+                            <Label className="flex items-start gap-3 text-xs font-normal leading-relaxed text-muted-foreground cursor-pointer">
+                              <Checkbox
+                                id="wp.terms"
+                                name="consent"
+                                checked={consent}
+                                onCheckedChange={(c) => {
+                                  setConsent(c === true);
+                                  if (fieldErrors.consent) {
+                                    setFieldErrors((prev) => ({ ...prev, consent: undefined }));
+                                  }
+                                }}
+                                ref={consentRef}
+                                className="mt-1"
+                                aria-invalid={Boolean(fieldErrors.consent)}
+                                aria-describedby={
+                                  fieldErrors.consent ? 'wp.terms-error' : undefined
+                                }
+                              />
                               Ich stimme zu, dass ich per E-Mail kontaktiert werde. Diese
                               Einwilligung kann jederzeit widerrufen werden.
                             </Label>
+                            {fieldErrors.consent ? (
+                              <p
+                                id="wp.terms-error"
+                                className="text-xs text-destructive"
+                                aria-live="polite"
+                              >
+                                {fieldErrors.consent}
+                              </p>
+                            ) : null}
                           </div>
 
                           {status === 'error' && (
-                            <Alert variant="destructive">
+                            <Alert variant="destructive" role="status" aria-live="polite">
                               <AlertDescription>{errorMessage}</AlertDescription>
                             </Alert>
                           )}
 
                           <Button
                             type="submit"
-                            className="w-full bg-accent hover:bg-accent/90 text-accent-foreground"
-                            disabled={loading || !consent}
+                            className="w-full h-12 bg-accent hover:bg-accent/90 text-accent-foreground"
+                            disabled={loading}
+                            aria-busy={loading}
                           >
-                            {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                            {loading && (
+                              <Loader2 className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />
+                            )}
                             Jetzt anfordern
                           </Button>
                         </form>
@@ -188,8 +276,11 @@ export default function WhitepaperTeaser({ className }: WhitepaperTeaserProps) {
               <div className="flex justify-center lg:justify-end relative">
                 {/* Mockup of a document */}
                 <motion.div
-                  className="antialiased relative w-64 md:w-80 aspect-[1/1.4] bg-white rounded-xl shadow-2xl flex flex-col overflow-hidden rotate-3 hover:rotate-0 transition-all duration-500 ease-out"
-                  whileHover={{ scale: 1.02 }}
+                  className={cn(
+                    'antialiased relative w-64 md:w-80 aspect-[1/1.4] bg-white rounded-xl shadow-2xl flex flex-col overflow-hidden rotate-3',
+                    !shouldReduceMotion && 'hover:rotate-0 transition-all duration-500 ease-out',
+                  )}
+                  whileHover={shouldReduceMotion ? undefined : { scale: 1.02 }}
                 >
                   {/* Mock Header */}
                   <div className="h-24 bg-accent p-6 flex items-center justify-center">

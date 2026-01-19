@@ -1,6 +1,7 @@
 'use client';
 
 import * as React from 'react';
+import { Loader2 } from 'lucide-react';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { type VariantProps } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
@@ -139,8 +140,10 @@ export function MeetergoCTAButton({
         className,
       )}
       disabled={loading || props.disabled}
+      aria-busy={loading}
       {...props}
     >
+      {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />}
       {children || 'Demo Vereinbaren'}
     </Button>
   );
