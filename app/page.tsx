@@ -2,7 +2,6 @@
 
 import {
   Activity,
-  AlertTriangle,
   Briefcase,
   CheckCircle,
   Cpu,
@@ -23,10 +22,10 @@ import CardGrid from '@/components/utilities/card-grid';
 import InfoGrid from '@/components/utilities/info-grid';
 import ProcessSteps from '@/components/utilities/process-steps';
 import SecurityAccordion from '@/components/utilities/security-accordion';
-import ScenarioGrid from '@/components/utilities/scenario-grid';
 import ConfiguratorTeaser from '@/components/utilities/configurator-teaser';
 
 import WhitepaperTeaser from '@/components/utilities/whitepaper-teaser';
+import ScenarioShowcase from '@/components/utilities/scenario-showcase';
 
 export default function HomePage() {
   return (
@@ -46,7 +45,6 @@ export default function HomePage() {
               Für Unternehmenswerkstätten, Hochschulen, Makerspaces und private Werkstätten.
             </p>
             <p>
-              {/* ToDo: Mobile Ansicht muss hier noch optimiert werden (Muss kleiner) */}
               mardu.space organisiert Zutritt, Maschinenfreigaben und Unterweisungen zuverlässig.
               Statt Schlüssel, Codes oder manueller Listen erhalten Betreiber ein konsistentes
               Berechtigungsmodell für Räume und Maschinen und technisch durchgesetzte Regeln.
@@ -186,6 +184,131 @@ export default function HomePage() {
       {/* Configurator Teaser */}
       <ConfiguratorTeaser />
 
+      {/* 5. Einsatzszenarien */}
+      <ScenarioShowcase
+        eyebrow="Produkte"
+        heading="Einsatzszenarien"
+        subheading="Sichern Sie Türen, Tore und Maschinen – von Schuko‑Geräten (1‑phasig) bis zu Drehstrom‑Maschinen (3‑phasig)."
+        features={[
+          {
+            id: 'doors',
+            title: 'Türen & Zugangssysteme',
+            description: 'Elektrische Türöffner und Zutrittspunkte sicher schalten.',
+          },
+          {
+            id: 'gates',
+            title: 'Tore & Schranken',
+            description: 'Anbindung an Außen- und Einfahrtstore.',
+          },
+          {
+            id: 'schuko',
+            title: 'Schuko‑Maschinen (1‑phasig)',
+            description: 'Freigabe für 230‑V‑Geräte und mobile Tools.',
+          },
+          {
+            id: 'drehstrom',
+            title: 'Drehstrom‑Maschinen (3‑phasig)',
+            description: 'Für leistungsstarke Maschinen mit höherem Strombedarf.',
+          },
+          {
+            id: 'central-release',
+            title: 'Zentrale Freigabe',
+            description: 'Aufsichtsschaltung für Räume und Anlagen.',
+          },
+          {
+            id: 'credentials',
+            title: 'Karte, Chip, App',
+            description: 'Identifikation pro Nutzer und Gerät.',
+          },
+          {
+            id: 'qualifications',
+            title: 'Unterweisungen',
+            description: 'Freigabe nur mit gültiger Qualifikation.',
+          },
+          {
+            id: 'time-rules',
+            title: 'Zeitsteuerung',
+            description: 'Regeln nach Schicht, Kurs oder Feiertag.',
+          },
+          {
+            id: 'audit-logs',
+            title: 'Ereignisprotokolle',
+            description: 'wer, wann, wo, Ergebnis — für Nachweise & Analyse.',
+          },
+          {
+            id: 'integrations',
+            title: 'API & Integrationen',
+            description: 'REST/OpenAPI, Anbindung an bestehende Systeme.',
+          },
+          {
+            id: 'emergency',
+            title: 'Notfall-Modus',
+            description: 'Definierte Ausnahmen für Einsatz-/Störfälle.',
+          },
+          {
+            id: 'reporting',
+            title: 'Reports & Export',
+            description: 'Auswertungen für Betrieb, Compliance und Vorfälle.',
+          },
+        ]}
+        scenarios={[
+          {
+            id: 'doors-gates',
+            label: 'Türen & Tore',
+            teaser:
+              'Zutritt für Eingänge, Werkstatt- und Außentore – regelbasiert und nachvollziehbar.',
+            imageSrc: '/configurator/tor.jpg',
+            imageAlt: 'Elektrische Eingangstür',
+            featureIds: [
+              'doors',
+              'gates',
+              'credentials',
+              'audit-logs',
+              'reporting',
+              'integrations',
+              'emergency',
+              'time-rules',
+            ],
+          },
+          {
+            id: 'schuko-machines',
+            label: 'Schuko‑Maschinen (1‑phasig)',
+            teaser:
+              'Kleinere Maschinen und mobile Geräte sicher freigeben – flexibel und nachvollziehbar.',
+            imageSrc: '/configurator/schuko.jpg',
+            imageAlt: 'Schuko‑Stecker',
+            featureIds: [
+              'schuko',
+              'qualifications',
+              'time-rules',
+              'audit-logs',
+              'reporting',
+              'credentials',
+              'integrations',
+              'emergency',
+            ],
+          },
+          {
+            id: 'drehstrom-machines',
+            label: 'Drehstrom‑Maschinen (3‑phasig)',
+            teaser:
+              'Leistungsstarke Maschinen kontrolliert schalten – auch mit zentraler Freigabe.',
+            imageSrc: '/configurator/32a.jpg',
+            imageAlt: 'Drehstrom‑Stecker',
+            featureIds: [
+              'drehstrom',
+              'central-release',
+              'qualifications',
+              'time-rules',
+              'audit-logs',
+              'reporting',
+              'integrations',
+              'emergency',
+            ],
+          },
+        ]}
+      />
+
       {/* 4. Spezifikation & Funktionsumfang */}
       <InfoGrid
         title="Spezifikation & Funktionsumfang"
@@ -252,45 +375,6 @@ export default function HomePage() {
                 description: 'Docker für Edge (Raspberry Pi) oder Server.',
               },
             ],
-          },
-        ]}
-      />
-
-      {/* 5. Einsatzszenarien */}
-      <ScenarioGrid
-        title="Einsatzszenarien"
-        leftTitle="Funktionsblöcke"
-        leftBlocks={[
-          {
-            title: 'Benutzer & Rollen',
-            description:
-              'Rollen (Mitglied, Trainer, EHS, Gast) definieren. Rechte sofort zuweisen oder entziehen. Identifikationsmittel (Karte, Chip, App) zuordnen.',
-          },
-          {
-            title: 'Maschinenfreigabe',
-            description:
-              'Maschinen einzeln oder als Gruppen verwalten. Qualifikation als zwingende Voraussetzung für die technische Freigabe (Strom/Logik).',
-          },
-          {
-            title: 'Zutritt & Zonen',
-            description:
-              'Türen zu Zonen zusammenfassen (Holz, Metall, Chemie). Zeitfenster für Schichtbetrieb oder Kurse abbilden.',
-          },
-        ]}
-        rightHighlights={[
-          {
-            title: 'Gebäude und Bereichszutritt',
-            description:
-              'Geregelter Zutritt statt Schlüsseltresor. Zonensteuerung für Werkstattbereiche, Lager und Rüstbereiche.',
-          },
-          {
-            title: 'Unternehmensspezifisch',
-            description:
-              'Ausbildungswerkstatt (Trennung nach Stand), Instandhaltung (Zeitfenster), Fremdfirmen (zweckgebunden).',
-          },
-          {
-            title: 'Prototyping & Labore',
-            description: 'Projektbezogene Berechtigungen und optionale Kostenstellenlogik.',
           },
         ]}
       />

@@ -132,7 +132,7 @@ export default function ScenarioShowcase({
             {scenarios.map((s) => (
               <TabsContent key={s.id} value={s.id} className="m-0">
                 <div className="rounded-3xl overflow-hidden border border-border/40 bg-card shadow-sm">
-                  <div className="relative w-full aspect-[16/10]">
+                  <div className="relative w-full aspect-16/10">
                     <Image
                       src={s.imageSrc}
                       alt={s.imageAlt}
@@ -149,11 +149,7 @@ export default function ScenarioShowcase({
         </div>
 
         {/* BOTTOM: 8 Feature tiles (switch with selection) */}
-        <div className="mt-10 rounded-3xl bg-muted/30 border border-border/40 overflow-hidden">
-          <div className="px-6 pt-6">
-            <div className="text-sm text-muted-foreground">And a lot more…</div>
-          </div>
-
+        <div className="mt-5 rounded-3xl bg-muted/30 border border-border/40 overflow-hidden">
           <div className="p-6 pt-5">
             <div className="grid gap-6 md:gap-0 md:grid-cols-4">
               {activeFeatures.map((f, idx) => (
