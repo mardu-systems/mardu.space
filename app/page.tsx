@@ -148,7 +148,7 @@ export default function HomePage() {
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-primary">•</span>
-                  <span>Einweisungen oft nicht gekoppelt</span>
+                  <span>Einweisungen sind oft nicht gekoppelt</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-primary">•</span>
