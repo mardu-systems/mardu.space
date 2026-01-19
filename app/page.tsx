@@ -46,6 +46,7 @@ export default function HomePage() {
               Für Unternehmenswerkstätten, Hochschulen, Makerspaces und private Werkstätten.
             </p>
             <p>
+              {/* ToDo: Mobile Ansicht muss hier noch optimiert werden (Muss kleiner) */}
               mardu.space organisiert Zutritt, Maschinenfreigaben und Unterweisungen zuverlässig.
               Statt Schlüssel, Codes oder manueller Listen erhalten Betreiber ein konsistentes
               Berechtigungsmodell für Räume und Maschinen und technisch durchgesetzte Regeln.
@@ -66,13 +67,13 @@ export default function HomePage() {
           <>
             <p>
               In Unternehmenswerkstätten, Hochschulen und Makerspaces treffen wechselnde Rollen auf
-              Bereiche mit erhöhtem Gefahrenpotenzial. Lücken entstehen selten durch fehlende Regeln,
-              sondern durch fehlende technische Durchsetzung.
+              Bereiche mit erhöhtem Gefahrenpotenzial. Lücken entstehen selten durch fehlende
+              Regeln, sondern durch fehlende technische Durchsetzung.
             </p>
             <p>
               mardu.space verbindet Türzugang, Maschinenfreigabe und Qualifikationen. Berechtigungen
-              sind rollenbasiert und zeitlich gesteuert. Maschinen lassen sich so schalten, dass eine
-              Bedienung nur mit gültiger Qualifikation möglich ist.
+              sind rollenbasiert und zeitlich gesteuert. Maschinen lassen sich so schalten, dass
+              eine Bedienung nur mit gültiger Qualifikation möglich ist.
             </p>
             <p>
               Ereignisprotokolle liefern Nachweise für Vorfallklärung und Compliance, inklusive
@@ -91,8 +92,7 @@ export default function HomePage() {
           },
           {
             title: 'Reduzierter Verwaltungsaufwand',
-            description:
-              'Digitale Vergabe, Anpassung und Entzug von Rechten im Alltag.',
+            description: 'Digitale Vergabe, Anpassung und Entzug von Rechten im Alltag.',
             icon: Settings,
           },
           {
@@ -185,27 +185,6 @@ export default function HomePage() {
 
       {/* Configurator Teaser */}
       <ConfiguratorTeaser />
-
-      <div className="max-w-7xl mx-auto px-6 md:px-8 w-full -mt-6 mb-20">
-        <div className="border-l-4 border-yellow-400 bg-yellow-50/50 p-8 rounded-r-2xl shadow-sm">
-          <div className="flex items-start gap-4">
-            <div className="w-12 h-12 bg-yellow-500/10 rounded-xl flex items-center justify-center shrink-0">
-              <AlertTriangle className="w-6 h-6 text-yellow-700" aria-hidden="true" />
-            </div>
-
-            <div className="space-y-3">
-              <h3 className="text-lg md:text-xl font-semibold text-primary">Konkrete Probleme in der Praxis</h3>
-              <ul className="space-y-2 text-sm md:text-base text-muted-foreground leading-relaxed list-disc pl-5">
-                <li>Geteilte Schlüssel oder Codes sind nicht kontrollierbar</li>
-                <li>Einweisungen sind nicht technisch an Freigaben gekoppelt</li>
-                <li>Unklar, wer wann wo war und was genutzt wurde</li>
-                <li>Nachweispflichten sind aufwendig und lückenanfällig</li>
-                <li>Öffnungszeiten werden aus Sicherheitsgründen reduziert</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
 
       {/* 4. Spezifikation & Funktionsumfang */}
       <InfoGrid
@@ -316,6 +295,9 @@ export default function HomePage() {
         ]}
       />
 
+      {/* Whitepaper Teaser */}
+      <WhitepaperTeaser />
+
       {/* 6. Umsetzung & Praxis */}
       <ProcessSteps
         title="Projektablauf"
@@ -362,9 +344,9 @@ export default function HomePage() {
                   ist eine Gefährdungsbeurteilung Pflicht (TRBS 1111).
                 </p>
                 <p>
-                  mardu.space unterstützt die operative Umsetzung: Qualifikationen werden zur technischen
-                  Voraussetzung für Zutritt und Freigabe. Ereignisse werden nachvollziehbar
-                  protokolliert.
+                  mardu.space unterstützt die operative Umsetzung: Qualifikationen werden zur
+                  technischen Voraussetzung für Zutritt und Freigabe. Ereignisse werden
+                  nachvollziehbar protokolliert.
                 </p>
               </div>
             ),
@@ -407,9 +389,6 @@ export default function HomePage() {
           },
         ]}
       />
-
-      {/* Whitepaper Teaser */}
-      <WhitepaperTeaser className="bg-muted/30" />
 
       {/* CTA Section */}
       <CTASection
