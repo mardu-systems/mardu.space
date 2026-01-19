@@ -204,7 +204,7 @@ const scenarioFeatures = [
   {
     id: 'integrations',
     title: 'API & Integrationen',
-    description: 'REST/OpenAPI, Anbindung an bestehende Systeme.',
+    description: 'Offene APIs, Anbindung an bestehende Systeme.',
   },
   {
     id: 'emergency',
