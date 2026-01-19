@@ -177,6 +177,10 @@ export default function HomePage() {
           },
         ]}
       />
+
+      {/* Configurator Teaser */}
+      <ConfiguratorTeaser />
+
       <div className="max-w-7xl mx-auto px-6 md:px-8 w-full -mt-6 mb-20">
         <div className="border-l-4 border-yellow-400 bg-yellow-50/50 p-8 rounded-r-2xl shadow-sm">
           <div className="flex items-start gap-4">
@@ -213,7 +217,7 @@ export default function HomePage() {
               },
               {
                 label: 'Zeitsteuerung',
-                description: 'Regeln nach Zeit, Wochentag & Feiertag.',
+                description: 'Regeln nach Zeit, Wochentagen und Feiertagen.',
               },
             ],
           },
@@ -231,7 +235,7 @@ export default function HomePage() {
               },
               {
                 label: 'Vernetzung',
-                description: 'IP500 Mesh Netzwerke via MQTT und LAN oder WLAN.',
+                description: 'IP500 Mesh-Netzwerke via MQTT und LAN oder WLAN.',
               },
             ],
           },
@@ -239,10 +243,10 @@ export default function HomePage() {
             title: 'Monitoring',
             icon: Activity,
             features: [
-              { label: 'Access Logs', description: 'Wer, Wann, Wo, Ergebnis.' },
+              { label: 'Access Logs', description: 'wer, wann, wo, Ergebnis.' },
               {
                 label: 'Reason Codes',
-                description: 'Details bei Ablehnung (z.B. "Qualifikation fehlt").',
+                description: 'Details bei Ablehnung (z. B. "Qualifikation fehlt").',
               },
               {
                 label: 'Audit Trail',
@@ -254,13 +258,13 @@ export default function HomePage() {
             title: 'System & Sicherheit',
             icon: Lock,
             features: [
-              { label: 'API first', description: 'REST-API mit OpenAPI-Spezifikation.' },
+              { label: 'API-first', description: 'REST-API mit OpenAPI-Spezifikation.' },
               {
                 label: 'Kryptografie',
-                description: 'Ende zu Ende (AES, ECDSA, TLS und DTLS).',
+                description: 'Ende-zu-Ende (AES, ECDSA, TLS und DTLS).',
               },
               {
-                label: 'Container basiert',
+                label: 'Container-basiert',
                 description: 'Docker für Edge (Raspberry Pi) oder Server.',
               },
             ],
@@ -307,12 +311,9 @@ export default function HomePage() {
         ]}
       />
 
-      {/* Configurator Teaser */}
-      <ConfiguratorTeaser />
-
       {/* 6. Umsetzung & Praxis */}
       <ProcessSteps
-        title="Umsetzung in der Praxis"
+        title="Projektablauf"
         steps={[
           {
             title: 'Erstgespräch',
@@ -320,7 +321,7 @@ export default function HomePage() {
               'Zielsetzung, Umfang, Zonen, Maschinen, Rollen und Betriebsmodell werden gemeinsam geklärt.',
           },
           {
-            title: 'Begehung oder Remote Review',
+            title: 'Begehung oder Remote-Review',
             description:
               'Prüfung von Türen, Maschinen, Strom, Netzwerk, Identifikation und Sicherheitsanforderungen.',
           },
@@ -356,7 +357,7 @@ export default function HomePage() {
                   ist eine Gefährdungsbeurteilung Pflicht (TRBS 1111).
                 </p>
                 <p>
-                  mardu.space unterstützt die operative Umsetzung: Qualifikationen werden technische
+                  mardu.space unterstützt die operative Umsetzung: Qualifikationen werden zur technischen
                   Voraussetzung für Zutritt und Freigabe. Ereignisse werden nachvollziehbar
                   protokolliert.
                 </p>
@@ -385,7 +386,7 @@ export default function HomePage() {
             content: (
               <div className="space-y-4">
                 <p>
-                  Zutritts und Nutzungsereignisse sind in der Regel personenbezogene Daten.
+                  Zutritts- und Nutzungsereignisse sind in der Regel personenbezogene Daten.
                   mardu.space setzt Privacy by Design um: Protokolle werden nur zu klar definierten
                   Zwecken geführt, insbesondere Betriebssicherheit, Vorfallklärung und
                   Nachweisführung.
@@ -393,13 +394,24 @@ export default function HomePage() {
                 <p>
                   Es gilt Datenminimierung: Es werden nur Ereignisse erfasst, die für diese Zwecke
                   erforderlich sind. Ergänzend unterstützt das System Löschkonzepte über
-                  konfigurierbare Aufbewahrungsfristen für Log Daten, damit Retention Policies
+                  konfigurierbare Aufbewahrungsfristen für Logdaten, damit Retention-Policies
                   nachvollziehbar umgesetzt und an interne Vorgaben angepasst werden können.
                 </p>
               </div>
             ),
           },
         ]}
+      />
+
+      {/* Whitepaper Teaser */}
+      <WhitepaperTeaser className="bg-muted/30" />
+
+      {/* CTA Section */}
+      <CTASection
+        title="Sichere Werkstätten beginnen mit klaren Standards."
+        description="Erfahren Sie, wie mardu.space Ihre Verantwortung technisch unterstützt und administrative Lasten reduziert."
+        primaryButtonText="Newsletter abonnieren"
+        secondaryButtonText="Mehr zum System"
       />
 
       <Foerderung
@@ -427,17 +439,6 @@ export default function HomePage() {
             <em>Existenzgründungen aus der Wissenschaft (EXIST)</em> in Deutschland.
           </>
         }
-      />
-
-      {/* Whitepaper Teaser */}
-      <WhitepaperTeaser className="bg-muted/30" />
-
-      {/* CTA Section */}
-      <CTASection
-        title="Sichere Werkstätten beginnen mit klaren Standards."
-        description="Erfahren Sie, wie mardu.space Ihre Verantwortung technisch unterstützt und administrative Lasten reduziert."
-        primaryButtonText="Newsletter abonnieren"
-        secondaryButtonText="Mehr zum System"
       />
     </main>
   );
