@@ -111,7 +111,7 @@ export default function ScenarioShowcase({
                   value={s.id}
                   className={cn(
                     'w-full justify-start text-left whitespace-normal',
-                    'rounded-2xl px-4 py-3',
+                    'min-h-11 rounded-2xl px-4 py-3 touch-manipulation',
                     'border border-border/40 bg-card/60',
                     'hover:bg-card transition-colors',
                     'data-[state=active]:bg-card data-[state=active]:border-border',

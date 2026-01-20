@@ -66,7 +66,7 @@ export default function MobileNav({
           variant="ghost"
           size="icon"
           className={clsx(
-            'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2',
+            'h-11 w-11 touch-manipulation focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2',
             variant === 'light'
               ? 'focus-visible:ring-neutral-900 focus-visible:ring-offset-white'
               : 'focus-visible:ring-white focus-visible:ring-offset-neutral-950',

@@ -136,7 +136,7 @@ export function MeetergoCTAButton({
     <Button
       onClick={handleClick}
       className={cn(
-        'w-full sm:w-auto h-12 px-6 rounded-lg bg-accent hover:bg-accent/90 text-accent-foreground font-medium text-sm tracking-wide transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 mt-3 sm:mt-0 sm:ml-4',
+        'w-full sm:w-auto h-12 px-6 rounded-lg bg-accent hover:bg-accent/90 text-accent-foreground font-medium text-sm tracking-wide transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 mt-3 sm:mt-0 sm:ml-4 touch-manipulation',
         className,
       )}
       disabled={loading || props.disabled}

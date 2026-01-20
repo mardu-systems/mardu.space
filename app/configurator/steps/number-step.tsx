@@ -61,7 +61,7 @@ export default function NumberStep({
                 onChange(parsed);
               }}
               placeholder="z. B. 3…"
-              className="h-20 text-center text-4xl font-extrabold border-0 focus-visible:ring-0 focus:outline-none rounded-2xl"
+              className="h-20 text-center text-4xl font-extrabold border-0 focus-visible:ring-0 focus:outline-none rounded-2xl touch-manipulation"
             />
           </div>
         </div>

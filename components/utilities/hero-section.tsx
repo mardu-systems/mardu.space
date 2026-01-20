@@ -96,12 +96,8 @@ export default function HeroSection({
       <ScrollReveal className="w-full max-w-7xl px-4 md:px-8 mx-auto mt-3" direction="up">
         <motion.div
           className="relative w-full h-125 md:h-162.5 lg:h-160 rounded-[34px] overflow-hidden shadow-lg bg-muted"
-          animate={shouldReduceMotion ? undefined : { y: [0, -10, 0] }}
-          transition={
-            shouldReduceMotion
-              ? undefined
-              : { duration: 12, repeat: Infinity, repeatType: 'mirror', ease: 'easeInOut' }
-          }
+          whileHover={shouldReduceMotion ? undefined : { y: -6 }}
+          transition={shouldReduceMotion ? undefined : { duration: 0.25, ease: 'easeOut' }}
         >
           {!isPlaying ? (
             <>

@@ -17,7 +17,6 @@ import { cn } from '@/lib/utils';
 import { MeetergoCTAButton } from './meetergo-cta-button';
 import { useRef, useState } from 'react';
 import { ScrollReveal } from '@/components/ui/motion/scroll-reveal';
-import { motion, useReducedMotion } from 'framer-motion';
 
 export interface CTASectionProps {
   title: string;
@@ -50,8 +49,6 @@ export default function CTASection({
   const [consentChecked, setConsentChecked] = useState(false);
   const emailInputRef = useRef<HTMLInputElement>(null);
   const consentRef = useRef<HTMLButtonElement>(null);
-  const shouldReduceMotion = useReducedMotion();
-
   const handleNewsletterSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (isSubmitting) return;
@@ -111,7 +108,7 @@ export default function CTASection({
         <ScrollReveal>
           <div
             className={cn(
-              'relative overflow-hidden rounded-2xl px-8 md:px-16 py-12 md:py-16',
+              'group relative overflow-hidden rounded-2xl px-8 md:px-16 py-12 md:py-16',
               backgroundColor,
             )}
           >
@@ -143,32 +140,8 @@ export default function CTASection({
             </div>
 
             {/* Decorative Background Elements (optional) */}
-            <motion.div
-              className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/4"
-              animate={
-                shouldReduceMotion
-                  ? undefined
-                  : { opacity: [0.2, 0.45, 0.2], scale: [0.9, 1.08, 0.95] }
-              }
-              transition={
-                shouldReduceMotion
-                  ? undefined
-                  : { duration: 12, repeat: Infinity, repeatType: 'mirror', ease: 'easeInOut' }
-              }
-            />
-            <motion.div
-              className="absolute bottom-0 left-0 w-96 h-96 bg-purple-900/20 rounded-full blur-3xl translate-y-1/2 -translate-x-1/4"
-              animate={
-                shouldReduceMotion
-                  ? undefined
-                  : { opacity: [0.15, 0.3, 0.15], scale: [1, 1.12, 0.92] }
-              }
-              transition={
-                shouldReduceMotion
-                  ? undefined
-                  : { duration: 14, repeat: Infinity, repeatType: 'mirror', ease: 'easeInOut' }
-              }
-            />
+            <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/4 pointer-events-none transition-[transform,opacity] duration-700 ease-out motion-reduce:transition-none group-hover:opacity-40 group-hover:scale-105 group-focus-within:opacity-40 group-focus-within:scale-105" />
+            <div className="absolute bottom-0 left-0 w-96 h-96 bg-purple-900/20 rounded-full blur-3xl translate-y-1/2 -translate-x-1/4 pointer-events-none transition-[transform,opacity] duration-700 ease-out motion-reduce:transition-none group-hover:opacity-30 group-hover:scale-105 group-focus-within:opacity-30 group-focus-within:scale-105" />
 
             {/* Content */}
             <div className="relative z-10 max-w-4xl text-left">
@@ -204,7 +177,7 @@ export default function CTASection({
                   }}
                 >
                   <DialogTrigger asChild>
-                    <Button className="w-full sm:w-auto h-12 px-6 rounded-lg bg-accent hover:bg-accent/90 text-accent-foreground font-medium text-sm tracking-wide transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+                    <Button className="w-full sm:w-auto h-12 px-6 rounded-lg bg-accent hover:bg-accent/90 text-accent-foreground font-medium text-sm tracking-wide transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 touch-manipulation">
                       {primaryButtonText}
                     </Button>
                   </DialogTrigger>
@@ -242,6 +215,7 @@ export default function CTASection({
                           name="global.vorname"
                           placeholder="z. B. Lena…"
                           autoComplete="given-name"
+                          className="touch-manipulation"
                           onBlur={(e) => {
                             e.currentTarget.value = e.currentTarget.value.trim();
                           }}
@@ -256,6 +230,7 @@ export default function CTASection({
                           name="global.nachname"
                           placeholder="z. B. Müller…"
                           autoComplete="family-name"
+                          className="touch-manipulation"
                           onBlur={(e) => {
                             e.currentTarget.value = e.currentTarget.value.trim();
                           }}
@@ -270,6 +245,7 @@ export default function CTASection({
                           name="global.firma"
                           placeholder="z. B. Muster GmbH…"
                           autoComplete="organization"
+                          className="touch-manipulation"
                           onBlur={(e) => {
                             e.currentTarget.value = e.currentTarget.value.trim();
                           }}
@@ -293,6 +269,7 @@ export default function CTASection({
                           autoCapitalize="none"
                           autoCorrect="off"
                           spellCheck={false}
+                          className="touch-manipulation"
                           ref={emailInputRef}
                           onChange={() => {
                             if (formErrors.email) {
@@ -323,7 +300,7 @@ export default function CTASection({
                             name="tags[]"
                             value="accept"
                             ref={consentRef}
-                            className="mt-1"
+                            className="mt-1 touch-manipulation"
                             checked={consentChecked}
                             onCheckedChange={(checked) => {
                               setConsentChecked(checked === true);
@@ -352,7 +329,7 @@ export default function CTASection({
 
                       <Button
                         type="submit"
-                        className="w-full sm:w-auto h-12 px-6 rounded-lg bg-accent hover:bg-accent/90 text-accent-foreground font-medium text-sm tracking-wide transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                        className="w-full sm:w-auto h-12 px-6 rounded-lg bg-accent hover:bg-accent/90 text-accent-foreground font-medium text-sm tracking-wide transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 touch-manipulation"
                         disabled={isSubmitting}
                         aria-busy={isSubmitting}
                       >

@@ -22,11 +22,11 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
 
 export const contactSchema = z.object({
-  name: z.string().min(1, 'Bitte Name angeben'),
-  email: z.email('Bitte eine gültige E-Mail angeben'),
-  company: z.string().optional(),
-  phone: z.string().optional(),
-  message: z.string().optional(),
+  name: z.string().trim().min(1, 'Bitte Name angeben'),
+  email: z.string().trim().email('Bitte eine gültige E-Mail angeben'),
+  company: z.string().trim().optional(),
+  phone: z.string().trim().optional(),
+  message: z.string().trim().optional(),
   consent: z.boolean().optional(),
 });
 
@@ -87,17 +87,20 @@ export function ContactForm({
   const [status, setStatus] = React.useState<'idle' | 'success' | 'error'>('idle');
   const [submitting, setSubmitting] = React.useState(false);
   const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
+  const consentId = React.useId();
 
   async function handleSubmit(values: ContactValues) {
     if (!submit) return;
+    if (values.consent !== true) {
+      form.setError('consent', { type: 'required', message: 'Bitte Zustimmung erteilen' });
+      setStatus('idle');
+      setErrorMessage(null);
+      return;
+    }
     try {
       setSubmitting(true);
       setStatus('idle');
       setErrorMessage(null);
-      if (values.consent !== true) {
-        form.setError('consent', { type: 'required', message: 'Bitte Zustimmung erteilen' });
-        throw new Error('validation');
-      }
       const res = await fetch(action, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -108,7 +111,14 @@ export function ContactForm({
       });
       if (!res.ok) throw new Error('Request failed');
       setStatus('success');
-      form.reset({ name: '', email: '', company: '', message: '' });
+      form.reset({
+        name: '',
+        email: '',
+        company: '',
+        phone: '',
+        message: '',
+        consent: false,
+      });
     } catch (e: unknown) {
       console.error(e);
       setStatus('error');
@@ -124,6 +134,13 @@ export function ContactForm({
   const textareaClasses =
     'w-full min-h-28 text-base rounded-none border-0 border-b border-neutral-800/70 bg-transparent px-0 py-2 text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent focus-visible:border-primary/80 touch-manipulation';
   const submitHandler = submit ? form.handleSubmit(handleSubmit) : undefined;
+  const handleTextareaKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (!submit) return;
+    if ((event.metaKey || event.ctrlKey) && event.key === 'Enter') {
+      event.preventDefault();
+      submitHandler?.();
+    }
+  };
   const content = (
     <div className="w-full">
       <Form {...form}>
@@ -143,6 +160,7 @@ export function ContactForm({
                     {...field}
                     placeholder="z. B. Maria Mustermann…"
                     autoComplete="name"
+                    autoCapitalize="words"
                     className={inputClasses}
                     onBlur={(event) => {
                       const trimmed = event.target.value.trim();
@@ -164,9 +182,19 @@ export function ContactForm({
                 <FormControl>
                   <input
                     type="email"
-                    placeholder="E‑Mail*"
-                    className="rounded-none border-0 border-b border-neutral-800/70 bg-transparent px-0 py-2"
                     {...field}
+                    placeholder="name@example.com…"
+                    autoComplete="email"
+                    inputMode="email"
+                    autoCapitalize="none"
+                    autoCorrect="off"
+                    spellCheck={false}
+                    className={inputClasses}
+                    onBlur={(event) => {
+                      const trimmed = event.target.value.trim();
+                      field.onChange(trimmed);
+                      field.onBlur();
+                    }}
                   />
                 </FormControl>
                 <FormMessage />
@@ -181,9 +209,15 @@ export function ContactForm({
                 <FormLabel className="sr-only">Firma</FormLabel>
                 <FormControl>
                   <input
-                    placeholder="Firma (optional)"
-                    className="rounded-none border-0 border-b border-neutral-800/70 bg-transparent px-0 py-2"
                     {...field}
+                    placeholder="z. B. Muster GmbH…"
+                    autoComplete="organization"
+                    className={inputClasses}
+                    onBlur={(event) => {
+                      const trimmed = event.target.value.trim();
+                      field.onChange(trimmed);
+                      field.onBlur();
+                    }}
                   />
                 </FormControl>
                 <FormMessage />
@@ -199,9 +233,18 @@ export function ContactForm({
                 <FormControl>
                   <input
                     type="tel"
-                    placeholder="+49 123 456789"
-                    className="rounded-none border-0 border-b border-neutral-800/70 bg-transparent px-0 py-2"
                     {...field}
+                    placeholder="z. B. +49 123 456789…"
+                    autoComplete="tel"
+                    inputMode="tel"
+                    autoCorrect="off"
+                    spellCheck={false}
+                    className={inputClasses}
+                    onBlur={(event) => {
+                      const trimmed = event.target.value.trim();
+                      field.onChange(trimmed);
+                      field.onBlur();
+                    }}
                   />
                 </FormControl>
                 <FormMessage />
@@ -217,9 +260,15 @@ export function ContactForm({
                 <FormControl>
                   <Textarea
                     rows={3}
-                    placeholder="Ihre Nachricht..."
-                    className="rounded-none border-0 border-b border-neutral-800/70 bg-transparent px-0 py-2"
                     {...field}
+                    placeholder="z. B. Anfrage zur Maschinenfreigabe…"
+                    className={textareaClasses}
+                    onBlur={(event) => {
+                      const trimmed = event.target.value.trim();
+                      field.onChange(trimmed);
+                      field.onBlur();
+                    }}
+                    onKeyDown={handleTextareaKeyDown}
                   />
                 </FormControl>
                 <FormDescription>
@@ -237,20 +286,23 @@ export function ContactForm({
                 <div className="flex items-start gap-3">
                   <FormControl>
                     <Checkbox
+                      id={consentId}
                       checked={field.value}
                       onCheckedChange={field.onChange}
-                      className="mt-0.5"
+                      name={field.name}
+                      data-contact-consent
+                      className="mt-0.5 touch-manipulation"
                     />
                   </FormControl>
-                  <div className="flex-1">
-                    <FormLabel className="text-sm leading-5 cursor-pointer">
+                  <label htmlFor={consentId} className="flex-1 cursor-pointer">
+                    <span className="block text-sm leading-5">
                       Ich stimme zu, dass meine Angaben zur Beantwortung meiner Anfrage verarbeitet
                       werden.
-                    </FormLabel>
-                    <FormDescription className="text-xs text-muted-foreground mt-1">
+                    </span>
+                    <span className="mt-1 block text-xs text-muted-foreground">
                       Ihre Daten werden gemäß DSGVO verarbeitet und nicht an Dritte weitergegeben.
-                    </FormDescription>
-                  </div>
+                    </span>
+                  </label>
                 </div>
                 <FormMessage />
               </FormItem>
@@ -264,9 +316,10 @@ export function ContactForm({
                 disabled={submitting}
                 aria-disabled={submitting}
                 aria-busy={submitting}
+                className="h-11 px-4 touch-manipulation"
               >
-                {submitting && <Loader2 className="h-4 w-4 animate-spin" />}
-                {submitting ? 'Sende…' : submitLabel}
+                {submitting && <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />}
+                {submitLabel}
               </Button>
             </div>
           )}

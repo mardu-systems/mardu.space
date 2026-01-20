@@ -38,11 +38,11 @@ export default function SummaryStep({ state }: { state: State }) {
           <div className="mt-4 text-xs text-ink-400">
             <p>
               Zweiadriges Kabel gesamt (ca.):{' '}
-              <strong className="text-ink-600">{totalCable2core} m</strong>
+              <strong className="text-ink-600 tabular-nums">{totalCable2core} m</strong>
             </p>
             <p>
               12‑adriges Kabel gesamt (ca.):{' '}
-              <strong className="text-ink-600">{totalCable12core} m</strong>
+              <strong className="text-ink-600 tabular-nums">{totalCable12core} m</strong>
             </p>
           </div>
         </CardContent>
@@ -54,7 +54,7 @@ export default function SummaryStep({ state }: { state: State }) {
             <div className="flex items-center justify-between mb-2">
               <h3 className="text-lg font-bold text-ink-600">Stückliste (automatisch berechnet)</h3>
               <CollapsibleTrigger asChild>
-                <Button variant="ghost" size="sm">
+                <Button type="button" variant="ghost" className="h-11 px-4 touch-manipulation">
                   {open ? 'Ausblenden' : 'Anzeigen'}
                 </Button>
               </CollapsibleTrigger>
@@ -70,7 +70,7 @@ export default function SummaryStep({ state }: { state: State }) {
                       {row.item}
                       {row.note ? <span className="text-ink-400"> · {row.note}</span> : null}
                     </span>
-                    <span className="font-semibold text-ink-700">{row.qty}</span>
+                    <span className="font-semibold text-ink-700 tabular-nums">{row.qty}</span>
                   </div>
                 ))}
               </div>
@@ -86,7 +86,7 @@ function Field({ label, value }: { label: string; value: React.ReactNode }) {
   return (
     <div className="rounded-xl border border-ink-100 p-4 bg-white/70">
       <div className="text-ink-400 text-xs mb-1">{label}</div>
-      <div className="font-semibold break-words text-ink-700">{value}</div>
+      <div className="font-semibold break-words text-ink-700 tabular-nums">{value}</div>
     </div>
   );
 }

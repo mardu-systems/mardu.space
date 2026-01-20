@@ -3,6 +3,7 @@
 import * as React from 'react';
 import { useEffect, useMemo, useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { defineStepper } from '@stepperize/react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
@@ -98,20 +99,31 @@ export default function ConfiguratorPageClient() {
           steps={steps}
           state={state}
           onSubmit={async () => {
+            const { contact, ...config } = state;
+            const validation = ContactSchema.safeParse(contact);
+            if (!validation.success) {
+              const field = validation.error.issues[0]?.path[0];
+              if (typeof field === 'string' && typeof document !== 'undefined') {
+                const selector =
+                  field === 'consent' ? '[data-contact-consent]' : `[name="${field}"]`;
+                const el = document.querySelector(selector) as HTMLElement | null;
+                el?.focus();
+              }
+              setStatus('idle');
+              setErrorMessage(null);
+              return;
+            }
+
             try {
               setSubmitting(true);
               setStatus('idle');
               setErrorMessage(null);
               const token = await executeRecaptcha('contact');
               if (!token) throw new Error('reCAPTCHA failed');
-              const { contact, ...config } = state;
-              const validation = ContactSchema.safeParse(contact);
-              if (!validation.success)
-                throw new Error(validation.error.issues.map((i) => i.message).join(', '));
               const res = await fetch('/api/contact', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ ...contact, config, token, source: 'wizard' }),
+                body: JSON.stringify({ ...validation.data, config, token, source: 'wizard' }),
               });
               if (!res.ok) throw new Error('Request failed');
               setStatus('success');
@@ -163,13 +175,27 @@ function MainContent({
   const stepper = Wizard.useStepper({ initialStep: 'tri' });
   const idx = stepper.all.findIndex((s) => s.id === stepper.current.id);
   const isValid = steps[idx]?.valid?.(state);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const media = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const update = () => setPrefersReducedMotion(media.matches);
+    update();
+    if (media.addEventListener) {
+      media.addEventListener('change', update);
+      return () => media.removeEventListener('change', update);
+    }
+    media.addListener(update);
+    return () => media.removeListener(update);
+  }, []);
 
   // Scroll to top on step changes (both directions, all layouts)
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.scrollTo({ top: 0, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
     }
-  }, [idx]);
+  }, [idx, prefersReducedMotion]);
 
   // Stepper indicator replaces custom mobile/desktop steppers
 
@@ -179,8 +205,8 @@ function MainContent({
         <Alert className="mt-4 animate-fade-in" variant="default" role="status" aria-live="polite">
           <AlertDescription>Danke! Anfrage versendet.</AlertDescription>
         </Alert>
-        <Button asChild className="mt-6" onClick={() => (window.location.href = '/')}>
-          Zur Startseite
+        <Button asChild className="mt-6 h-11 px-4 touch-manipulation">
+          <Link href="/">Zur Startseite</Link>
         </Button>
       </main>
     );
@@ -223,7 +249,7 @@ function MainContent({
           variant="outline"
           onClick={() => stepper.prev()}
           disabled={stepper.isFirst}
-          className="disabled:opacity-50 disabled:cursor-not-allowed"
+          className="h-11 px-4 disabled:opacity-50 disabled:cursor-not-allowed touch-manipulation"
         >
           Zurück
         </Button>
@@ -238,10 +264,12 @@ function MainContent({
             disabled={submitting}
             aria-disabled={submitting}
             aria-busy={submitting && stepper.isLast}
-            className="disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+            className="h-11 px-4 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 touch-manipulation"
           >
-            {submitting && stepper.isLast && <Loader2 className="h-4 w-4 animate-spin" />}
-            {stepper.isLast ? (submitting ? 'Sende…' : 'Angebot anfordern') : 'Weiter'}
+            {submitting && stepper.isLast && (
+              <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
+            )}
+            {stepper.isLast ? 'Angebot anfordern' : 'Weiter'}
           </Button>
         </div>
       </div>
@@ -263,12 +291,12 @@ function MainContent({
 
 /* ===================== Responsive Help ===================== */
 function ResponsiveHelp({
-                            title,
-                            tip,
-                            stepIndex: _stepIndex,
-                            stepCount: _stepCount,
-                            image,
-                        }: {
+  title,
+  tip,
+  stepIndex: _stepIndex,
+  stepCount: _stepCount,
+  image,
+}: {
   title: React.ReactNode;
   tip: string;
   stepIndex: number;

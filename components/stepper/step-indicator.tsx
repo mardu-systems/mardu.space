@@ -162,6 +162,7 @@ function StepCircle({
   onClick,
 }: StepCircleProps) {
   const config = SIZE_CONFIG[size];
+  const ariaLabel = getAriaLabel(stepIndex, totalSteps, label);
 
   const circleElement = (
     <div
@@ -170,8 +171,8 @@ function StepCircle({
         config.circle,
         STEP_STYLES[state],
       )}
-      aria-current={state === 'active' ? 'step' : undefined}
-      aria-label={getAriaLabel(stepIndex, totalSteps, label)}
+      aria-current={!isClickable && state === 'active' ? 'step' : undefined}
+      aria-label={!isClickable ? ariaLabel : undefined}
     >
       <span className="font-medium tabular-nums">{stepIndex}</span>
     </div>
@@ -182,12 +183,15 @@ function StepCircle({
       <button
         type="button"
         className={clsx(
-          'group outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-full',
+          'group inline-flex min-h-11 min-w-11 touch-manipulation items-center justify-center rounded-full outline-none',
+          'focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
           config.padding,
         )}
+        aria-label={ariaLabel}
+        aria-current={state === 'active' ? 'step' : undefined}
         onClick={onClick}
       >
-        {circleElement}
+        <div aria-hidden="true">{circleElement}</div>
       </button>
     );
   }
@@ -222,7 +226,7 @@ function ProgressLine({ isDone, size }: ProgressLineProps) {
       <div className={clsx('relative  w-full bg-border/70', config.lineHeight)}>
         <div
           className={clsx(
-            'absolute inset-y-0 left-0 transition-all duration-300',
+            'absolute inset-y-0 left-0 transition-[width] duration-300 motion-reduce:transition-none',
             config.lineHeight,
             isDone ? 'w-full bg-primary' : 'w-0',
           )}
@@ -270,13 +274,31 @@ export default function StepIndicator({
 
   const scrollRef = React.useRef<HTMLDivElement>(null);
   const activeStepRef = React.useRef<HTMLLIElement | null>(null);
+  const [prefersReducedMotion, setPrefersReducedMotion] = React.useState(false);
+
+  React.useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const media = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const update = () => setPrefersReducedMotion(media.matches);
+    update();
+    if (media.addEventListener) {
+      media.addEventListener('change', update);
+      return () => media.removeEventListener('change', update);
+    }
+    media.addListener(update);
+    return () => media.removeListener(update);
+  }, []);
 
   // Scroll the active step into view whenever the current step changes
   React.useEffect(() => {
     const el = activeStepRef.current;
     if (!el) return;
-    el.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-  }, [clampedCurrent]);
+    el.scrollIntoView({
+      behavior: prefersReducedMotion ? 'auto' : 'smooth',
+      block: 'nearest',
+      inline: 'center',
+    });
+  }, [clampedCurrent, prefersReducedMotion]);
 
   if (stepCount === 0) {
     return null;

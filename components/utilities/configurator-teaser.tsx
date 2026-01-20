@@ -29,7 +29,7 @@ export default function ConfiguratorTeaser({ className }: ConfiguratorTeaserProp
               {/* Content Side */}
               <div className="space-y-8">
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/10 text-accent text-xs font-semibold uppercase tracking-wider border border-accent/10">
-                  <Settings className="w-3.5 h-3.5" />
+                  <Settings className="w-3.5 h-3.5" aria-hidden="true" />
                   Interaktiver Konfigurator
                 </div>
                 
@@ -42,10 +42,14 @@ export default function ConfiguratorTeaser({ className }: ConfiguratorTeaserProp
                 </p>
 
                 <div className="flex flex-wrap gap-4 pt-2">
-                  <Button asChild size="lg" className="h-14 px-8 text-base bg-accent hover:bg-accent/90 text-accent-foreground border-none">
+                  <Button
+                    asChild
+                    size="lg"
+                    className="h-14 px-8 text-base bg-accent hover:bg-accent/90 text-accent-foreground border-none touch-manipulation"
+                  >
                     <Link href="/configurator">
                       Konfiguration starten
-                      <ArrowRight className="ml-2 w-5 h-5" />
+                      <ArrowRight className="ml-2 w-5 h-5" aria-hidden="true" />
                     </Link>
                   </Button>
                 </div>
@@ -57,7 +61,8 @@ export default function ConfiguratorTeaser({ className }: ConfiguratorTeaserProp
                 <motion.div 
                   className={cn(
                     'relative w-72 md:w-96 aspect-[4/3] bg-card rounded-xl shadow-2xl flex flex-col overflow-hidden -rotate-2 border border-border',
-                    !shouldReduceMotion && 'hover:rotate-0 transition-all duration-500 ease-out',
+                    !shouldReduceMotion &&
+                      'hover:rotate-0 transition-transform duration-500 ease-out motion-reduce:transition-none',
                   )}
                   whileHover={shouldReduceMotion ? undefined : { scale: 1.02 }}
                 >
@@ -95,11 +100,11 @@ export default function ConfiguratorTeaser({ className }: ConfiguratorTeaserProp
                     {/* Fake Checkboxes */}
                     <div className="flex gap-4">
                         <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                            <CheckSquare className="w-4 h-4 text-primary" />
+                            <CheckSquare className="w-4 h-4 text-primary" aria-hidden="true" />
                             <span>RFID</span>
                         </div>
                         <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                            <CheckSquare className="w-4 h-4 text-primary" />
+                            <CheckSquare className="w-4 h-4 text-primary" aria-hidden="true" />
                             <span>App</span>
                         </div>
                     </div>

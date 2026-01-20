@@ -113,7 +113,7 @@ export default function WhitepaperTeaser({ className }: WhitepaperTeaserProps) {
               {/* Content Side */}
               <div className="space-y-8">
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-white text-xs font-semibold uppercase tracking-wider border border-white/10">
-                  <FileText className="w-3.5 h-3.5" />
+                  <FileText className="w-3.5 h-3.5" aria-hidden="true" />
                   Neuerscheinung
                 </div>
 
@@ -143,10 +143,10 @@ export default function WhitepaperTeaser({ className }: WhitepaperTeaserProps) {
                     <DialogTrigger asChild>
                       <Button
                         size="lg"
-                        className="h-14 px-8 text-base bg-accent hover:bg-accent/90 text-accent-foreground border-none"
+                        className="h-14 px-8 text-base bg-accent hover:bg-accent/90 text-accent-foreground border-none touch-manipulation"
                       >
                         Jetzt kostenlos anfordern
-                        <ArrowRight className="ml-2 w-5 h-5" />
+                        <ArrowRight className="ml-2 w-5 h-5" aria-hidden="true" />
                       </Button>
                     </DialogTrigger>
                     <DialogContent className="sm:max-w-md bg-card text-foreground">
@@ -159,11 +159,11 @@ export default function WhitepaperTeaser({ className }: WhitepaperTeaserProps) {
                       </DialogHeader>
 
                       {status === 'success' ? (
-                        <div className="py-6 text-center space-y-4">
-                          <div className="mx-auto w-12 h-12 rounded-full bg-green-100 flex items-center justify-center">
-                            <CheckSquare className="w-6 h-6 text-green-600" />
-                          </div>
-                          <p className="text-lg font-medium">Vielen Dank!</p>
+                          <div className="py-6 text-center space-y-4">
+                            <div className="mx-auto w-12 h-12 rounded-full bg-green-100 flex items-center justify-center">
+                              <CheckSquare className="w-6 h-6 text-green-600" aria-hidden="true" />
+                            </div>
+                            <p className="text-lg font-medium">Vielen Dank!</p>
                           <p className="text-muted-foreground">
                             Wir haben Ihnen eine Bestätigungs-E-Mail gesendet. Bitte klicken Sie auf
                             den Link darin, um Ihre Anmeldung abzuschließen.
@@ -171,7 +171,7 @@ export default function WhitepaperTeaser({ className }: WhitepaperTeaserProps) {
                           <Button
                             type="button"
                             variant="outline"
-                            className="h-11 px-6"
+                            className="h-11 px-6 touch-manipulation"
                             onClick={() => setOpen(false)}
                           >
                             Schließen
@@ -191,6 +191,7 @@ export default function WhitepaperTeaser({ className }: WhitepaperTeaserProps) {
                               autoCapitalize="none"
                               autoCorrect="off"
                               spellCheck={false}
+                              className="touch-manipulation"
                               ref={emailInputRef}
                               autoFocus
                               value={email}
@@ -228,7 +229,7 @@ export default function WhitepaperTeaser({ className }: WhitepaperTeaserProps) {
                                   }
                                 }}
                                 ref={consentRef}
-                                className="mt-1"
+                                className="mt-1 touch-manipulation"
                                 aria-invalid={Boolean(fieldErrors.consent)}
                                 aria-describedby={
                                   fieldErrors.consent ? 'wp.terms-error' : undefined
@@ -256,7 +257,7 @@ export default function WhitepaperTeaser({ className }: WhitepaperTeaserProps) {
 
                           <Button
                             type="submit"
-                            className="w-full h-12 bg-accent hover:bg-accent/90 text-accent-foreground"
+                            className="w-full h-12 bg-accent hover:bg-accent/90 text-accent-foreground touch-manipulation"
                             disabled={loading}
                             aria-busy={loading}
                           >
@@ -278,14 +279,15 @@ export default function WhitepaperTeaser({ className }: WhitepaperTeaserProps) {
                 <motion.div
                   className={cn(
                     'antialiased relative w-64 md:w-80 aspect-[1/1.4] bg-white rounded-xl shadow-2xl flex flex-col overflow-hidden rotate-3',
-                    !shouldReduceMotion && 'hover:rotate-0 transition-all duration-500 ease-out',
+                    !shouldReduceMotion &&
+                      'hover:rotate-0 transition-transform duration-500 ease-out motion-reduce:transition-none',
                   )}
                   whileHover={shouldReduceMotion ? undefined : { scale: 1.02 }}
                 >
                   {/* Mock Header */}
                   <div className="h-24 bg-accent p-6 flex items-center justify-center">
                     <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
-                      <Download className="text-white w-6 h-6" />
+                      <Download className="text-white w-6 h-6" aria-hidden="true" />
                     </div>
                   </div>
                   {/* Mock Content Lines */}

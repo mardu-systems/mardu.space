@@ -216,6 +216,23 @@ const scenarioFeatures = [
 
 const scenarioScenarios = [
   {
+    id: 'drehstrom-machines',
+    label: 'Drehstrom‑Maschinen (3‑phasig)',
+    teaser: 'Leistungsstarke Maschinen kontrolliert schalten – auch mit zentraler Freigabe.',
+    imageSrc: '/configurator/32a.jpg',
+    imageAlt: 'Drehstrom‑Stecker',
+    featureIds: [
+      'drehstrom',
+      'central-release',
+      'qualifications',
+      'time-rules',
+      'audit-logs',
+      'reporting',
+      'integrations',
+      'emergency',
+    ],
+  },
+  {
     id: 'doors-gates',
     label: 'Türen & Tore',
     teaser: 'Zutritt für Eingänge, Werkstatt- und Außentore – regelbasiert und nachvollziehbar.',
@@ -245,23 +262,6 @@ const scenarioScenarios = [
       'audit-logs',
       'reporting',
       'credentials',
-      'integrations',
-      'emergency',
-    ],
-  },
-  {
-    id: 'drehstrom-machines',
-    label: 'Drehstrom‑Maschinen (3‑phasig)',
-    teaser: 'Leistungsstarke Maschinen kontrolliert schalten – auch mit zentraler Freigabe.',
-    imageSrc: '/configurator/32a.jpg',
-    imageAlt: 'Drehstrom‑Stecker',
-    featureIds: [
-      'drehstrom',
-      'central-release',
-      'qualifications',
-      'time-rules',
-      'audit-logs',
-      'reporting',
       'integrations',
       'emergency',
     ],

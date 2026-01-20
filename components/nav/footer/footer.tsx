@@ -86,7 +86,7 @@ export default function SiteFooter({
     'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-primary';
 
   const linkBase =
-    `rounded-sm transition-colors ${focusRing} touch-manipulation ` +
+    `inline-flex min-h-11 min-w-11 items-center justify-center rounded-sm px-2 transition-colors ${focusRing} touch-manipulation ` +
     'text-primary-foreground/80 hover:text-primary-foreground';
 
   return (
@@ -170,7 +170,7 @@ export default function SiteFooter({
               variant="ghost"
               className={[
                 // kompakter als vorher (Screenshot: wirkt sehr “luftig”)
-                'h-9 px-3 py-0 inline-flex items-center gap-2',
+                'h-11 px-4 py-0 inline-flex items-center gap-2 touch-manipulation',
                 'text-primary-foreground hover:bg-primary-foreground/10',
                 focusRing,
               ].join(' ')}
