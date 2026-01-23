@@ -61,7 +61,7 @@ function SystemPageContent() {
                 */}
         <ProductShowcase
           variant={1}
-          leftImageSrc="/_A7_9072_quer.jpg"
+          leftImageSrc="/_A7_9094_quer.jpg"
           leftImageAlt="Gateway an zentraler Position in einer Werkstatt"
           topMiddleImageSrc="/device/tor-2.jpg"
           topMiddleImageAlt="Innenleben des Gateways"

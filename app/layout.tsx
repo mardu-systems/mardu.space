@@ -62,7 +62,7 @@ export const metadata: Metadata = {
     type: 'website',
     images: [
       {
-        url: '/_A7_9072_quer.jpg',
+        url: '/_A7_9094_quer.jpg',
         width: 1200,
         height: 630,
         alt: 'mardu.space Maschinenfreigabe in der Werkstatt',
@@ -74,7 +74,7 @@ export const metadata: Metadata = {
     title: 'Digitale Zutritts- und Maschinenfreigabe für Werkstätten',
     description:
       'Sichere Maschinenfreigabe & Zutrittskontrolle für Unternehmenswerkstätten, Hochschulen & Makerspaces.',
-    images: ['/_A7_9072_quer.jpg'],
+    images: ['/_A7_9094_quer.jpg'],
   },
 };
 
