@@ -522,11 +522,11 @@ export default function HomePage() {
         secondaryButtonText="Mehr zum System"
       />
 
-      {/*<Foerderung
+      <Foerderung
         className={SECTION_SPACING}
         items={foerderungItems}
         description={foerderungDescription}
-      />*/}
+      />
     </main>
   );
 }
