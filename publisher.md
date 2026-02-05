@@ -1,6 +1,8 @@
 ## Angaben gemäß § 5 TMG
 
-**Mardu GmbH i. G.**
+**Mardu GmbH**
+
+Registereintrag: Amtsgericht Mannheim (Baden-Württemberg), HRB 757158
 
 A1
 Alter Schlachthof 39  
@@ -16,7 +18,7 @@ Luca Schöneberg, Erik Frey
 
 ## Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV / MStV
 
-**Mardu GmbH i. G.**
+**Mardu GmbH**
 
 A1
 Alter Schlachthof 39  

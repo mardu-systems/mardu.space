@@ -61,9 +61,10 @@ Ein lückenloser Schutz der Daten vor dem Zugriff durch Dritte ist nicht möglic
 ### Hinweis zur verantwortlichen Stelle
 Die verantwortliche Stelle für die Datenverarbeitung auf dieser Website ist:
 
-**Mardu A1**
+**Mardu GmbH**
 Alter Schlachthof 39
 76131 Karlsruhe
+Registereintrag: Amtsgericht Mannheim (Baden-Württemberg), HRB 757158
 
 Telefon: [Telefonnummer der verantwortlichen Stelle]
 E-Mail: info@mardu.de

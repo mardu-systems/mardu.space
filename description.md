@@ -1,1 +1,1 @@
-"Website von Mardu GmbH i.G."
+"Website von Mardu GmbH"

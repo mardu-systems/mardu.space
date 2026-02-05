@@ -17,7 +17,7 @@ export default function ContactPage() {
               <p>Du hast Fragen oder möchtest uns besuchen? Melde dich gerne bei uns.</p>
               <div className="space-y-1">
                 <p>
-                  <strong>Mardu GmbH i.G.</strong>
+                  <strong>Mardu GmbH</strong>
                   <br />
                   A1
                   <br />
