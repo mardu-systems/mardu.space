@@ -11,7 +11,7 @@ const Modal: React.FC = ({}) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const previouslyFocusedRef = useRef<HTMLElement | null>(null);
   const wasOpenRef = useRef(false);
-  const [dialogRef, animate] = useAnimate();
+  const [dialogRef, animate] = useAnimate<HTMLDivElement>();
   const { closeModal, data, isOpen } = useCodeBlip();
   const shouldReduceMotion = useReducedMotion();
   const titleId = useId();
