@@ -23,15 +23,15 @@ export default async function Privacy() {
 
   return (
     <main className="pt-[calc(var(--app-header-height,64px)+env(safe-area-inset-top))]">
-      <section className="max-w-4xl mx-auto px-4 py-10">
+      <section className="max-w-7xl mx-auto px-4 py-10">
         <div className="text-center">
           <h1 className="text-3xl font-bold">Datenschutzerklärung</h1>
           <p className="text-sm text-gray-600">Stand: {today}</p>
           <p className="text-sm text-gray-600">Geändert: {changed}</p>
         </div>
 
-        <div className="space-y-6 pt-8 text-base">
-          <article className="prose lg:prose-xl max-w-none">
+        <div className="space-y-6 pt-8">
+          <article className="prose max-w-none">
             <Markdown>{fileContent}</Markdown>
           </article>
           <div className="flex flex-col sm:flex-row justify-center gap-4 pt-6">
