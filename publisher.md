@@ -2,14 +2,14 @@
 
 **Mardu GmbH**
 
-Registereintrag: Amtsgericht Mannheim (Baden-Württemberg), HRB 757158
-
 A1
 Alter Schlachthof 39  
 76131 Karlsruhe  
 Deutschland
 
 E-Mail: [info@mardu.de](mailto:info@mardu.de)
+
+Registergericht: Amtsgericht Mannheim (Baden-Württemberg), HRB 757158
 
 Geschäftsführung:  
 Luca Schöneberg, Erik Frey
