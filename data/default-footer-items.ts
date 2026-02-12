@@ -12,6 +12,6 @@ export const defaultFooterNavLinks: FooterLink[] = [
 
 export const defaultFooterMetaLinks: FooterLink[] = [
   { href: '/roadmap', label: 'Roadmap' },
-  { href: '/publisher', label: 'Impressum' },
   { href: '/privacy', label: 'Datenschutz' },
+  { href: '/publisher', label: 'Impressum' },
 ];
