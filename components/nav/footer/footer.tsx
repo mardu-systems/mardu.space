@@ -56,7 +56,7 @@ export default function SiteFooter({
   return (
     <footer className="section-hairline relative overflow-hidden bg-neutral-950 pb-16 pt-14 text-white md:pb-20">
       <div className="mardu-container relative">
-        <div className="grid gap-10 border-t border-white/10 py-10 md:grid-cols-[1.15fr_0.55fr_0.6fr] md:gap-8">
+        <div className="grid gap-10 border-t border-white/12 py-10 md:grid-cols-[1.15fr_0.55fr_0.6fr] md:gap-8">
           <div className="space-y-5">
             <Link href="/" className="inline-block">
               <div className="relative h-12 w-40">
@@ -69,14 +69,14 @@ export default function SiteFooter({
                 />
               </div>
             </Link>
-            <p className="max-w-xl text-[15px] leading-relaxed text-white/72">
+            <p className="max-w-xl text-[15px] leading-relaxed text-white/84">
               {description ??
                 'Verwalte Zutritt und Maschinennutzung mobil auf der Baustelle oder stationär in der Werkstatt.'}
             </p>
             <Button
               variant="outline"
               onClick={scrollToTop}
-              className="border-white/18 bg-transparent text-white hover:bg-white hover:text-neutral-950"
+              className="border-white/28 bg-transparent text-white hover:bg-white hover:text-neutral-950"
             >
               <ArrowUp className="size-4" />
               Nach oben
@@ -90,7 +90,7 @@ export default function SiteFooter({
                   <Link
                     href={link.href}
                     onClick={link.onClick}
-                    className="text-white/72 transition-colors hover:text-white"
+                    className="text-white/86 transition-colors hover:text-white"
                   >
                     {link.label}
                   </Link>
@@ -100,7 +100,7 @@ export default function SiteFooter({
           </div>
 
           <div className="space-y-4">
-            <p className="text-[11px] uppercase tracking-[0.18em] text-white/45">
+            <p className="text-[11px] uppercase tracking-[0.18em] text-white/62">
               Kontakt & Recht
             </p>
             <ul className="space-y-2.5 text-sm">
@@ -111,7 +111,7 @@ export default function SiteFooter({
                       <button
                         type="button"
                         onClick={() => window.openCookieSettings?.()}
-                        className="text-white/72 transition-colors hover:text-white"
+                        className="text-white/86 transition-colors hover:text-white"
                       >
                         {link.label}
                       </button>
@@ -127,7 +127,7 @@ export default function SiteFooter({
                         target="_blank"
                         rel="noopener noreferrer"
                         onClick={link.onClick}
-                        className="text-white/72 transition-colors hover:text-white"
+                        className="text-white/86 transition-colors hover:text-white"
                       >
                         {link.label}
                       </a>
@@ -140,7 +140,7 @@ export default function SiteFooter({
                     <Link
                       href={link.href}
                       onClick={link.onClick}
-                      className="text-white/72 transition-colors hover:text-white"
+                      className="text-white/86 transition-colors hover:text-white"
                     >
                       {link.label}
                     </Link>
@@ -158,7 +158,7 @@ export default function SiteFooter({
                       target="_blank"
                       rel="noopener noreferrer"
                       onClick={link.onClick}
-                      className="inline-flex size-10 items-center justify-center rounded-full border border-white/14 bg-white/4 text-white/75 transition-colors hover:bg-white hover:text-neutral-950"
+                      className="inline-flex size-10 items-center justify-center rounded-full border border-white/20 bg-white/6 text-white/90 transition-colors hover:bg-white hover:text-neutral-950"
                       aria-label={link.label}
                       title={link.label}
                     >
@@ -170,7 +170,7 @@ export default function SiteFooter({
                     <Link
                       href={link.href}
                       onClick={link.onClick}
-                      className="inline-flex size-10 items-center justify-center rounded-full border border-white/14 bg-white/4 text-white/75 transition-colors hover:bg-white hover:text-neutral-950"
+                      className="inline-flex size-10 items-center justify-center rounded-full border border-white/20 bg-white/6 text-white/90 transition-colors hover:bg-white hover:text-neutral-950"
                       aria-label={link.label}
                       title={link.label}
                     >
@@ -183,8 +183,8 @@ export default function SiteFooter({
           </div>
         </div>
 
-        <div className="border-t border-white/10 pt-5">
-          <p className="text-xs text-white/52" suppressHydrationWarning>
+        <div className="border-t border-white/12 pt-5">
+          <p className="text-xs text-white/68" suppressHydrationWarning>
             Copyright © {year} Mardu.
           </p>
         </div>
