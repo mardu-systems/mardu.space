@@ -71,12 +71,15 @@ export default function WhitepaperTeaser({ className }: WhitepaperTeaserProps) {
 
     try {
       const token = await executeRecaptcha('whitepaper_signup');
-      if (!token) throw new Error('Recaptcha verification failed');
 
       const res = await fetch('/api/newsletter', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: trimmedEmail, role: 'whitepaper', token }),
+        body: JSON.stringify({
+          email: trimmedEmail,
+          role: 'whitepaper',
+          ...(token ? { token } : {}),
+        }),
       });
 
       const data = await res.json();
@@ -193,7 +196,6 @@ export default function WhitepaperTeaser({ className }: WhitepaperTeaserProps) {
                               spellCheck={false}
                               className="touch-manipulation"
                               ref={emailInputRef}
-                              autoFocus
                               value={email}
                               onChange={(e) => {
                                 setEmail(e.target.value);

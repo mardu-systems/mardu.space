@@ -1,29 +1,36 @@
 import "reflect-metadata";
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
-import { createToken } from '@/lib/newsletter';
-import { renderEmailLayout, sendEmail } from '@/lib/email';
+import { sendNewsletterConfirmationEmail } from '@/lib/newsletter-confirmation';
+import type {
+  NewsletterErrorResponseDto,
+  NewsletterRequestDto,
+  NewsletterResponseDto,
+} from '@/types/api/newsletter';
 
 const Schema = z.object({
   email: z.email(),
   role: z.string(),
-  token: z.string(),
+  firstName: z.string().trim().optional(),
+  lastName: z.string().trim().optional(),
+  company: z.string().trim().optional(),
+  token: z.string().optional(),
 });
 
 export async function POST(req: Request) {
   const json = await req.json();
   const parsed = Schema.safeParse(json);
   if (!parsed.success) {
-    return NextResponse.json({ error: 'Invalid payload' }, { status: 400 });
+    const payload: NewsletterErrorResponseDto = { error: 'Invalid payload' };
+    return NextResponse.json(payload, { status: 400 });
   }
 
-  const { email, role, token } = parsed.data;
+  const { email, role, token, firstName, lastName, company } = parsed.data;
   const isDev = process.env.NODE_ENV === 'development';
-  if (!isDev) {
-    const secret = process.env.RECAPTCHA_SECRET_KEY;
-    if (!secret) {
-      return NextResponse.json({ error: 'Missing captcha secret' }, { status: 500 });
-    }
+  const secret = process.env.RECAPTCHA_SECRET_KEY;
+  const shouldVerifyCaptcha = !isDev && Boolean(token && secret);
+
+  if (shouldVerifyCaptcha) {
     const captchaRes = await fetch('https://www.google.com/recaptcha/api/siteverify', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -33,25 +40,34 @@ export async function POST(req: Request) {
     if (!captchaJson.success) {
       return NextResponse.json({ error: 'Invalid captcha' }, { status: 400 });
     }
+  } else if (!isDev && (token || secret)) {
+    console.warn('Newsletter captcha check skipped due to partial captcha configuration');
   }
 
   try {
-    const confirmToken = createToken(email, role);
     const origin = process.env.APP_URL ?? req.headers.get('origin') ?? '';
-    const confirmUrl = `${origin}/api/newsletter/confirm?token=${encodeURIComponent(confirmToken)}`;
-    await sendEmail({
-      to: email,
-      subject: 'Bitte bestätige deine Newsletter-Anmeldung',
-      text: `Bitte bestätige deine Anmeldung indem du auf folgenden Link klickst: ${confirmUrl}`,
-      html: renderEmailLayout(
-        'Newsletter Anmeldung',
-        `<p>Bitte bestätige deine Anmeldung indem du auf folgenden Link klickst:</p><p style="text-align:center;"><a href="${confirmUrl}">Newsletter bestätigen</a></p>`,
-      ),
+    const payload: NewsletterRequestDto = {
+      email,
+      role,
+      ...(firstName ? { firstName } : {}),
+      ...(lastName ? { lastName } : {}),
+      ...(company ? { company } : {}),
+      ...(token ? { token } : {}),
+    };
+
+    await sendNewsletterConfirmationEmail({
+      email: payload.email,
+      role: payload.role,
+      origin,
+      ...(payload.firstName ? { firstName: payload.firstName } : {}),
+      ...(payload.lastName ? { lastName: payload.lastName } : {}),
+      ...(payload.company ? { company: payload.company } : {}),
     });
   } catch (err) {
     console.error('Failed to send confirmation email', err);
     return NextResponse.json({ error: 'Failed to send email' }, { status: 500 });
   }
 
-  return NextResponse.json({ ok: true });
+  const response: NewsletterResponseDto = { ok: true };
+  return NextResponse.json(response);
 }

@@ -31,6 +31,7 @@ export type State = {
     message?: string;
     phone?: string;
     consent?: boolean;
+    newsletterOptIn?: boolean;
   };
 };
 
@@ -41,7 +42,15 @@ const defaultState: State = {
   gates: { count: 0, cablePerGateM: 20 },
   fridges: { count: 0 },
   centralRooms: { count: 0 },
-  contact: { name: '', email: '', company: '', message: '', phone: '', consent: false },
+  contact: {
+    name: '',
+    email: '',
+    company: '',
+    message: '',
+    phone: '',
+    consent: false,
+    newsletterOptIn: false,
+  },
 };
 
 const STORAGE_KEY = 'configurator-state';
@@ -119,11 +128,15 @@ export default function ConfiguratorPageClient() {
               setStatus('idle');
               setErrorMessage(null);
               const token = await executeRecaptcha('contact');
-              if (!token) throw new Error('reCAPTCHA failed');
               const res = await fetch('/api/contact', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ ...validation.data, config, token, source: 'wizard' }),
+                body: JSON.stringify({
+                  ...validation.data,
+                  config,
+                  ...(token ? { token } : {}),
+                  source: 'wizard',
+                }),
               });
               if (!res.ok) throw new Error('Request failed');
               setStatus('success');

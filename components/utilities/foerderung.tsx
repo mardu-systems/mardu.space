@@ -3,8 +3,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
-import { ScrollReveal } from '@/components/ui/motion/scroll-reveal';
 import { cn } from '@/lib/utils';
 
 export type FoerderItem = {
@@ -23,55 +21,46 @@ type Props = {
 };
 
 export default function Foerderung({
-  title = 'Gefördert durch:',
+  title = 'Gefördert durch',
   items,
   description,
   className = '',
 }: Props) {
-  const shouldReduceMotion = useReducedMotion();
-
   return (
-    <section id="foerderung" className={cn('w-full py-20', className)}>
-      <div className="max-w-7xl mx-auto px-4 md:px-8">
-        <ScrollReveal className="text-center mb-10" direction="up">
-          <h2 className="text-2xl md:text-4xl font-bold text-primary">{title}</h2>
-        </ScrollReveal>
+    <section id="foerderung" className={cn('section-hairline py-18 md:py-24', className)}>
+      <div className="mardu-container">
+        <div className="mb-8 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+          <h2 className="text-[clamp(1.6rem,2.8vw,2.7rem)] leading-[1.08] tracking-[-0.015em]">
+            {title}
+          </h2>
+          <p className="text-xs uppercase tracking-[0.18em] text-foreground/45">Institutionen</p>
+        </div>
+
         {description ? (
-          <ScrollReveal className="mb-6 text-center text-muted-foreground">
+          <div className="mb-8 max-w-4xl text-sm leading-relaxed text-foreground/72 md:text-base">
             {description}
-          </ScrollReveal>
+          </div>
         ) : null}
 
-        <div className="flex flex-wrap items-center justify-center gap-10 md:gap-16">
-          {items.map((it, idx) => (
-            <ScrollReveal key={idx} delay={idx * 0.05} direction="up">
-              <Link
-                href={it.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={cn('flex items-center touch-manipulation', it.className)}
-                aria-label={it.alt}
-              >
-                <motion.div
-                  whileHover={shouldReduceMotion ? undefined : { scale: 1.05 }}
-                  whileTap={shouldReduceMotion ? undefined : { scale: 0.97 }}
-                  transition={
-                    shouldReduceMotion
-                      ? undefined
-                      : { type: 'spring', stiffness: 300, damping: 18 }
-                  }
-                >
-                  <Image
-                    src={it.src}
-                    alt={it.alt}
-                    width={it.width ?? 140}
-                    height={20}
-                    className="object-contain"
-                    loading="lazy"
-                  />
-                </motion.div>
-              </Link>
-            </ScrollReveal>
+        <div className="flex flex-wrap items-center justify-center gap-14 md:gap-16">
+          {items.map((it) => (
+            <Link
+              key={`${it.href}-${it.src}`}
+              href={it.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={cn('flex items-center touch-manipulation', it.className)}
+              aria-label={it.alt}
+            >
+              <Image
+                src={it.src}
+                alt={it.alt}
+                width={it.width ?? 140}
+                height={20}
+                className="object-contain"
+                loading="lazy"
+              />
+            </Link>
           ))}
         </div>
       </div>

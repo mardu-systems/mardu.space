@@ -111,6 +111,7 @@ export type ContactEmailData = {
     source?: "contact" | "wizard";
     phone?: string;
     consent?: boolean;
+    newsletterOptIn?: boolean;
 };
 
 export async function sendContactEmail(data: ContactEmailData) {
@@ -122,6 +123,9 @@ export async function sendContactEmail(data: ContactEmailData) {
         data.message ? `Message: ${data.message}` : "",
         data.config ? `Config:\n${JSON.stringify(data.config, null, 2)}` : "",
         typeof data.consent === 'boolean' ? `Consent: ${data.consent ? 'yes' : 'no'}` : "",
+        typeof data.newsletterOptIn === 'boolean'
+            ? `Newsletter opt-in: ${data.newsletterOptIn ? 'yes' : 'no'}`
+            : "",
     ].filter(Boolean);
 
     const subject = (() => {

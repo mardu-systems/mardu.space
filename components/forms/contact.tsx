@@ -1,10 +1,10 @@
 'use client';
 
 import * as React from 'react';
+import Link from 'next/link';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-// Use native input elements instead of the shadcn `Input` component
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription } from '@/components/ui/alert';
@@ -20,14 +20,25 @@ import {
 import { Loader2 } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
+import { useRecaptcha } from '@/lib/recaptcha';
+import { normalizePhoneNumber } from '@/lib/phone';
+import type { ContactErrorResponseDto } from '@/types/api/contact';
 
 export const contactSchema = z.object({
   name: z.string().trim().min(1, 'Bitte Name angeben'),
   email: z.string().trim().email('Bitte eine gültige E-Mail angeben'),
   company: z.string().trim().optional(),
-  phone: z.string().trim().optional(),
-  message: z.string().trim().optional(),
+  phone: z
+    .string()
+    .trim()
+    .optional()
+    .refine(
+      (value) => value == null || value.length === 0 || Boolean(normalizePhoneNumber(value)),
+      'Bitte eine gültige Telefonnummer im internationalen Format angeben',
+    ),
+  message: z.string().trim().max(500, 'Bitte maximal 500 Zeichen eingeben').optional(),
   consent: z.boolean().optional(),
+  newsletterOptIn: z.boolean().optional(),
 });
 
 export type ContactValues = z.infer<typeof contactSchema>;
@@ -62,6 +73,7 @@ export function ContactForm({
       phone: initialValues?.phone ?? '',
       message: initialValues?.message ?? '',
       consent: initialValues?.consent ?? false,
+      newsletterOptIn: initialValues?.newsletterOptIn ?? false,
     },
     mode: submit ? 'onSubmit' : 'onChange',
   });
@@ -75,6 +87,7 @@ export function ContactForm({
       phone: initialValues.phone ?? form.getValues('phone'),
       message: initialValues.message ?? form.getValues('message'),
       consent: initialValues.consent ?? form.getValues('consent'),
+      newsletterOptIn: initialValues.newsletterOptIn ?? form.getValues('newsletterOptIn'),
     });
   }, [initialValues, form]);
 
@@ -88,28 +101,51 @@ export function ContactForm({
   const [submitting, setSubmitting] = React.useState(false);
   const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
   const consentId = React.useId();
+  const newsletterId = React.useId();
+  const executeRecaptcha = useRecaptcha();
 
   async function handleSubmit(values: ContactValues) {
     if (!submit) return;
+
     if (values.consent !== true) {
       form.setError('consent', { type: 'required', message: 'Bitte Zustimmung erteilen' });
       setStatus('idle');
       setErrorMessage(null);
       return;
     }
+
     try {
       setSubmitting(true);
       setStatus('idle');
       setErrorMessage(null);
+
+      const token = await executeRecaptcha('contact');
+      const normalizedPhone = normalizePhoneNumber(values.phone);
       const res = await fetch(action, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           ...values,
+          phone: normalizedPhone,
+          ...(token ? { token } : {}),
           ...(extra || {}),
         }),
       });
-      if (!res.ok) throw new Error('Request failed');
+
+      if (!res.ok) {
+        const payload = (await res.json().catch(() => null)) as ContactErrorResponseDto | null;
+        if (payload?.details) {
+          for (const [field, messages] of Object.entries(payload.details)) {
+            const message = messages?.[0];
+            if (!message) continue;
+            if (field in form.getValues()) {
+              form.setError(field as keyof ContactValues, { type: 'server', message });
+            }
+          }
+        }
+        throw new Error(payload?.error || 'Request failed');
+      }
+
       setStatus('success');
       form.reset({
         name: '',
@@ -118,6 +154,7 @@ export function ContactForm({
         phone: '',
         message: '',
         consent: false,
+        newsletterOptIn: false,
       });
     } catch (e: unknown) {
       console.error(e);
@@ -134,6 +171,7 @@ export function ContactForm({
   const textareaClasses =
     'w-full min-h-28 text-base rounded-none border-0 border-b border-neutral-800/70 bg-transparent px-0 py-2 text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent focus-visible:border-primary/80 touch-manipulation';
   const submitHandler = submit ? form.handleSubmit(handleSubmit) : undefined;
+
   const handleTextareaKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (!submit) return;
     if ((event.metaKey || event.ctrlKey) && event.key === 'Enter') {
@@ -141,24 +179,21 @@ export function ContactForm({
       submitHandler?.();
     }
   };
+
   const content = (
     <div className="w-full">
       <Form {...form}>
-        <form
-          noValidate
-          onSubmit={submitHandler}
-          className={`grid sm:grid-cols-2 ${gap}`}
-        >
+        <form noValidate onSubmit={submitHandler} className={`grid sm:grid-cols-2 ${gap}`}>
           <FormField
             control={form.control}
             name="name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="sr-only">Name</FormLabel>
+                <FormLabel>Name*</FormLabel>
                 <FormControl>
                   <input
                     {...field}
-                    placeholder="z. B. Maria Mustermann…"
+                    placeholder="Max Mustermann"
                     autoComplete="name"
                     autoCapitalize="words"
                     className={inputClasses}
@@ -178,12 +213,12 @@ export function ContactForm({
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="sr-only">E-Mail</FormLabel>
+                <FormLabel>E-Mail*</FormLabel>
                 <FormControl>
                   <input
                     type="email"
                     {...field}
-                    placeholder="name@example.com…"
+                    placeholder="name@beispiel.de"
                     autoComplete="email"
                     inputMode="email"
                     autoCapitalize="none"
@@ -206,11 +241,11 @@ export function ContactForm({
             name="company"
             render={({ field }) => (
               <FormItem className="sm:col-span-2">
-                <FormLabel className="sr-only">Firma</FormLabel>
+                <FormLabel>Firma (optional)</FormLabel>
                 <FormControl>
                   <input
                     {...field}
-                    placeholder="z. B. Muster GmbH…"
+                    placeholder="Ihr Unternehmen"
                     autoComplete="organization"
                     className={inputClasses}
                     onBlur={(event) => {
@@ -234,7 +269,7 @@ export function ContactForm({
                   <input
                     type="tel"
                     {...field}
-                    placeholder="z. B. +49 123 456789…"
+                    placeholder="+49 1520 2189213"
                     autoComplete="tel"
                     inputMode="tel"
                     autoCorrect="off"
@@ -247,6 +282,9 @@ export function ContactForm({
                     }}
                   />
                 </FormControl>
+                <FormDescription>
+                  Optional. Bitte im internationalen Format, z. B. <code>+4915202189213</code>.
+                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -261,7 +299,7 @@ export function ContactForm({
                   <Textarea
                     rows={3}
                     {...field}
-                    placeholder="z. B. Anfrage zur Maschinenfreigabe…"
+                    placeholder="Ihre Nachricht..."
                     className={textareaClasses}
                     onBlur={(event) => {
                       const trimmed = event.target.value.trim();
@@ -274,6 +312,38 @@ export function ContactForm({
                 <FormDescription>
                   Beschreiben Sie kurz Ihr Anliegen (optional, max. 500 Zeichen)
                 </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="newsletterOptIn"
+            render={({ field }) => (
+              <FormItem className="sm:col-span-2">
+                <div className="flex items-start gap-3">
+                  <FormControl>
+                    <Checkbox
+                      id={newsletterId}
+                      checked={field.value}
+                      onCheckedChange={(checked) => field.onChange(checked === true)}
+                      name={field.name}
+                      className="mt-0.5 touch-manipulation"
+                    />
+                  </FormControl>
+                  <label htmlFor={newsletterId} className="flex-1 cursor-pointer">
+                    <span className="block text-sm leading-5">
+                      Ich möchte zusätzlich den Newsletter erhalten (optional).
+                    </span>
+                    <span className="mt-1 block text-xs text-muted-foreground">
+                      Anmeldung per Double-Opt-in mit Bestätigungs-E-Mail. Details in der{' '}
+                      <Link href="/privacy" className="underline underline-offset-2">
+                        Datenschutzerklärung
+                      </Link>
+                      .
+                    </span>
+                  </label>
+                </div>
                 <FormMessage />
               </FormItem>
             )}
@@ -309,7 +379,7 @@ export function ContactForm({
             )}
           />
 
-          {submit && (
+          {submit ? (
             <div className="sm:col-span-2">
               <Button
                 type="submit"
@@ -318,23 +388,18 @@ export function ContactForm({
                 aria-busy={submitting}
                 className="h-11 px-4 touch-manipulation"
               >
-                {submitting && <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />}
-                {submitLabel}
+                {submitting ? <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" /> : null}
+                {submitting ? 'Sende…' : submitLabel}
               </Button>
             </div>
-          )}
+          ) : null}
         </form>
-        {submit && status === 'success' && (
-          <Alert
-            className="mt-4 animate-fade-in"
-            variant="default"
-            role="status"
-            aria-live="polite"
-          >
+        {submit && status === 'success' ? (
+          <Alert className="mt-4 animate-fade-in" variant="default" role="status" aria-live="polite">
             <AlertDescription>{successMessage}</AlertDescription>
           </Alert>
-        )}
-        {submit && status === 'error' && (
+        ) : null}
+        {submit && status === 'error' ? (
           <Alert
             className="mt-4 animate-fade-in"
             variant="destructive"
@@ -345,18 +410,19 @@ export function ContactForm({
               {errorMessage ?? 'Etwas ist schiefgelaufen. Versuch es erneut.'}
             </AlertDescription>
           </Alert>
-        )}
+        ) : null}
       </Form>
     </div>
   );
 
   if (layout === 'card') {
     return (
-      <Card className="rounded-2xl border-0 shadow-none bg-transparent">
+      <Card className="rounded-2xl border-0 bg-transparent shadow-none">
         <CardContent>{content}</CardContent>
       </Card>
     );
   }
+
   return content;
 }
 

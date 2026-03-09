@@ -517,9 +517,9 @@ export default function HomePage() {
       <CTASection
         className={SECTION_SPACING}
         title="Sichere Werkstätten beginnen mit klaren Standards."
-        description="Erfahren Sie, wie mardu.space Ihre Verantwortung technisch unterstützt und administrative Lasten reduziert."
+        description="Sprechen Sie mit uns. Gemeinsam entwickeln wir eine Lösung, die zu Ihren Prozessen, Flächen und Sicherheitsanforderungen passt."
         primaryButtonText="Newsletter abonnieren"
-        secondaryButtonText="Mehr zum System"
+        secondaryButtonText="Beratung vereinbaren"
       />
 
       <Foerderung

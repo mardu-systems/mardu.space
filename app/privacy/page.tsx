@@ -1,15 +1,26 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
-import { Button } from '@/components/ui/button';
 import fs from 'fs/promises';
 import path from 'path';
 import Markdown from 'react-markdown';
-
-// Hinweis: Diese Datei bleibt eine Server Component (kein "use client").
+import { Overline } from '@/components/ui/typography';
 
 export const metadata: Metadata = {
   title: 'Datenschutzerklärung',
   description: 'Informationen zum Datenschutz bei mardu.space.',
+  alternates: {
+    canonical: '/privacy',
+  },
+  openGraph: {
+    title: 'Datenschutzerklärung | mardu.space',
+    description: 'Informationen zum Datenschutz bei mardu.space.',
+    url: '/privacy',
+    type: 'article',
+  },
+  twitter: {
+    card: 'summary',
+    title: 'Datenschutzerklärung | mardu.space',
+    description: 'Informationen zum Datenschutz bei mardu.space.',
+  },
 };
 
 export default async function Privacy() {
@@ -23,22 +34,20 @@ export default async function Privacy() {
 
   return (
     <main className="pt-[calc(var(--app-header-height,64px)+env(safe-area-inset-top))]">
-      <section className="max-w-7xl mx-auto px-4 py-10">
-        <div className="text-center">
-          <h1 className="text-3xl font-bold">Datenschutzerklärung</h1>
-          <p className="text-sm text-gray-600">Stand: {today}</p>
-          <p className="text-sm text-gray-600">Geändert: {changed}</p>
+      <section className="mardu-container py-12 md:py-16">
+        <div className="max-w-3xl space-y-3">
+          <Overline>Rechtliches</Overline>
+          <h1 className="headline-balance text-[clamp(2rem,4.5vw,3.75rem)] leading-[0.95] tracking-[-0.03em] text-foreground">
+            Datenschutzerklärung
+          </h1>
+          <p className="text-sm text-foreground/60">Stand: {today}</p>
+          <p className="text-sm text-foreground/60">Geändert: {changed}</p>
         </div>
 
-        <div className="space-y-6 pt-8">
-          <article className="prose max-w-none">
+        <div className="space-y-6 pt-8 md:pt-10">
+          <article className="prose max-w-none prose-headings:font-sans prose-headings:tracking-[-0.02em] prose-p:text-foreground/85 prose-li:text-foreground/85 prose-strong:text-foreground prose-a:text-foreground prose-a:underline prose-a:underline-offset-3">
             <Markdown>{fileContent}</Markdown>
           </article>
-          <div className="flex flex-col sm:flex-row justify-center gap-4 pt-6">
-            <Link href="/">
-              <Button variant="outline">Zurück zur Startseite</Button>
-            </Link>
-          </div>
         </div>
       </section>
     </main>

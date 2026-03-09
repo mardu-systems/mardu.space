@@ -39,27 +39,6 @@
 .no-scrollbar::-webkit-scrollbar {
     display: none;
 }
-/* Global font setup: Inter regular for body, Inter bold for headings/buttons */
-body, input, textarea, select {
-    font-family: 'Inter', var(--font-sans) !important;
-    font-weight: 400 !important;
-}
-
-h1, h2, h3, h4, h5, h6, button, .btn, [role="button"] {
-    font-family: 'Inter', var(--font-sans) !important;
-    font-weight: 700 !important;
-}
-
-a, p, button {
-    font-family: 'Inter', var(--font-sans) !important;
-    font-weight: 500 !important;
-}
-
-link[type="text/css"] {
-    font-family: 'Inter', var(--font-sans) !important;
-    font-weight: 700 !important;
-    background-color: #FFB703 !important;
-}
 
 .no-scrollbar {
     -ms-overflow-style: none;
@@ -364,7 +343,22 @@ select:focus-visible {
     @apply border-border outline-ring/50;
     }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground antialiased;
     }
 }
 
+@layer components {
+    .mardu-container {
+        @apply mx-auto w-full max-w-7xl px-4 md:px-8;
+    }
+
+    .section-hairline {
+        border-top: 1px solid rgb(16 24 40 / 8%);
+    }
+}
+
+@layer utilities {
+    .headline-balance {
+        text-wrap: balance;
+    }
+}
