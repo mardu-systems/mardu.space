@@ -310,6 +310,8 @@ select:focus-visible {
     @apply bg-background text-foreground antialiased;
     background-color: var(--paper);
     text-rendering: geometricPrecision;
+    font-size: 15px;
+    line-height: 1.5;
     }
 }
 

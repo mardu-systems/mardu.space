@@ -32,7 +32,7 @@ function DesktopNavEntry({ entry }: { entry: NavEntry }) {
   const { scrollToSection } = useScrollToSection();
   const pathname = usePathname();
   const baseClasses =
-    'group relative inline-flex cursor-pointer pointer-events-auto items-center px-3 py-2 text-[0.92rem] font-normal uppercase tracking-[0.14em] text-neutral-900/72 transition-colors hover:text-neutral-900 focus-visible:outline-none focus-visible:ring focus-visible:ring-neutral-900 focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--paper)] touch-manipulation';
+    'group relative inline-flex cursor-pointer pointer-events-auto items-center rounded-lg px-3 py-2 text-[0.9rem] font-normal tracking-[0.1em] text-neutral-900/80 transition-colors hover:text-neutral-900 focus-visible:outline-none focus-visible:ring focus-visible:ring-neutral-900 focus-visible:ring-offset-2 focus-visible:ring-offset-white touch-manipulation';
 
   if (entry.type === 'link') {
     // Prüfe ob es ein Anchor-Link ist (startet mit #)

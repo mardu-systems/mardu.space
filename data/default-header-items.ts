@@ -1,9 +1,9 @@
 import { NavEntry } from '@/types/header';
 
 export const defaultHeaderItems: NavEntry[] = [
-  { type: 'link', label: 'Home', href: '#home' },
-  { type: 'link', label: 'Lösung', href: '#loesung' },
-  { type: 'link', label: 'Angebote', href: '#produkte' },
-  { type: 'link', label: 'Vorteile', href: '#argumente' },
+  { type: 'link', label: 'Home', href: '/' },
+  { type: 'link', label: 'Konfigurator', href: '/configurator' },
+  { type: 'link', label: 'Hardware', href: '/system' },
+  { type: 'link', label: 'Platform', href: '/platform' },
   { type: 'link', label: 'Kontakt', href: '/contact' },
 ];

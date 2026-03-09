@@ -2,7 +2,6 @@
 import { ReactNode } from 'react';
 import { cn } from '@/lib/utils';
 import { Card, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { LucideIcon } from 'lucide-react';
 
 export type RoadmapCard = {
@@ -33,45 +32,44 @@ export default function RoadmapTimeline({
   compact = false,
 }: RoadmapTimelineProps) {
   return (
-    <section className={cn('py-16 px-6 md:px-8 max-w-7xl mx-auto w-full', className)}>
+    <section className={cn('w-full', className)}>
       {title && (
-        <h2 className="text-3xl md:text-4xl font-bold text-center text-primary mb-10">{title}</h2>
+        <h2 className="headline-balance mb-10 max-w-4xl text-[clamp(1.9rem,4vw,3.5rem)] leading-[1.02] tracking-[-0.03em] text-foreground">
+          {title}
+        </h2>
       )}
 
       <div className={cn('relative', compact ? 'space-y-5' : 'space-y-7')}>
-        {/* vertical line */}
         <div
-          className="absolute left-[18px] top-0 bottom-0 w-px bg-primary/10"
+          className="absolute bottom-0 left-[18px] top-0 w-px bg-black/10"
           aria-hidden="true"
         />
 
         {items.map((m, idx) => (
           <div key={`${m.title}-${idx}`} className="relative flex gap-6 md:gap-8">
-            {/* timeline column */}
             <div className="w-11 shrink-0">
               <div>
-                <div className="w-9 h-9 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-xs font-semibold shadow-sm ring-[6px] ring-background">
+                <div className="flex h-9 w-9 items-center justify-center rounded-full bg-foreground text-xs font-semibold text-background ring-[6px] ring-[color:var(--paper)]">
                   {idx + 1}
                 </div>
               </div>
             </div>
 
-            {/* content column */}
             <div className="flex-1 pb-2">
               <div className={cn('space-y-3', compact && 'space-y-2')}>
-                {/* milestone header */}
                 <div className="flex items-start justify-between gap-4">
                   <div>
-                    <h3 className="text-lg md:text-xl font-semibold text-primary">{m.title}</h3>
+                    <h3 className="text-lg font-semibold tracking-[-0.01em] text-foreground md:text-xl">
+                      {m.title}
+                    </h3>
                     {m.note && (
-                      <div className="mt-1 text-xs font-semibold tracking-wide uppercase text-primary/70">
+                      <div className="mt-1 text-xs font-semibold uppercase tracking-[0.16em] text-foreground/50">
                         {m.note}
                       </div>
                     )}
                   </div>
                 </div>
 
-                {/* right cards */}
                 <div className={cn('grid gap-6', m.cards.length > 1 ? 'md:grid-cols-2' : '')}>
                   {m.cards.map((c, cIdx) => {
                     const topRight = c.badge ?? m.time;
@@ -80,18 +78,14 @@ export default function RoadmapTimeline({
                       <Card
                         key={`${c.title ?? 'card'}-${cIdx}`}
                         className={cn(
-                          'relative rounded-3xl bg-card shadow-sm transition-shadow duration-300 hover:shadow-md h-full',
-                          compact && 'shadow-none hover:shadow-sm',
+                          'relative h-full border border-black/10 bg-card shadow-none',
                         )}
                       >
                         {topRight && (
                           <div className={cn('absolute', compact ? 'top-4 right-4' : 'top-6 right-6')}>
-                            <Badge
-                              variant="secondary"
-                              className="bg-primary/10 text-primary hover:bg-primary/20 border-0 rounded-full px-3 py-1 text-xs font-semibold"
-                            >
+                            <div className="border border-black/10 bg-background px-3 py-1 text-xs font-semibold uppercase tracking-[0.14em] text-foreground/62">
                               {topRight}
-                            </Badge>
+                            </div>
                           </div>
                         )}
 
@@ -102,7 +96,12 @@ export default function RoadmapTimeline({
                           )}
                         >
                           {c.title && (
-                            <div className={cn('font-semibold text-primary', compact ? 'text-base md:text-lg' : 'text-lg md:text-xl')}>
+                            <div
+                              className={cn(
+                                'font-semibold tracking-[-0.01em] text-foreground',
+                                compact ? 'text-base md:text-lg' : 'text-lg md:text-xl',
+                              )}
+                            >
                               {c.title}
                             </div>
                           )}
@@ -110,7 +109,7 @@ export default function RoadmapTimeline({
                           <div
                             className={cn(
                               c.title ? (compact ? 'mt-3' : 'mt-4') : null,
-                              'text-muted-foreground leading-relaxed',
+                              'leading-relaxed text-foreground/72',
                               compact ? 'text-sm' : 'text-sm md:text-base',
                               '[&_ul]:my-0 [&_ul]:pl-5 [&_ol]:my-0 [&_ol]:pl-5 [&_p]:my-0',
                             )}

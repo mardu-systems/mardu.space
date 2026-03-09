@@ -1,9 +1,24 @@
 import RoadmapTimeline, { RoadmapMilestone } from '@/components/utilities/roadmap-timeline';
 import type { Metadata } from 'next';
+import { Overline } from '@/components/ui/typography';
 
 export const metadata: Metadata = {
   title: 'Roadmap & Ausblick',
   description: 'Unsere geplanten Features und Entwicklungsziele für mardu.space.',
+  alternates: {
+    canonical: '/roadmap',
+  },
+  openGraph: {
+    title: 'Roadmap & Ausblick | mardu.space',
+    description: 'Unsere geplanten Features und Entwicklungsziele für mardu.space.',
+    url: '/roadmap',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary',
+    title: 'Roadmap & Ausblick | mardu.space',
+    description: 'Unsere geplanten Features und Entwicklungsziele für mardu.space.',
+  },
 };
 
 export default function RoadmapPage() {
@@ -86,10 +101,19 @@ export default function RoadmapPage() {
 
   return (
     <main className="pt-[calc(var(--app-header-height,64px)+env(safe-area-inset-top))]">
-      <section className="max-w-7xl mx-auto px-4 py-10">
-        <h1 className="sr-only">Roadmap & Ausblick</h1>
+      <section className="mardu-container py-12 md:py-16">
+        <div className="max-w-3xl space-y-3">
+          <Overline>Produkt</Overline>
+          <h1 className="headline-balance text-[clamp(2rem,4.5vw,3.75rem)] leading-[0.95] tracking-[-0.03em] text-foreground">
+            Roadmap & Ausblick
+          </h1>
+          <p className="text-base leading-relaxed text-foreground/72 md:text-lg">
+            Unsere geplanten Features und Entwicklungsziele für mardu.space.
+          </p>
+        </div>
+
         <RoadmapTimeline
-          title="Roadmap und Ausblick"
+          className="pt-8 md:pt-10"
           items={items}
         />
       </section>
