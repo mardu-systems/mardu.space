@@ -27,13 +27,13 @@ export default function NumberStep({
   return (
     <>
       {note && (
-        <div className="text-sm text-ink-700 bg-amber-50 border border-amber-200 mx-auto w-fit p-3 rounded-xl mb-4">
+        <div className="mb-4 w-fit border border-black/10 bg-muted/35 px-4 py-3 text-sm text-foreground/72">
           {note}
         </div>
       )}
-      <div className="mx-auto w-full max-w-sm">
+      <div className="mx-auto w-full max-w-xl">
         <div className="flex flex-col items-stretch justify-center gap-4">
-          <div className="flex-1 rounded-2xl border-2 bg-white text-ink-600 focus-within:ring-2 focus-within:ring-primary/40 focus-within:border-primary/50">
+          <div className="border border-black/10 bg-background transition-colors focus-within:border-foreground/18">
             <Input
               type="text"
               min={0}
@@ -61,11 +61,11 @@ export default function NumberStep({
                 onChange(parsed);
               }}
               placeholder="z. B. 3…"
-              className="h-20 text-center text-4xl font-extrabold border-0 focus-visible:ring-0 focus:outline-none rounded-2xl touch-manipulation"
+              className="h-24 border-0 rounded-none px-6 text-center text-4xl font-semibold tracking-[-0.03em] shadow-none focus-visible:ring-0 focus:outline-none touch-manipulation md:text-5xl"
             />
           </div>
         </div>
-        <p className="mt-3 text-center text-xs text-ink-400">
+        <p className="mt-3 text-center text-xs uppercase tracking-[0.12em] text-foreground/45">
           Tipp: ↑/↓ ändern ebenfalls den Wert.
         </p>
       </div>

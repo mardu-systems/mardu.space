@@ -13,7 +13,8 @@ import { useRecaptcha } from '@/lib/recaptcha';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Loader2 } from 'lucide-react';
 import StepIndicator from '@/components/stepper/step-indicator';
-import CodeBlip from '@/components/CodeBlip'; /* ===================== Typen & Defaults ===================== */
+/* ===================== Typen & Defaults ===================== */
+import { Overline } from '@/components/ui/typography';
 
 /* ===================== Typen & Defaults ===================== */
 
@@ -96,11 +97,10 @@ export default function ConfiguratorPageClient() {
   return (
     <div
       className={cn(
-        'md:min-h-screen',
-        'flex items-start sm:items-center justify-center',
+        'min-h-screen bg-background',
+        'flex items-start justify-center',
         'px-4 sm:px-6 lg:px-10',
-        // verhindert Overlap mit transparentem Header + Notch-safe
-        'pt-[calc(var(--app-header-height,64px)+env(safe-area-inset-top))] pb-10',
+        'pt-[calc(var(--app-header-height,64px)+env(safe-area-inset-top))] pb-14 md:pb-18',
       )}
     >
       <Wizard.Scoped>
@@ -214,7 +214,7 @@ function MainContent({
 
   if (status === 'success') {
     return (
-      <main className="w-full max-w-4xl mx-auto px-0 sm:px-2 pb-24 mt-10 md:mt-0 text-center">
+      <main className="w-full max-w-5xl mx-auto py-10 md:py-14 text-center">
         <Alert className="mt-4 animate-fade-in" variant="default" role="status" aria-live="polite">
           <AlertDescription>Danke! Anfrage versendet.</AlertDescription>
         </Alert>
@@ -226,9 +226,19 @@ function MainContent({
   }
 
   return (
-    <main className="w-full max-w-4xl mx-auto px-0 sm:px-2 pb-24 mt-10 md:mt-0">
-      {/* Progress + Stepper */}
-      <div className="relative my-8 sm:my-10">
+    <main className="w-full max-w-6xl mx-auto py-8 md:py-12">
+      <div className="max-w-3xl space-y-3">
+        <Overline>Konfigurator</Overline>
+        <h1 className="headline-balance text-[clamp(2rem,4.5vw,3.75rem)] leading-[0.95] tracking-[-0.03em] text-foreground">
+          System grob konfigurieren
+        </h1>
+        <p className="text-base leading-relaxed text-foreground/72 md:text-lg">
+          In wenigen Schritten erfassen wir Tueren, Tore, Maschinen und die wichtigsten
+          Kontaktdaten fuer ein erstes Angebot.
+        </p>
+      </div>
+
+      <div className="relative mt-8 md:mt-10">
         <StepIndicator
           current={idx + 1}
           total={stepper.all.length}
@@ -239,53 +249,68 @@ function MainContent({
         />
       </div>
 
-      {/* Titel + CodeBlip Help */}
-      <CodeBlip.Provider>
-        <div className="text-center">
-          <ResponsiveHelp
-            title={steps[idx]?.title}
-            tip={steps[idx]?.tip ?? ''}
-            stepIndex={idx}
-            stepCount={steps.length}
-            image={steps[idx]?.hoverImg}
-          />
-          <CodeBlip.Modal />
+      <section className="mt-8 overflow-hidden border border-black/10 bg-card md:mt-10">
+        <div className="grid gap-0 lg:grid-cols-[minmax(0,1.15fr)_minmax(18rem,0.85fr)]">
+          <div className="p-6 md:p-8">
+            <ResponsiveHelp
+              title={steps[idx]?.title}
+              tip={steps[idx]?.tip ?? ''}
+              stepIndex={idx}
+              stepCount={steps.length}
+            />
+          </div>
+
+          {steps[idx]?.hoverImg ? (
+            <div className="border-t border-black/10 bg-muted/30 lg:border-l lg:border-t-0">
+              <div className="relative aspect-[4/3] h-full min-h-64 w-full">
+                <Image
+                  src={steps[idx].hoverImg as string}
+                  alt=""
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 30vw"
+                  className="object-cover"
+                />
+              </div>
+            </div>
+          ) : (
+            <div className="hidden border-l border-black/10 bg-muted/20 lg:block" />
+          )}
         </div>
-      </CodeBlip.Provider>
 
-      {/* Aktueller Step-View */}
-      <div className="mt-8">{steps[idx]?.view}</div>
-
-      {/* Navigation */}
-      <div className="mt-12 flex items-center justify-between gap-4">
-        <Button
-          variant="outline"
-          onClick={() => stepper.prev()}
-          disabled={stepper.isFirst}
-          className="h-11 px-4 disabled:opacity-50 disabled:cursor-not-allowed touch-manipulation"
-        >
-          Zurück
-        </Button>
-
-        <div className="flex items-center gap-4">
-          <Button
-            onClick={async () => {
-              if (!isValid) return;
-              if (!stepper.isLast) stepper.next();
-              else await onSubmit();
-            }}
-            disabled={submitting}
-            aria-disabled={submitting}
-            aria-busy={submitting && stepper.isLast}
-            className="h-11 px-4 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 touch-manipulation"
-          >
-            {submitting && stepper.isLast && (
-              <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
-            )}
-            {stepper.isLast ? 'Angebot anfordern' : 'Weiter'}
-          </Button>
+        <div className="border-t border-black/10 p-6 md:p-8">
+          <div className="mx-auto max-w-4xl">{steps[idx]?.view}</div>
         </div>
-      </div>
+
+        <div className="border-t border-black/10 bg-muted/20 px-6 py-4 md:px-8">
+          <div className="flex items-center justify-between gap-4">
+            <Button
+              variant="outline"
+              onClick={() => stepper.prev()}
+              disabled={stepper.isFirst}
+              className="h-11 px-4 disabled:cursor-not-allowed disabled:opacity-50 touch-manipulation"
+            >
+              Zurück
+            </Button>
+
+            <Button
+              onClick={async () => {
+                if (!isValid) return;
+                if (!stepper.isLast) stepper.next();
+                else await onSubmit();
+              }}
+              disabled={submitting}
+              aria-disabled={submitting}
+              aria-busy={submitting && stepper.isLast}
+              className="h-11 px-4 disabled:cursor-not-allowed disabled:opacity-50 flex items-center gap-2 touch-manipulation"
+            >
+              {submitting && stepper.isLast && (
+                <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
+              )}
+              {stepper.isLast ? 'Angebot anfordern' : 'Weiter'}
+            </Button>
+          </div>
+        </div>
+      </section>
       {status === 'error' && (
         <Alert
           className="mt-4 animate-fade-in"
@@ -308,50 +333,27 @@ function ResponsiveHelp({
   tip,
   stepIndex: _stepIndex,
   stepCount: _stepCount,
-  image,
 }: {
   title: React.ReactNode;
   tip: string;
   stepIndex: number;
   stepCount: number;
-  image?: string;
 }) {
-  // Replace Dialog tooltip with CodeBlip button
   return (
-    <div className="mx-auto block min-h-[44px] px-2 text-center">
-      <div className="inline-flex items-baseline gap-0">
-        <h1
-          className="font-extrabold text-ink-500 leading-tight whitespace-pre-wrap
-                           text-[clamp(1.125rem,3.2vw,2rem)] sm:text-3xl md:text-4xl"
-        >
-          {title}
-          <span className="ml-2 inline-flex align-baseline">
-            <CodeBlip.Button
-              blip={{
-                label: typeof title === 'string' ? title : 'Info',
-                feature: (
-                  <div className="space-y-4">
-                    {tip && (
-                      <p className="text-base sm:text-lg leading-relaxed text-white/90">{tip}</p>
-                    )}
-                    {image && (
-                      <Image
-                        src={image}
-                        alt=""
-                        width={720}
-                        height={405}
-                        className="rounded-md border border-white/10"
-                      />
-                    )}
-                  </div>
-                ),
-              }}
-              delay={400}
-              index={1}
-            />
-          </span>
-        </h1>
-      </div>
+    <div className="mx-auto block min-h-[44px] text-left">
+      {title ? (
+        <>
+          <Overline>Schritt {Math.min(_stepIndex + 1, _stepCount)} von {_stepCount}</Overline>
+          <div className="mt-3">
+            <h2 className="headline-balance text-[clamp(1.6rem,4vw,3rem)] leading-[0.98] tracking-[-0.03em] text-foreground">
+              {title}
+            </h2>
+          </div>
+          {tip ? (
+            <p className="mt-4 max-w-2xl text-sm leading-relaxed text-foreground/68">{tip}</p>
+          ) : null}
+        </>
+      ) : null}
     </div>
   );
 }

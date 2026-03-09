@@ -98,7 +98,7 @@ export default function SiteHeader({ items }: HeaderProps) {
           aria-label="Hauptnavigation"
         >
           <Link
-            href="/public"
+            href="/"
             aria-label="Mardu Home"
             className="block touch-manipulation focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           >
