@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { motion, useReducedMotion } from 'framer-motion';
-import { ArrowRight, Settings, CheckSquare } from 'lucide-react';
+import { ArrowRight, Settings, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { ScrollReveal } from '@/components/ui/motion/scroll-reveal';
@@ -20,27 +20,40 @@ export default function ConfiguratorTeaser({ className }: ConfiguratorTeaserProp
       <div className="mardu-container">
         <ScrollReveal>
           <div className="relative overflow-hidden border border-black/10 bg-card">
-            
-            {/* Background Decor */}
-            <div className="absolute top-0 right-0 w-125 h-125 bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/4 pointer-events-none" />
-            <div className="absolute bottom-0 left-0 w-75 h-75 bg-accent/5 rounded-full blur-3xl translate-y-1/3 -translate-x-1/4 pointer-events-none" />
+            <div className="pointer-events-none absolute inset-y-0 right-0 w-[45%] bg-linear-to-l from-muted/40 to-transparent" />
+            <div className="pointer-events-none absolute -right-24 top-8 h-64 w-64 rounded-full bg-primary/6 blur-3xl" />
+            <div className="pointer-events-none absolute -left-16 bottom-4 h-40 w-40 rounded-full bg-foreground/[0.03] blur-3xl" />
 
             <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 p-8 md:p-12 lg:p-20 items-center">
-              
-              {/* Content Side */}
               <div className="space-y-8">
                 <Overline className="flex items-center gap-2">
                   <Settings className="w-3.5 h-3.5" aria-hidden="true" />
                   Interaktiver Konfigurator
                 </Overline>
-                
+
                 <h2 className="headline-balance text-[clamp(1.9rem,4vw,3.5rem)] leading-[1.02] tracking-[-0.03em] text-foreground">
                   Planen Sie Ihr System individuell
                 </h2>
-                
+
                 <p className="max-w-xl text-lg leading-relaxed text-foreground/72">
-                  Ermitteln Sie in wenigen Schritten Ihren Bedarf. Wählen Sie Türen, Maschinen und Nutzeranzahl, um eine erste Kostenschätzung zu erhalten.
+                  Erfassen Sie Tueren, Tore und Maschinen in wenigen Schritten und schaffen Sie eine
+                  belastbare Grundlage fuer ein erstes Angebot.
                 </p>
+
+                <div className="grid gap-3 sm:grid-cols-3">
+                  {[
+                    ['Türen & Tore', 'Zugänge strukturieren'],
+                    ['Maschinen', 'Freigaben grob erfassen'],
+                    ['Kontakt', 'Anfrage direkt senden'],
+                  ].map(([label, copy]) => (
+                    <div key={label} className="border border-black/10 bg-background/70 p-4">
+                      <div className="text-[11px] uppercase tracking-[0.16em] text-foreground/48">
+                        {label}
+                      </div>
+                      <div className="mt-2 text-sm leading-relaxed text-foreground/76">{copy}</div>
+                    </div>
+                  ))}
+                </div>
 
                 <div className="flex flex-wrap gap-4 pt-2">
                   <Button asChild size="lg" className="touch-manipulation">
@@ -52,66 +65,79 @@ export default function ConfiguratorTeaser({ className }: ConfiguratorTeaserProp
                 </div>
               </div>
 
-              {/* Visual Side */}
               <div className="flex justify-center lg:justify-end relative">
-                {/* Mockup of UI */}
-                <motion.div 
+                <motion.div
                   className={cn(
-                    'relative flex aspect-[4/3] w-72 flex-col overflow-hidden border border-black/10 bg-background shadow-none md:w-96 -rotate-2',
+                    'relative flex w-[20rem] max-w-full flex-col overflow-hidden border border-black/10 bg-background shadow-none md:w-[29rem] -rotate-[2.5deg]',
                     !shouldReduceMotion &&
                       'hover:rotate-0 transition-transform duration-500 ease-out motion-reduce:transition-none',
                   )}
                   whileHover={shouldReduceMotion ? undefined : { scale: 1.02 }}
                 >
-                  {/* Header */}
                   <div className="flex h-12 items-center gap-2 border-b border-black/8 bg-muted/30 px-4">
                     <div className="w-3 h-3 rounded-full bg-red-400" />
                     <div className="w-3 h-3 rounded-full bg-amber-400" />
                     <div className="w-3 h-3 rounded-full bg-green-400" />
                   </div>
-                  
-                  {/* Content */}
-                  <div className="flex-1 p-6 space-y-6 bg-background">
-                    {/* Fake Slider */}
-                    <div className="space-y-2">
-                        <div className="flex justify-between text-xs font-medium text-muted-foreground">
-                            <span>Anzahl Türen</span>
-                            <span>5</span>
+
+                  <div className="flex-1 space-y-5 bg-background p-6">
+                    <div className="border border-black/10 bg-card p-4">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <div className="text-[11px] uppercase tracking-[0.16em] text-foreground/48">
+                            Schritt 1
+                          </div>
+                          <div className="mt-2 text-sm font-medium text-foreground">
+                            Wie viele Zugangspunkte sollen gesichert werden?
+                          </div>
                         </div>
-                        <div className="h-2 bg-muted rounded-full overflow-hidden">
-                            <div className="h-full w-1/3 bg-foreground rounded-full" />
+                        <div className="border border-black/10 bg-background px-3 py-2 text-lg font-semibold tabular-nums text-foreground">
+                          5
                         </div>
+                      </div>
                     </div>
 
-                    {/* Fake Slider 2 */}
-                    <div className="space-y-2">
-                        <div className="flex justify-between text-xs font-medium text-muted-foreground">
-                            <span>Maschinen</span>
-                            <span>12</span>
+                    <div className="grid gap-3 sm:grid-cols-2">
+                      <div className="border border-black/10 bg-muted/20 p-4">
+                        <div className="text-[11px] uppercase tracking-[0.16em] text-foreground/48">
+                          Maschinen
                         </div>
-                        <div className="h-2 bg-muted rounded-full overflow-hidden">
-                            <div className="h-full w-2/3 bg-foreground rounded-full" />
+                        <div className="mt-2 text-2xl font-semibold tracking-[-0.03em] text-foreground">
+                          12
                         </div>
+                        <div className="mt-3 h-1.5 overflow-hidden bg-black/8">
+                          <div className="h-full w-2/3 bg-foreground" />
+                        </div>
+                      </div>
+                      <div className="border border-black/10 bg-muted/20 p-4">
+                        <div className="text-[11px] uppercase tracking-[0.16em] text-foreground/48">
+                          Zugänge
+                        </div>
+                        <div className="mt-2 text-2xl font-semibold tracking-[-0.03em] text-foreground">
+                          7
+                        </div>
+                        <div className="mt-3 h-1.5 overflow-hidden bg-black/8">
+                          <div className="h-full w-[45%] bg-foreground" />
+                        </div>
+                      </div>
                     </div>
 
-                    {/* Fake Checkboxes */}
-                    <div className="flex gap-4">
-                        <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                            <CheckSquare className="w-4 h-4 text-foreground" aria-hidden="true" />
-                            <span>RFID</span>
+                    <div className="flex flex-wrap gap-2">
+                      {['RFID', 'App', 'Zeitregeln'].map((item) => (
+                        <div
+                          key={item}
+                          className="inline-flex items-center gap-2 border border-black/10 bg-card px-3 py-2 text-xs uppercase tracking-[0.14em] text-foreground/64"
+                        >
+                          <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />
+                          {item}
                         </div>
-                        <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                            <CheckSquare className="w-4 h-4 text-foreground" aria-hidden="true" />
-                            <span>App</span>
-                        </div>
+                      ))}
                     </div>
                   </div>
                 </motion.div>
 
-                {/* Decorative Elements behind */}
-                <div className="absolute -z-10 bottom-6 left-6 w-full h-full border-2 border-primary/5 rounded-xl rotate-3" />
+                <div className="absolute -bottom-5 -left-4 -z-10 h-[92%] w-[92%] border border-black/8 bg-muted/20 rotate-[5deg]" />
               </div>
-
             </div>
           </div>
         </ScrollReveal>

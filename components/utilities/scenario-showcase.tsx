@@ -68,20 +68,6 @@ export default function ScenarioShowcase({
     [scenarios, selectedId],
   );
 
-  const featureMap = React.useMemo(() => {
-    const m = new Map<string, Feature>();
-    for (const f of features) m.set(f.id, f);
-    return m;
-  }, [features]);
-
-  const activeFeatures = React.useMemo(() => {
-    const ids = scenario?.featureIds ?? [];
-    return ids
-      .map((id) => featureMap.get(id))
-      .filter(Boolean)
-      .slice(0, 8) as Feature[];
-  }, [scenario, featureMap]);
-
   if (!scenario) return null;
 
   return (
@@ -148,22 +134,27 @@ export default function ScenarioShowcase({
 
         <div className="mt-5 overflow-hidden border border-black/10 bg-muted/35">
           <div className="p-6 pt-5">
-            <div className="grid gap-6 md:gap-0 md:grid-cols-4">
-              {activeFeatures.map((f, idx) => (
+            <div className="mb-5 border-b border-black/8 pb-4">
+              <p className="text-[11px] uppercase tracking-[0.16em] text-foreground/50">
+                Funktionsumfang
+              </p>
+            </div>
+            <div className="grid gap-0 md:grid-cols-2 xl:grid-cols-4">
+              {features.map((f, idx) => (
                 <div
                   key={f.id}
                   className={cn(
-                    'md:px-5 md:py-2',
-                    'md:border-l md:border-black/8',
-                    idx % 4 === 0 && 'md:border-l-0',
+                    'space-y-1.5 border-black/8 px-0 py-4 md:px-5 md:py-4',
+                    'border-t md:border-t',
+                    idx === 0 && 'border-t-0',
+                    idx === 1 && 'md:border-t-0',
+                    idx < 4 && 'xl:border-t-0',
+                    idx % 4 !== 0 && 'xl:border-l',
+                    idx % 2 !== 0 && 'md:border-l xl:border-l',
                   )}
                 >
-                  <div className="space-y-1.5">
-                    <div className="font-medium text-foreground">{f.title}</div>
-                    <div className="text-sm leading-relaxed text-foreground/65">
-                      {f.description}
-                    </div>
-                  </div>
+                  <div className="font-medium text-foreground">{f.title}</div>
+                  <div className="text-sm leading-relaxed text-foreground/65">{f.description}</div>
                 </div>
               ))}
             </div>

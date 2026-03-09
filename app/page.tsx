@@ -45,33 +45,33 @@ const heroDescription = (
 const summaryDescription = (
   <>
     <p className="text-balance">
-      Wo viele Nutzergruppen auf risikobehaftete Bereiche treffen, scheitert Sicherheit oft nicht an
-      Regeln, sondern an der Durchsetzung. mardu.space verknüpft Zutritt, Maschinenfreigabe und
-      Qualifikationen in einem System.
+      mardu.space steuert, wer welche Bereiche betreten und welche Maschinen nutzen darf und
+      dokumentiert Freigaben nachvollziehbar in einem zentralen System.
     </p>
     <ul className="mt-10 space-y-6 list-disc list-inside">
-      <li>Rollenbasierte und zeitgesteuerte Berechtigungen</li>
-      <li>Maschinenfreigabe nur mit gültiger Qualifikation</li>
-      <li>Ereignisprotokolle als Nachweis mit Zeitpunkt, Ort und Ergebnis</li>
+      <li>Rechte rollenbasiert und zeitgesteuert vergeben</li>
+      <li>Maschinen nur mit gültiger Qualifikation freischalten</li>
+      <li>Ereignisse mit Zeit, Ort und Ergebnis protokollieren</li>
     </ul>
   </>
 );
 
 const summaryItems = [
   {
-    title: 'Sicherheit & Nachvollziehbarkeit',
-    description: 'Personenbezogene, zeitlich definierte Berechtigungen und Ereignisprotokolle.',
+    title: 'Sicher und nachvollziehbar',
+    description:
+      'Personenbezogene Berechtigungen und lückenlose Protokolle schaffen Transparenz im Betrieb.',
     icon: ShieldCheck,
   },
   {
-    title: 'Reduzierter Verwaltungsaufwand',
-    description: 'Digitale Vergabe, Anpassung und Entzug von Rechten im Alltag.',
+    title: 'Weniger Verwaltungsaufwand',
+    description: 'Rechte digital vergeben, anpassen und entziehen statt manuell organisieren.',
     icon: Settings,
   },
   {
-    title: 'Flexibler Betrieb',
+    title: 'Flexibel integrierbar',
     description:
-      'Lokal oder zentral, passend zu Infrastruktur, IT-Vorgaben und Verfügbarkeitsanforderungen.',
+      'Lokal oder zentral betreibbar, passend zu Infrastruktur, Compliance und Verfügbarkeit.',
     icon: Server,
   },
 ];
@@ -152,26 +152,6 @@ const cardGridItems = [
 
 const scenarioFeatures = [
   {
-    id: 'doors',
-    title: 'Türen & Zugangssysteme',
-    description: 'Elektrische Türöffner und Zutrittspunkte sicher schalten.',
-  },
-  {
-    id: 'gates',
-    title: 'Tore & Schranken',
-    description: 'Anbindung an Außen- und Einfahrtstore.',
-  },
-  {
-    id: 'schuko',
-    title: 'Schuko‑Maschinen (1‑phasig)',
-    description: 'Freigabe für 230‑V‑Geräte und mobile Tools.',
-  },
-  {
-    id: 'drehstrom',
-    title: 'Drehstrom‑Maschinen (3‑phasig)',
-    description: 'Für leistungsstarke Maschinen mit höherem Strombedarf.',
-  },
-  {
     id: 'central-release',
     title: 'Zentrale Freigabe',
     description: 'Aufsichtsschaltung für Räume und Anlagen.',
@@ -221,7 +201,6 @@ const scenarioScenarios = [
     imageSrc: '/configurator/32a.jpg',
     imageAlt: 'Drehstrom‑Stecker',
     featureIds: [
-      'drehstrom',
       'central-release',
       'qualifications',
       'time-rules',
@@ -238,8 +217,6 @@ const scenarioScenarios = [
     imageSrc: '/configurator/tor.jpg',
     imageAlt: 'Elektrisches Tor',
     featureIds: [
-      'doors',
-      'gates',
       'credentials',
       'audit-logs',
       'reporting',
@@ -255,7 +232,6 @@ const scenarioScenarios = [
     imageSrc: '/configurator/schuko.jpg',
     imageAlt: 'Schuko‑Stecker',
     featureIds: [
-      'schuko',
       'qualifications',
       'time-rules',
       'audit-logs',
@@ -364,6 +340,25 @@ const processSteps = [
 const securityItems = [
   {
     id: 'compliance-1',
+    title: 'Datenschutz & Governance (DSGVO)',
+    content: (
+      <div className="space-y-4">
+        <p>
+          Zutritts- und Nutzungsereignisse sind in der Regel personenbezogene Daten. mardu.space
+          setzt Privacy by Design um: Protokolle werden nur zu klar definierten Zwecken geführt,
+          insbesondere Betriebssicherheit, Vorfallklärung und Nachweisführung.
+        </p>
+        <p>
+          Es gilt Datenminimierung: Es werden nur Ereignisse erfasst, die für diese Zwecke
+          erforderlich sind. Ergänzend unterstützt das System Löschkonzepte über konfigurierbare
+          Aufbewahrungsfristen für Logdaten, damit Retention-Policies nachvollziehbar umgesetzt und
+          an interne Vorgaben angepasst werden können.
+        </p>
+      </div>
+    ),
+  },
+  {
+    id: 'compliance-2',
     title: 'Arbeitsschutz & Nachweise (DGUV / TRBS)',
     content: (
       <div className="space-y-4">
@@ -379,7 +374,7 @@ const securityItems = [
     ),
   },
   {
-    id: 'compliance-2',
+    id: 'compliance-3',
     title: 'Maschinensicherheit & Schutzkonzepte',
     content: (
       <div className="space-y-4">
@@ -390,25 +385,6 @@ const securityItems = [
         <p>
           Das System unterstützt diese Konzepte durch flexible Sperrlogiken und
           qualifikationsbasierte Freigaben.
-        </p>
-      </div>
-    ),
-  },
-  {
-    id: 'compliance-3',
-    title: 'Datenschutz & Governance (DSGVO)',
-    content: (
-      <div className="space-y-4">
-        <p>
-          Zutritts- und Nutzungsereignisse sind in der Regel personenbezogene Daten. mardu.space
-          setzt Privacy by Design um: Protokolle werden nur zu klar definierten Zwecken geführt,
-          insbesondere Betriebssicherheit, Vorfallklärung und Nachweisführung.
-        </p>
-        <p>
-          Es gilt Datenminimierung: Es werden nur Ereignisse erfasst, die für diese Zwecke
-          erforderlich sind. Ergänzend unterstützt das System Löschkonzepte über konfigurierbare
-          Aufbewahrungsfristen für Logdaten, damit Retention-Policies nachvollziehbar umgesetzt und
-          an interne Vorgaben angepasst werden können.
         </p>
       </div>
     ),
@@ -469,10 +445,10 @@ export default function HomePage() {
       <section id="loesung" className="section-hairline">
         <SplitContent
           className={SECTION_SPACING}
-          title="Die mardu.space Lösung"
+          title="Zutritt, Maschinenfreigabe und Qualifikation in einem System"
           eyebrow="Die Mardu-Lösung"
           description={summaryDescription}
-          sideTitle="Mehrwert aus Betreibersicht"
+          sideTitle="Vorteile für Betreiber"
           sideIcon={CheckCircle}
           items={summaryItems}
         />
