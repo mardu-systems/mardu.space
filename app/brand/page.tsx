@@ -28,8 +28,9 @@ export default function BrandPage() {
       question: 'Welches Logo nutze ich auf hellem Hintergrund?',
       answer: (
         <p>
-          Auf hellen oder papierartigen Hintergründen bitte das dunkle Logo verwenden. Das sorgt
-          für ausreichend Kontrast und entspricht der Standarddarstellung von mardu.space.
+          Auf hellen oder papierartigen Hintergründen bitte die Variante{' '}
+          <strong>marduspace_logo_bg_white.svg</strong> verwenden. Diese Datei ist fuer weisse
+          oder helle Hintergruende vorgesehen.
         </p>
       ),
     },
@@ -37,8 +38,9 @@ export default function BrandPage() {
       question: 'Welches Logo nutze ich auf dunklem Hintergrund?',
       answer: (
         <p>
-          Auf dunklen Flächen bitte das weiße Logo verwenden. Es ist für dunkle Hintergründe
-          optimiert und bleibt auch bei kleineren Darstellungen gut lesbar.
+          Auf dunklen oder schwarzen Flaechen bitte die Variante{' '}
+          <strong>marduspace_logo_bg_black.svg</strong> verwenden. Diese Datei ist fuer dunkle
+          Hintergruende vorgesehen.
         </p>
       ),
     },
@@ -77,33 +79,33 @@ export default function BrandPage() {
         </div>
 
         <div className="grid gap-8 pt-8 md:grid-cols-2 md:pt-10">
-          <a href="/marduspace_logo_bg_black.svg" download className="group space-y-4">
+          <a href="/marduspace_logo_bg_white.svg" download className="group space-y-4">
             <div className="border border-black/10 bg-card p-8">
               <Image
-                src="/marduspace_logo_bg_black.svg"
-                alt="mardu.space Logo auf hellem Hintergrund"
+                src="/marduspace_logo_bg_white.svg"
+                alt="mardu.space Logo fuer weissen Hintergrund"
                 width={240}
                 height={120}
                 className="h-auto w-full object-contain"
               />
             </div>
             <p className="text-sm underline underline-offset-3 group-hover:text-foreground/72">
-              Download Logo für hellen Hintergrund (SVG)
+              Download Logo fuer weissen Hintergrund (SVG)
             </p>
           </a>
 
-          <a href="/marduspace_logo_bg_white.svg" download className="group space-y-4">
+          <a href="/marduspace_logo_bg_black.svg" download className="group space-y-4">
             <div className="border border-black/10 bg-foreground p-8">
               <Image
-                src="/marduspace_logo_bg_white.svg"
-                alt="mardu.space Logo auf dunklem Hintergrund"
+                src="/marduspace_logo_bg_black.svg"
+                alt="mardu.space Logo fuer schwarzen Hintergrund"
                 width={240}
                 height={120}
                 className="h-auto w-full object-contain"
               />
             </div>
             <p className="text-sm underline underline-offset-3 group-hover:text-foreground/72">
-              Download Logo für dunklen Hintergrund (SVG)
+              Download Logo fuer schwarzen Hintergrund (SVG)
             </p>
           </a>
         </div>

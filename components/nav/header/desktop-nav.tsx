@@ -3,12 +3,12 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { ChevronDown } from 'lucide-react';
-import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
+import { HoverCard, HoverCardContent, HoverCardTrigger } from '../../../../mardu.de/components/ui/hover-card';
 import React from 'react';
 import clsx from 'clsx';
 import MegaContent from './mega-content';
-import { NavEntry } from '@/types/header';
-import { useScrollToSection } from '@/hooks/use-scroll-to-section';
+import { NavEntry } from '../../../../mardu.de/types/header';
+import { useScrollToSection } from '../../../../mardu.de/hooks/use-scroll-to-section';
 
 interface DesktopNavProps {
   items: NavEntry[];
@@ -85,7 +85,7 @@ function DesktopNavEntry({ entry }: { entry: NavEntry }) {
           />
         </button>
       </HoverCardTrigger>
-      <HoverCardContent className="w-full pointer-events-auto border border-border bg-background p-0 text-foreground shadow-xl backdrop-blur-xl">
+      <HoverCardContent className="w-full pointer-events-auto border border-border bg-background p-0 text-foreground shadow-2xl backdrop-blur-xl">
         <MegaContent group={entry} />
       </HoverCardContent>
     </HoverCard>

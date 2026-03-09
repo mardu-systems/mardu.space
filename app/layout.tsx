@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import './globals.css';
+import 'photoswipe/style.css';
 import React from 'react';
 import SiteShell from '@/components/layout/site-shell';
 import { Analytics } from '@vercel/analytics/next';
