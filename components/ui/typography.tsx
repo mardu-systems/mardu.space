@@ -12,12 +12,12 @@ export function HeroHeadline({ prefix, emphasis, suffix, className }: HeroHeadli
   return (
     <h1
       className={cn(
-        'headline-balance text-[clamp(2.4rem,5vw,5rem)] leading-[0.94] tracking-[-0.03em] text-foreground',
+        'headline-balance text-[clamp(2.25rem,5vw,5rem)] leading-[0.95] tracking-[-0.03em] text-foreground',
         className,
       )}
     >
       {prefix}{' '}
-      <em className="font-serif text-foreground/90 not-italic md:italic md:font-normal tracking-[-0.02em]">
+      <em className="font-serif italic font-normal tracking-[-0.02em] text-foreground/90">
         {emphasis}
       </em>
       {suffix ? ` ${suffix}` : ''}
