@@ -19,6 +19,7 @@ import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
 import { useRecaptcha } from '@/lib/recaptcha';
 import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Overline } from '@/components/ui/typography';
 
 interface WhitepaperTeaserProps {
   className?: string;
@@ -104,10 +105,10 @@ export default function WhitepaperTeaser({ className }: WhitepaperTeaserProps) {
   };
 
   return (
-    <section className={cn('w-full py-20 px-4 md:px-8', className)}>
-      <div className="max-w-7xl mx-auto">
+    <section className={cn('w-full py-20 md:py-24', className)}>
+      <div className="mardu-container">
         <ScrollReveal>
-          <div className="relative overflow-hidden rounded-2xl bg-primary text-primary-foreground">
+          <div className="relative overflow-hidden border border-black/10 bg-card text-foreground">
             {/* Background Decor */}
             <div className="absolute top-0 right-0 w-125 h-125 bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/4 pointer-events-none" />
             <div className="absolute bottom-0 left-0 w-75 h-75 bg-accent/10 rounded-full blur-3xl translate-y-1/3 -translate-x-1/4 pointer-events-none" />
@@ -115,17 +116,16 @@ export default function WhitepaperTeaser({ className }: WhitepaperTeaserProps) {
             <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 p-8 md:p-12 lg:p-20 items-center">
               {/* Content Side */}
               <div className="space-y-8">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-white text-xs font-semibold uppercase tracking-wider border border-white/10">
+                <Overline className="flex items-center gap-2">
                   <FileText className="w-3.5 h-3.5" aria-hidden="true" />
                   Neuerscheinung
-                </div>
+                </Overline>
 
-                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight">
-                  Whitepaper:{' '}
-                  <span className="text-accent">Digitale Zutritts- und Maschinenfreigabe</span>
+                <h2 className="headline-balance text-[clamp(1.9rem,4vw,3.5rem)] leading-[1.02] tracking-[-0.03em] text-foreground">
+                  Whitepaper: Digitale Zutritts- und Maschinenfreigabe
                 </h2>
 
-                <p className="text-lg text-primary-foreground/80 leading-relaxed max-w-xl">
+                <p className="max-w-xl text-lg leading-relaxed text-foreground/72">
                   Erfahren Sie, wie Sie Zutritt, Maschinenfreigaben und Unterweisungen zuverlässig
                   organisieren – für Unternehmenswerkstätten, Hochschulen und Makerspaces.
                 </p>
@@ -144,10 +144,7 @@ export default function WhitepaperTeaser({ className }: WhitepaperTeaserProps) {
                     }}
                   >
                     <DialogTrigger asChild>
-                      <Button
-                        size="lg"
-                        className="h-14 px-8 text-base bg-accent hover:bg-accent/90 text-accent-foreground border-none touch-manipulation"
-                      >
+                      <Button size="lg" className="touch-manipulation">
                         Jetzt kostenlos anfordern
                         <ArrowRight className="ml-2 w-5 h-5" aria-hidden="true" />
                       </Button>
@@ -259,7 +256,7 @@ export default function WhitepaperTeaser({ className }: WhitepaperTeaserProps) {
 
                           <Button
                             type="submit"
-                            className="w-full h-12 bg-accent hover:bg-accent/90 text-accent-foreground touch-manipulation"
+                            className="w-full touch-manipulation"
                             disabled={loading}
                             aria-busy={loading}
                           >
@@ -280,14 +277,14 @@ export default function WhitepaperTeaser({ className }: WhitepaperTeaserProps) {
                 {/* Mockup of a document */}
                 <motion.div
                   className={cn(
-                    'antialiased relative w-64 md:w-80 aspect-[1/1.4] bg-white rounded-xl shadow-2xl flex flex-col overflow-hidden rotate-3',
+                    'antialiased relative flex aspect-[1/1.4] w-64 flex-col overflow-hidden border border-black/10 bg-white shadow-none rotate-3 md:w-80',
                     !shouldReduceMotion &&
                       'hover:rotate-0 transition-transform duration-500 ease-out motion-reduce:transition-none',
                   )}
                   whileHover={shouldReduceMotion ? undefined : { scale: 1.02 }}
                 >
                   {/* Mock Header */}
-                  <div className="h-24 bg-accent p-6 flex items-center justify-center">
+                  <div className="flex h-24 items-center justify-center bg-foreground p-6">
                     <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
                       <Download className="text-white w-6 h-6" aria-hidden="true" />
                     </div>
@@ -307,7 +304,7 @@ export default function WhitepaperTeaser({ className }: WhitepaperTeaserProps) {
                     </div>
                   </div>
                   {/* Badge */}
-                  <div className="absolute bottom-6 right-6 bg-primary text-white text-xs font-bold px-3 py-1 rounded shadow-lg">
+                  <div className="absolute bottom-6 right-6 bg-foreground px-3 py-1 text-xs font-bold text-white shadow-lg">
                     PDF
                   </div>
                 </motion.div>

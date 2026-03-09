@@ -4,6 +4,7 @@ import * as React from 'react';
 import Image from 'next/image';
 import { cn } from '@/lib/utils';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Overline } from '@/components/ui/typography';
 
 export type Feature = {
   id: string;
@@ -84,22 +85,20 @@ export default function ScenarioShowcase({
   if (!scenario) return null;
 
   return (
-    <section className={cn('py-16 px-6 md:px-8 max-w-7xl mx-auto w-full', className)}>
+    <section className={cn('w-full py-20 md:py-24', className)}>
+      <div className="mardu-container">
       <Tabs value={selectedId} onValueChange={setSelected} className="w-full">
-        {/* TOP: Bild startet erst ab Subheading-Höhe */}
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
-          {/* LEFT ROW 1: Eyebrow + Heading */}
           <div className="lg:col-start-1 lg:row-start-1">
-            <div className="text-xs tracking-widest uppercase text-muted-foreground mb-2">
-              {eyebrow}
-            </div>
-            <h2 className="text-3xl md:text-4xl font-bold text-primary">{heading}</h2>
+            <Overline className="mb-3">{eyebrow}</Overline>
+            <h2 className="headline-balance text-[clamp(1.9rem,4vw,3.5rem)] leading-[1.02] tracking-[-0.03em] text-foreground">
+              {heading}
+            </h2>
           </div>
 
-          {/* LEFT ROW 2: Subheading + 3 selectable points */}
           <div className="space-y-6 lg:col-start-1 lg:row-start-2">
             {subheading ? (
-              <p className="text-sm md:text-base text-muted-foreground leading-relaxed max-w-prose">
+              <p className="max-w-prose text-sm leading-relaxed text-foreground/72 md:text-base">
                 {subheading}
               </p>
             ) : null}
@@ -111,27 +110,26 @@ export default function ScenarioShowcase({
                   value={s.id}
                   className={cn(
                     'w-full justify-start text-left whitespace-normal',
-                    'min-h-11 rounded-2xl px-4 py-3 touch-manipulation',
-                    'border border-border/40 bg-card/60',
-                    'hover:bg-card transition-colors',
-                    'data-[state=active]:bg-card data-[state=active]:border-border',
-                    'data-[state=active]:shadow-sm',
+                    'min-h-11 px-4 py-4 touch-manipulation',
+                    'border border-black/10 bg-card',
+                    'hover:bg-background transition-colors',
+                    'data-[state=active]:bg-background data-[state=active]:border-foreground/18',
+                    'data-[state=active]:shadow-none',
                   )}
                 >
                   <div className="flex flex-col gap-1">
-                    <div className="font-semibold text-primary">{s.label}</div>
-                    <div className="text-sm text-muted-foreground leading-relaxed">{s.teaser}</div>
+                    <div className="font-semibold tracking-[-0.01em] text-foreground">{s.label}</div>
+                    <div className="text-sm leading-relaxed text-foreground/65">{s.teaser}</div>
                   </div>
                 </TabsTrigger>
               ))}
             </TabsList>
           </div>
 
-          {/* RIGHT ROW 2: Image (aligned with subheading row) */}
           <div className="w-full lg:col-start-2 lg:row-start-2">
             {scenarios.map((s) => (
               <TabsContent key={s.id} value={s.id} className="m-0">
-                <div className="rounded-3xl overflow-hidden border border-border/40 bg-card shadow-sm">
+                <div className="overflow-hidden border border-black/10 bg-card shadow-none">
                   <div className="relative w-full aspect-16/10">
                     <Image
                       src={s.imageSrc}
@@ -148,8 +146,7 @@ export default function ScenarioShowcase({
           </div>
         </div>
 
-        {/* BOTTOM: 8 Feature tiles (switch with selection) */}
-        <div className="mt-5 rounded-3xl bg-muted/30 border border-border/40 overflow-hidden">
+        <div className="mt-5 overflow-hidden border border-black/10 bg-muted/35">
           <div className="p-6 pt-5">
             <div className="grid gap-6 md:gap-0 md:grid-cols-4">
               {activeFeatures.map((f, idx) => (
@@ -157,13 +154,13 @@ export default function ScenarioShowcase({
                   key={f.id}
                   className={cn(
                     'md:px-5 md:py-2',
-                    'md:border-l md:border-border/40',
+                    'md:border-l md:border-black/8',
                     idx % 4 === 0 && 'md:border-l-0',
                   )}
                 >
                   <div className="space-y-1.5">
-                    <div className="font-medium text-primary">{f.title}</div>
-                    <div className="text-sm text-muted-foreground leading-relaxed">
+                    <div className="font-medium text-foreground">{f.title}</div>
+                    <div className="text-sm leading-relaxed text-foreground/65">
                       {f.description}
                     </div>
                   </div>
@@ -173,6 +170,7 @@ export default function ScenarioShowcase({
           </div>
         </div>
       </Tabs>
+      </div>
     </section>
   );
 }

@@ -1,12 +1,10 @@
 import { FooterLink } from '@/components/nav/footer/footer';
 
 export const defaultFooterNavLinks: FooterLink[] = [
-  { href: '/', label: 'Startseite' },
-  { href: '/configurator', label: 'Konfigurator' },
-  { href: '/system', label: 'System' },
-  { href: '/faq', label: 'FAQ' },
-  { href: '/brand', label: 'Brand Assets' },
-  { href: '/fotos', label: 'Fotos' },
+  { href: '/#home', label: 'Startseite' },
+  { href: '/#loesung', label: 'Lösung' },
+  { href: '/#produkte', label: 'Angebote' },
+  { href: '/#argumente', label: 'Vorteile' },
   { href: '/contact', label: 'Kontakt' },
 ];
 

@@ -2,7 +2,7 @@ import { LucideIcon } from 'lucide-react';
 import { ReactNode } from 'react';
 import { cn } from '@/lib/utils';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
+import { Overline } from '@/components/ui/typography';
 
 export type CardItem = {
   title: string;
@@ -15,6 +15,7 @@ export type CardItem = {
 
 interface CardGridProps {
   title?: string;
+  eyebrow?: string;
   items: CardItem[];
   columns?: 2 | 3 | 4;
   variant?: 'default' | 'outline' | 'muted';
@@ -23,6 +24,7 @@ interface CardGridProps {
 
 export default function CardGrid({
   title,
+  eyebrow,
   items,
   columns = 3,
   variant = 'default',
@@ -35,9 +37,11 @@ export default function CardGrid({
   }[columns];
 
   return (
-    <section className={cn('py-16 px-6 md:px-8 max-w-7xl mx-auto w-full', className)}>
+    <section className={cn('w-full py-20 md:py-24', className)}>
+      <div className="mardu-container">
+      {eyebrow ? <Overline className="mb-3">{eyebrow}</Overline> : null}
       {title && (
-        <h2 className="text-3xl md:text-4xl font-bold text-center text-primary mb-10">
+        <h2 className="headline-balance mb-10 max-w-4xl text-[clamp(1.9rem,4vw,3.5rem)] leading-[1.02] tracking-[-0.03em] text-foreground">
           {title}
         </h2>
       )}
@@ -46,42 +50,33 @@ export default function CardGrid({
           <Card
             key={`${item.title}-${idx}`}
             className={cn(
-              'rounded-3xl overflow-hidden transition-shadow duration-300 hover:shadow-md h-full border-none',
-              // Default variant relies on Card's default styles (bg-card, border, shadow-sm)
-
-              // Outline variant: semi-transparent background, standard border
-              variant === 'outline' && 'bg-card/50 shadow-none',
-
-              // Muted variant: No border, muted background, no shadow
-              variant === 'muted' && 'bg-muted border-none shadow-none',
-
+              'h-full overflow-hidden border border-black/10 bg-card shadow-none',
+              variant === 'outline' && 'bg-card/80',
+              variant === 'muted' && 'bg-muted/45',
               item.className,
             )}
           >
-            <CardHeader className="relative p-6">
-              {item.badge && (
-                <div className="absolute top-4 right-4">
-                  <Badge
-                    variant="secondary"
-                    className="bg-primary/10 text-primary hover:bg-primary/20 border-0 rounded-full px-3 py-1"
-                  >
-                    {item.badge}
-                  </Badge>
-                </div>
-              )}
+            <CardHeader className="relative border-b border-black/8 p-6">
               <div className="flex items-center gap-4">
                 {item.icon && (
-                  <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center shrink-0">
-                    <item.icon className="text-primary w-5 h-5" aria-hidden="true" />
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center border border-black/10 bg-background">
+                    <item.icon className="h-5 w-5 text-foreground/75" aria-hidden="true" />
                   </div>
                 )}
-                <CardTitle className="text-lg md:text-xl font-semibold leading-tight text-primary">
+                <CardTitle className="text-lg font-semibold leading-tight tracking-[-0.01em] text-foreground md:text-xl">
                   {item.title}
                 </CardTitle>
               </div>
             </CardHeader>
             <CardContent className="p-6 pt-0">
-              <div className="text-sm md:text-base text-foreground leading-relaxed">
+              {item.badge ? (
+                <p className="mb-4 pt-6 text-[11px] uppercase tracking-[0.18em] text-foreground/50">
+                  {item.badge}
+                </p>
+              ) : (
+                <div className="pt-6" />
+              )}
+              <div className="text-sm leading-relaxed text-foreground/75 md:text-base">
                 {typeof item.description === 'string' ? (
                   <p>{item.description}</p>
                 ) : (
@@ -89,7 +84,7 @@ export default function CardGrid({
                 )}
               </div>
               {item.list && (
-                <ul className="mt-5 space-y-2 text-sm md:text-base text-foreground list-disc list-inside">
+                <ul className="mt-5 list-inside list-disc space-y-2 text-sm text-foreground/75 md:text-base">
                   {item.list.map((li, lIdx) => (
                     <li key={lIdx}>{li}</li>
                   ))}
@@ -98,6 +93,7 @@ export default function CardGrid({
             </CardContent>
           </Card>
         ))}
+      </div>
       </div>
     </section>
   );

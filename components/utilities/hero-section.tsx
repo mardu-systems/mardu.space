@@ -2,11 +2,11 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import WavyBackground from '@/components/ui/wavy-background';
 import { cn } from '@/lib/utils';
-import { useState } from 'react';
-import { ScrollReveal } from '@/components/ui/motion/scroll-reveal';
-import { motion, useReducedMotion } from 'framer-motion';
+import type { MouseEvent } from 'react';
+import { HeroHeadline, Overline } from '@/components/ui/typography';
+import { Button } from '@/components/ui/button';
+import { ArrowRight } from 'lucide-react';
 
 export interface HeroSectionProps {
   title: string;
@@ -21,6 +21,9 @@ export interface HeroSectionProps {
   mediaType?: 'image' | 'video';
   videoUrl?: string;
   onPlayClick?: () => void;
+  variant?: 'default' | 'landing';
+  overline?: string;
+  emphasis?: string;
 }
 
 export default function HeroSection({
@@ -36,119 +39,165 @@ export default function HeroSection({
   mediaType = 'image',
   videoUrl,
   onPlayClick,
+  variant = 'default',
+  overline,
+  emphasis,
 }: HeroSectionProps) {
-  const [isPlaying, setIsPlaying] = useState(false);
-  const shouldReduceMotion = useReducedMotion();
+  void onPlayClick;
 
-  const handlePlayClick = () => {
-    setIsPlaying(true);
-    if (onPlayClick) {
-      onPlayClick();
+  const scrollToProducts = (event: MouseEvent<HTMLAnchorElement>) => {
+    if (
+      event.defaultPrevented ||
+      event.metaKey ||
+      event.ctrlKey ||
+      event.shiftKey ||
+      event.altKey ||
+      event.button !== 0
+    ) {
+      return;
     }
-  };
-  return (
-    <section className={cn('flex flex-col items-center py-20 bg-background', className)}>
-      {/* Waves behind the copy */}
-      <WavyBackground
-        colors={['#F5C842', '#F786AE', '#351B59']} // Keeping brand specific wave colors for now as they might be specific assets
-        waveWidth={30}
-        blur={8}
-        speed="fast"
-        waveOpacity={0.1}
-        containerClassName="w-full overflow-hidden"
-        className="w-full max-w-7xl px-4 md:px-8 mx-auto py-10 lg:py-20"
-      >
-        <ScrollReveal className="flex flex-col items-start gap-6 w-full">
-          {/* Main Heading */}
-          <h1 className="text-4xl md:text-5xl lg:text-5xl font-semibold leading-tight text-primary w-full max-w-4xl text-balance">
-            {title}
-          </h1>
 
-          {/* Description Text */}
-          <div className="text-base md:text-lg leading-relaxed text-foreground w-full max-w-3xl">
-            {description}
+    event.preventDefault();
+
+    const section = document.getElementById('produkte');
+    if (!section) return;
+
+    const prefersReduced = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+    section.scrollIntoView({ behavior: prefersReduced ? 'auto' : 'smooth', block: 'start' });
+    window.history.replaceState(null, '', '#produkte');
+  };
+
+  if (variant === 'default') {
+    return (
+      <section className={cn('relative overflow-hidden border-b border-black/8 py-20 md:py-24', className)}>
+        <div className="mardu-container grid gap-12 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
+          <div className="space-y-6">
+            {overline ? <Overline>{overline}</Overline> : null}
+            <h1 className="headline-balance max-w-4xl text-[clamp(2.2rem,5vw,4.5rem)] leading-[0.95] tracking-[-0.03em] text-foreground">
+              {title}
+            </h1>
+            <div className="max-w-2xl text-base leading-relaxed text-foreground/75 md:text-lg">
+              {description}
+            </div>
+            <div className="flex flex-wrap gap-3 pt-1">
+              {buttonText ? (
+                <Link href={buttonHref}>
+                  <Button>
+                    {buttonText}
+                    <ArrowRight className="size-4" />
+                  </Button>
+                </Link>
+              ) : null}
+              {secondaryButtonText && secondaryButtonHref ? (
+                <Link href={secondaryButtonHref}>
+                  <Button variant="outline">{secondaryButtonText}</Button>
+                </Link>
+              ) : null}
+            </div>
           </div>
 
-          {(buttonText || secondaryButtonText) && (
-            <ScrollReveal className="flex flex-wrap gap-4" delay={0.1} direction="up">
-              {buttonText && (
-                <Link
-                  href={buttonHref}
-                  className="inline-flex touch-manipulation items-center justify-center h-11 px-6 rounded-lg bg-accent hover:bg-accent/90 text-accent-foreground font-medium text-sm tracking-wide transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-                >
+          <div className="overflow-hidden border border-black/10 bg-card">
+            {mediaType === 'video' && videoUrl ? (
+              <div className="relative aspect-[16/10] w-full">
+                <iframe
+                  src={videoUrl}
+                  className="absolute inset-0 h-full w-full"
+                  allow="autoplay; fullscreen; picture-in-picture"
+                  allowFullScreen
+                  title={imageAlt}
+                />
+              </div>
+            ) : (
+              <div className="relative aspect-[16/10] w-full">
+                <Image
+                  src={imageSrc}
+                  alt={imageAlt}
+                  fill
+                  priority
+                  sizes="(max-width: 1024px) 100vw, 52vw"
+                  className="object-cover"
+                />
+              </div>
+            )}
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  return (
+    <section
+      className={cn(
+        'relative flex min-h-screen items-center overflow-hidden border-b border-black/8 py-20 md:py-24',
+        className,
+      )}
+    >
+      <div className="mardu-container relative grid w-full gap-16 lg:grid-cols-[1.02fr_0.98fr] lg:items-center">
+        <div className="relative space-y-7">
+          <Image
+            src="/landing/Ellipse.png"
+            alt=""
+            width={3945}
+            height={1991}
+            aria-hidden
+            className="pointer-events-none absolute -left-24 -z-10 w-[170%] max-w-none opacity-65 md:-left-28 lg:w-[150%]"
+          />
+          <Overline>{overline ?? 'Engineering Access Platform'}</Overline>
+          <div className="relative isolate inline-block">
+            <div className="absolute -left-2 top-[16%] z-0 h-[42%] w-[58%] bg-[repeating-linear-gradient(135deg,rgba(31,41,55,0.14)_0,rgba(31,41,55,0.14)_1px,transparent_1px,transparent_9px)] opacity-35" />
+            {emphasis ? (
+              <HeroHeadline prefix={title} emphasis={emphasis} className="relative z-10" />
+            ) : (
+              <h1 className="headline-balance relative z-10 max-w-4xl text-[clamp(2.4rem,5vw,5rem)] leading-[0.94] tracking-[-0.03em] text-foreground">
+                {title}
+              </h1>
+            )}
+          </div>
+          <div className="max-w-2xl text-base leading-relaxed text-foreground/75 md:text-lg">
+            {description}
+          </div>
+          <div className="flex flex-wrap gap-3 pt-1">
+            {buttonText ? (
+              <Link href={buttonHref}>
+                <Button>
                   {buttonText}
-                </Link>
-              )}
-              {secondaryButtonText && secondaryButtonHref && (
-                <Link
-                  href={secondaryButtonHref}
-                  className="inline-flex touch-manipulation items-center justify-center h-11 px-6 rounded-lg border-2 border-primary hover:bg-primary hover:text-primary-foreground text-primary font-medium text-sm tracking-wide transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-                >
-                  {secondaryButtonText}
-                </Link>
-              )}
-            </ScrollReveal>
-          )}
-        </ScrollReveal>
-      </WavyBackground>
+                  <ArrowRight className="size-4" />
+                </Button>
+              </Link>
+            ) : null}
+            {secondaryButtonText && secondaryButtonHref ? (
+              <Link href={secondaryButtonHref}>
+                <Button variant="outline">{secondaryButtonText}</Button>
+              </Link>
+            ) : null}
+          </div>
+        </div>
 
-      {/* Image Section (no waves behind it) */}
-      <ScrollReveal className="w-full max-w-7xl px-4 md:px-8 mx-auto mt-3" direction="up">
-        <motion.div
-          className="relative w-full h-125 md:h-162.5 lg:h-160 rounded-[34px] overflow-hidden shadow-lg bg-muted"
-          whileHover={shouldReduceMotion ? undefined : { y: -6 }}
-          transition={shouldReduceMotion ? undefined : { duration: 0.25, ease: 'easeOut' }}
-        >
-          {!isPlaying ? (
-            <>
-              <Image
-                src={imageSrc}
-                alt={imageAlt}
-                fill
-                priority
-                sizes="(max-width: 768px) 100vw, 1280px"
-                className="object-cover"
-              />
-
-              {/* Play Button Overlay - nur bei Video */}
-              {mediaType === 'video' && (
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <button
-                    type="button"
-                    onClick={handlePlayClick}
-                    className="flex touch-manipulation items-center justify-center w-22 h-22 bg-background rounded-lg shadow-lg hover:scale-110 transition-transform duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-                    aria-label="Video abspielen"
-                  >
-                    <svg
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="ml-1 text-primary"
-                      aria-hidden="true"
-                      focusable="false"
-                    >
-                      <path d="M6 4.5L18 12L6 19.5V4.5Z" fill="currentColor" />
-                    </svg>
-                  </button>
-                </div>
-              )}
-            </>
-          ) : (
-            // Video-Player
-            videoUrl && (
-              <iframe
-                src={videoUrl}
-                className="absolute inset-0 w-full h-full"
-                allow="autoplay; fullscreen; picture-in-picture"
-                allowFullScreen
-                title={imageAlt}
-              />
-            )
-          )}
-        </motion.div>
-      </ScrollReveal>
+        <div className="relative">
+          <Link
+            href="#produkte"
+            onClick={scrollToProducts}
+            className="group relative block aspect-[16/11] overflow-hidden border border-black/12 bg-card"
+            aria-label="Zu den Produktlösungen mardu.space scrollen"
+          >
+            <Image
+              src={imageSrc}
+              alt={imageAlt}
+              fill
+              priority
+              sizes="(max-width: 1024px) 100vw, 48vw"
+              className="object-cover"
+            />
+            <div className="absolute inset-0 bg-linear-to-t from-black/44 via-black/10 to-transparent" />
+            <div className="absolute left-4 top-4 border border-white/45 bg-black/38 px-3 py-1.5 text-[10px] uppercase tracking-[0.18em] text-white">
+              mardu.space
+            </div>
+            <p className="absolute bottom-4 left-4 max-w-[36ch] text-sm text-white/95 group-hover:text-white">
+              Digitale Zutritts- und Maschinenfreigabe für Werkstätten, Labore und Makerspaces.
+            </p>
+          </Link>
+        </div>
+      </div>
     </section>
   );
 }

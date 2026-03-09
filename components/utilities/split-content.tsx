@@ -1,8 +1,7 @@
 import { CheckCircle, LucideIcon } from 'lucide-react';
 import { ReactNode } from 'react';
 import { cn } from '@/lib/utils';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
+import { Overline } from '@/components/ui/typography';
 
 export type SplitContentItem = {
   title: string;
@@ -32,27 +31,11 @@ export default function SplitContent({
   reverse = false,
 }: SplitContentProps) {
   return (
-    <section className={cn('relative overflow-hidden py-16 w-full bg-primary', className)}>
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0"
-      >
-        <div className="absolute inset-0 opacity-70 mask-[radial-gradient(60%_50%_at_50%_0%,black,transparent)]">
-          <div className="absolute -top-24 left-1/2 h-80 w-2xl -translate-x-1/2 rounded-full bg-white/10 blur-3xl" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(255,255,255,0.10),transparent_55%),radial-gradient(circle_at_80%_30%,rgba(255,255,255,0.08),transparent_50%),radial-gradient(circle_at_50%_90%,rgba(255,255,255,0.06),transparent_60%)]" />
-        </div>
-        <div className="absolute inset-0 opacity-30 bg-[linear-gradient(to_right,rgba(255,255,255,0.08)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.08)_1px,transparent_1px)] [background-size:24px_24px]" />
-      </div>
-      <div className="max-w-7xl mx-auto px-6 md:px-8">
-        <div className="flex flex-col gap-3 mb-8 md:mb-12">
-          {eyebrow ? (
-            <div>
-              <Badge variant="secondary" className="bg-white/10 text-white border-white/15">
-                {eyebrow}
-              </Badge>
-            </div>
-          ) : null}
-          <h2 className="text-3xl sm:text-4xl md:text-5xl leading-tight font-bold text-balance">
+    <section className={cn('relative w-full py-20 md:py-24', className)}>
+      <div className="mardu-container">
+        <div className="mb-8 flex flex-col gap-3 md:mb-12">
+          {eyebrow ? <Overline>{eyebrow}</Overline> : null}
+          <h2 className="headline-balance max-w-4xl text-[clamp(1.9rem,4vw,3.6rem)] leading-[1.02] tracking-[-0.03em] text-foreground">
             {title}
           </h2>
         </div>
@@ -62,50 +45,43 @@ export default function SplitContent({
             reverse && 'md:[&>*:first-child]:order-2 md:[&>*:last-child]:order-1',
           )}
         >
-          <div className={cn('text-base md:text-lg leading-relaxed opacity-95 space-y-4', reverse && 'md:order-2')}>
-            {description}
-          </div>
-          <Card
+          <div
             className={cn(
-              'rounded-3xl overflow-hidden border border-white/10 supports-backdrop-filter:bg-background/90 supports-backdrop-filter:backdrop-blur shadow-[0_1px_0_rgba(255,255,255,0.08)_inset,0_18px_40px_rgba(0,0,0,0.28)] transition-transform duration-200 will-change-transform hover:-translate-y-0.5 focus-within:-translate-y-0.5',
-              'motion-reduce:transition-none motion-reduce:hover:translate-y-0 motion-reduce:focus-within:translate-y-0',
-              reverse && 'md:order-1',
+              'max-w-2xl space-y-5 text-base leading-relaxed text-foreground/76 md:text-lg',
+              reverse && 'md:order-2',
             )}
           >
-            {sideTitle && (
-              <CardHeader className="pb-4">
-                <CardTitle className="text-lg md:text-xl font-semibold flex items-center gap-3 text-primary">
-                  <SideIcon className="text-primary w-5 h-5" aria-hidden="true" />
+            {description}
+          </div>
+          <div className={cn('border-t border-black/8 pt-6', reverse && 'md:order-1')}>
+            {sideTitle ? (
+              <div className="mb-6 flex items-center gap-3">
+                <SideIcon className="h-5 w-5 text-foreground/70" aria-hidden="true" />
+                <h3 className="text-lg font-semibold tracking-[-0.01em] text-foreground md:text-xl">
                   {sideTitle}
-                </CardTitle>
-              </CardHeader>
-            )}
-            <CardContent>
-              <ul className="space-y-6">
-                {items.map((item, idx) => {
-                  const ItemIcon = item.icon ?? CheckCircle;
+                </h3>
+              </div>
+            ) : null}
+            <ul className="space-y-6">
+              {items.map((item, idx) => {
+                const ItemIcon = item.icon ?? CheckCircle;
 
-                  return (
-                    <li key={`${item.title}-${idx}`} className="flex gap-4 items-start">
-                      <ItemIcon className="shrink-0 text-primary w-5 h-5 mt-0.5" aria-hidden="true" />
-                      <div className="space-y-1">
-                        <h4 className="font-semibold text-primary text-base md:text-lg">
-                          {item.title}
-                        </h4>
-                        <div className="text-sm md:text-base text-muted-foreground leading-relaxed">
-                          {typeof item.description === 'string' ? (
-                            <p>{item.description}</p>
-                          ) : (
-                            item.description
-                          )}
-                        </div>
+                return (
+                  <li key={`${item.title}-${idx}`} className="flex gap-4 items-start border-b border-black/6 pb-5 last:border-b-0 last:pb-0">
+                    <ItemIcon className="mt-0.5 h-5 w-5 shrink-0 text-foreground/65" aria-hidden="true" />
+                    <div className="space-y-1">
+                      <h4 className="text-base font-semibold tracking-[-0.01em] text-foreground md:text-lg">
+                        {item.title}
+                      </h4>
+                      <div className="text-sm leading-relaxed text-foreground/70 md:text-base">
+                        {typeof item.description === 'string' ? <p>{item.description}</p> : item.description}
                       </div>
-                    </li>
-                  );
-                })}
-              </ul>
-            </CardContent>
-          </Card>
+                    </div>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
         </div>
       </div>
     </section>

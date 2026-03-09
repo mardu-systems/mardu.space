@@ -26,14 +26,13 @@ import ConfiguratorTeaser from '@/components/utilities/configurator-teaser';
 
 import WhitepaperTeaser from '@/components/utilities/whitepaper-teaser';
 import ScenarioShowcase from '@/components/utilities/scenario-showcase';
-import { cn } from '@/lib/utils';
 
-const SECTION_SPACING = 'py-20 md:py-20';
+const SECTION_SPACING = '';
 
 const heroDescription = (
   <>
     <p className="mb-4 text-lg font-medium">
-      Für Unternehmenswerkstätten, Hochschulen, Makerspaces und private Werkstätten.
+      Für Unternehmenswerkstätten, Hochschulen, Makerspaces und Labore.
     </p>
     <p>
       mardu.space organisiert Zutritt, Maschinenfreigaben und Unterweisungen zuverlässig. Statt
@@ -451,69 +450,90 @@ export default function HomePage() {
       >
         Zum Inhalt springen
       </a>
-      {/* 1. Hero Header Section */}
-      <HeroSection
-        className={SECTION_SPACING}
-        title="Digitale Zutritts- und Maschinenfreigabe"
-        description={heroDescription}
-        buttonText="Jetzt Demo vereinbaren"
-        imageSrc="/_A7_9094_quer.jpg"
-        imageAlt="mardu.space-System in einer Werkstatt"
-      />
+      <section id="home">
+        <HeroSection
+          className={SECTION_SPACING}
+          title="Zutrittskontrolle & Maschinenfreigabe"
+          emphasis="für Werkstätten, Labore & Makerspaces."
+          overline="Engineering Access Platform"
+          description={heroDescription}
+          buttonText="Jetzt Demo vereinbaren"
+          secondaryButtonText="Mehr erfahren"
+          secondaryButtonHref="/#produkte"
+          imageSrc="/_A7_9094_quer.jpg"
+          imageAlt="mardu.space-System in einer Werkstatt"
+          variant="landing"
+        />
+      </section>
 
-      {/* 2. Management Summary */}
-      <SplitContent
-        className={cn(SECTION_SPACING, 'text-white')}
-        title="Das Wichtigste auf einen Blick"
-        eyebrow="Kurzfassung"
-        description={summaryDescription}
-        sideTitle="Mehrwert aus Betreibersicht"
-        sideIcon={CheckCircle}
-        items={summaryItems}
-      />
+      <section id="loesung" className="section-hairline">
+        <SplitContent
+          className={SECTION_SPACING}
+          title="Die mardu.space Lösung"
+          eyebrow="Die Mardu-Lösung"
+          description={summaryDescription}
+          sideTitle="Mehrwert aus Betreibersicht"
+          sideIcon={CheckCircle}
+          items={summaryItems}
+        />
+      </section>
 
-      {/* 3. Ausgangslage & Herausforderungen */}
-      <CardGrid
-        className={SECTION_SPACING}
-        title="Ausgangslage & Herausforderungen"
-        variant="muted"
-        items={cardGridItems}
-      />
+      <section id="argumente" className="section-hairline">
+        <CardGrid
+          className={SECTION_SPACING}
+          eyebrow="Vorteile"
+          title="Ausgangslage & Herausforderungen"
+          variant="muted"
+          items={cardGridItems}
+        />
+      </section>
 
-      {/* Configurator Teaser */}
-      <ConfiguratorTeaser className={SECTION_SPACING} />
+      <section className="section-hairline">
+        <ConfiguratorTeaser className={SECTION_SPACING} />
+      </section>
 
-      {/* 5. Einsatzszenarien */}
-      <ScenarioShowcase
-        className={SECTION_SPACING}
-        eyebrow="Produkte"
-        heading="Einsatzszenarien"
-        subheading="Sichern Sie Türen, Tore und Maschinen – von Schuko‑Geräten (1‑phasig) bis zu Drehstrom‑Maschinen (3‑phasig)."
-        features={scenarioFeatures}
-        scenarios={scenarioScenarios}
-      />
+      <section id="produkte" className="section-hairline">
+        <ScenarioShowcase
+          className={SECTION_SPACING}
+          eyebrow="Angebote"
+          heading="Einsatzszenarien"
+          subheading="Sichern Sie Türen, Tore und Maschinen, von Schuko-Geräten bis zu Drehstrom-Maschinen, regelbasiert und nachvollziehbar."
+          features={scenarioFeatures}
+          scenarios={scenarioScenarios}
+        />
+      </section>
 
-      {/* 4. Spezifikation & Funktionsumfang */}
-      <InfoGrid
-        className={SECTION_SPACING}
-        title="Spezifikation & Funktionsumfang"
-        items={infoGridItems}
-      />
+      <section className="section-hairline">
+        <InfoGrid
+          className={SECTION_SPACING}
+          eyebrow="System"
+          title="Spezifikation & Funktionsumfang"
+          items={infoGridItems}
+        />
+      </section>
 
-      {/* Whitepaper Teaser */}
-      <WhitepaperTeaser className={SECTION_SPACING} />
+      <section className="section-hairline">
+        <WhitepaperTeaser className={SECTION_SPACING} />
+      </section>
 
-      {/* 6. Umsetzung & Praxis */}
-      <ProcessSteps className={SECTION_SPACING} title="Projektablauf" steps={processSteps} />
+      <section className="section-hairline">
+        <ProcessSteps
+          className={SECTION_SPACING}
+          eyebrow="Projektablauf"
+          title="Von der Anforderung bis zum Rollout"
+          steps={processSteps}
+        />
+      </section>
 
-      {/* 7. Sicherheit, Datenschutz & Normen */}
-      <SecurityAccordion
-        className={SECTION_SPACING}
-        title="Sicherheit, Datenschutz & Normen"
-        items={securityItems}
-      />
+      <section className="section-hairline">
+        <SecurityAccordion
+          className={SECTION_SPACING}
+          eyebrow="Sicherheit"
+          title="Sicherheit, Datenschutz & Normen"
+          items={securityItems}
+        />
+      </section>
 
-      {/* CTA Section */}
       <CTASection
         className={SECTION_SPACING}
         title="Sichere Werkstätten beginnen mit klaren Standards."

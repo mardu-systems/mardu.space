@@ -6,6 +6,7 @@ import { ArrowRight, Settings, CheckSquare } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { ScrollReveal } from '@/components/ui/motion/scroll-reveal';
+import { Overline } from '@/components/ui/typography';
 
 interface ConfiguratorTeaserProps {
   className?: string;
@@ -15,10 +16,10 @@ export default function ConfiguratorTeaser({ className }: ConfiguratorTeaserProp
   const shouldReduceMotion = useReducedMotion();
 
   return (
-    <section className={cn('w-full py-20 px-4 md:px-8', className)}>
-      <div className="max-w-7xl mx-auto">
+    <section className={cn('w-full py-20 md:py-24', className)}>
+      <div className="mardu-container">
         <ScrollReveal>
-          <div className="relative overflow-hidden rounded-[2.5rem] bg-secondary/10 border border-secondary/20">
+          <div className="relative overflow-hidden border border-black/10 bg-card">
             
             {/* Background Decor */}
             <div className="absolute top-0 right-0 w-125 h-125 bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/4 pointer-events-none" />
@@ -28,25 +29,21 @@ export default function ConfiguratorTeaser({ className }: ConfiguratorTeaserProp
               
               {/* Content Side */}
               <div className="space-y-8">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/10 text-accent text-xs font-semibold uppercase tracking-wider border border-accent/10">
+                <Overline className="flex items-center gap-2">
                   <Settings className="w-3.5 h-3.5" aria-hidden="true" />
                   Interaktiver Konfigurator
-                </div>
+                </Overline>
                 
-                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight text-foreground">
-                  Planen Sie Ihr System <span className="text-primary">individuell</span>
+                <h2 className="headline-balance text-[clamp(1.9rem,4vw,3.5rem)] leading-[1.02] tracking-[-0.03em] text-foreground">
+                  Planen Sie Ihr System individuell
                 </h2>
                 
-                <p className="text-lg text-muted-foreground leading-relaxed max-w-xl">
+                <p className="max-w-xl text-lg leading-relaxed text-foreground/72">
                   Ermitteln Sie in wenigen Schritten Ihren Bedarf. Wählen Sie Türen, Maschinen und Nutzeranzahl, um eine erste Kostenschätzung zu erhalten.
                 </p>
 
                 <div className="flex flex-wrap gap-4 pt-2">
-                  <Button
-                    asChild
-                    size="lg"
-                    className="h-14 px-8 text-base bg-accent hover:bg-accent/90 text-accent-foreground border-none touch-manipulation"
-                  >
+                  <Button asChild size="lg" className="touch-manipulation">
                     <Link href="/configurator">
                       Konfiguration starten
                       <ArrowRight className="ml-2 w-5 h-5" aria-hidden="true" />
@@ -60,14 +57,14 @@ export default function ConfiguratorTeaser({ className }: ConfiguratorTeaserProp
                 {/* Mockup of UI */}
                 <motion.div 
                   className={cn(
-                    'relative w-72 md:w-96 aspect-[4/3] bg-card rounded-xl shadow-2xl flex flex-col overflow-hidden -rotate-2 border border-border',
+                    'relative flex aspect-[4/3] w-72 flex-col overflow-hidden border border-black/10 bg-background shadow-none md:w-96 -rotate-2',
                     !shouldReduceMotion &&
                       'hover:rotate-0 transition-transform duration-500 ease-out motion-reduce:transition-none',
                   )}
                   whileHover={shouldReduceMotion ? undefined : { scale: 1.02 }}
                 >
                   {/* Header */}
-                  <div className="h-12 border-b border-border bg-muted/30 flex items-center px-4 gap-2">
+                  <div className="flex h-12 items-center gap-2 border-b border-black/8 bg-muted/30 px-4">
                     <div className="w-3 h-3 rounded-full bg-red-400" />
                     <div className="w-3 h-3 rounded-full bg-amber-400" />
                     <div className="w-3 h-3 rounded-full bg-green-400" />
@@ -82,7 +79,7 @@ export default function ConfiguratorTeaser({ className }: ConfiguratorTeaserProp
                             <span>5</span>
                         </div>
                         <div className="h-2 bg-muted rounded-full overflow-hidden">
-                            <div className="h-full w-1/3 bg-primary rounded-full" />
+                            <div className="h-full w-1/3 bg-foreground rounded-full" />
                         </div>
                     </div>
 
@@ -93,18 +90,18 @@ export default function ConfiguratorTeaser({ className }: ConfiguratorTeaserProp
                             <span>12</span>
                         </div>
                         <div className="h-2 bg-muted rounded-full overflow-hidden">
-                            <div className="h-full w-2/3 bg-primary rounded-full" />
+                            <div className="h-full w-2/3 bg-foreground rounded-full" />
                         </div>
                     </div>
 
                     {/* Fake Checkboxes */}
                     <div className="flex gap-4">
                         <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                            <CheckSquare className="w-4 h-4 text-primary" aria-hidden="true" />
+                            <CheckSquare className="w-4 h-4 text-foreground" aria-hidden="true" />
                             <span>RFID</span>
                         </div>
                         <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                            <CheckSquare className="w-4 h-4 text-primary" aria-hidden="true" />
+                            <CheckSquare className="w-4 h-4 text-foreground" aria-hidden="true" />
                             <span>App</span>
                         </div>
                     </div>
