@@ -1,188 +1,220 @@
 'use client';
 
-import { useState } from 'react';
-import ProductShowcase from '@/features/product/product-showcase';
-import FeatureList from '@/features/product/feature-list';
-import { Building, Monitor, Shield, Wifi } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import Image from 'next/image';
+import { CheckCircle, Cpu, Network, ShieldCheck } from 'lucide-react';
+
+import CTASection from '@/components/utilities/cta-section';
 import Faq from '@/components/utilities/faq';
-import { faqItems } from '@/data/faq-items';
+import HardwareFeatureBlock from '@/components/utilities/hardware-feature-block';
+import HardwareVariantCompare from '@/components/utilities/hardware-variant-compare';
 import HeroSection from '@/components/utilities/hero-section';
+import InfoGrid from '@/components/utilities/info-grid';
+import SplitContent from '@/components/utilities/split-content';
+import MediaPlaceholder from '@/components/utilities/media-placeholder';
 import {
-  Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { toast } from 'sonner';
-import { Toaster } from '@/components/ui/sonner';
+  hardwareFaqItems,
+  hardwareFeatureBlocks,
+  hardwareTrustItems,
+  hardwareVariants,
+} from '@/data/hardware-page';
 
-function SystemPageContent() {
-  const [open, setOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
+const heroDescription = (
+  <>
+    <p className="mb-4 text-lg font-medium">
+      Für Werkstätten, Labore, Hochschulen und sicherheitsrelevante Zugänge.
+    </p>
+    <p>
+      mardu Hardware verbindet lokale Schaltpunkte mit zentraler Steuerung. So werden Zutritte und
+      Maschinen vor Ort zuverlässig freigegeben und gleichzeitig für Betrieb, Security und
+      Administration nachvollziehbar eingebunden.
+    </p>
+  </>
+);
 
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    const email = formData.get('email');
-    setLoading(true);
-    try {
-      const res = await fetch('/api/preorder', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email }),
-      });
-      if (!res.ok) throw new Error('Request failed');
-      toast.success('Danke! Vormerkung erfolgreich.');
-      setOpen(false);
-    } catch (err) {
-      console.error(err);
-      toast.error('Etwas ist schiefgelaufen. Versuch es erneut.');
-    } finally {
-      setLoading(false);
-    }
-  }
+const systemOverviewDescription = (
+  <>
+    <p className="text-balance">
+      Hardware, Netz und Plattform greifen ineinander. Das schafft nicht nur technische Freigaben,
+      sondern einen belastbaren operativen Ablauf vom Zutritt bis zum Maschinenstart.
+    </p>
+    <ul className="mt-10 list-inside list-disc space-y-6">
+      <li>Zugriffspunkte identifizieren Personen und schalten lokal</li>
+      <li>Gateways koordinieren Regeln, Netz und Offline-Verfügbarkeit</li>
+      <li>Die Plattform verbindet Berechtigungen, Logs und Betrieb in einer Oberfläche</li>
+    </ul>
+  </>
+);
 
-  return (
-    <>
-      <section id="products" className="scroll-mt-24">
-        {/*
-                Texte für den Zugriffspunkt
-                Der Zugriffspunkt [ˈtsuːɡrɪfsˌpʊŋkt] liest die Schlüsselkarten der Benutzer und fragt die Berechtigung bei dem Gateway an.
+const systemOverviewItems = [
+  {
+    title: 'Zugriffspunkt',
+    description: 'Liest Identität vor Ort und schaltet Tür oder Maschine direkt frei.',
+    icon: ShieldCheck,
+  },
+  {
+    title: 'Gateway',
+    description: 'Koordiniert Netz, Regeln und lokalen Betrieb pro Standort oder Gebäude.',
+    icon: Network,
+  },
+  {
+    title: 'Plattform',
+    description: 'Verbindet Freigaben, Rollen, Zustände und Logs in einer verwaltbaren Oberfläche.',
+    icon: Cpu,
+  },
+];
 
-                Für jede freischaltbare Strombetriebene Maschine wird ein Zutrittspunkt benötigt.
-                Ein Zutrittspunkt besteht aus einem Lesegerät und einem Schützgerät.
-                Das Schütz schaltet den Strom für Maschinen mit bis zu 3 Phasen und 32A frei.
-                Das Lesegerät liest NFC Schlüsselkarten und kommuniziert über Funk mit dem Gateway
-                Alle Lesegeräte und das Gateway sind über Funk untereinander vermascht um höchste ausfallsicherheit zu gewährleisten
-                */}
-        <ProductShowcase
-          variant={1}
-          leftImageSrc="/_A7_9094_quer.jpg"
-          leftImageAlt="Gateway an zentraler Position in einer Werkstatt"
-          topMiddleImageSrc="/device/tor-2.jpg"
-          topMiddleImageAlt="Innenleben des Gateways"
-          textImageSrc="/device/render.png"
-          textImageAlt="Weboberfläche des Gateways"
-          title="DER ZUGRIFFSPUNKT"
-          description="Der Zugriffspunkt [ˈtsuːɡrɪfsˌpʊŋkt] kombiniert Lesegerät und Schützmodul. Er liest die Schlüsselkarten der Nutzer, fragt beim Gateway die Berechtigung an und schaltet Maschinen zuverlässig frei."
-          price="TBA"
-          priceNote="Preis wird noch bekannt gegeben"
-          ctaLabel="Vormerken"
-          onCtaClick={() => setOpen(true)}
-        >
-          <>
-            <FeatureList size="lg" columns={1}>
-              <FeatureList.Item size="lg" icon={Shield}>
-                Schützmodul schaltet Strom für Maschinen mit bis zu 32A / 3 Phasen sicher frei.
-              </FeatureList.Item>
-              <FeatureList.Item size="lg" icon={Wifi}>
-                NFC-Lesegerät kommuniziert drahtlos mit dem Gateway im vermaschten Funknetz.
-              </FeatureList.Item>
-              <FeatureList.Item size="lg" icon={Monitor}>
-                Vernetzte Zugriffspunkte sorgen für maximale Ausfallsicherheit.
-              </FeatureList.Item>
-            </FeatureList>
-          </>
-        </ProductShowcase>
-
-        {/*
-                Text für das Gateway
-                Das Gateway [geɪtweɪ] empfängt die Zugriffsanfragen von den Readern und sendet die entsprechenden Berechtigungen zurück.
-
-                Pro Gebäude wird ein Gateway benötigt, um das Lokale Funknetzwerk zu verwalten.
-                Das Gateway fragt die Kenntnisse der nutzer bei Open Educational Badges.
-                Alle Berechtigungen sind offline gecached um auch bei Internetausfall einen weiterbetrieb zu ermöglichen
-                Für die genaue überwachung und Verwaltung gibt es ein modernes Webinterface
-
-
-Das Produkt ist in kürze erhältlich, es handelt sich um einen Vorläufigen Preis
-                */}
-        <ProductShowcase
-          variant={2}
-          leftImageSrc="/gateway/mounted.jpg"
-          leftImageAlt="Gateway an zentraler Position in einer Werkstatt"
-          topMiddleImageSrc="/gateway/inside.jpg"
-          topMiddleImageAlt="Innenleben des Gateways"
-          textImageSrc="/gateway/cutout.png"
-          textImageAlt="Gateways Coutout"
-          title="Das Gateway"
-          description="Das Gateway [ˈɡeɪtweɪ] koordiniert das Funknetzwerk, prüft Zugriffsberechtigungen anhand der Open Badges und sendet Freigaben an die Zugriffspunkte."
-          price="TBA"
-          priceNote="Preis wird noch bekannt gegeben"
-          ctaLabel="Vormerken"
-          onCtaClick={() => setOpen(true)}
-        >
-          <FeatureList size="lg" columns={1}>
-            <FeatureList.Item size="lg" icon={Building}>
-              Pro Gebäude wird mindestens ein Gateway benötigt, um das lokale Funknetzwerk zu
-              koordinieren.
-            </FeatureList.Item>
-            <FeatureList.Item size="lg" icon={Shield}>
-              Prüft Berechtigungen anhand der Open Badges und sorgt für regelkonformen Zugang.
-            </FeatureList.Item>
-            <FeatureList.Item size="lg" icon={Wifi}>
-              Offline-Caching aller Berechtigungen ermöglicht Betrieb auch bei Internetausfall.
-            </FeatureList.Item>
-            <FeatureList.Item size="lg" icon={Monitor}>
-              Intuitives Webinterface zur Verwaltung, Überwachung und Auswertung.
-            </FeatureList.Item>
-          </FeatureList>
-        </ProductShowcase>
-      </section>
-
-      <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Produkt vormerken</DialogTitle>
-          </DialogHeader>
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="email">E-Mail-Adresse</Label>
-              <Input id="email" name="email" type="email" required />
-            </div>
-            <DialogFooter>
-              <Button type="submit" disabled={loading}>
-                {loading ? 'Sende...' : 'Absenden'}
-              </Button>
-            </DialogFooter>
-          </form>
-        </DialogContent>
-      </Dialog>
-    </>
-  );
-}
+const trustGridItems = hardwareTrustItems.map((item) => ({
+  title: item.title,
+  icon: item.icon,
+  features: [{ label: 'Nutzen', description: item.description }],
+}));
 
 export default function Page() {
   return (
-    <>
-      <main>
-        <HeroSection
-          title="Das System"
-          description={
-            <>
-              <p className="mb-4">
-                Intelligente Zugriffskontrolle für Makerspaces – sicher, zuverlässig und einfach zu verwalten.
-              </p>
-              <p>
-                Entdecken Sie unsere Hard- und Software-Lösung für maximale Sicherheit und Ausfallsicherheit in Ihrer Werkstatt.
-              </p>
-            </>
-          }
-          buttonText='Jetzt Demo vereinbaren'
-          imageSrc="/gateway/mounted.jpg"
-          imageAlt="Gateway und Zugriffspunkt in der Werkstatt"
+    <main className="min-h-screen bg-background">
+      <HeroSection
+        title="Hardware für Zutritt, Maschinenfreigabe und belastbaren Betrieb"
+        description={heroDescription}
+        overline="Hardware"
+        buttonText="Konfigurator starten"
+        buttonHref="/configurator"
+        secondaryButtonText="Kontakt"
+        secondaryButtonHref="/contact"
+        imageSrc="/gateway/mounted.jpg"
+        imageAlt="Montiertes Gateway in einer Werkstatt"
+      />
+
+      <section className="section-hairline">
+        <SplitContent
+          title="Wie die Hardware zusammenspielt"
+          eyebrow="Systemaufbau"
+          description={systemOverviewDescription}
+          sideTitle="Drei Rollen, ein Ablauf"
+          sideIcon={CheckCircle}
+          items={systemOverviewItems}
         />
-        <SystemPageContent />
-        <section className="max-w-7xl mx-auto px-1 my-20">
-          <h2 className="mb-8 text-center text-3xl font-bold">FAQ</h2>
-          <Faq items={faqItems} />
-        </section>
-      </main>
-      <Toaster position="top-center" richColors />
-    </>
+      </section>
+
+      <section className="section-hairline">
+        <div className="mardu-container py-20 md:py-24">
+          <div className="mb-8 grid gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(20rem,0.72fr)] lg:items-start">
+            <h2 className="headline-balance text-[clamp(1.9rem,4vw,3.5rem)] leading-[1.02] tracking-[-0.03em] text-foreground">
+              Hardware, die im Betrieb Wert schafft
+            </h2>
+            <p className="max-w-xl text-sm leading-relaxed text-foreground/68 md:text-base">
+              Statt Technik nur aufzuzählen, zeigt dieser Bereich, wie Zugriffspunkt, Gateway und
+              Software zusammenarbeiten, damit aus Freigaben verlässliche Abläufe im Alltag werden.
+            </p>
+          </div>
+
+          <div className="grid gap-5">
+            {hardwareFeatureBlocks.map((block, index) => (
+              <HardwareFeatureBlock key={block.id} block={block} reverse={index % 2 === 1} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section-hairline">
+        <HardwareVariantCompare
+          eyebrow="Produktstufen"
+          title="Drei Ausbaustufen für unterschiedliche Anforderungen"
+          description="Nicht jede Umgebung braucht die gleiche Technik. Deshalb gibt es mardu.space in drei Ausbaustufen. So finden Sie schneller die passende Lösung für Ihren Einsatzbereich und Ihr Budget."
+          variants={hardwareVariants}
+        />
+      </section>
+
+      <section className="section-hairline">
+        <div className="mardu-container py-20 md:py-24">
+          <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
+            <div className="space-y-5">
+              <p className="text-[11px] uppercase tracking-[0.16em] text-foreground/46">
+                Inside the Hardware
+              </p>
+              <h2 className="headline-balance text-[clamp(1.9rem,4vw,3.2rem)] leading-[1.02] tracking-[-0.03em] text-foreground">
+                Eigenentwickelte Hardware für den realen Betrieb
+              </h2>
+              <p className="max-w-[58ch] text-sm leading-relaxed text-foreground/72 md:text-base">
+                Innenansichten und Baugruppen sind auf dieser Seite kein Selbstzweck. Sie belegen,
+                dass die Hardware servicefreundlich aufgebaut ist und für Integration, Belastbarkeit
+                und saubere Einbindung in reale Umgebungen gedacht wurde.
+              </p>
+              <ul className="space-y-3 border-t border-black/8 pt-5">
+                <li className="flex items-start gap-3 text-sm leading-relaxed text-foreground/74 md:text-base">
+                  <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-foreground" />
+                  <span>
+                    Innenleben und Gehäuse sind Teil der Produktqualität, nicht nur der Optik.
+                  </span>
+                </li>
+                <li className="flex items-start gap-3 text-sm leading-relaxed text-foreground/74 md:text-base">
+                  <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-foreground" />
+                  <span>
+                    Die Hardware ist auf robuste Integration mit Regeln, Netz und Plattform
+                    ausgelegt.
+                  </span>
+                </li>
+                <li className="flex items-start gap-3 text-sm leading-relaxed text-foreground/74 md:text-base">
+                  <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-foreground" />
+                  <span>
+                    Technische Details werden nur so weit gezeigt, wie sie Vertrauen und Einordnung
+                    verbessern.
+                  </span>
+                </li>
+              </ul>
+            </div>
+
+            <div className="grid gap-4 sm:grid-cols-[1.12fr_0.88fr]">
+              <div className="relative aspect-[16/11] overflow-hidden border border-black/10 bg-card">
+                <Image
+                  src="/gateway/inside.jpg"
+                  alt="Innenansicht des Gateways"
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 40vw"
+                  className="object-cover"
+                />
+              </div>
+              <MediaPlaceholder
+                badge="PCB"
+                title="Platine / Baugruppe"
+                description="Platzhalter für eine saubere Board- oder PCB-Ansicht, sobald das finale Detailmotiv vorliegt."
+                aspectRatioClassName="aspect-[4/5]"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="section-hairline">
+        <InfoGrid
+          eyebrow="Vertrauenselemente"
+          title="Worauf Betreiber bei der Hardware vertrauen können"
+          items={trustGridItems}
+        />
+      </section>
+
+      <section className="section-hairline">
+        <div className="mardu-container py-20 md:py-24">
+          <div className="mb-10 grid gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(18rem,0.7fr)] lg:items-start">
+            <h2 className="headline-balance text-[clamp(1.9rem,4vw,3.2rem)] leading-[1.02] tracking-[-0.03em] text-foreground">
+              FAQ zur Hardware, Einführung und Variantenwahl
+            </h2>
+            <p className="max-w-xl text-sm leading-relaxed text-foreground/68 md:text-base">
+              Die wichtigsten Fragen zur Einordnung, Installation und Auswahl der passenden
+              Produktstufe.
+            </p>
+          </div>
+          <Faq items={hardwareFaqItems} />
+        </div>
+      </section>
+
+      <CTASection
+        title="Hardware sauber einordnen, dann fundiert entscheiden."
+        description="Nutzen Sie den Konfigurator für eine erste Bedarfserfassung oder sprechen Sie direkt mit uns über Umgebung, Netzvariante und Integrationsanforderungen."
+        primaryButtonText="Konfigurator starten"
+        primaryButtonHref="/configurator"
+        secondaryButtonText="Kontakt aufnehmen"
+        secondaryButtonHref="/contact"
+      />
+    </main>
   );
 }
