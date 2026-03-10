@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { ScrollReveal } from '@/components/ui/motion/scroll-reveal';
 import { Overline } from '@/components/ui/typography';
+import MediaPlaceholder from '@/components/utilities/media-placeholder';
 
 interface ConfiguratorTeaserProps {
   className?: string;
@@ -32,19 +33,19 @@ export default function ConfiguratorTeaser({ className }: ConfiguratorTeaserProp
                 </Overline>
 
                 <h2 className="headline-balance text-[clamp(1.9rem,4vw,3.5rem)] leading-[1.02] tracking-[-0.03em] text-foreground">
-                  Planen Sie Ihr System individuell
+                  Der schnellste Weg zu einer belastbaren Erstplanung
                 </h2>
 
                 <p className="max-w-xl text-lg leading-relaxed text-foreground/72">
-                  Erfassen Sie Tueren, Tore und Maschinen in wenigen Schritten und schaffen Sie eine
-                  belastbare Grundlage fuer ein erstes Angebot.
+                  Erfassen Sie Zugänge, Maschinen und Rahmenbedingungen in wenigen Schritten und
+                  schaffen Sie eine belastbare Grundlage für ein erstes Angebot.
                 </p>
 
                 <div className="grid gap-3 sm:grid-cols-3">
                   {[
-                    ['Türen & Tore', 'Zugänge strukturieren'],
-                    ['Maschinen', 'Freigaben grob erfassen'],
-                    ['Kontakt', 'Anfrage direkt senden'],
+                    ['Zugänge', 'Türen, Tore und Zonen grob erfassen'],
+                    ['Maschinen', 'Freigaben und Leistungsbedarf skizzieren'],
+                    ['Anfrage', 'Kontaktdaten direkt mit übergeben'],
                   ].map(([label, copy]) => (
                     <div key={label} className="border border-black/10 bg-background/70 p-4">
                       <div className="text-[11px] uppercase tracking-[0.16em] text-foreground/48">

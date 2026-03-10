@@ -122,13 +122,28 @@ export default function WhitepaperTeaser({ className }: WhitepaperTeaserProps) {
                 </Overline>
 
                 <h2 className="headline-balance text-[clamp(1.9rem,4vw,3.5rem)] leading-[1.02] tracking-[-0.03em] text-foreground">
-                  Whitepaper: Digitale Zutritts- und Maschinenfreigabe
+                  Whitepaper für Betreiber, Werkstätten und Lernumgebungen
                 </h2>
 
                 <p className="max-w-xl text-lg leading-relaxed text-foreground/72">
-                  Erfahren Sie, wie Sie Zutritt, Maschinenfreigaben und Unterweisungen zuverlässig
-                  organisieren – für Unternehmenswerkstätten, Hochschulen und Makerspaces.
+                  Verdichtete Einordnung zu Betrieb, Qualifikation, Nachvollziehbarkeit und
+                  Umsetzung. Für alle, die das Thema intern sauber bewerten und weitergeben müssen.
                 </p>
+
+                <div className="grid gap-3 sm:grid-cols-3">
+                  {[
+                    ['Betrieb', 'typische Einsatzbilder und Verantwortlichkeiten'],
+                    ['Sicherheit', 'Freigaben, Logs und organisatorische Anforderungen'],
+                    ['Entscheidung', 'kompakte Grundlage für interne Abstimmung'],
+                  ].map(([label, copy]) => (
+                    <div key={label} className="border border-black/10 bg-background/70 p-4">
+                      <div className="text-[11px] uppercase tracking-[0.16em] text-foreground/48">
+                        {label}
+                      </div>
+                      <div className="mt-2 text-sm leading-relaxed text-foreground/76">{copy}</div>
+                    </div>
+                  ))}
+                </div>
 
                 <div className="flex flex-wrap gap-4 pt-2">
                   <Dialog

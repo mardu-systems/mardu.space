@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useRef, useState } from 'react';
 import { Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -24,6 +25,8 @@ export interface CTASectionProps {
   description: string;
   primaryButtonText: string;
   secondaryButtonText?: string;
+  primaryButtonHref?: string;
+  secondaryButtonHref?: string;
   className?: string;
 }
 
@@ -32,6 +35,8 @@ export default function CTASection({
   description,
   primaryButtonText,
   secondaryButtonText,
+  primaryButtonHref,
+  secondaryButtonHref,
   className = '',
 }: CTASectionProps) {
   const [open, setOpen] = useState(false);
@@ -141,151 +146,175 @@ export default function CTASection({
             </p>
 
             <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
-              <Dialog
-                open={open}
-                onOpenChange={(nextOpen) => {
-                  setOpen(nextOpen);
-                  if (!nextOpen) {
-                    setFormErrors({});
-                    setIsSubmitting(false);
-                    setConsentChecked(false);
-                    setStatus('idle');
-                    setErrorMessage('');
-                  }
-                }}
-              >
-                <DialogTrigger asChild>
-                  <Button>{primaryButtonText}</Button>
-                </DialogTrigger>
+              {primaryButtonHref ? (
+                <Button asChild>
+                  <Link href={primaryButtonHref}>{primaryButtonText}</Link>
+                </Button>
+              ) : (
+                <Dialog
+                  open={open}
+                  onOpenChange={(nextOpen) => {
+                    setOpen(nextOpen);
+                    if (!nextOpen) {
+                      setFormErrors({});
+                      setIsSubmitting(false);
+                      setConsentChecked(false);
+                      setStatus('idle');
+                      setErrorMessage('');
+                    }
+                  }}
+                >
+                  <DialogTrigger asChild>
+                    <Button>{primaryButtonText}</Button>
+                  </DialogTrigger>
 
-                <DialogContent className="max-h-[90vh] overflow-y-auto border border-black/10 bg-background sm:max-w-2xl">
-                  <DialogHeader>
-                    <DialogTitle>Anmelden</DialogTitle>
-                    <DialogDescription>
-                      Unser Newsletter informiert Sie regelmäßig über Produktneuheiten und
-                      Sonderaktionen.
-                    </DialogDescription>
-                  </DialogHeader>
+                  <DialogContent className="max-h-[90vh] overflow-y-auto border border-black/10 bg-background sm:max-w-2xl">
+                    <DialogHeader>
+                      <DialogTitle>Anmelden</DialogTitle>
+                      <DialogDescription>
+                        Unser Newsletter informiert Sie regelmäßig über Produktneuheiten und
+                        Sonderaktionen.
+                      </DialogDescription>
+                    </DialogHeader>
 
-                  {status === 'success' ? (
-                    <Alert role="status" aria-live="polite">
-                      <AlertDescription>
-                        Vielen Dank. Wir haben Ihnen eine Bestätigungs-E-Mail gesendet.
-                      </AlertDescription>
-                    </Alert>
-                  ) : (
-                    <form className="space-y-5 pt-2" onSubmit={handleNewsletterSubmit} noValidate>
-                      <div className="grid gap-4 md:grid-cols-2">
+                    {status === 'success' ? (
+                      <Alert role="status" aria-live="polite">
+                        <AlertDescription>
+                          Vielen Dank. Wir haben Ihnen eine Bestätigungs-E-Mail gesendet.
+                        </AlertDescription>
+                      </Alert>
+                    ) : (
+                      <form className="space-y-5 pt-2" onSubmit={handleNewsletterSubmit} noValidate>
+                        <div className="grid gap-4 md:grid-cols-2">
+                          <div className="space-y-2">
+                            <Label
+                              htmlFor="cta.firstName"
+                              className="after:ml-0.5 after:text-destructive after:content-['*']"
+                            >
+                              Vorname
+                            </Label>
+                            <Input
+                              type="text"
+                              id="cta.firstName"
+                              name="firstName"
+                              autoComplete="given-name"
+                              ref={firstNameInputRef}
+                              aria-invalid={Boolean(formErrors.firstName)}
+                            />
+                            {formErrors.firstName ? (
+                              <p className="text-xs text-destructive">{formErrors.firstName}</p>
+                            ) : null}
+                          </div>
+                          <div className="space-y-2">
+                            <Label
+                              htmlFor="cta.lastName"
+                              className="after:ml-0.5 after:text-destructive after:content-['*']"
+                            >
+                              Nachname
+                            </Label>
+                            <Input
+                              type="text"
+                              id="cta.lastName"
+                              name="lastName"
+                              autoComplete="family-name"
+                              ref={lastNameInputRef}
+                              aria-invalid={Boolean(formErrors.lastName)}
+                            />
+                            {formErrors.lastName ? (
+                              <p className="text-xs text-destructive">{formErrors.lastName}</p>
+                            ) : null}
+                          </div>
+                        </div>
+
                         <div className="space-y-2">
-                          <Label
-                            htmlFor="cta.firstName"
-                            className="after:ml-0.5 after:text-destructive after:content-['*']"
-                          >
-                            Vorname
-                          </Label>
+                          <Label htmlFor="cta.company">Firma</Label>
                           <Input
                             type="text"
-                            id="cta.firstName"
-                            name="firstName"
-                            autoComplete="given-name"
-                            ref={firstNameInputRef}
-                            aria-invalid={Boolean(formErrors.firstName)}
+                            id="cta.company"
+                            name="company"
+                            autoComplete="organization"
                           />
-                          {formErrors.firstName ? (
-                            <p className="text-xs text-destructive">{formErrors.firstName}</p>
-                          ) : null}
                         </div>
+
                         <div className="space-y-2">
                           <Label
-                            htmlFor="cta.lastName"
+                            htmlFor="cta.email"
                             className="after:ml-0.5 after:text-destructive after:content-['*']"
                           >
-                            Nachname
+                            E-Mail
                           </Label>
                           <Input
-                            type="text"
-                            id="cta.lastName"
-                            name="lastName"
-                            autoComplete="family-name"
-                            ref={lastNameInputRef}
-                            aria-invalid={Boolean(formErrors.lastName)}
+                            type="email"
+                            id="cta.email"
+                            name="email"
+                            autoComplete="email"
+                            inputMode="email"
+                            ref={emailInputRef}
+                            aria-invalid={Boolean(formErrors.email)}
                           />
-                          {formErrors.lastName ? (
-                            <p className="text-xs text-destructive">{formErrors.lastName}</p>
+                          {formErrors.email ? (
+                            <p className="text-xs text-destructive">{formErrors.email}</p>
                           ) : null}
                         </div>
-                      </div>
 
-                      <div className="space-y-2">
-                        <Label htmlFor="cta.company">Firma</Label>
-                        <Input type="text" id="cta.company" name="company" autoComplete="organization" />
-                      </div>
+                        <div className="space-y-2 pt-1">
+                          <Label className="flex cursor-pointer items-start gap-3 text-xs font-normal leading-relaxed text-muted-foreground">
+                            <Checkbox
+                              id="cta.consent"
+                              checked={consentChecked}
+                              onCheckedChange={(checked) => {
+                                setConsentChecked(checked === true);
+                                if (formErrors.consent) {
+                                  setFormErrors((prev) => ({ ...prev, consent: undefined }));
+                                }
+                              }}
+                              ref={consentRef}
+                              className="mt-1"
+                            />
+                            Ihre hier eingegebenen Daten werden lediglich zur Personalisierung des
+                            Newsletters verwendet. Durch das Absenden willigen Sie in die
+                            Datenverarbeitung gemäß Datenschutzerklärung ein.
+                          </Label>
+                          {formErrors.consent ? (
+                            <p className="text-xs text-destructive">{formErrors.consent}</p>
+                          ) : null}
+                        </div>
 
-                      <div className="space-y-2">
-                        <Label
-                          htmlFor="cta.email"
-                          className="after:ml-0.5 after:text-destructive after:content-['*']"
-                        >
-                          E-Mail
-                        </Label>
-                        <Input
-                          type="email"
-                          id="cta.email"
-                          name="email"
-                          autoComplete="email"
-                          inputMode="email"
-                          ref={emailInputRef}
-                          aria-invalid={Boolean(formErrors.email)}
-                        />
-                        {formErrors.email ? (
-                          <p className="text-xs text-destructive">{formErrors.email}</p>
+                        {status === 'error' ? (
+                          <Alert variant="destructive" role="alert" aria-live="assertive">
+                            <AlertDescription>{errorMessage}</AlertDescription>
+                          </Alert>
                         ) : null}
-                      </div>
 
-                      <div className="space-y-2 pt-1">
-                        <Label className="flex cursor-pointer items-start gap-3 text-xs font-normal leading-relaxed text-muted-foreground">
-                          <Checkbox
-                            id="cta.consent"
-                            checked={consentChecked}
-                            onCheckedChange={(checked) => {
-                              setConsentChecked(checked === true);
-                              if (formErrors.consent) {
-                                setFormErrors((prev) => ({ ...prev, consent: undefined }));
-                              }
-                            }}
-                            ref={consentRef}
-                            className="mt-1"
-                          />
-                          Ihre hier eingegebenen Daten werden lediglich zur Personalisierung des
-                          Newsletters verwendet. Durch das Absenden willigen Sie in die
-                          Datenverarbeitung gemäß Datenschutzerklärung ein.
-                        </Label>
-                        {formErrors.consent ? (
-                          <p className="text-xs text-destructive">{formErrors.consent}</p>
-                        ) : null}
-                      </div>
-
-                      {status === 'error' ? (
-                        <Alert variant="destructive" role="alert" aria-live="assertive">
-                          <AlertDescription>{errorMessage}</AlertDescription>
-                        </Alert>
-                      ) : null}
-
-                      <Button type="submit" className="w-full" disabled={isSubmitting}>
-                        {isSubmitting ? (
-                          <Loader2 className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />
-                        ) : null}
-                        {isSubmitting ? 'Sende…' : 'Jetzt anmelden'}
-                      </Button>
-                    </form>
-                  )}
-                </DialogContent>
-              </Dialog>
+                        <Button type="submit" className="w-full" disabled={isSubmitting}>
+                          {isSubmitting ? (
+                            <Loader2 className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />
+                          ) : null}
+                          {isSubmitting ? 'Sende…' : 'Jetzt anmelden'}
+                        </Button>
+                      </form>
+                    )}
+                  </DialogContent>
+                </Dialog>
+              )}
 
               {secondaryButtonText ? (
-                <MeetergoCTAButton variant="outline" className="border-white/45 bg-white/8 text-white hover:bg-white/14 hover:text-white sm:ml-0">
-                  {secondaryButtonText}
-                </MeetergoCTAButton>
+                secondaryButtonHref ? (
+                  <Button
+                    asChild
+                    variant="outline"
+                    className="border-white/45 bg-white/8 text-white hover:bg-white/14 hover:text-white"
+                  >
+                    <Link href={secondaryButtonHref}>{secondaryButtonText}</Link>
+                  </Button>
+                ) : (
+                  <MeetergoCTAButton
+                    variant="outline"
+                    className="border-white/45 bg-white/8 text-white hover:bg-white/14 hover:text-white sm:ml-0"
+                  >
+                    {secondaryButtonText}
+                  </MeetergoCTAButton>
+                )
               ) : null}
             </div>
           </div>

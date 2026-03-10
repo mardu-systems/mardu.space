@@ -35,9 +35,9 @@ const heroDescription = (
       Für Unternehmenswerkstätten, Hochschulen, Makerspaces und Labore.
     </p>
     <p>
-      mardu.space organisiert Zutritt, Maschinenfreigaben und Unterweisungen zuverlässig. Statt
-      Schlüssel, Codes oder manueller Listen erhalten Betreiber ein konsistentes Berechtigungsmodell
-      für Räume und Maschinen und technisch durchgesetzte Regeln.
+      mardu.space organisiert Zutritt, Maschinenfreigaben und Qualifikationen in einem zentralen
+      System. Betreiber steuern damit nachvollziehbar, wer wann welche Bereiche betreten und welche
+      Maschinen nutzen darf.
     </p>
   </>
 );
@@ -79,72 +79,37 @@ const summaryItems = [
 const cardGridItems = [
   {
     title: 'Unternehmen & Hochschulen',
-    description: (
-      <ul className="space-y-3">
-        <li className="flex items-start gap-2">
-          <span className="text-primary">•</span>
-          <span>Zahlreiche Türen, Zonen & Maschinen</span>
-        </li>
-        <li className="flex items-start gap-2">
-          <span className="text-primary">•</span>
-          <span>Hohe Gefährdungspotenziale</span>
-        </li>
-        <li className="flex items-start gap-2">
-          <span className="text-primary">•</span>
-          <span>Strenge Nachweispflichten</span>
-        </li>
-        <li className="flex items-start gap-2">
-          <span className="text-primary">•</span>
-          <span>Diverse Nutzergruppen</span>
-        </li>
-      </ul>
-    ),
+    badge: 'Viele Beteiligte',
+    description:
+      'Hilfreich, wenn viele Räume, Maschinen und Nutzergruppen koordiniert und nachvollziehbar abgesichert werden müssen.',
+    list: [
+      'klare Zuständigkeiten trotz komplexer Strukturen',
+      'saubere Nachweise für Betrieb und Aufsicht',
+    ],
     icon: Briefcase,
     className: 'bg-card',
   },
   {
     title: 'Makerspaces',
-    description: (
-      <ul className="space-y-3">
-        <li className="flex items-start gap-2">
-          <span className="text-primary">•</span>
-          <span>Wenig Personal, hohe Fluktuation</span>
-        </li>
-        <li className="flex items-start gap-2">
-          <span className="text-primary">•</span>
-          <span>Maschinen mit hohem Risiko</span>
-        </li>
-        <li className="flex items-start gap-2">
-          <span className="text-primary">•</span>
-          <span>Einweisungen sind oft nicht gekoppelt</span>
-        </li>
-        <li className="flex items-start gap-2">
-          <span className="text-primary">•</span>
-          <span>Unterschiedliche Schutzzonen</span>
-        </li>
-      </ul>
-    ),
+    badge: 'Wenig Administration',
+    description:
+      'Besonders sinnvoll, wenn Einweisungen, wechselnde Nutzer und riskante Maschinen im Alltag zusammenkommen.',
+    list: [
+      'Qualifikation direkt mit Freigaben koppeln',
+      'weniger manuelle Organisation trotz Fluktuation',
+    ],
     icon: Users,
     className: 'bg-card',
   },
   {
     title: 'Private Werkstätten',
-    description: (
-      <ul className="space-y-3">
-        <li className="flex items-start gap-2">
-          <span className="text-primary">•</span>
-          <span>Fokus auf Komfort & Sicherheit</span>
-        </li>
-        <li className="flex items-start gap-2">
-          <span className="text-primary">•</span>
-          <span>Schutz vor unbefugtem Zugriff</span>
-        </li>
-        <li className="flex items-start gap-2">
-          <span className="text-primary">•</span>
-          <span>Einfache Verwaltung gewünscht</span>
-        </li>
-      </ul>
-    ),
+    badge: 'Einfacher Betrieb',
+    description:
+      'Passend, wenn Sicherheit, Komfort und überschaubare Verwaltung wichtiger sind als komplexe Organisationsstrukturen.',
+    list: [
+      'Schutz vor unbefugtem Zugriff auf Räume und Geräte',
+      'einfaches Rechtemanagement ohne Listen und Schlüsselchaos',
+    ],
     icon: Wrench,
     className: 'bg-card',
   },
@@ -248,14 +213,13 @@ const infoGridItems = [
     title: 'Identität & Zugang',
     icon: Key,
     features: [
-      { label: 'RBAC', description: 'Granulare Rechte für Benutzer, Gruppen & Admins.' },
       {
-        label: 'Auth',
-        description: 'Passwortloser Login, Passkeys (FIDO2), NFC & App.',
+        label: 'Rollen & Rechte',
+        description: 'Granulare Freigaben für Nutzer, Gruppen und Verantwortliche.',
       },
       {
-        label: 'Zeitsteuerung',
-        description: 'Regeln nach Zeit, Wochentagen und Feiertagen.',
+        label: 'Login & Identifikation',
+        description: 'Passkeys, NFC, Karten und App-Anbindung in einem Modell.',
       },
     ],
   },
@@ -264,16 +228,13 @@ const infoGridItems = [
     icon: Cpu,
     features: [
       {
-        label: 'Sicheres Provisioning',
-        description: 'Automatischer Schlüsselaustausch (ECC).',
-      },
-      {
         label: 'Maschinenfreigabe',
-        description: 'Steuerung basierend auf Qualifikation.',
+        description: 'Steuerung von Geräten und Maschinen auf Basis von Qualifikation und Regeln.',
       },
       {
         label: 'Vernetzung',
-        description: 'IP500 Mesh-Netzwerke via MQTT und LAN oder WLAN.',
+        description:
+          'Einbindung von Türen, Steuerungen und Hardware in bestehende Infrastrukturen.',
       },
     ],
   },
@@ -281,14 +242,13 @@ const infoGridItems = [
     title: 'Monitoring',
     icon: Activity,
     features: [
-      { label: 'Access Logs', description: 'wer, wann, wo, Ergebnis.' },
       {
-        label: 'Reason Codes',
-        description: 'Details bei Ablehnung (z. B. "Qualifikation fehlt").',
+        label: 'Ereignisprotokolle',
+        description: 'Nachvollziehbar dokumentiert: wer, wann, wo und mit welchem Ergebnis.',
       },
       {
-        label: 'Audit Trail',
-        description: 'Nachvollziehbarkeit aller Änderungen.',
+        label: 'Ablehnungsgründe',
+        description: 'Transparente Hinweise, warum Zutritt oder Nutzung nicht freigegeben wurde.',
       },
     ],
   },
@@ -296,14 +256,13 @@ const infoGridItems = [
     title: 'System & Sicherheit',
     icon: Lock,
     features: [
-      { label: 'API-first', description: 'REST-API mit OpenAPI-Spezifikation.' },
       {
-        label: 'Kryptografie',
-        description: 'Ende-zu-Ende (AES, ECDSA, TLS und DTLS).',
+        label: 'Schnittstellen',
+        description: 'Anbindung an bestehende Systeme, Prozesse und Auswertungen.',
       },
       {
-        label: 'Container-basiert',
-        description: 'Docker für Edge (Raspberry Pi) oder Server.',
+        label: 'Betriebsmodell',
+        description: 'Lokal oder zentral betreibbar, passend zu Infrastruktur und Verfügbarkeit.',
       },
     ],
   },
@@ -429,13 +388,14 @@ export default function HomePage() {
       <section id="home">
         <HeroSection
           className={SECTION_SPACING}
-          title="Zutrittskontrolle & Maschinenfreigabe"
-          emphasis="für Werkstätten, Labore & Makerspaces."
-          overline="Engineering Access Platform"
+          title="Wer darf was wann nutzen?"
+          emphasis="Zutritt und Maschinenfreigabe sicher steuern."
+          overline="Digitale Zutritts- und Maschinenfreigabe"
           description={heroDescription}
-          buttonText="Jetzt Demo vereinbaren"
-          secondaryButtonText="Mehr erfahren"
-          secondaryButtonHref="/#produkte"
+          buttonText="Konfigurator starten"
+          buttonHref="/configurator"
+          secondaryButtonText="Whitepaper"
+          secondaryButtonHref="/#whitepaper"
           imageSrc="/_A7_9094_quer.jpg"
           imageAlt="mardu.space-System in einer Werkstatt"
           variant="landing"
@@ -457,8 +417,8 @@ export default function HomePage() {
       <section id="argumente" className="section-hairline">
         <CardGrid
           className={SECTION_SPACING}
-          eyebrow="Vorteile"
-          title="Ausgangslage & Herausforderungen"
+          eyebrow="Einsatzfelder"
+          title="Wo mardu.space besonders hilft"
           variant="muted"
           items={cardGridItems}
         />
@@ -479,6 +439,10 @@ export default function HomePage() {
         />
       </section>
 
+      <section id="whitepaper" className="section-hairline">
+        <WhitepaperTeaser className={SECTION_SPACING} />
+      </section>
+
       <section className="section-hairline">
         <InfoGrid
           className={SECTION_SPACING}
@@ -486,10 +450,6 @@ export default function HomePage() {
           title="Spezifikation & Funktionsumfang"
           items={infoGridItems}
         />
-      </section>
-
-      <section className="section-hairline">
-        <WhitepaperTeaser className={SECTION_SPACING} />
       </section>
 
       <section className="section-hairline">
@@ -512,10 +472,12 @@ export default function HomePage() {
 
       <CTASection
         className={SECTION_SPACING}
-        title="Sichere Werkstätten beginnen mit klaren Standards."
-        description="Sprechen Sie mit uns. Gemeinsam entwickeln wir eine Lösung, die zu Ihren Prozessen, Flächen und Sicherheitsanforderungen passt."
-        primaryButtonText="Newsletter abonnieren"
-        secondaryButtonText="Beratung vereinbaren"
+        title="Nächster Schritt: Bedarf strukturieren, dann sauber entscheiden."
+        description="Starten Sie mit dem Konfigurator für eine erste Einordnung. Wenn Sie intern vertiefen oder weitergeben müssen, nutzen Sie ergänzend das Whitepaper."
+        primaryButtonText="Konfigurator starten"
+        primaryButtonHref="/configurator"
+        secondaryButtonText="Whitepaper ansehen"
+        secondaryButtonHref="/#whitepaper"
       />
 
       <Foerderung

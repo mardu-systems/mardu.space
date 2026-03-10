@@ -1,6 +1,5 @@
 import { LucideIcon } from 'lucide-react';
 import { ReactNode } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 import { Overline } from '@/components/ui/typography';
 
@@ -30,13 +29,6 @@ export default function InfoGrid({ title, eyebrow, items, columns = 4, className
       4: 'md:grid-cols-2',
     }[columns] || 'md:grid-cols-2';
 
-  const cardTones = [
-    'bg-linear-to-br from-card via-card to-muted/22',
-    'bg-card',
-    'bg-card',
-    'bg-linear-to-br from-muted/18 via-card to-card',
-  ];
-
   return (
     <section className={cn('w-full py-16 md:py-18', className)}>
       <div className="mardu-container">
@@ -53,55 +45,40 @@ export default function InfoGrid({ title, eyebrow, items, columns = 4, className
           </div>
         )}
         <div className={`grid gap-4 lg:gap-5 ${gridCols}`}>
-          {items.map((item, idx) => {
-            return (
-              <Card
-                key={item.title}
-                className={cn(
-                  'border border-black/10 shadow-none',
-                  cardTones[idx % cardTones.length],
-                )}
-              >
-                <CardHeader className="mb-0 border-b border-black/8 px-5 py-5">
-                  <div className="space-y-3">
-                    <div className="flex items-center gap-3">
-                      {item.icon ? (
-                        <div className="flex h-10 w-10 shrink-0 items-center justify-center border border-black/10 bg-background">
-                          <item.icon className="h-4.5 w-4.5 text-foreground/72" />
-                        </div>
-                      ) : null}
-                      <CardTitle
-                        className={cn(
-                          'font-semibold tracking-[-0.02em] text-foreground',
-                          'text-lg md:text-[1.45rem]',
-                        )}
-                      >
-                        {item.title}
-                      </CardTitle>
-                    </div>
+          {items.map((item) => (
+            <section
+              key={item.title}
+              className="border border-black/10 bg-card/90 px-5 py-5 shadow-none md:px-6 md:py-6"
+            >
+              <div className="flex items-center gap-3">
+                {item.icon ? (
+                  <div className="flex h-9 w-9 shrink-0 items-center justify-center border border-black/10 bg-background">
+                    <item.icon className="h-4 w-4 text-foreground/72" />
                   </div>
-                </CardHeader>
-                <CardContent className="px-5 py-5">
-                  <ul className="space-y-4">
-                    {item.features.map((feature) => (
-                      <li key={`${item.title}-${feature.label}`} className="space-y-1.5">
-                        <strong className="block text-[12px] font-semibold uppercase tracking-[0.16em] text-foreground/46">
-                          {feature.label}
-                        </strong>
-                        <div className="max-w-[34ch] text-[15px] leading-relaxed text-foreground/74">
-                          {typeof feature.description === 'string' ? (
-                            <span>{feature.description}</span>
-                          ) : (
-                            feature.description
-                          )}
-                        </div>
-                      </li>
-                    ))}
-                  </ul>
-                </CardContent>
-              </Card>
-            );
-          })}
+                ) : null}
+                <h3 className="text-lg font-semibold tracking-[-0.02em] text-foreground md:text-xl">
+                  {item.title}
+                </h3>
+              </div>
+
+              <ul className="mt-4 space-y-3 border-t border-black/8 pt-4">
+                {item.features.map((feature) => (
+                  <li key={`${item.title}-${feature.label}`} className="space-y-1">
+                    <strong className="block text-[11px] font-semibold uppercase tracking-[0.16em] text-foreground/46">
+                      {feature.label}
+                    </strong>
+                    <div className="max-w-[34ch] text-sm leading-relaxed text-foreground/72">
+                      {typeof feature.description === 'string' ? (
+                        <span>{feature.description}</span>
+                      ) : (
+                        feature.description
+                      )}
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ))}
         </div>
       </div>
     </section>
