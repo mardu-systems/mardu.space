@@ -7,6 +7,7 @@ import {
   ArrowRight,
   BadgeCheck,
   CheckCircle2,
+  ChevronRight,
   KeyRound,
   Network,
   ScanLine,
@@ -22,7 +23,6 @@ import { Overline } from '@/components/ui/typography';
 import {
   administrationCta,
   administrationGrowthPillars,
-  administrationGrowthSignals,
   administrationHero,
   administrationStorySections,
   type AdministrationStorySectionDto,
@@ -63,7 +63,7 @@ function SoftwareHeroVisual() {
           </div>
           <div className="inline-flex items-center gap-2 border border-emerald-600/15 bg-emerald-500/8 px-3 py-1 text-xs text-emerald-800">
             <span className="h-2 w-2 rounded-full bg-emerald-600" />
-            Strukturen verbunden
+            Operativ nutzbar
           </div>
         </div>
 
@@ -76,8 +76,8 @@ function SoftwareHeroVisual() {
                     <UsersRound className="h-4 w-4 text-foreground/70" aria-hidden="true" />
                   </div>
                   <div>
-                    <p className="text-sm font-semibold text-foreground">Benutzerverwaltung</p>
-                    <p className="text-xs text-foreground/55">Aktive Nutzer, Status und Gruppen</p>
+                    <p className="text-sm font-semibold text-foreground">Nutzerverwaltung</p>
+                    <p className="text-xs text-foreground/55">Status, Gruppen und Tags</p>
                   </div>
                 </div>
                 <div className="text-right text-xs text-foreground/55">
@@ -112,14 +112,14 @@ function SoftwareHeroVisual() {
               <HeroSignalCard
                 icon={Network}
                 eyebrow="Integrationen"
-                title="Verzeichnisdienste eingebunden"
-                description="Bestehende Quellen bleiben Teil des Prozesses statt Parallelwelt."
+                title="Quellen anbinden"
+                description="Bestehende Nutzerquellen statt Doppelpflege."
               />
               <HeroSignalCard
                 icon={KeyRound}
-                eyebrow="Zutrittsregeln"
-                title="Präzise statt pauschal"
-                description="Person, Bereich und Zeitfenster lassen sich kombiniert steuern."
+                eyebrow="Freigaben"
+                title="Regeln zentral steuern"
+                description="Nach Person, Bereich und Zeit statt pauschal."
               />
             </div>
           </div>
@@ -131,8 +131,8 @@ function SoftwareHeroVisual() {
                   <BadgeCheck className="h-4 w-4 text-foreground/70" aria-hidden="true" />
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-foreground">Regelstatus</p>
-                  <p className="text-xs text-foreground/55">Freigaben für Personen und Bereiche</p>
+                  <p className="text-sm font-semibold text-foreground">Freigabestatus</p>
+                  <p className="text-xs text-foreground/55">Personen, Bereiche und Bedingungen</p>
                 </div>
               </div>
 
@@ -161,9 +161,7 @@ function SoftwareHeroVisual() {
               <div className="mt-3 grid gap-3 sm:grid-cols-2">
                 <div className="border border-black/8 bg-card/70 p-3">
                   <p className="text-sm font-medium text-foreground">9 Nutzergruppen</p>
-                  <p className="mt-1 text-xs text-foreground/55">
-                    Regeln zentral statt pro Einzelfall.
-                  </p>
+                  <p className="mt-1 text-xs text-foreground/55">Regeln zentral statt einzeln.</p>
                 </div>
                 <div className="border border-black/8 bg-card/70 p-3">
                   <p className="text-sm font-medium text-foreground">Tag-Ausgabe in 3 Schritten</p>
@@ -248,10 +246,10 @@ function VisualFrame({
             <span className="inline-flex border border-black/10 bg-background px-2.5 py-1 text-[11px] uppercase tracking-[0.16em] text-foreground/50">
               {badge}
             </span>
-            <h3 className="mt-3 text-xl font-semibold tracking-[-0.02em] text-foreground">
+            <h3 className="mt-3 text-lg font-semibold tracking-[-0.02em] text-foreground md:text-xl">
               {title}
             </h3>
-            <p className="mt-2 max-w-[42ch] text-sm leading-relaxed text-foreground/66">
+            <p className="mt-2 max-w-[34ch] text-sm leading-relaxed text-foreground/66">
               {description}
             </p>
           </div>
@@ -259,6 +257,32 @@ function VisualFrame({
         {children}
       </div>
     </div>
+  );
+}
+
+function ProductScreenshot({
+  badge,
+  title,
+  description,
+  src,
+  alt,
+  sizes,
+}: {
+  badge: string;
+  title: string;
+  description: string;
+  src: string;
+  alt: string;
+  sizes: string;
+}) {
+  return (
+    <VisualFrame badge={badge} title={title} description={description}>
+      <div className="overflow-hidden border border-black/8 bg-black">
+        <div className="relative aspect-[16/10] w-full">
+          <Image src={src} alt={alt} fill sizes={sizes} className="object-cover object-top" />
+        </div>
+      </div>
+    </VisualFrame>
   );
 }
 
@@ -276,8 +300,8 @@ function UserManagementVisual({ section }: { section: AdministrationStorySection
 }
 
 function IntegrationFlowVisual({ section }: { section: AdministrationStorySectionDto }) {
-  const sources = ['HR-System', 'Directory', 'Campus-IT'];
-  const targets = ['WebQ Verwaltung', 'Gruppenlogik', 'Zutrittsregeln'];
+  const sources = ['Directory', 'HR-System', 'Gastdaten'];
+  const targets = ['Nutzer', 'Gruppen', 'Freigaben'];
 
   return (
     <VisualFrame
@@ -285,17 +309,17 @@ function IntegrationFlowVisual({ section }: { section: AdministrationStorySectio
       title={section.media.title}
       description={section.media.description}
     >
-      <div className="grid gap-4 lg:grid-cols-[0.9fr_auto_1.1fr] lg:items-center">
+      <div className="grid gap-4 lg:grid-cols-[0.95fr_auto_1.05fr] lg:items-center">
         <div className="space-y-3">
           {sources.map((source) => (
             <div key={source} className="border border-black/8 bg-background px-4 py-3">
               <p className="text-sm font-medium text-foreground">{source}</p>
-              <p className="text-xs text-foreground/55">Bestehende Nutzerquelle</p>
+              <p className="text-xs text-foreground/55">Bestehende Quelle</p>
             </div>
           ))}
         </div>
 
-        <div className="flex items-center justify-center py-2">
+        <div className="flex items-center justify-center">
           <div className="flex h-12 w-12 items-center justify-center rounded-full border border-black/10 bg-background">
             <Network className="h-5 w-5 text-foreground/65" aria-hidden="true" />
           </div>
@@ -305,9 +329,7 @@ function IntegrationFlowVisual({ section }: { section: AdministrationStorySectio
           {targets.map((target) => (
             <div key={target} className="border border-black/8 bg-background px-4 py-3">
               <p className="text-sm font-medium text-foreground">{target}</p>
-              <p className="text-xs text-foreground/55">
-                Direkt in operative Verwaltungslogik übersetzt
-              </p>
+              <p className="text-xs text-foreground/55">Direkt in der Verwaltungsapp nutzbar</p>
             </div>
           ))}
         </div>
@@ -342,32 +364,6 @@ function GroupManagementVisual({ section }: { section: AdministrationStorySectio
   );
 }
 
-function ProductScreenshot({
-  badge,
-  title,
-  description,
-  src,
-  alt,
-  sizes,
-}: {
-  badge: string;
-  title: string;
-  description: string;
-  src: string;
-  alt: string;
-  sizes: string;
-}) {
-  return (
-    <VisualFrame badge={badge} title={title} description={description}>
-      <div className="overflow-hidden border border-black/8 bg-black">
-        <div className="relative aspect-[16/10] w-full">
-          <Image src={src} alt={alt} fill sizes={sizes} className="object-cover object-top" />
-        </div>
-      </div>
-    </VisualFrame>
-  );
-}
-
 function TagEnrollmentVisual({ section }: { section: AdministrationStorySectionDto }) {
   return (
     <VisualFrame
@@ -377,9 +373,9 @@ function TagEnrollmentVisual({ section }: { section: AdministrationStorySectionD
     >
       <div className="grid gap-3 md:grid-cols-3">
         {[
-          ['01', 'Tag erfassen', 'Neuen Zugangstag scannen oder anlegen.'],
-          ['02', 'Person zuweisen', 'Direkt im Kontext der Nutzerverwaltung verknüpfen.'],
-          ['03', 'Freigabe prüfen', 'Regeln bestätigen und Ausgabe dokumentieren.'],
+          ['01', 'Tag erfassen', 'Neuen Tag scannen oder anlegen.'],
+          ['02', 'Person zuweisen', 'Direkt dem richtigen Nutzer zuordnen.'],
+          ['03', 'Freigabe prüfen', 'Zuordnung bestätigen und dokumentieren.'],
         ].map(([step, title, description]) => (
           <div key={step} className="border border-black/8 bg-background p-4">
             <div className="flex items-center justify-between gap-3">
@@ -412,22 +408,19 @@ function StorySection({
         >
           <div className="space-y-6">
             <Overline>{section.eyebrow}</Overline>
-            <h2 className="headline-balance max-w-3xl text-[clamp(1.9rem,4vw,3.35rem)] leading-[1.02] tracking-[-0.03em] text-foreground">
+            <h2 className="headline-balance max-w-3xl text-[clamp(1.8rem,3.7vw,3rem)] leading-[1.04] tracking-[-0.03em] text-foreground">
               {section.title}
             </h2>
-            <div className="max-w-[62ch] space-y-4 text-base leading-relaxed text-foreground/74 md:text-lg">
+            <div className="max-w-[58ch] space-y-3 text-base leading-relaxed text-foreground/74 md:text-[1.05rem]">
               {section.description.map((paragraph) => (
                 <p key={paragraph}>{paragraph}</p>
               ))}
             </div>
 
-            <div className="border-t border-black/8 pt-5">
-              <p className="text-sm font-semibold uppercase tracking-[0.16em] text-foreground/48">
-                {section.benefitTitle}
-              </p>
-              <div className="mt-4 space-y-4">
-                {section.benefits.map((benefit) => (
-                  <div key={benefit.title} className="flex items-start gap-3">
+            <ul className="grid gap-3 border-t border-black/8 pt-5 sm:grid-cols-2">
+              {section.benefits.map((benefit) => (
+                <li key={benefit.title} className="border border-black/8 bg-card/65 p-4">
+                  <div className="flex items-start gap-3">
                     <CheckCircle2
                       className="mt-0.5 h-5 w-5 shrink-0 text-foreground/62"
                       aria-hidden="true"
@@ -436,14 +429,14 @@ function StorySection({
                       <p className="text-sm font-semibold text-foreground md:text-base">
                         {benefit.title}
                       </p>
-                      <p className="text-sm leading-relaxed text-foreground/64 md:text-base">
+                      <p className="mt-1 text-sm leading-relaxed text-foreground/64">
                         {benefit.description}
                       </p>
                     </div>
                   </div>
-                ))}
-              </div>
-            </div>
+                </li>
+              ))}
+            </ul>
           </div>
 
           <StoryVisual section={section} />
@@ -453,7 +446,43 @@ function StorySection({
   );
 }
 
+function CoreBenefitsSection() {
+  return (
+    <section className="section-hairline">
+      <div className="mardu-container py-14 md:py-16">
+        <div className="mb-8 flex flex-col gap-3 lg:max-w-2xl">
+          <Overline>Kernvorteile</Overline>
+          <h2 className="headline-balance text-[clamp(1.6rem,3.2vw,2.6rem)] leading-[1.05] tracking-[-0.03em] text-foreground">
+            Was die Software heute konkret vereinfacht
+          </h2>
+        </div>
+
+        <div className="grid gap-4 md:grid-cols-3">
+          {administrationHero.keyFigures.map((figure) => (
+            <article key={figure.label} className="border border-black/10 bg-card p-5">
+              <p className="text-[11px] uppercase tracking-[0.16em] text-foreground/46">
+                {figure.label}
+              </p>
+              <p className="mt-3 text-2xl font-semibold tracking-[-0.03em] text-foreground">
+                {figure.value}
+              </p>
+              <p className="mt-2 text-sm leading-relaxed text-foreground/64">
+                {figure.description}
+              </p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export default function VerwaltungsoftwarePage() {
+  const storyOrder = ['users', 'tags', 'groups', 'rules', 'directories'];
+  const orderedSections = storyOrder
+    .map((id) => administrationStorySections.find((section) => section.id === id))
+    .filter((section): section is AdministrationStorySectionDto => Boolean(section));
+
   const growthItems = administrationGrowthPillars.map((pillar) => ({
     title: pillar.title,
     icon: pillar.icon,
@@ -469,13 +498,13 @@ export default function VerwaltungsoftwarePage() {
     <main className="min-h-screen bg-background">
       <section className="relative overflow-hidden border-b border-black/8 py-20 md:py-24">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(226,170,98,0.16),transparent_28%),radial-gradient(circle_at_100%_20%,rgba(71,95,255,0.12),transparent_28%)]" />
-        <div className="mardu-container relative grid gap-12 lg:grid-cols-[0.88fr_1.12fr] lg:items-center">
-          <div className="space-y-7">
+        <div className="mardu-container relative grid gap-12 lg:grid-cols-[0.82fr_1.18fr] lg:items-center">
+          <div className="space-y-6">
             <Overline>{administrationHero.overline}</Overline>
-            <h1 className="headline-balance max-w-4xl text-[clamp(2.35rem,5vw,4.9rem)] leading-[0.95] tracking-[-0.03em] text-foreground">
+            <h1 className="headline-balance max-w-4xl text-[clamp(2.2rem,4.7vw,4.6rem)] leading-[0.95] tracking-[-0.03em] text-foreground">
               {administrationHero.title}
             </h1>
-            <div className="max-w-2xl space-y-4 text-base leading-relaxed text-foreground/75 md:text-lg">
+            <div className="max-w-xl text-base leading-relaxed text-foreground/75 md:text-lg">
               {administrationHero.description.map((paragraph) => (
                 <p key={paragraph}>{paragraph}</p>
               ))}
@@ -489,24 +518,11 @@ export default function VerwaltungsoftwarePage() {
                 </Link>
               </Button>
               <Button asChild variant="outline">
-                <Link href={administrationHero.secondaryCtaHref}>
-                  {administrationHero.secondaryCtaLabel}
+                <Link href="#nutzerverwaltung">
+                  Produkt ansehen
+                  <ChevronRight className="size-4" />
                 </Link>
               </Button>
-            </div>
-
-            <div className="grid gap-4 border-t border-black/8 pt-6 sm:grid-cols-3">
-              {administrationHero.keyFigures.map((figure) => (
-                <div key={figure.label} className="space-y-2">
-                  <p className="text-[11px] uppercase tracking-[0.16em] text-foreground/46">
-                    {figure.label}
-                  </p>
-                  <p className="text-2xl font-semibold tracking-[-0.03em] text-foreground">
-                    {figure.value}
-                  </p>
-                  <p className="text-sm leading-relaxed text-foreground/62">{figure.description}</p>
-                </div>
-              ))}
             </div>
           </div>
 
@@ -514,53 +530,33 @@ export default function VerwaltungsoftwarePage() {
         </div>
       </section>
 
-      {administrationStorySections.map((section, index) => (
-        <StorySection key={section.id} section={section} reverse={index % 2 === 1} />
+      <CoreBenefitsSection />
+
+      {orderedSections.map((section, index) => (
+        <div key={section.id} id={section.id === 'users' ? 'nutzerverwaltung' : undefined}>
+          <StorySection section={section} reverse={index % 2 === 1} />
+        </div>
       ))}
 
       <section className="section-hairline">
         <div className="mardu-container py-20 md:py-24">
           <SplitContent
-            eyebrow="Heute stark, morgen ausbaufähig"
-            title="Eine Verwaltungssoftware, die mit Anforderungen wachsen kann, ohne heute zu viel zu versprechen"
+            eyebrow="Zukunftsfähigkeit"
+            title="Heute nutzbar, später sauber erweiterbar"
             description={
               <>
                 <p className="text-balance">
-                  Die Seite soll Zukunft nicht als Vision verkaufen, sondern als strategische
-                  Anschlussfähigkeit. Entscheidend ist, dass die Lösung schon heute Ordnung schafft
-                  und gleichzeitig Raum für größere Strukturen lässt.
+                  Die Verwaltungsapp soll heute Ordnung schaffen und später anschlussfähig bleiben.
                 </p>
-                <p className="mt-5">
-                  Wenn Integrationen, Automatisierung oder mehrere Standorte später wichtiger
-                  werden, muss die Verwaltungsbasis diese Entwicklung sauber aufnehmen können.
+                <p className="mt-4">
+                  Wenn weitere Nutzerquellen, Standorte oder automatisierte Abläufe dazukommen, muss
+                  die Struktur nicht neu gedacht werden.
                 </p>
               </>
             }
-            sideTitle="Worauf die Lösung vorbereitet ist"
+            sideTitle="Worauf die Basis vorbereitet ist"
             items={growthItems}
           />
-
-          <div className="mt-8 grid gap-5 md:grid-cols-3">
-            {administrationGrowthSignals.map((signal) => {
-              const Icon = signal.icon;
-
-              return (
-                <article key={signal.title} className="border border-black/10 bg-card p-6">
-                  <div className="flex items-center gap-3">
-                    <div className="flex h-11 w-11 items-center justify-center border border-black/10 bg-background">
-                      <Icon className="h-5 w-5 text-foreground/70" aria-hidden="true" />
-                    </div>
-                    <h3 className="text-xl font-semibold tracking-[-0.02em] text-foreground">
-                      {signal.title}
-                    </h3>
-                  </div>
-                  <p className="mt-5 text-sm leading-relaxed text-foreground/68 md:text-base">
-                    {signal.description}
-                  </p>
-                </article>
-              );
-            })}
-          </div>
         </div>
       </section>
 

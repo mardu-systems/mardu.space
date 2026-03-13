@@ -91,9 +91,9 @@ export interface AdministrationCtaDto {
 
 export const administrationHero: AdministrationHeroDto = {
   overline: 'Verwaltungssoftware',
-  title: 'Weniger Verwaltungsaufwand. Mehr Kontrolle. Klarere Abläufe pro Standort.',
+  title: 'Zentrale Verwaltungsapp für Nutzer, Zutrittspunkte und Freigaben.',
   description: [
-    'Die Verwaltungssoftware bündelt Nutzer, Zutrittspunkte, Gruppen und Tags in einer zentralen App. So sinkt der Verwaltungsaufwand, Prozesse werden klarer und auch größere Strukturen bleiben beherrschbar.',
+    'Verwalten Sie Nutzer, Gruppen, Regeln und Zugangstags an einem Ort. Das vereinfacht Onboarding, senkt manuellen Aufwand und schafft Ordnung über Standorte hinweg.',
   ],
   primaryCtaLabel: 'Demo anfragen',
   primaryCtaHref: '/contact?source=admin-software&topic=verwaltungssoftware-demo',
@@ -103,17 +103,17 @@ export const administrationHero: AdministrationHeroDto = {
     {
       label: 'Verwaltung',
       value: 'Ein System',
-      description: 'Nutzer, Zutritte, Gruppen und Tags an einem Ort statt in mehreren Tools.',
+      description: 'Nutzer, Zutrittspunkte, Gruppen und Tags an einem Ort.',
     },
     {
       label: 'Onboarding',
       value: 'Weniger Reibung',
-      description: 'Neue Personen schneller anlegen, zuordnen und sauber freischalten.',
+      description: 'Neue Personen schneller anlegen und freischalten.',
     },
     {
       label: 'Skalierung',
       value: 'Mehr Struktur',
-      description: 'Standorte und wachsende Gruppen ohne Listenchaos beherrschbar halten.',
+      description: 'Auch mehrere Standorte und Gruppen sauber organisieren.',
     },
   ],
 };
@@ -249,23 +249,23 @@ export const administrationStorySections: AdministrationStorySectionDto[] = [
 export const administrationGrowthPillars: AdministrationGrowthPillarDto[] = [
   {
     id: 'integrations',
-    title: 'Besser in bestehende Abläufe eingebunden',
+    title: 'Heute Ordnung, später anschlussfähig',
     description:
-      'Die Lösung bleibt anschlussfähig, wenn später weitere Systeme eingebunden werden sollen.',
-    proof: 'So wächst der Prozess mit, ohne heute unnötig komplex zu werden.',
+      'Die Software ist heute operativ nutzbar und bleibt offen für weitere Systeme und Prozesse.',
+    proof: 'So entsteht erst Struktur und später saubere Erweiterbarkeit.',
     icon: PlugZap,
   },
   {
     id: 'automation',
-    title: 'Mehr Automatisierung mit steigender Komplexität',
+    title: 'Wiederkehrende Abläufe später automatisieren',
     description:
       'Wiederkehrende Verwaltungsaufgaben lassen sich später schrittweise stärker standardisieren.',
-    proof: 'So wächst die Lösung mit dem Betrieb, statt neue manuelle Last zu erzeugen.',
+    proof: 'Das reduziert Zusatzaufwand, wenn Nutzerzahlen und Standorte wachsen.',
     icon: ArrowLeftRight,
   },
   {
     id: 'structures',
-    title: 'Größere Strukturen sauber abbilden',
+    title: 'Standorte und Rollen sauber erweitern',
     description:
       'Mehr Gruppen, Standorte und Rollen bleiben beherrschbar, wenn die Struktur sauber mitwächst.',
     proof: 'Entscheidend ist eine Basis, die Ordnung schafft, bevor Komplexität teuer wird.',
@@ -295,9 +295,9 @@ export const administrationGrowthSignals = [
 ];
 
 export const administrationCta: AdministrationCtaDto = {
-  title: 'Ordnung, Kontrolle und skalierbare Prozesse in einer Verwaltungssoftware zusammenführen.',
+  title: 'Weniger Verwaltungsaufwand. Klarere Prozesse. Mehr Kontrolle.',
   description:
-    'Wenn Sie weniger manuelle Pflege, mehr Übersicht und eine belastbare Grundlage für wachsende Strukturen suchen, sprechen Sie mit uns über Ihre Anforderungen und eine passende Demo.',
+    'Wenn Sie Nutzer, Zutrittspunkte, Regeln und Tags zentral verwalten wollen, sprechen Sie mit uns über Ihre Anforderungen und eine passende Demo.',
   primaryButtonText: 'Demo anfragen',
   primaryButtonHref: '/contact?source=admin-software&topic=verwaltungssoftware-demo',
   secondaryButtonText: 'Kontakt aufnehmen',

@@ -1,4 +1,8 @@
-export type ContactSource = 'contact' | 'wizard';
+/**
+ * Supported lead sources for `POST /api/contact`.
+ * Extend this union whenever a page-specific funnel needs separate attribution.
+ */
+export type ContactSource = 'contact' | 'wizard' | 'admin-software';
 
 /**
  * DTO for `POST /api/contact`.
@@ -15,6 +19,9 @@ export interface ContactRequestDto {
   message?: string;
   consent?: boolean;
   newsletterOptIn?: boolean;
+  /**
+   * Optional lead source so inbound requests can be attributed to a concrete funnel or page.
+   */
   source?: ContactSource;
   token?: string;
   config?: unknown;
