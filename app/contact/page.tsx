@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import ContactForm from './contact-form';
 import { Overline } from '@/components/ui/typography';
+import { getContactPageContext, type ContactPageSearchParamsDto } from '@/lib/contact-page-context';
 
 export const metadata: Metadata = {
   title: 'Kontakt',
@@ -24,26 +25,30 @@ export const metadata: Metadata = {
   },
 };
 
-export default function ContactPage() {
+export default async function ContactPage({
+  searchParams,
+}: {
+  searchParams?: Promise<ContactPageSearchParamsDto>;
+}) {
+  const resolvedSearchParams = await searchParams;
+  const context = getContactPageContext(resolvedSearchParams);
+
   return (
     <main className="min-h-screen pt-[calc(var(--app-header-height,64px)+env(safe-area-inset-top))]">
       <section className="mardu-container w-full py-12 md:py-16">
         <header className="max-w-3xl space-y-4 pb-8">
-          <Overline>Kontakt</Overline>
+          <Overline>{context.overline}</Overline>
           <h1 className="headline-balance text-[clamp(2rem,4.5vw,3.75rem)] leading-[0.95] tracking-[-0.03em] text-foreground">
-            Lass uns über dein{' '}
-            <em className="font-serif italic font-normal tracking-[-0.02em] text-foreground/90">
-              Projekt sprechen.
-            </em>
+            {context.title}
           </h1>
           <p className="max-w-2xl text-base leading-relaxed text-foreground/75 md:text-lg">
-            Melde dich bei uns, wir antworten so schnell wie möglich.
+            {context.description}
           </p>
         </header>
 
         <div className="grid items-start gap-12 lg:grid-cols-2">
           <div className="space-y-6 pt-2 text-base leading-relaxed text-foreground/85">
-            <p>Du hast Fragen oder möchtest uns besuchen? Melde dich gerne bei uns.</p>
+            <p>{context.intro}</p>
             <div className="space-y-1">
               <p>
                 <strong>Mardu GmbH</strong>
@@ -71,18 +76,25 @@ export default function ContactPage() {
                 liegen nur wenige Minuten zu Fuß entfernt.
               </p>
               <p>
-                Mit dem Auto erreichst du uns über die Durlacher Allee. Folge der Beschilderung
-                zum Alten Schlachthof und nutze die Parkplätze auf dem Gelände.
+                Mit dem Auto erreichst du uns über die Durlacher Allee. Folge der Beschilderung zum
+                Alten Schlachthof und nutze die Parkplätze auf dem Gelände.
               </p>
             </div>
             <div className="space-y-2">
               <h2 className="text-lg font-semibold tracking-[-0.01em]">Schreib uns</h2>
-              <p>Gib uns einfach deine Kontaktdaten und eine kurze Beschreibung deines Vorhabens.</p>
+              <p>
+                Gib uns einfach deine Kontaktdaten und eine kurze Beschreibung deines Vorhabens.
+              </p>
             </div>
           </div>
 
           <div className="mx-auto w-full max-w-2xl">
-            <ContactForm />
+            <ContactForm
+              source={context.source}
+              initialMessage={context.initialMessage}
+              submitLabel={context.submitLabel}
+              successMessage={context.successMessage}
+            />
           </div>
         </div>
       </section>

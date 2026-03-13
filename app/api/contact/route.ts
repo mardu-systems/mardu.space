@@ -26,7 +26,7 @@ const Schema = z.object({
   message: z.string().max(500).optional(),
   config: z.any().optional(),
   token: z.string().optional(),
-  source: z.enum(['contact', 'wizard']).optional(),
+  source: z.enum(['contact', 'wizard', 'admin-software']).optional(),
   consent: z.boolean().optional(),
   newsletterOptIn: z.boolean().optional(),
 });

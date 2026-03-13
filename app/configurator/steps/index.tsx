@@ -97,7 +97,7 @@ export const createSteps = (
   },
   {
     id: 'summary',
-    title: 'Zusammenfassung & Stückliste',
+    title: 'Zusammenfassung',
     tip: 'Bitte prüfen, dann absenden.',
     view: <SummaryStep state={state} />,
     valid: () => true,
